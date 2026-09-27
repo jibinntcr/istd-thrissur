@@ -40,7 +40,7 @@ ISTD Thrissur/
 ├── contact.html            # Secretariat helpdesk, direct contact details & inquiry form
 ├── .gitignore              # Git ignore rules
 ├── README.md               # Project documentation
-└── Assets/
+└── assets/
     ├── css/
     │   └── style.css       # Design tokens, responsive grid & component styles
     ├── js/
