@@ -102,6 +102,21 @@ export function Navbar() {
           </div>
 
           <div className="top-bar-right">
+            <Link
+              href="/campus-chapters"
+              className="top-bar-portal-pill"
+              title="ISTD Thrissur Campus & Student Chapters"
+              style={{
+                background: pathname?.startsWith('/campus-chapters')
+                  ? 'rgba(245, 158, 11, 0.28)'
+                  : undefined,
+                borderColor: pathname?.startsWith('/campus-chapters')
+                  ? 'rgba(251, 191, 36, 0.6)'
+                  : undefined,
+              }}
+            >
+              <span>Campus Chapters</span>
+            </Link>
             <a
               href={OFFICIAL_LINKS.istdNationalWeb}
               target="_blank"
@@ -293,6 +308,25 @@ export function Navbar() {
                 </svg>
               </Link>
             ))}
+            <Link
+              href="/campus-chapters"
+              className={`mobile-nav-link ${isActive('/campus-chapters') ? 'active' : ''}`}
+              tabIndex={drawerOpen ? 0 : -1}
+              onClick={() => setDrawerOpen(false)}
+            >
+              <span>Campus Chapters</span>
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.2"
+                aria-hidden="true"
+              >
+                <polyline points="9 18 15 12 9 6" />
+              </svg>
+            </Link>
           </nav>
         </div>
 

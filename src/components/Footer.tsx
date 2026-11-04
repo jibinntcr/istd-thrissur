@@ -96,6 +96,9 @@ export function Footer() {
                   <Link href="/events">Events &amp; Programmes</Link>
                 </li>
                 <li>
+                  <Link href="/campus-chapters">Campus Chapters</Link>
+                </li>
+                <li>
                   <Link href="/gallery">Gallery</Link>
                 </li>
                 <li>
@@ -194,6 +197,7 @@ export function Footer() {
                 <Link href="/about">About Us</Link>
                 <Link href="/committee">Managing Committee</Link>
                 <Link href="/events">Events &amp; Programmes</Link>
+                <Link href="/campus-chapters">Campus Chapters</Link>
                 <Link href="/gallery">Gallery</Link>
                 <Link href="/membership">Membership</Link>
                 <Link href="/contact">Contact Us</Link>

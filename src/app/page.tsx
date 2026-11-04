@@ -5,6 +5,7 @@ import { PhotoCard } from '@/components/PhotoCard';
 import { EventsChronicleSection } from '@/components/EventsChronicleSection';
 import {
   OFFICIAL_LINKS,
+  assetUrl,
 } from '@/data/siteData';
 
 const HOMEPAGE_GALLERY_PREVIEW = [
@@ -50,6 +51,13 @@ export default function HomePage() {
           </div>
           <div className="upcoming-ticker-viewport">
             <div className="upcoming-ticker-track">
+              <Link href="/campus-chapters/christ-college-of-engineering" className="upcoming-ticker-item">
+                <strong>First Student Chapter Inauguration:</strong> ISTD Trichur Chapter announces
+                its First Student Chapter at Christ College of Engineering (Autonomous) &rarr;
+              </Link>
+              <span className="upcoming-ticker-sep" aria-hidden="true">
+                •
+              </span>
               <Link href="/events/advancing-aiot-research" className="upcoming-ticker-item">
                 <strong>10 Nov 2026 (7:00 PM – 8:00 PM IST • Google Meet):</strong> “Advancing AIoT
                 Research: From Intelligent Algorithms to Real-World Applications” — Resource Person:
@@ -61,6 +69,13 @@ export default function HomePage() {
               <Link href="/events" className="upcoming-ticker-item">
                 Explore Upcoming Events &amp; Completed Event Reports of ISTD Thrissur Chapter
                 &rarr;
+              </Link>
+              <span className="upcoming-ticker-sep" aria-hidden="true">
+                •
+              </span>
+              <Link href="/campus-chapters/christ-college-of-engineering" className="upcoming-ticker-item">
+                <strong>First Student Chapter Inauguration:</strong> ISTD Trichur Chapter announces
+                its First Student Chapter at Christ College of Engineering (Autonomous) &rarr;
               </Link>
               <span className="upcoming-ticker-sep" aria-hidden="true">
                 •
@@ -242,6 +257,170 @@ export default function HomePage() {
 
       {/* 3. Tabbed Events Section: Upcoming Events & Past Event Reports */}
       <EventsChronicleSection initialTab="upcoming" />
+
+      {/* 3B. Campus & Student Chapters Spotlight */}
+      <section className="section-padding bg-white" id="campusChaptersSpotlight">
+        <div className="container">
+          <div
+            style={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              alignItems: 'flex-end',
+              justifyContent: 'space-between',
+              gap: '1rem',
+              marginBottom: '1.85rem',
+            }}
+          >
+            <div>
+              <span className="section-tag tag-yellow">Campus &amp; Student Chapters</span>
+              <h2 className="section-title" style={{ marginBottom: '0.35rem' }}>
+                Connecting Academic Learning with Professional Practice
+              </h2>
+              <p style={{ color: 'var(--color-muted)', marginBottom: 0, maxWidth: '680px' }}>
+                ISTD Trichur Chapter partners with higher education institutions to establish
+                student chapters that bridge classroom learning with industry mentorship and
+                professional development.
+              </p>
+            </div>
+            <div style={{ display: 'flex', gap: '0.65rem', flexWrap: 'wrap' }}>
+              <Link href="/campus-chapters" className="btn btn-outline-navy btn-sm">
+                Why Campus Chapters &amp; Submit EOI &rarr;
+              </Link>
+            </div>
+          </div>
+
+          <div
+            style={{
+              background: 'linear-gradient(135deg, #071226 0%, #0F2347 60%, #16336B 100%)',
+              borderRadius: '22px',
+              border: '2px solid rgba(245, 158, 11, 0.35)',
+              boxShadow: '0 20px 50px rgba(15, 29, 58, 0.14)',
+              overflow: 'hidden',
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(290px, 1fr))',
+              alignItems: 'center',
+            }}
+          >
+            <Link
+              href="/campus-chapters/christ-college-of-engineering"
+              style={{
+                padding: '1.75rem',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                background: 'rgba(0, 0, 0, 0.22)',
+                textDecoration: 'none',
+              }}
+            >
+              <img
+                src={assetUrl('/images/campus-chapter-cce.jpg')}
+                alt="ISTD Trichur First Student Chapter — Christ College of Engineering (Autonomous)"
+                style={{
+                  width: '100%',
+                  maxWidth: '340px',
+                  maxHeight: '400px',
+                  objectFit: 'contain',
+                  borderRadius: '14px',
+                  boxShadow: '0 14px 36px rgba(0, 0, 0, 0.45)',
+                  border: '2px solid rgba(255, 255, 255, 0.2)',
+                }}
+              />
+            </Link>
+
+            <div style={{ padding: '2.25rem', color: '#FFFFFF' }}>
+              <div
+                style={{
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  gap: '0.5rem',
+                  marginBottom: '0.85rem',
+                }}
+              >
+                <span
+                  style={{
+                    padding: '0.28rem 0.78rem',
+                    borderRadius: '999px',
+                    background: '#FEF3C7',
+                    color: '#92400E',
+                    fontSize: '0.72rem',
+                    fontWeight: 800,
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.07em',
+                  }}
+                >
+                  First Student Chapter • ISTD Trichur
+                </span>
+                <span
+                  style={{
+                    padding: '0.28rem 0.78rem',
+                    borderRadius: '999px',
+                    background: 'rgba(255,255,255,0.12)',
+                    color: '#E2E8F0',
+                    fontSize: '0.72rem',
+                    fontWeight: 700,
+                  }}
+                >
+                  📍 Irinjalakuda, Thrissur
+                </span>
+              </div>
+
+              <h3
+                style={{
+                  color: '#FFFFFF',
+                  fontSize: 'clamp(1.35rem, 2.3vw, 1.75rem)',
+                  fontWeight: 900,
+                  lineHeight: 1.25,
+                  marginBottom: '0.75rem',
+                }}
+              >
+                Inauguration of First Student Chapter at Christ College of Engineering (Autonomous)
+              </h3>
+
+              <p
+                style={{
+                  color: '#E2E8F0',
+                  fontSize: '0.94rem',
+                  lineHeight: 1.7,
+                  marginBottom: '0.9rem',
+                }}
+              >
+                ISTD Trichur Chapter is pleased to announce the inauguration of its first student
+                chapter at <strong style={{ color: '#FFFFFF' }}>Christ College of Engineering (Autonomous)</strong>. The
+                chapter will create a space for students to connect academic learning with
+                professional practice, engage with experienced practitioners, and develop as future
+                professionals.
+              </p>
+
+              <p
+                style={{
+                  color: '#CBD5E1',
+                  fontSize: '0.88rem',
+                  lineHeight: 1.65,
+                  marginBottom: '1.35rem',
+                }}
+              >
+                The inaugural program includes an address by{' '}
+                <strong style={{ color: '#FDE68A' }}>Prof. (Dr.) Zakkariya</strong>, National Vice
+                President, ISTD, followed by the official inauguration and lighting of the lamp, and
+                an address by <strong style={{ color: '#FDE68A' }}>Mr. Tony Chacko</strong>, Chairman
+                of the ISTD Trichur Chapter.
+              </p>
+
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem' }}>
+                <Link
+                  href="/campus-chapters/christ-college-of-engineering"
+                  className="btn btn-red"
+                >
+                  Visit Exclusive Chapter Page &rarr;
+                </Link>
+                <Link href="/campus-chapters" className="btn btn-outline-white">
+                  Campus Chapters Hub &amp; Institutional EOI
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* 4. Membership */}
       <section className="section-padding bg-pale-blue" id="membershipOverview">
