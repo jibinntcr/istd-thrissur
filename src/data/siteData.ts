@@ -47,6 +47,7 @@ export interface ChapterEvent {
   slug: string;
   status: 'upcoming' | 'past';
   title: string;
+  subtitleQuestion?: string;
   programmeType: 'Webinar' | 'Workshop' | 'Seminar' | 'Conference' | 'Chapter Milestone';
   date: string;
   timeIST: string;
@@ -57,10 +58,17 @@ export interface ChapterEvent {
   fullDescription: string[];
   image: string;
   imageCaption: string;
+  isPosterImage?: boolean;
   registrationAvailable?: boolean;
   brochureUrl?: string;
   recordingUrl?: string;
   hasPhotoGallery?: boolean;
+  eventPhotos?: {
+    src: string;
+    title: string;
+    caption: string;
+    category: string;
+  }[];
 }
 
 export const OFFICIAL_LINKS = {
@@ -582,24 +590,70 @@ export const CHAPTER_CORE_CONTRIBUTORS = [
 
 export const ALL_CHAPTER_EVENTS: ChapterEvent[] = [
   {
+    id: 'event-aiot-boopathy',
+    slug: 'advancing-aiot-research',
+    status: 'upcoming',
+    title: 'Advancing AIoT Research: From Intelligent Algorithms to Real-World Applications',
+    subtitleQuestion: 'How can intelligent algorithms translate into real-world applications?',
+    programmeType: 'Webinar',
+    date: '10 November 2026',
+    timeIST: '7:00 PM – 8:00 PM IST',
+    venue: 'Google Meet (Online Session)',
+    speaker: 'Boopathy',
+    speakerDesignation: 'CTO, Monzha Research Labs Pvt. Ltd.',
+    shortDescription:
+      'How can intelligent algorithms translate into real-world applications? Explore the convergence of Artificial Intelligence and the Internet of Things, and how research can connect intelligent algorithms with practical applications.',
+    fullDescription: [
+      'How can intelligent algorithms translate into real-world applications?',
+      'ISTD Trichur Chapter invites you to an online session on “Advancing AIoT Research: From Intelligent Algorithms to Real-World Applications.”',
+      'Explore the convergence of Artificial Intelligence and the Internet of Things, and how research can connect intelligent algorithms with practical applications.',
+      'We welcome researchers, educators, students, and technology professionals to join us for an evening of learning and fresh perspectives on AIoT.',
+      'Organised by ISTD Trichur Chapter.',
+    ],
+    image: '/images/event-aiot-boopathy.jpg',
+    imageCaption:
+      'Official Event Poster — Advancing AIoT Research: From Intelligent Algorithms to Real-World Applications by Resource Person Boopathy (CTO, Monzha Research Labs Pvt. Ltd.) on 10 November 2026, 7:00 PM – 8:00 PM IST via Google Meet.',
+    isPosterImage: true,
+    registrationAvailable: true,
+    eventPhotos: [
+      {
+        src: '/images/event-aiot-boopathy.jpg',
+        title: 'Official Session Poster — Advancing AIoT Research',
+        caption:
+          'Online session on “Advancing AIoT Research: From Intelligent Algorithms to Real-World Applications” by Resource Person Boopathy, CTO, Monzha Research Labs Pvt. Ltd. (10 November 2026, 7:00 PM – 8:00 PM IST, Google Meet).',
+        category: 'Event Poster',
+      },
+    ],
+  },
+  {
     id: 'event-ai-agents',
     slug: 'ai-agents-in-business',
-    status: 'upcoming',
+    status: 'past',
     title: 'From AI Assistants to AI Agents: The Next Shift in Business',
     programmeType: 'Webinar',
     date: '8 August 2026',
-    timeIST: 'Time to be announced (IST)',
+    timeIST: 'Online Session (IST)',
     venue: 'Online Session',
     speaker: 'Shaheen Siddique',
     shortDescription:
-      'An online session exploring the evolution of AI tools and how businesses and professionals can use AI agents for sustainable growth.',
+      'An online session exploring the evolution of AI tools and how businesses and professionals can leverage AI agents for sustainable growth.',
     fullDescription: [
-      'This online webinar organised by the ISTD Thrissur Chapter examines the transition from conversational AI assistants to autonomous AI agents in workplace and business environments.',
-      'The session covers practical applications for HR professionals, trainers, educators, and business managers looking to integrate AI-assisted workflows responsibly and effectively.',
+      'This online webinar organised by the ISTD Thrissur Chapter examined the transition from conversational AI assistants to autonomous AI agents in workplace and business environments.',
+      'Led by speaker Shaheen Siddique, the session covered practical applications for HR professionals, trainers, educators, and business managers looking to integrate AI-assisted workflows responsibly and effectively.',
     ],
     image: '/images/event-ai-agents.jpg',
-    imageCaption: 'Programme announcement illustration for the webinar on AI Assistants and AI Agents.',
-    registrationAvailable: false,
+    imageCaption:
+      'Session visual for “From AI Assistants to AI Agents: The Next Shift in Business” led by Shaheen Siddique on 8 August 2026.',
+    hasPhotoGallery: false,
+    eventPhotos: [
+      {
+        src: '/images/event-ai-agents.jpg',
+        title: 'From AI Assistants to AI Agents: The Next Shift in Business',
+        caption:
+          'Online webinar led by Shaheen Siddique on 8 August 2026 exploring how businesses and L&D practitioners can adopt AI agents.',
+        category: 'Session Archive',
+      },
+    ],
   },
   {
     id: 'event-future-ld',
@@ -614,12 +668,22 @@ export const ALL_CHAPTER_EVENTS: ChapterEvent[] = [
     shortDescription:
       'A Foundation Day special session exploring how Artificial Intelligence is reshaping Learning and Development for organisations and academic institutions.',
     fullDescription: [
-      'Held to mark ISTD Foundation Day, this session explored how Artificial Intelligence is reshaping Learning and Development across corporate organisations and educational institutions.',
-      'Participants discussed instructional design, adaptive learning tools, and the evolving role of L&D practitioners.',
+      'Held on 11 April 2026 to mark ISTD Foundation Day, this special session explored how Artificial Intelligence is reshaping Learning and Development across corporate organisations and educational institutions.',
+      'Participants discussed modern instructional design, adaptive learning ecosystems, and the evolving role of L&D practitioners.',
     ],
     image: '/images/event-future-ld.jpg',
-    imageCaption: 'Foundation Day special session on Building Intelligent Learning Ecosystems with AI.',
+    imageCaption:
+      'Foundation Day special session on Building Intelligent Learning Ecosystems with AI (11 April 2026).',
     hasPhotoGallery: false,
+    eventPhotos: [
+      {
+        src: '/images/event-future-ld.jpg',
+        title: 'Future of L&D: Building Intelligent Learning Ecosystems with AI',
+        caption:
+          'Foundation Day special session held on 11 April 2026 on AI-enabled learning ecosystems.',
+        category: 'Session Archive',
+      },
+    ],
   },
   {
     id: 'event-inauguration-2026',

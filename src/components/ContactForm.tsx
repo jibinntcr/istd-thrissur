@@ -10,7 +10,7 @@ export function ContactForm() {
   const [phone, setPhone] = useState('');
   const [category, setCategory] = useState('Events & Programmes Enquiry');
   const [eventTitle, setEventTitle] = useState(
-    'From AI Assistants to AI Agents: The Next Shift in Business (8 August 2026)'
+    'Advancing AIoT Research: From Intelligent Algorithms to Real-World Applications'
   );
   const [message, setMessage] = useState('');
   const [submitting, setSubmitting] = useState(false);

@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { ALL_CHAPTER_EVENTS, assetUrl, ChapterEvent } from '@/data/siteData';
 
 type EventTab = 'upcoming' | 'past';
@@ -29,7 +30,6 @@ export function EventsChronicleSection({
   }, []);
 
   const upcomingEvents = ALL_CHAPTER_EVENTS.filter((e) => e.status === 'upcoming');
-  // Past events ordered most recent first (11 April 2026 first, then 30 March 2026)
   const pastEvents = ALL_CHAPTER_EVENTS.filter((e) => e.status === 'past');
 
   return (
@@ -39,15 +39,15 @@ export function EventsChronicleSection({
       aria-label="Events and Programmes"
     >
       <div className="container">
-        {/* Two-Tab Navigation Bar: Upcoming Events (First) | Past Events */}
+        {/* Two-Tab Navigation Header: Upcoming Events | Past Events & Reports */}
         <div
           className="events-chronicle-header"
           style={{ marginBottom: '2rem', paddingBottom: '1.25rem' }}
         >
           <div>
-            <span className="section-tag tag-blue">Chapter Calendar &amp; Archive</span>
+            <span className="section-tag tag-blue">Events &amp; Programmes</span>
             <h2 className="section-title" style={{ marginBottom: '0.35rem' }}>
-              {activeTab === 'upcoming' ? 'Upcoming Events' : 'Past Events'}
+              {activeTab === 'upcoming' ? 'Upcoming Events' : 'Completed Events & Reports'}
             </h2>
             <p
               style={{
@@ -58,8 +58,8 @@ export function EventsChronicleSection({
               }}
             >
               {activeTab === 'upcoming'
-                ? 'Scheduled learning sessions, webinars, and programmes organised by the ISTD Thrissur Chapter.'
-                : 'Summaries, reports, and photographic records of completed chapter programmes and milestones.'}
+                ? 'Explore scheduled learning sessions and programmes organised by the ISTD Thrissur Chapter. Click any event card to view full details.'
+                : 'Reports and photographs of completed learning sessions, seminars, and milestones organised by the ISTD Thrissur Chapter. Click any event card to open its full report and photo gallery.'}
             </p>
           </div>
 
@@ -73,6 +73,7 @@ export function EventsChronicleSection({
               className={`events-tab-btn ${activeTab === 'upcoming' ? 'active' : ''}`}
               onClick={() => setActiveTab('upcoming')}
             >
+              <span className="pulse-dot-green" aria-hidden="true" />
               <span>Upcoming Events</span>
               <span className="events-tab-badge">{upcomingEvents.length}</span>
             </button>
@@ -85,7 +86,7 @@ export function EventsChronicleSection({
               className={`events-tab-btn ${activeTab === 'past' ? 'active' : ''}`}
               onClick={() => setActiveTab('past')}
             >
-              <span>Past Events</span>
+              <span>Past Events &amp; Reports</span>
               <span className="events-tab-badge">{pastEvents.length}</span>
             </button>
           </div>
@@ -95,11 +96,7 @@ export function EventsChronicleSection({
             TAB 1: UPCOMING EVENTS (SHOWN FIRST)
            ===================================================================== */}
         {activeTab === 'upcoming' && (
-          <div
-            id="panel-upcoming"
-            role="tabpanel"
-            aria-labelledby="tab-upcoming"
-          >
+          <div id="panel-upcoming" role="tabpanel" aria-labelledby="tab-upcoming">
             {upcomingEvents.length === 0 ? (
               <div
                 style={{
@@ -125,7 +122,7 @@ export function EventsChronicleSection({
               <div
                 style={{
                   display: 'grid',
-                  gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+                  gridTemplateColumns: '1fr',
                   gap: '1.75rem',
                 }}
               >
@@ -138,14 +135,10 @@ export function EventsChronicleSection({
         )}
 
         {/* =====================================================================
-            TAB 2: PAST EVENTS (MOST RECENT FIRST)
+            TAB 2: PAST EVENTS & COMPLETED REPORTS (MOST RECENT FIRST)
            ===================================================================== */}
         {activeTab === 'past' && (
-          <div
-            id="panel-past"
-            role="tabpanel"
-            aria-labelledby="tab-past"
-          >
+          <div id="panel-past" role="tabpanel" aria-labelledby="tab-past">
             <div
               style={{
                 display: 'grid',
@@ -165,192 +158,305 @@ export function EventsChronicleSection({
 }
 
 export function UpcomingEventCard({ event }: { event: ChapterEvent }) {
+  const router = useRouter();
+
+  const handleCardClick = (e: React.MouseEvent<HTMLElement>) => {
+    const target = e.target as HTMLElement;
+    if (target.closest('a') || target.closest('button')) return;
+    router.push(`/events/${event.slug}`);
+  };
+
   return (
     <article
-      className="upcoming-event-card"
+      className="upcoming-event-card clickable-event-card"
+      onClick={handleCardClick}
       style={{
         padding: 0,
         overflow: 'hidden',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-between',
+        cursor: 'pointer',
       }}
     >
-      <div>
-        {/* Event Poster / Relevant Image */}
-        <div
-          style={{
-            position: 'relative',
-            aspectRatio: '16/9',
-            overflow: 'hidden',
-            background: 'var(--brand-navy-deep)',
-          }}
-        >
+      <div className="upcoming-poster-layout">
+        {/* Left: Official Event Poster */}
+        <div className="upcoming-poster-media">
           <img
             src={assetUrl(event.image)}
             alt={event.imageCaption}
-            style={{
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
-              display: 'block',
-            }}
             loading="lazy"
           />
-          <div
-            style={{
-              position: 'absolute',
-              top: '0.85rem',
-              left: '0.85rem',
-              display: 'flex',
-              gap: '0.5rem',
-              flexWrap: 'wrap',
-            }}
-          >
-            <span
+        </div>
+
+        {/* Right: Structured Event Content */}
+        <div
+          style={{
+            padding: '2rem',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+          }}
+        >
+          <div>
+            <div
               style={{
-                background: 'var(--brand-navy)',
-                color: '#fff',
-                fontSize: '0.72rem',
-                fontWeight: 700,
-                textTransform: 'uppercase',
-                letterSpacing: '0.06em',
-                padding: '0.3rem 0.7rem',
-                borderRadius: '999px',
+                display: 'flex',
+                flexWrap: 'wrap',
+                gap: '0.55rem',
+                alignItems: 'center',
+                marginBottom: '0.85rem',
               }}
             >
-              {event.programmeType}
-            </span>
-          </div>
-        </div>
+              <span
+                style={{
+                  background: 'var(--brand-navy)',
+                  color: '#fff',
+                  fontSize: '0.73rem',
+                  fontWeight: 700,
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.06em',
+                  padding: '0.3rem 0.75rem',
+                  borderRadius: '999px',
+                }}
+              >
+                {event.programmeType}
+              </span>
+              <span
+                style={{
+                  background: 'var(--accent-blue-subtle)',
+                  color: 'var(--accent-blue)',
+                  border: '1px solid var(--border-blue)',
+                  fontSize: '0.75rem',
+                  fontWeight: 700,
+                  padding: '0.28rem 0.75rem',
+                  borderRadius: '999px',
+                }}
+              >
+                📅 {event.date} • 🕖 {event.timeIST}
+              </span>
+              <span
+                style={{
+                  background: '#ECFDF5',
+                  color: '#047857',
+                  border: '1px solid #A7F3D0',
+                  fontSize: '0.75rem',
+                  fontWeight: 700,
+                  padding: '0.28rem 0.75rem',
+                  borderRadius: '999px',
+                }}
+              >
+                💻 {event.venue}
+              </span>
+            </div>
 
-        {/* Card Content */}
-        <div style={{ padding: '1.5rem' }}>
-          <h3
-            style={{
-              fontSize: '1.22rem',
-              fontWeight: 800,
-              color: 'var(--color-ink)',
-              marginBottom: '0.85rem',
-              lineHeight: 1.35,
-            }}
-          >
-            <Link
-              href={`/events/${event.slug}`}
-              style={{ color: 'inherit', textDecoration: 'none' }}
+            {event.subtitleQuestion && (
+              <p
+                style={{
+                  fontSize: '0.96rem',
+                  fontStyle: 'italic',
+                  fontWeight: 600,
+                  color: 'var(--brand-blue)',
+                  marginBottom: '0.4rem',
+                }}
+              >
+                {event.subtitleQuestion}
+              </p>
+            )}
+
+            <h3
+              style={{
+                fontSize: 'clamp(1.3rem, 2.2vw, 1.65rem)',
+                fontWeight: 800,
+                color: 'var(--color-ink)',
+                marginBottom: '1rem',
+                lineHeight: 1.3,
+              }}
             >
-              {event.title}
-            </Link>
-          </h3>
+              <Link
+                href={`/events/${event.slug}`}
+                style={{ color: 'inherit', textDecoration: 'none' }}
+              >
+                {event.title}
+              </Link>
+            </h3>
 
-          {/* Structured Event Metadata: Date, Time (IST), Venue/Platform, Speaker */}
-          <dl
-            style={{
-              display: 'grid',
-              gridTemplateColumns: '1fr',
-              gap: '0.45rem',
-              margin: '0 0 1rem 0',
-              padding: '0.85rem 1rem',
-              background: 'var(--color-surface-soft)',
-              borderRadius: 'var(--radius-sm)',
-              border: '1px solid var(--color-border)',
-              fontSize: '0.85rem',
-            }}
-          >
-            <div style={{ display: 'flex', gap: '0.5rem' }}>
-              <dt style={{ fontWeight: 700, color: 'var(--brand-navy)', minWidth: '72px' }}>
-                Date:
-              </dt>
-              <dd style={{ margin: 0, color: 'var(--color-ink)', fontWeight: 600 }}>
-                {event.date}
-              </dd>
-            </div>
-            <div style={{ display: 'flex', gap: '0.5rem' }}>
-              <dt style={{ fontWeight: 700, color: 'var(--brand-navy)', minWidth: '72px' }}>
-                Time:
-              </dt>
-              <dd style={{ margin: 0, color: 'var(--color-body)' }}>{event.timeIST}</dd>
-            </div>
-            <div style={{ display: 'flex', gap: '0.5rem' }}>
-              <dt style={{ fontWeight: 700, color: 'var(--brand-navy)', minWidth: '72px' }}>
-                Venue:
-              </dt>
-              <dd style={{ margin: 0, color: 'var(--color-body)' }}>{event.venue}</dd>
-            </div>
-            {event.speaker && (
-              <div style={{ display: 'flex', gap: '0.5rem' }}>
-                <dt style={{ fontWeight: 700, color: 'var(--brand-navy)', minWidth: '72px' }}>
-                  Speaker:
+            {/* Speaker & Schedule Box */}
+            <dl
+              style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+                gap: '0.75rem 1.25rem',
+                margin: '0 0 1.15rem 0',
+                padding: '1rem 1.2rem',
+                background: 'var(--color-surface-soft)',
+                borderRadius: 'var(--radius-md)',
+                border: '1px solid var(--color-border)',
+                fontSize: '0.88rem',
+              }}
+            >
+              {event.speaker && (
+                <div>
+                  <dt
+                    style={{
+                      fontSize: '0.73rem',
+                      fontWeight: 800,
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.05em',
+                      color: 'var(--color-muted)',
+                      marginBottom: '0.15rem',
+                    }}
+                  >
+                    🎙️ Resource Person
+                  </dt>
+                  <dd style={{ margin: 0, color: 'var(--color-ink)', fontWeight: 800 }}>
+                    {event.speaker}
+                    {event.speakerDesignation && (
+                      <span
+                        style={{
+                          display: 'block',
+                          fontWeight: 600,
+                          fontSize: '0.82rem',
+                          color: 'var(--brand-blue)',
+                        }}
+                      >
+                        {event.speakerDesignation}
+                      </span>
+                    )}
+                  </dd>
+                </div>
+              )}
+
+              <div>
+                <dt
+                  style={{
+                    fontSize: '0.73rem',
+                    fontWeight: 800,
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.05em',
+                    color: 'var(--color-muted)',
+                    marginBottom: '0.15rem',
+                  }}
+                >
+                  📅 Date &amp; Time (IST)
                 </dt>
-                <dd style={{ margin: 0, color: 'var(--color-ink)', fontWeight: 600 }}>
-                  {event.speaker}
-                  {event.speakerDesignation ? `, ${event.speakerDesignation}` : ''}
+                <dd style={{ margin: 0, color: 'var(--color-ink)', fontWeight: 700 }}>
+                  {event.date}
+                  <span
+                    style={{
+                      display: 'block',
+                      fontWeight: 600,
+                      fontSize: '0.82rem',
+                      color: 'var(--color-body)',
+                    }}
+                  >
+                    {event.timeIST}
+                  </span>
                 </dd>
               </div>
-            )}
-          </dl>
 
-          <p
+              <div>
+                <dt
+                  style={{
+                    fontSize: '0.73rem',
+                    fontWeight: 800,
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.05em',
+                    color: 'var(--color-muted)',
+                    marginBottom: '0.15rem',
+                  }}
+                >
+                  💻 Platform / Venue
+                </dt>
+                <dd style={{ margin: 0, color: 'var(--color-ink)', fontWeight: 700 }}>
+                  {event.venue}
+                  <span
+                    style={{
+                      display: 'block',
+                      fontWeight: 600,
+                      fontSize: '0.82rem',
+                      color: 'var(--color-body)',
+                    }}
+                  >
+                    Organised by ISTD Trichur Chapter
+                  </span>
+                </dd>
+              </div>
+            </dl>
+
+            <p
+              style={{
+                fontSize: '0.94rem',
+                color: 'var(--color-body)',
+                lineHeight: 1.68,
+                marginBottom: '0.6rem',
+              }}
+            >
+              Explore the convergence of Artificial Intelligence and the Internet of Things, and how
+              research can connect intelligent algorithms with practical applications.
+            </p>
+            <p
+              style={{
+                fontSize: '0.92rem',
+                color: 'var(--color-muted)',
+                lineHeight: 1.65,
+                marginBottom: 0,
+              }}
+            >
+              We welcome researchers, educators, students, and technology professionals to join us
+              for an evening of learning and fresh perspectives on AIoT.
+            </p>
+          </div>
+
+          {/* Action Buttons */}
+          <div
             style={{
-              fontSize: '0.92rem',
-              color: 'var(--color-body)',
-              lineHeight: 1.65,
-              marginBottom: 0,
+              marginTop: '1.5rem',
+              paddingTop: '1.15rem',
+              borderTop: '1px solid var(--color-border)',
+              display: 'flex',
+              flexWrap: 'wrap',
+              gap: '0.75rem',
+              alignItems: 'center',
             }}
           >
-            {event.shortDescription}
-          </p>
+            <Link href={`/events/${event.slug}`} className="btn btn-primary btn-sm">
+              View Details &amp; Poster &rarr;
+            </Link>
+            {event.registrationAvailable && (
+              <Link
+                href={`/contact?type=event&event=${encodeURIComponent(
+                  event.title
+                )}#contactEnquiryForm`}
+                className="btn btn-red btn-sm"
+              >
+                Register / Enquire Now
+              </Link>
+            )}
+          </div>
         </div>
-      </div>
-
-      {/* Action Buttons */}
-      <div
-        style={{
-          padding: '1rem 1.5rem 1.35rem',
-          borderTop: '1px solid var(--color-border)',
-          display: 'flex',
-          flexWrap: 'wrap',
-          gap: '0.65rem',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-        }}
-      >
-        <Link href={`/events/${event.slug}`} className="btn btn-primary btn-sm">
-          View Details
-        </Link>
-        {event.registrationAvailable && (
-          <Link
-            href={`/contact?type=event&event=${encodeURIComponent(event.title)}#contactEnquiryForm`}
-            className="btn btn-red btn-sm"
-          >
-            Register Now
-          </Link>
-        )}
-        {event.brochureUrl && (
-          <a
-            href={event.brochureUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn btn-outline-navy btn-sm"
-          >
-            Download Brochure
-          </a>
-        )}
       </div>
     </article>
   );
 }
 
 export function PastEventCard({ event }: { event: ChapterEvent }) {
+  const router = useRouter();
+
+  const handleCardClick = (e: React.MouseEvent<HTMLElement>) => {
+    const target = e.target as HTMLElement;
+    if (target.closest('a') || target.closest('button')) return;
+    router.push(`/events/${event.slug}`);
+  };
+
   return (
     <article
-      className="upcoming-event-card"
+      className="upcoming-event-card clickable-event-card"
+      onClick={handleCardClick}
       style={{
         padding: 0,
         overflow: 'hidden',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
+        cursor: 'pointer',
       }}
     >
       <div>
@@ -444,7 +550,7 @@ export function PastEventCard({ event }: { event: ChapterEvent }) {
         </div>
       </div>
 
-      {/* Action Buttons: View Report, View Photos (where available), Watch Recording (where available) */}
+      {/* Action Buttons: View Report & Photos */}
       <div
         style={{
           padding: '1rem 1.5rem 1.35rem',
@@ -456,22 +562,12 @@ export function PastEventCard({ event }: { event: ChapterEvent }) {
         }}
       >
         <Link href={`/events/${event.slug}`} className="btn btn-primary btn-sm">
-          View Report
+          View Report &amp; Photos &rarr;
         </Link>
         {event.hasPhotoGallery && (
-          <Link href="/gallery" className="btn btn-outline-navy btn-sm">
-            View Photos
+          <Link href={`/events/${event.slug}#eventPhotosSection`} className="btn btn-outline-navy btn-sm">
+            24 Event Photos
           </Link>
-        )}
-        {event.recordingUrl && (
-          <a
-            href={event.recordingUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn btn-outline-blue btn-sm"
-          >
-            Watch Recording
-          </a>
         )}
       </div>
     </article>

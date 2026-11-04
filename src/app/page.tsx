@@ -2,13 +2,11 @@ import React from 'react';
 import Link from 'next/link';
 import { HeroShowcase } from '@/components/HeroShowcase';
 import { PhotoCard } from '@/components/PhotoCard';
-import { UpcomingEventCard, PastEventCard } from '@/components/EventsChronicleSection';
+import { EventsChronicleSection } from '@/components/EventsChronicleSection';
 import {
-  ALL_CHAPTER_EVENTS,
   OFFICE_BEARERS,
   COMMITTEE_MEMBERS,
   OFFICIAL_LINKS,
-  assetUrl,
 } from '@/data/siteData';
 
 const HOMEPAGE_GALLERY_PREVIEW = [
@@ -43,9 +41,6 @@ const HOMEPAGE_GALLERY_PREVIEW = [
 ];
 
 export default function HomePage() {
-  const upcomingEvents = ALL_CHAPTER_EVENTS.filter((e) => e.status === 'upcoming');
-  const pastEvents = ALL_CHAPTER_EVENTS.filter((e) => e.status === 'past');
-
   return (
     <>
       {/* Scrolling Upcoming Events Headline Ticker */}
@@ -53,42 +48,41 @@ export default function HomePage() {
         <div className="container upcoming-ticker-inner">
           <div className="upcoming-ticker-label">
             <span className="pulse-dot-green" aria-hidden="true" />
-            <span>Upcoming Events</span>
+            <span>Upcoming Event</span>
           </div>
           <div className="upcoming-ticker-viewport">
             <div className="upcoming-ticker-track">
-              <Link href="/events/ai-agents-in-business" className="upcoming-ticker-item">
-                <strong>8 August 2026 (Webinar):</strong> “From AI Assistants to AI Agents: The
-                Next Shift in Business” — Speaker: Shaheen Siddique &rarr;
+              <Link href="/events/advancing-aiot-research" className="upcoming-ticker-item">
+                <strong>10 Nov 2026 (7:00 PM – 8:00 PM IST • Google Meet):</strong> “Advancing AIoT
+                Research: From Intelligent Algorithms to Real-World Applications” — Resource Person:
+                Boopathy (CTO, Monzha Research Labs Pvt. Ltd.) &rarr;
               </Link>
               <span className="upcoming-ticker-sep" aria-hidden="true">
                 •
               </span>
               <Link href="/events" className="upcoming-ticker-item">
-                Explore Learning Sessions, Workshops &amp; Seminars organised by the ISTD Thrissur
-                Chapter &rarr;
+                Explore Upcoming Events &amp; Completed Event Reports of ISTD Thrissur Chapter
+                &rarr;
+              </Link>
+              <span className="upcoming-ticker-sep" aria-hidden="true">
+                •
+              </span>
+              <Link href="/events/advancing-aiot-research" className="upcoming-ticker-item">
+                <strong>Online Session:</strong> How can intelligent algorithms translate into
+                real-world applications? Join us on 10 November 2026 &rarr;
               </Link>
               <span className="upcoming-ticker-sep" aria-hidden="true">
                 •
               </span>
               <Link
-                href="/contact?type=event&event=Programme+Collaboration+or+Speaker+Proposal#contactEnquiryForm"
-                className="upcoming-ticker-item"
-              >
-                Interested in speaking or collaborating on an upcoming chapter workshop? Connect
-                with us &rarr;
-              </Link>
-              <span className="upcoming-ticker-sep" aria-hidden="true">
-                •
-              </span>
-              <Link
-                href="/events/ai-agents-in-business"
+                href="/events/advancing-aiot-research"
                 className="upcoming-ticker-item"
                 aria-hidden="true"
                 tabIndex={-1}
               >
-                <strong>8 August 2026 (Webinar):</strong> “From AI Assistants to AI Agents: The
-                Next Shift in Business” — Speaker: Shaheen Siddique &rarr;
+                <strong>10 Nov 2026 (7:00 PM – 8:00 PM IST • Google Meet):</strong> “Advancing AIoT
+                Research: From Intelligent Algorithms to Real-World Applications” — Resource Person:
+                Boopathy (CTO, Monzha Research Labs Pvt. Ltd.) &rarr;
               </Link>
               <span className="upcoming-ticker-sep" aria-hidden="true">
                 •
@@ -99,8 +93,8 @@ export default function HomePage() {
                 aria-hidden="true"
                 tabIndex={-1}
               >
-                Explore Learning Sessions, Workshops &amp; Seminars organised by the ISTD Thrissur
-                Chapter &rarr;
+                Explore Upcoming Events &amp; Completed Event Reports of ISTD Thrissur Chapter
+                &rarr;
               </Link>
             </div>
           </div>
@@ -248,63 +242,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 3. Upcoming Events */}
-      <section className="section-padding bg-white" id="upcomingEventsSection">
-        <div className="container">
-          <div
-            style={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              alignItems: 'flex-end',
-              justifyContent: 'space-between',
-              gap: '1rem',
-              marginBottom: '2rem',
-            }}
-          >
-            <div>
-              <span className="section-tag tag-blue">Events &amp; Programmes</span>
-              <h2 className="section-title" style={{ marginBottom: '0.35rem' }}>
-                Upcoming Events
-              </h2>
-              <p style={{ color: 'var(--color-muted)', marginBottom: 0 }}>
-                Explore scheduled learning sessions and programmes organised by the ISTD Thrissur
-                Chapter.
-              </p>
-            </div>
-            <Link href="/events" className="btn btn-outline-navy btn-sm">
-              View All Events &amp; Programmes &rarr;
-            </Link>
-          </div>
-
-          {upcomingEvents.length === 0 ? (
-            <div
-              style={{
-                padding: '2.5rem',
-                textAlign: 'center',
-                background: 'var(--color-surface-soft)',
-                borderRadius: 'var(--radius-md)',
-                border: '1px solid var(--color-border)',
-              }}
-            >
-              <p style={{ margin: 0, fontWeight: 600, color: 'var(--color-ink)' }}>
-                Details of upcoming events will be published here.
-              </p>
-            </div>
-          ) : (
-            <div
-              style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-                gap: '1.75rem',
-              }}
-            >
-              {upcomingEvents.map((ev) => (
-                <UpcomingEventCard key={ev.slug} event={ev} />
-              ))}
-            </div>
-          )}
-        </div>
-      </section>
+      {/* 3. Tabbed Events Section: Upcoming Events & Past Event Reports */}
+      <EventsChronicleSection initialTab="upcoming" />
 
       {/* 4. Membership */}
       <section className="section-padding bg-pale-blue" id="membershipOverview">
@@ -336,7 +275,14 @@ export default function HomePage() {
           </div>
 
           <div className="grid-3">
-            <div className="CleanCard" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+            <div
+              className="CleanCard"
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+              }}
+            >
               <div>
                 <span className="section-tag tag-blue">Practitioners &amp; Educators</span>
                 <h3 style={{ fontSize: '1.2rem', fontWeight: 800, marginBottom: '0.6rem' }}>
@@ -358,7 +304,14 @@ export default function HomePage() {
               </div>
             </div>
 
-            <div className="CleanCard" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+            <div
+              className="CleanCard"
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+              }}
+            >
               <div>
                 <span className="section-tag tag-red">Corporates &amp; Academic Institutions</span>
                 <h3 style={{ fontSize: '1.2rem', fontWeight: 800, marginBottom: '0.6rem' }}>
@@ -379,7 +332,14 @@ export default function HomePage() {
               </div>
             </div>
 
-            <div className="CleanCard" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+            <div
+              className="CleanCard"
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+              }}
+            >
               <div>
                 <span className="section-tag tag-yellow">Students &amp; Early-Career</span>
                 <h3 style={{ fontSize: '1.2rem', fontWeight: 800, marginBottom: '0.6rem' }}>
@@ -403,50 +363,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 5. Past Events (Concise Milestone + Recent Session) */}
-      <section className="section-padding bg-white" id="pastEventsSection">
-        <div className="container">
-          <div
-            style={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              alignItems: 'flex-end',
-              justifyContent: 'space-between',
-              gap: '1rem',
-              marginBottom: '2rem',
-            }}
-          >
-            <div>
-              <span className="section-tag tag-blue">Chapter Archive</span>
-              <h2 className="section-title" style={{ marginBottom: '0.35rem' }}>
-                Past Events
-              </h2>
-              <p style={{ color: 'var(--color-muted)', marginBottom: 0 }}>
-                Recent learning sessions and the official inauguration of the ISTD Thrissur
-                Chapter.
-              </p>
-            </div>
-            <Link href="/events#pastEvents" className="btn btn-outline-navy btn-sm">
-              View All Past Events &rarr;
-            </Link>
-          </div>
-
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-              gap: '1.75rem',
-            }}
-          >
-            {pastEvents.map((ev) => (
-              <PastEventCard key={ev.slug} event={ev} />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 6. Managing Committee Preview */}
-      <section className="section-padding bg-pale-blue" id="managingCommitteePreview">
+      {/* 5. Managing Committee Preview */}
+      <section className="section-padding bg-white" id="managingCommitteePreview">
         <div className="container">
           <div
             style={{
@@ -520,7 +438,7 @@ export default function HomePage() {
             style={{
               marginTop: '1.25rem',
               padding: '1rem 1.35rem',
-              background: '#fff',
+              background: 'var(--color-surface-soft)',
               borderRadius: 'var(--radius-md)',
               border: '1px solid var(--color-border)',
               display: 'flex',
@@ -547,8 +465,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 7. Gallery Preview */}
-      <section className="section-padding bg-white" id="galleryPreview">
+      {/* 6. Gallery Preview */}
+      <section className="section-padding bg-pale-blue" id="galleryPreview">
         <div className="container">
           <div
             style={{
@@ -599,8 +517,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 8. Contact Invitation */}
-      <section className="section-padding-sm bg-pale-blue" id="contactInvitation">
+      {/* 7. Contact Invitation */}
+      <section className="section-padding-sm bg-white" id="contactInvitation">
         <div className="container">
           <div className="cta-banner">
             <div className="cta-banner-inner">
