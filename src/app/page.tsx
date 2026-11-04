@@ -4,8 +4,6 @@ import { HeroShowcase } from '@/components/HeroShowcase';
 import { PhotoCard } from '@/components/PhotoCard';
 import { EventsChronicleSection } from '@/components/EventsChronicleSection';
 import {
-  OFFICE_BEARERS,
-  COMMITTEE_MEMBERS,
   OFFICIAL_LINKS,
 } from '@/data/siteData';
 
@@ -363,110 +361,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 5. Managing Committee Preview */}
-      <section className="section-padding bg-white" id="managingCommitteePreview">
-        <div className="container">
-          <div
-            style={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              alignItems: 'flex-end',
-              justifyContent: 'space-between',
-              gap: '1rem',
-              marginBottom: '2rem',
-            }}
-          >
-            <div>
-              <span className="section-tag tag-blue">Chapter Governance</span>
-              <h2 className="section-title" style={{ marginBottom: '0.35rem' }}>
-                Managing Committee
-              </h2>
-              <p style={{ color: 'var(--color-muted)', marginBottom: 0 }}>
-                Office bearers and managing committee members of the ISTD Thrissur Chapter.
-              </p>
-            </div>
-            <Link href="/committee" className="btn btn-outline-navy btn-sm">
-              View Full Managing Committee &rarr;
-            </Link>
-          </div>
-
-          <div className="grid-3">
-            {OFFICE_BEARERS.map((member) => (
-              <div className="CleanCard" key={member.name}>
-                <span
-                  className={`section-tag ${
-                    member.isChairman ? 'tag-red' : 'tag-blue'
-                  }`}
-                >
-                  {member.role}
-                </span>
-                <h3 style={{ fontSize: '1.22rem', fontWeight: 800, marginBottom: '0.25rem' }}>
-                  {member.name}
-                </h3>
-                {member.title && (
-                  <p
-                    style={{
-                      fontSize: '0.88rem',
-                      fontWeight: 600,
-                      color: 'var(--brand-blue)',
-                      marginBottom: '0.75rem',
-                    }}
-                  >
-                    {member.title}
-                  </p>
-                )}
-                {member.linkedin && (
-                  <a
-                    href={member.linkedin}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{
-                      fontSize: '0.84rem',
-                      fontWeight: 700,
-                      color: 'var(--brand-navy)',
-                      textDecoration: 'underline',
-                    }}
-                  >
-                    LinkedIn Profile ↗
-                  </a>
-                )}
-              </div>
-            ))}
-          </div>
-
-          <div
-            style={{
-              marginTop: '1.25rem',
-              padding: '1rem 1.35rem',
-              background: 'var(--color-surface-soft)',
-              borderRadius: 'var(--radius-md)',
-              border: '1px solid var(--color-border)',
-              display: 'flex',
-              flexWrap: 'wrap',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              gap: '0.75rem',
-              fontSize: '0.9rem',
-            }}
-          >
-            <div>
-              <strong style={{ color: 'var(--brand-navy)' }}>Committee Members: </strong>
-              <span style={{ color: 'var(--color-body)' }}>
-                {COMMITTEE_MEMBERS.map((m) => m.name).join(' • ')}
-              </span>
-            </div>
-            <Link
-              href="/committee"
-              style={{ fontWeight: 700, color: 'var(--brand-blue)' }}
-            >
-              Committee Details &rarr;
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* 6. Gallery Preview */}
-      <section className="section-padding bg-pale-blue" id="galleryPreview">
+      {/* 5. Gallery Preview */}
+      <section className="section-padding bg-white" id="galleryPreview">
         <div className="container">
           <div
             style={{
