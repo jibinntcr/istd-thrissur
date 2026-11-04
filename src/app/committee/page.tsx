@@ -320,76 +320,8 @@ export default function CommitteePage() {
         </div>
       </section>
 
-      {/* Leadership in Action */}
-      <section
-        className="section-padding bg-white"
-        style={{ borderTop: '1px solid var(--border-light)' }}
-      >
-        <div className="container">
-          <div className="section-header text-center">
-            <span className="section-tag tag-yellow">Leadership in Action</span>
-            <h2 className="section-title">Executive Governance &amp; Chapter Fellowship</h2>
-            <p className="section-subtitle">
-              Highlights of the Thrissur Chapter Office Bearers and Managing Committee engaging with
-              ISTD National and Regional leaders.
-            </p>
-          </div>
-
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-              gap: '1.35rem',
-            }}
-          >
-            <PhotoCard
-              src="/photos/istd-tony-chacko.jpeg"
-              alt="Chairman Tony Chacko Address"
-              title="Chairman Shri. Tony Chacko Delivering the Chapter Vision"
-              caption="Chapter Chairman Shri. Tony Chacko outlining the strategic roadmap for L&D in Central Kerala."
-              category="Chairman's Address"
-              badgeText="Chairman"
-              headingText="Shri. Tony Chacko's Vision Address"
-            />
-            <PhotoCard
-              src="/photos/istd-sneha.jpeg"
-              alt="Secretary Sneha Rose George Felicitation"
-              title="Chapter Secretary Ms. Sneha Rose George with Prof. (Dr.) Zakkariya K A"
-              caption="Regional Vice President (South) Prof. (Dr.) Zakkariya K A honoring Chapter Secretary Ms. Sneha Rose George."
-              category="Secretary Recognition"
-              badgeText="Secretary"
-              headingText="Ms. Sneha Rose George"
-            />
-            <PhotoCard
-              src="/photos/istd-participants.jpeg"
-              alt="Treasurer Jibin N Honoring Dr. Yogesh Kumar Upadhyay"
-              title="Treasurer Mr. Jibin N with Past National President Dr. Yogesh Kumar Upadhyay"
-              caption="Chapter Treasurer Mr. Jibin N honoring Past National President Dr. Yogesh Kumar Upadhyay."
-              category="Treasurer in Action"
-              badgeText="Treasurer"
-              headingText="Mr. Jibin N with National Leadership"
-            />
-            <PhotoCard
-              src="/photos/istd-participants-group.jpeg"
-              alt="Core Executive Team and Members"
-              title="Core Executive Team & Members with National President"
-              caption="Office Bearers and Committee Members with National President Shri. Atul Shah."
-              category="Committee Cohort"
-              badgeText="Executive Team"
-              headingText="Core Team with National President"
-            />
-          </div>
-
-          <div style={{ textAlign: 'center', marginTop: '2rem' }}>
-            <Link href="/gallery" className="btn btn-outline-navy">
-              Explore Complete Chapter Photo Gallery &rarr;
-            </Link>
-          </div>
-        </div>
-      </section>
-
       {/* Connect CTA */}
-      <section className="section-padding bg-pale-blue">
+      <section className="section-padding bg-white">
         <div className="container">
           <div
             style={{

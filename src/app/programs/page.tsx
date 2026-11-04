@@ -2,7 +2,7 @@ import React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { PhotoCard } from '@/components/PhotoCard';
-import { FLAGSHIP_PROGRAMS, CHAPTER_EVENTS, assetUrl } from '@/data/siteData';
+import { FLAGSHIP_PROGRAMS } from '@/data/siteData';
 
 export const metadata: Metadata = {
   title: 'Programs & Initiatives',
@@ -192,62 +192,18 @@ export default function ProgramsPage() {
         </div>
       </section>
 
-      {/* Section 2: Recent & Upcoming Chapter Events */}
-      <section className="section-padding bg-pale-blue" id="chapterEventsSection">
-        <div className="container">
-          <div className="section-header text-center">
-            <span className="section-tag tag-blue">Chapter Knowledge Hub</span>
-            <h2 className="section-title">Recent &amp; Upcoming Chapter Events</h2>
-            <p className="section-subtitle">
-              Join thought leaders exploring the next wave of Artificial Intelligence,
-              organizational psychology, and agile learning ecosystems.
-            </p>
-          </div>
-
-          <div className="events-grid">
-            {CHAPTER_EVENTS.map((ev) => (
-              <article className="event-card" key={ev.id}>
-                <div className="event-image-box">
-                  <img src={assetUrl(ev.image)} alt={ev.title} width={560} height={230} loading="lazy" />
-                  <span className="event-date-badge">{ev.dateBadge}</span>
-                </div>
-                <div className="event-body">
-                  <div>
-                    <div className="event-speaker-tag">
-                      <svg
-                        width="14"
-                        height="14"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                      >
-                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                        <circle cx="12" cy="7" r="4" />
-                      </svg>
-                      <span>{ev.speaker}</span>
-                    </div>
-                    <h3 className="event-title">{ev.title}</h3>
-                    <p className="event-desc">{ev.description}</p>
-                  </div>
-                  <div className="event-footer">
-                    <span
-                      style={{
-                        fontSize: '0.85rem',
-                        fontWeight: 700,
-                        color: 'var(--accent-red)',
-                      }}
-                    >
-                      Date: {ev.dateBadge}
-                    </span>
-                    <Link href="/contact" className="btn btn-outline-blue btn-sm">
-                      Register for Session
-                    </Link>
-                  </div>
-                </div>
-              </article>
-            ))}
-          </div>
+      {/* CTA to Events & Reports */}
+      <section className="section-padding-sm bg-pale-blue">
+        <div className="container text-center">
+          <h3 style={{ fontSize: '1.35rem', fontWeight: 800, color: 'var(--color-ink)', marginBottom: '0.6rem' }}>
+            Explore Upcoming Events &amp; Past Event Reports
+          </h3>
+          <p style={{ color: 'var(--color-muted)', maxWidth: '580px', margin: '0 auto 1.35rem', fontSize: '0.95rem' }}>
+            View our full calendar of upcoming workshops and read official post-event reports from the ISTD Thrissur Chapter.
+          </p>
+          <Link href="/events" className="btn btn-primary">
+            Go to Events &amp; Reports &rarr;
+          </Link>
         </div>
       </section>
     </>

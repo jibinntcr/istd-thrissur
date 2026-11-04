@@ -77,16 +77,13 @@ export function Footer() {
                   <Link href="/about">About ISTD &amp; Chapter</Link>
                 </li>
                 <li>
-                  <Link href="/committee">Managing Committee</Link>
+                  <Link href="/committee">Chapter Leadership</Link>
                 </li>
                 <li>
-                  <Link href="/programs">Programs &amp; Initiatives</Link>
+                  <Link href="/events">Events &amp; Chronicles</Link>
                 </li>
                 <li>
-                  <Link href="/events">Chapter Events &amp; Milestones</Link>
-                </li>
-                <li>
-                  <Link href="/gallery">Chapter Photo Gallery</Link>
+                  <Link href="/gallery">Photo Gallery (24 Photos)</Link>
                 </li>
                 <li>
                   <Link href="/membership">Membership Categories</Link>
@@ -97,24 +94,24 @@ export function Footer() {
               </ul>
             </div>
 
-            {/* Col 3: Programs */}
+            {/* Col 3: Events & Chronicles */}
             <div>
-              <h4 className="footer-heading">Chapter Initiatives</h4>
+              <h4 className="footer-heading">Events &amp; Chronicles</h4>
               <ul className="footer-links">
                 <li>
-                  <Link href="/programs#knowledgeForums">Executive Knowledge Forums</Link>
+                  <Link href="/events#pastEventReports">Past Event Reports</Link>
                 </li>
                 <li>
-                  <Link href="/programs#academiaCollaboration">Industry–Academia Tie-Ups</Link>
+                  <Link href="/events#upcomingEvents">Upcoming Events Calendar</Link>
                 </li>
                 <li>
-                  <Link href="/programs#trainerLabs">Facilitator &amp; HRD Skill Labs</Link>
+                  <Link href="/events#inaugurationReport">Diamond Chapter Inauguration Report</Link>
                 </li>
                 <li>
-                  <Link href="/events">Chapter Events &amp; Milestones</Link>
+                  <Link href="/gallery">Official Photo Archives</Link>
                 </li>
                 <li>
-                  <Link href="/membership#categoriesSection">Institutional Membership</Link>
+                  <Link href="/membership#categoriesSection">Join the Chapter</Link>
                 </li>
               </ul>
             </div>
@@ -182,8 +179,8 @@ export function Footer() {
               <p>© 2026 ISTD Thrissur (Trichur) Chapter. All rights reserved.</p>
               <div className="footer-bottom-links">
                 <Link href="/about">About ISTD</Link>
-                <Link href="/committee">Committee</Link>
-                <Link href="/events">Events</Link>
+                <Link href="/committee">Leadership</Link>
+                <Link href="/events">Events &amp; Reports</Link>
                 <Link href="/gallery">Gallery</Link>
                 <Link href="/membership">Membership</Link>
                 <Link href="/contact">Contact</Link>
@@ -232,16 +229,6 @@ export function Footer() {
           <span>Join</span>
         </Link>
         <Link
-          href="/programs"
-          className={`mobile-bottom-item ${isActive('/programs') ? 'active' : ''}`}
-        >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-            <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
-            <path d="M6 12v5c3 3 9 3 12 0v-5" />
-          </svg>
-          <span>Programs</span>
-        </Link>
-        <Link
           href="/gallery"
           className={`mobile-bottom-item ${isActive('/gallery') ? 'active' : ''}`}
         >
@@ -251,6 +238,15 @@ export function Footer() {
             <polyline points="21 15 16 10 5 21" />
           </svg>
           <span>Gallery</span>
+        </Link>
+        <Link
+          href="/contact"
+          className={`mobile-bottom-item ${isActive('/contact') ? 'active' : ''}`}
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+          </svg>
+          <span>Contact</span>
         </Link>
       </nav>
     </>

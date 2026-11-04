@@ -8,11 +8,10 @@ import { assetUrl, OFFICIAL_LINKS } from '@/data/siteData';
 const NAV_ITEMS = [
   { href: '/', label: 'Home', mobileLabel: 'Home' },
   { href: '/about', label: 'About Us', mobileLabel: 'About ISTD & Chapter' },
-  { href: '/committee', label: 'Committee', mobileLabel: 'Managing Committee' },
-  { href: '/programs', label: 'Programs', mobileLabel: 'Programs & Initiatives' },
-  { href: '/events', label: 'Events', mobileLabel: 'Chapter Events & Milestones' },
-  { href: '/gallery', label: 'Gallery', mobileLabel: 'Chapter Photo Gallery' },
-  { href: '/membership', label: 'Membership', mobileLabel: 'Membership & Tiers' },
+  { href: '/committee', label: 'Leadership', mobileLabel: 'Chapter Leadership & Committee' },
+  { href: '/events', label: 'Events & Reports', mobileLabel: 'Upcoming Events & Past Reports' },
+  { href: '/gallery', label: 'Photo Gallery', mobileLabel: 'Chapter Photo Gallery' },
+  { href: '/membership', label: 'Membership', mobileLabel: 'Membership & Application' },
   { href: '/contact', label: 'Contact', mobileLabel: 'Contact Secretariat' },
 ];
 
@@ -30,12 +29,10 @@ export function Navbar() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Close drawer on route change
   useEffect(() => {
     setDrawerOpen(false);
   }, [pathname]);
 
-  // Lock body scroll when drawer open & support Escape key
   useEffect(() => {
     if (drawerOpen) {
       document.body.style.overflow = 'hidden';
