@@ -48,69 +48,61 @@ export default function HomePage() {
 
   return (
     <>
-      {/* Compact Announcement Banner */}
-      <div
-        style={{
-          background: 'var(--brand-navy-soft)',
-          color: '#fff',
-          borderBottom: '1px solid rgba(255,255,255,0.12)',
-          padding: '0.6rem 0',
-          fontSize: '0.84rem',
-        }}
-      >
-        <div
-          className="container"
-          style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            gap: '0.75rem',
-          }}
-        >
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', flexWrap: 'wrap' }}>
-            <span
-              style={{
-                background: 'var(--accent-yellow)',
-                color: '#1e1b04',
-                fontWeight: 800,
-                fontSize: '0.7rem',
-                textTransform: 'uppercase',
-                letterSpacing: '0.06em',
-                padding: '0.18rem 0.55rem',
-                borderRadius: '999px',
-              }}
-            >
-              Chapter Milestone
-            </span>
-            <span>
-              <strong>ISTD Thrissur Chapter</strong> inaugurated on <strong>30 March 2026</strong>{' '}
-              as the Diamond Chapter in ISTD’s 55th Year.
-            </span>
+      {/* Scrolling Upcoming Events Headline Ticker */}
+      <div className="upcoming-ticker-bar" aria-label="Upcoming Events Announcements">
+        <div className="container upcoming-ticker-inner">
+          <div className="upcoming-ticker-label">
+            <span className="pulse-dot-green" aria-hidden="true" />
+            <span>Upcoming Events</span>
           </div>
-          <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-            <Link
-              href="/events/inauguration"
-              style={{
-                color: 'var(--accent-yellow-bright)',
-                fontWeight: 700,
-                textDecoration: 'underline',
-                textUnderlineOffset: '3px',
-              }}
-            >
-              View Report &rarr;
-            </Link>
-            <Link
-              href="/events/ai-agents-in-business"
-              style={{
-                color: '#fff',
-                fontWeight: 600,
-                textDecoration: 'underline',
-                textUnderlineOffset: '3px',
-              }}
-            >
-              8 Aug 2026 Webinar &rarr;
-            </Link>
+          <div className="upcoming-ticker-viewport">
+            <div className="upcoming-ticker-track">
+              <Link href="/events/ai-agents-in-business" className="upcoming-ticker-item">
+                <strong>8 August 2026 (Webinar):</strong> “From AI Assistants to AI Agents: The
+                Next Shift in Business” — Speaker: Shaheen Siddique &rarr;
+              </Link>
+              <span className="upcoming-ticker-sep" aria-hidden="true">
+                •
+              </span>
+              <Link href="/events" className="upcoming-ticker-item">
+                Explore Learning Sessions, Workshops &amp; Seminars organised by the ISTD Thrissur
+                Chapter &rarr;
+              </Link>
+              <span className="upcoming-ticker-sep" aria-hidden="true">
+                •
+              </span>
+              <Link
+                href="/contact?type=event&event=Programme+Collaboration+or+Speaker+Proposal#contactEnquiryForm"
+                className="upcoming-ticker-item"
+              >
+                Interested in speaking or collaborating on an upcoming chapter workshop? Connect
+                with us &rarr;
+              </Link>
+              <span className="upcoming-ticker-sep" aria-hidden="true">
+                •
+              </span>
+              <Link
+                href="/events/ai-agents-in-business"
+                className="upcoming-ticker-item"
+                aria-hidden="true"
+                tabIndex={-1}
+              >
+                <strong>8 August 2026 (Webinar):</strong> “From AI Assistants to AI Agents: The
+                Next Shift in Business” — Speaker: Shaheen Siddique &rarr;
+              </Link>
+              <span className="upcoming-ticker-sep" aria-hidden="true">
+                •
+              </span>
+              <Link
+                href="/events"
+                className="upcoming-ticker-item"
+                aria-hidden="true"
+                tabIndex={-1}
+              >
+                Explore Learning Sessions, Workshops &amp; Seminars organised by the ISTD Thrissur
+                Chapter &rarr;
+              </Link>
+            </div>
           </div>
         </div>
       </div>
@@ -123,7 +115,7 @@ export default function HomePage() {
             <div className="hero-content">
               <div className="hero-eyebrow">
                 <span className="dot" />
-                <span>Affiliated with ISTD New Delhi (Est. April 1970)</span>
+                <span>Indian Society for Training &amp; Development • Thrissur Chapter</span>
               </div>
               <h1
                 className="hero-title"
@@ -155,11 +147,15 @@ export default function HomePage() {
 
               <div className="hero-trust-bar" style={{ paddingTop: '1rem' }}>
                 <div className="hero-trust-item">
-                  <span>ISTD National Established April 1970</span>
+                  <span>Workshops &amp; Seminars</span>
                 </div>
                 <div className="hero-trust-item">
                   <span>•</span>
-                  <span>Thrissur Chapter Inaugurated 30 March 2026</span>
+                  <span>HR &amp; L&amp;D Practitioner Network</span>
+                </div>
+                <div className="hero-trust-item">
+                  <span>•</span>
+                  <span>Industry–Academia Collaboration</span>
                 </div>
               </div>
             </div>

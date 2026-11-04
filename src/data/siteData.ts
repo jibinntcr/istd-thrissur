@@ -106,36 +106,36 @@ export const CHAPTER_CONTACTS = {
 
 export const HERO_SLIDES: HeroSlide[] = [
   {
-    src: '/photos/team-istd.jpeg',
-    badge: '30 March 2026 • Hotel Pearl Regency, Thrissur',
-    title: 'ISTD National and Regional Leaders with Thrissur Chapter Members',
-    desc: 'Inauguration of the ISTD Thrissur Chapter as the Diamond Chapter in ISTD’s 55th Year',
+    src: '/photos/hero-slide-1.jpg',
+    badge: 'Keynote Address • Thrissur Chapter',
+    title: 'Prof. (Dr.) Zakkariya K A Addressing the Gathering',
+    desc: 'Regional Vice President (South), ISTD speaking at the Thrissur Chapter',
     caption:
-      'Shri. Atul Shah (National President, ISTD), Dr. Yogesh Kumar Upadhyay (Past National President, ISTD), Shri. Nabaghana Pany (National Treasurer, ISTD), Prof. (Dr.) Zakkariya K A (Regional Vice President, South), and Shri. Tony Chacko (Chairman, ISTD Thrissur Chapter) with chapter members.',
+      'Prof. (Dr.) Zakkariya K A (Regional Vice President – South, ISTD) addressing the gathering at Hotel Pearl Regency, Thrissur.',
   },
   {
-    src: '/photos/istd-22.jpeg',
-    badge: 'Inaugural Ceremony • 30 March 2026',
-    title: 'Lighting of the Ceremonial Lamp at the Chapter Inauguration',
-    desc: 'Chairman Shri. Tony Chacko and Regional Vice President Prof. (Dr.) Zakkariya K A with National Office Bearers',
+    src: '/photos/hero-slide-2.jpg',
+    badge: 'Chairman’s Address • Thrissur Chapter',
+    title: 'Welcome Address by Chapter Chairman Shri. Tony Chacko',
+    desc: 'Outlining the vision and programmes of the ISTD Thrissur Chapter',
     caption:
-      'Chairman Shri. Tony Chacko and Regional Vice President (South) Prof. (Dr.) Zakkariya K A lighting the ceremonial lamp alongside National President Shri. Atul Shah, National Treasurer Shri. Nabaghana Pany, and Past National President Dr. Yogesh Kumar Upadhyay.',
+      'Shri. Tony Chacko, Chairman of the ISTD Thrissur Chapter, addressing members and delegates at Hotel Pearl Regency, Thrissur.',
   },
   {
-    src: '/photos/istd-national-president.jpeg',
-    badge: 'Charter Presentation • 30 March 2026',
-    title: 'Presentation of the Diamond Chapter Charter',
-    desc: 'National President Shri. Atul Shah presenting the chapter charter to Regional and Chapter Leadership',
+    src: '/photos/hero-slide-3.jpg',
+    badge: 'Chapter Leadership & Dignitaries',
+    title: 'ISTD National Leaders & Thrissur Chapter Managing Committee',
+    desc: 'National and Regional ISTD leaders alongside the Thrissur Chapter Office Bearers and Committee',
     caption:
-      'ISTD National President Shri. Atul Shah presenting the Diamond Chapter charter to Regional Vice President (South) Prof. (Dr.) Zakkariya K A in the presence of National Treasurer Shri. Nabaghana Pany.',
+      'ISTD National President Shri. Atul Shah, Past National President Dr. Yogesh Kumar Upadhyay, National Treasurer Shri. Nabaghana Pany, Regional VP (South) Prof. (Dr.) Zakkariya K A, Chairman Shri. Tony Chacko, Secretary Ms. Sneha Rose George, Treasurer Mr. Jibin N, and committee members.',
   },
   {
-    src: '/photos/istd-calicut.jpeg',
-    badge: 'Inaugural Session • Hotel Pearl Regency',
-    title: 'Dignitaries on the Dais During the Chapter Inauguration',
-    desc: 'Dr. Yogesh Kumar Upadhyay, Shri. Nabaghana Pany, Shri. Atul Shah, Prof. (Dr.) Zakkariya K A, and Shri. Tony Chacko',
+    src: '/photos/hero-slide-4.jpg',
+    badge: 'Oath of Office • Thrissur Chapter',
+    title: 'Installation & Oath of Office of Chapter Members',
+    desc: 'Office bearers and members taking the oath of commitment to Training & Development',
     caption:
-      'Dignitaries seated on the dais at Hotel Pearl Regency, Thrissur during the inauguration of the ISTD Thrissur Chapter on 30 March 2026.',
+      'Chapter office bearers and managing committee members taking the formal oath of office during the installation ceremony in Thrissur.',
   },
 ];
 
