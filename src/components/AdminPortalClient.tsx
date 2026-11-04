@@ -18,33 +18,45 @@ import {
 } from '@/lib/clientBackendCache';
 import { CaptchaChallenge } from './CaptchaChallenge';
 
-type AdminTab = 'registrations' | 'events' | 'photos' | 'system';
+type AdminModule =
+  | 'overview'
+  | 'upcoming'
+  | 'reports'
+  | 'registrations'
+  | 'photos'
+  | 'system';
 
 export function AdminPortalClient() {
   const [session, setSession] = useState<AdminSession | null>(null);
   const [authChecked, setAuthChecked] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   // Login Form State
   const [loginEmail, setLoginEmail] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [loginCaptchaValid, setLoginCaptchaValid] = useState(false);
   const [loginCaptchaReset, setLoginCaptchaReset] = useState(0);
   const [loginError, setLoginError] = useState('');
   const [loginLoading, setLoginLoading] = useState(false);
 
-  // Portal Data State
-  const [activeTab, setActiveTab] = useState<AdminTab>('registrations');
+  // Portal Navigation & Data State
+  const [activeModule, setActiveModule] = useState<AdminModule>('overview');
   const [events, setEvents] = useState<ChapterEvent[]>([]);
   const [photos, setPhotos] = useState<GalleryPhoto[]>([]);
   const [registrations, setRegistrations] = useState<EventRegistration[]>([]);
   const [cacheStats, setCacheStats] = useState<CacheStats | null>(null);
   const [statusBanner, setStatusBanner] = useState<string>('');
 
-  // Registration Filters
+  // Registration Filters & Selected Participant Modal
   const [regEventFilter, setRegEventFilter] = useState<string>('all');
+  const [regStatusFilter, setRegStatusFilter] = useState<string>('all');
   const [regSearch, setRegSearch] = useState<string>('');
+  const [selectedRegistration, setSelectedRegistration] =
+    useState<EventRegistration | null>(null);
 
-  // Event Form State
+  // Event / Report Editor Panel State
+  const [showEventEditor, setShowEventEditor] = useState(false);
   const [editingEventSlug, setEditingEventSlug] = useState<string | null>(null);
   const [evTitle, setEvTitle] = useState('');
   const [evSlug, setEvSlug] = useState('');
@@ -58,12 +70,15 @@ export function AdminPortalClient() {
   const [evSpeakerDesig, setEvSpeakerDesig] = useState('');
   const [evShortDesc, setEvShortDesc] = useState('');
   const [evFullDesc, setEvFullDesc] = useState('');
+  const [evHighlights, setEvHighlights] = useState('');
   const [evImage, setEvImage] = useState('/images/event-aiot-boopathy.jpg');
   const [evImageCaption, setEvImageCaption] = useState('');
   const [evIsPoster, setEvIsPoster] = useState(true);
   const [evRegOpen, setEvRegOpen] = useState(true);
 
-  // Photo Upload State
+  // Photo Upload & Filter State
+  const [showPhotoUploader, setShowPhotoUploader] = useState(false);
+  const [photoCategoryFilter, setPhotoCategoryFilter] = useState<string>('all');
   const [photoTitle, setPhotoTitle] = useState('');
   const [photoCaption, setPhotoCaption] = useState('');
   const [photoCategory, setPhotoCategory] =
@@ -96,6 +111,13 @@ export function AdminPortalClient() {
     }, 5000);
   };
 
+  const switchModule = (mod: AdminModule) => {
+    setActiveModule(mod);
+    setSidebarOpen(false);
+    setShowEventEditor(false);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   const handleLoginSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoginError('');
@@ -126,7 +148,7 @@ export function AdminPortalClient() {
           }
         }
       } catch {
-        // Fallback client check when running on static hosting
+        // Static hosting fallback
       }
 
       if (!newSession) {
@@ -190,6 +212,59 @@ export function AdminPortalClient() {
     reader.readAsDataURL(file);
   };
 
+  const openNewEventCreator = (targetStatus: 'upcoming' | 'past') => {
+    resetEventForm(targetStatus);
+    setActiveModule(targetStatus === 'upcoming' ? 'upcoming' : 'reports');
+    setShowEventEditor(true);
+    setSidebarOpen(false);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const resetEventForm = (defaultStatus: 'upcoming' | 'past' = 'upcoming') => {
+    setEditingEventSlug(null);
+    setEvTitle('');
+    setEvSlug('');
+    setEvSubtitle('');
+    setEvType('Webinar');
+    setEvStatus(defaultStatus);
+    setEvDate('');
+    setEvTime('7:00 PM – 8:00 PM IST');
+    setEvVenue('Google Meet (Online Session)');
+    setEvSpeaker('');
+    setEvSpeakerDesig('');
+    setEvShortDesc('');
+    setEvFullDesc('');
+    setEvHighlights('');
+    setEvImage('/images/event-aiot-boopathy.jpg');
+    setEvImageCaption('');
+    setEvIsPoster(true);
+    setEvRegOpen(defaultStatus === 'upcoming');
+  };
+
+  const startEditEvent = (ev: ChapterEvent) => {
+    setEditingEventSlug(ev.slug);
+    setEvTitle(ev.title);
+    setEvSlug(ev.slug);
+    setEvSubtitle(ev.subtitleQuestion || '');
+    setEvType(ev.programmeType);
+    setEvStatus(ev.status);
+    setEvDate(ev.date);
+    setEvTime(ev.timeIST);
+    setEvVenue(ev.venue);
+    setEvSpeaker(ev.speaker || '');
+    setEvSpeakerDesig(ev.speakerDesignation || '');
+    setEvShortDesc(ev.shortDescription);
+    setEvFullDesc((ev.fullDescription || []).join('\n\n'));
+    setEvHighlights((ev.highlights || []).join('\n'));
+    setEvImage(ev.image);
+    setEvImageCaption(ev.imageCaption);
+    setEvIsPoster(Boolean(ev.isPosterImage));
+    setEvRegOpen(Boolean(ev.registrationAvailable));
+    setActiveModule(ev.status === 'upcoming' ? 'upcoming' : 'reports');
+    setShowEventEditor(true);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   const handleSaveEvent = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!evTitle.trim()) return;
@@ -203,6 +278,11 @@ export function AdminPortalClient() {
     const paragraphs = evFullDesc
       .split('\n')
       .map((p) => p.trim())
+      .filter(Boolean);
+
+    const highlightItems = evHighlights
+      .split('\n')
+      .map((h) => h.trim())
       .filter(Boolean);
 
     const existing = events.find((item) => item.slug === computedSlug);
@@ -221,6 +301,7 @@ export function AdminPortalClient() {
       speakerDesignation: evSpeakerDesig.trim() || undefined,
       shortDescription: evShortDesc.trim(),
       fullDescription: paragraphs.length ? paragraphs : [evShortDesc.trim()],
+      highlights: highlightItems.length ? highlightItems : existing?.highlights,
       image: evImage.trim() || '/images/event-aiot-boopathy.jpg',
       imageCaption: evImageCaption.trim() || `${evTitle.trim()} (${evDate.trim()})`,
       isPosterImage: evIsPoster,
@@ -238,53 +319,13 @@ export function AdminPortalClient() {
 
     await saveEventToBackend(newEvent);
     await loadPortalData(true);
-    resetEventForm();
+    setShowEventEditor(false);
+    resetEventForm(evStatus);
     showToast(
       `✓ Saved "${newEvent.title}" (${
         newEvent.status === 'upcoming' ? 'Upcoming Event' : 'Past Event Report'
-      }) and invalidated backend cache.`
+      }) and refreshed cache.`
     );
-  };
-
-  const resetEventForm = () => {
-    setEditingEventSlug(null);
-    setEvTitle('');
-    setEvSlug('');
-    setEvSubtitle('');
-    setEvType('Webinar');
-    setEvStatus('upcoming');
-    setEvDate('');
-    setEvTime('7:00 PM – 8:00 PM IST');
-    setEvVenue('Google Meet (Online Session)');
-    setEvSpeaker('');
-    setEvSpeakerDesig('');
-    setEvShortDesc('');
-    setEvFullDesc('');
-    setEvImage('/images/event-aiot-boopathy.jpg');
-    setEvImageCaption('');
-    setEvIsPoster(true);
-    setEvRegOpen(true);
-  };
-
-  const startEditEvent = (ev: ChapterEvent) => {
-    setEditingEventSlug(ev.slug);
-    setEvTitle(ev.title);
-    setEvSlug(ev.slug);
-    setEvSubtitle(ev.subtitleQuestion || '');
-    setEvType(ev.programmeType);
-    setEvStatus(ev.status);
-    setEvDate(ev.date);
-    setEvTime(ev.timeIST);
-    setEvVenue(ev.venue);
-    setEvSpeaker(ev.speaker || '');
-    setEvSpeakerDesig(ev.speakerDesignation || '');
-    setEvShortDesc(ev.shortDescription);
-    setEvFullDesc((ev.fullDescription || []).join('\n\n'));
-    setEvImage(ev.image);
-    setEvImageCaption(ev.imageCaption);
-    setEvIsPoster(Boolean(ev.isPosterImage));
-    setEvRegOpen(Boolean(ev.registrationAvailable));
-    window.scrollTo({ top: 180, behavior: 'smooth' });
   };
 
   const handleToggleEventStatus = async (ev: ChapterEvent) => {
@@ -297,7 +338,7 @@ export function AdminPortalClient() {
     await loadPortalData(true);
     showToast(
       `✓ Moved "${ev.title}" to ${
-        updated.status === 'upcoming' ? 'Upcoming Events' : 'Completed Past Event Reports'
+        updated.status === 'upcoming' ? 'Upcoming Events' : 'Past Event Reports'
       }.`
     );
   };
@@ -305,7 +346,7 @@ export function AdminPortalClient() {
   const handleDeleteEvent = async (slug: string, title: string) => {
     await removeEventFromBackend(slug);
     await loadPortalData(true);
-    showToast(`✓ Removed event "${title}" and refreshed cache.`);
+    showToast(`✓ Deleted "${title}" and invalidated cache.`);
   };
 
   const handleAddPhoto = async (e: React.FormEvent) => {
@@ -314,7 +355,7 @@ export function AdminPortalClient() {
 
     const categoryLabels: Record<GalleryPhoto['category'], string> = {
       ceremony: 'Inaugural Ceremony',
-      addresses: 'Addresses & Dais',
+      addresses: 'Addresses & Sessions',
       oath: 'Oath of Office',
       felicitations: 'Felicitations',
       portraits: 'Group Photographs',
@@ -337,8 +378,9 @@ export function AdminPortalClient() {
     setPhotoTitle('');
     setPhotoCaption('');
     setPhotoSrc('');
+    setShowPhotoUploader(false);
     showToast(
-      `✓ Added photograph "${newPhoto.title}" ${
+      `✓ Uploaded "${newPhoto.title}" ${
         photoEventSlug ? `to event "${photoEventSlug}" and ` : ''
       }to the Chapter Gallery.`
     );
@@ -438,8 +480,12 @@ export function AdminPortalClient() {
     URL.revokeObjectURL(url);
   };
 
+  const upcomingEvents = events.filter((e) => e.status === 'upcoming');
+  const pastEvents = events.filter((e) => e.status === 'past');
+
   const filteredRegistrations = registrations.filter((r) => {
     if (regEventFilter !== 'all' && r.eventSlug !== regEventFilter) return false;
+    if (regStatusFilter !== 'all' && r.status !== regStatusFilter) return false;
     if (!regSearch.trim()) return true;
     const q = regSearch.toLowerCase();
     return `${r.registrationCode} ${r.fullName} ${r.email} ${r.phone} ${r.whatsapp} ${r.district} ${r.organization}`
@@ -447,59 +493,191 @@ export function AdminPortalClient() {
       .includes(q);
   });
 
+  const filteredPhotos = photos.filter((p) => {
+    if (photoCategoryFilter === 'all') return true;
+    return p.category === photoCategoryFilter;
+  });
+
   if (!authChecked) {
     return null;
   }
 
   // ============================================================================
-  // VIEW 1: ADMIN LOGIN WITH CAPTCHA CHALLENGE
+  // VIEW 1: STANDALONE SPLIT-SCREEN ADMIN CONSOLE LOGIN (NO PUBLIC MENUS)
   // ============================================================================
   if (!session) {
     return (
-      <section className="section-padding bg-pale-blue">
-        <div className="container" style={{ maxWidth: '540px' }}>
-          <div
-            style={{
-              background: '#FFFFFF',
-              borderRadius: 'var(--radius-xl)',
-              border: '1.5px solid var(--color-border)',
-              borderTop: '5px solid var(--brand-navy)',
-              padding: '2.25rem',
-              boxShadow: 'var(--shadow-lg)',
-            }}
-          >
-            <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
-              <div
+      <div className="admin-auth-shell">
+        <div className="admin-auth-grid">
+          {/* Left Brand & System Info Column */}
+          <div className="admin-auth-brand">
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', marginBottom: '2rem' }}>
+                <div
+                  style={{
+                    width: '56px',
+                    height: '56px',
+                    borderRadius: '50%',
+                    background: '#FFFFFF',
+                    padding: '4px',
+                    boxShadow: '0 6px 18px rgba(0,0,0,0.28)',
+                    flexShrink: 0,
+                  }}
+                >
+                  <img
+                    src={assetUrl('/images/logo-circle.png')}
+                    alt="ISTD Seal"
+                    style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                  />
+                </div>
+                <div>
+                  <span
+                    style={{
+                      display: 'inline-block',
+                      fontSize: '0.68rem',
+                      fontWeight: 800,
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.08em',
+                      padding: '0.2rem 0.6rem',
+                      borderRadius: '999px',
+                      background: 'rgba(250, 204, 21, 0.18)',
+                      color: '#FACC15',
+                      marginBottom: '0.25rem',
+                    }}
+                  >
+                    Official Backend Console
+                  </span>
+                  <div style={{ fontSize: '1.15rem', fontWeight: 800, color: '#FFFFFF', lineHeight: 1.2 }}>
+                    ISTD Thrissur Chapter
+                  </div>
+                </div>
+              </div>
+
+              <h1
                 style={{
-                  width: '64px',
-                  height: '64px',
-                  margin: '0 auto 0.85rem',
-                  borderRadius: '50%',
-                  border: '2px solid var(--color-border)',
-                  padding: '4px',
-                  background: '#FFFFFF',
+                  fontSize: '1.75rem',
+                  fontWeight: 800,
+                  color: '#FFFFFF',
+                  lineHeight: 1.25,
+                  marginBottom: '0.85rem',
                 }}
               >
-                <img
-                  src={assetUrl('/images/logo-circle.png')}
-                  alt="ISTD Seal"
-                  style={{ width: '100%', height: '100%', objectFit: 'contain' }}
-                />
+                Chapter Content &amp; Registration Portal
+              </h1>
+              <p style={{ fontSize: '0.9rem', color: '#CBD5E1', lineHeight: 1.6, marginBottom: '1.75rem' }}>
+                Dedicated administration environment for managing chapter programmes, participant
+                registrations, event reports, and official photographs.
+              </p>
+
+              <div style={{ display: 'grid', gap: '0.85rem' }}>
+                {[
+                  {
+                    icon: '📅',
+                    title: 'Upcoming Events & Registration',
+                    desc: 'Publish webinars/workshops and enable participant registration.',
+                  },
+                  {
+                    icon: '📑',
+                    title: 'Completed Event Reports',
+                    desc: 'Publish post-event proceedings, speaker notes, and key highlights.',
+                  },
+                  {
+                    icon: '👥',
+                    title: 'Participant Directory & CSV Export',
+                    desc: 'Track registrations, WhatsApp contacts, districts, and certificates.',
+                  },
+                  {
+                    icon: '🖼️',
+                    title: 'Event Photographs & MongoDB Cache',
+                    desc: 'Upload event photos and manage MongoDB collections with TTL caching.',
+                  },
+                ].map((item) => (
+                  <div
+                    key={item.title}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'flex-start',
+                      gap: '0.75rem',
+                      padding: '0.75rem 0.9rem',
+                      borderRadius: '12px',
+                      background: 'rgba(255, 255, 255, 0.06)',
+                      border: '1px solid rgba(255, 255, 255, 0.09)',
+                    }}
+                  >
+                    <span style={{ fontSize: '1.15rem', lineHeight: 1.2 }}>{item.icon}</span>
+                    <div>
+                      <div style={{ fontSize: '0.84rem', fontWeight: 700, color: '#FFFFFF' }}>
+                        {item.title}
+                      </div>
+                      <div style={{ fontSize: '0.76rem', color: '#94A3B8', marginTop: '0.1rem' }}>
+                        {item.desc}
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
-              <span className="section-tag tag-blue">Chapter Administration</span>
-              <h1
+            </div>
+
+            <div
+              style={{
+                marginTop: '2rem',
+                paddingTop: '1.25rem',
+                borderTop: '1px solid rgba(255, 255, 255, 0.12)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                fontSize: '0.8rem',
+                color: '#94A3B8',
+              }}
+            >
+              <Link
+                href="/"
+                style={{
+                  color: '#E2E8F0',
+                  textDecoration: 'none',
+                  fontWeight: 600,
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.35rem',
+                }}
+              >
+                ← Return to Public Website
+              </Link>
+              <span>v2.0 • MongoDB + TTL Cache</span>
+            </div>
+          </div>
+
+          {/* Right Sign-In Form Column */}
+          <div className="admin-auth-form-pane">
+            <div style={{ marginBottom: '1.5rem' }}>
+              <span
+                style={{
+                  display: 'inline-block',
+                  fontSize: '0.72rem',
+                  fontWeight: 800,
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.07em',
+                  color: '#1D4ED8',
+                  background: '#EFF6FF',
+                  padding: '0.25rem 0.65rem',
+                  borderRadius: '999px',
+                  marginBottom: '0.5rem',
+                }}
+              >
+                Secure Administrator Access
+              </span>
+              <h2
                 style={{
                   fontSize: '1.6rem',
                   fontWeight: 800,
-                  color: 'var(--color-ink)',
-                  marginBottom: '0.35rem',
+                  color: '#0F172A',
+                  marginBottom: '0.25rem',
                 }}
               >
-                ISTD Thrissur Backend Portal
-              </h1>
-              <p style={{ fontSize: '0.9rem', color: 'var(--color-muted)', marginBottom: 0 }}>
-                Sign in to manage Upcoming Events, Completed Event Reports, Event Photographs,
-                Participant Registrations, and MongoDB Cache.
+                Sign In to Admin Console
+              </h2>
+              <p style={{ fontSize: '0.88rem', color: '#64748B', margin: 0 }}>
+                Enter your chapter administrator credentials and complete the security CAPTCHA below.
               </p>
             </div>
 
@@ -510,8 +688,8 @@ export function AdminPortalClient() {
                   border: '1px solid #FECACA',
                   color: '#B91C1C',
                   padding: '0.85rem 1rem',
-                  borderRadius: 'var(--radius-md)',
-                  fontSize: '0.86rem',
+                  borderRadius: '10px',
+                  fontSize: '0.84rem',
                   fontWeight: 600,
                   marginBottom: '1.15rem',
                 }}
@@ -521,7 +699,7 @@ export function AdminPortalClient() {
             )}
 
             <form onSubmit={handleLoginSubmit}>
-              <div className="form-group">
+              <div className="form-group" style={{ marginBottom: '1rem' }}>
                 <label className="form-label">Administrator Email / ID *</label>
                 <input
                   type="text"
@@ -533,10 +711,36 @@ export function AdminPortalClient() {
                 />
               </div>
 
-              <div className="form-group">
-                <label className="form-label">Password *</label>
+              <div className="form-group" style={{ marginBottom: '1rem' }}>
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    marginBottom: '0.35rem',
+                  }}
+                >
+                  <label className="form-label" style={{ marginBottom: 0 }}>
+                    Password *
+                  </label>
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword((prev) => !prev)}
+                    style={{
+                      background: 'none',
+                      border: 'none',
+                      color: '#1D4ED8',
+                      fontSize: '0.76rem',
+                      fontWeight: 700,
+                      cursor: 'pointer',
+                      padding: 0,
+                    }}
+                  >
+                    {showPassword ? 'Hide Password' : 'Show Password'}
+                  </button>
+                </div>
                 <input
-                  type="password"
+                  type={showPassword ? 'text' : 'password'}
                   className="form-control"
                   placeholder="Enter administrator password"
                   value={loginPassword}
@@ -545,524 +749,531 @@ export function AdminPortalClient() {
                 />
               </div>
 
-              {/* Security CAPTCHA Verification */}
               <CaptchaChallenge
                 onVerifyChange={setLoginCaptchaValid}
                 resetSignal={loginCaptchaReset}
-                label="Admin Login CAPTCHA Verification *"
+                label="Security CAPTCHA Verification *"
               />
 
               <button
                 type="submit"
                 disabled={loginLoading}
                 className="btn btn-primary"
-                style={{ width: '100%', marginTop: '1.25rem', justifyContent: 'center' }}
+                style={{
+                  width: '100%',
+                  marginTop: '1.25rem',
+                  justifyContent: 'center',
+                  padding: '0.85rem 1.25rem',
+                  fontSize: '0.95rem',
+                }}
               >
-                {loginLoading ? 'Verifying Credentials...' : 'Sign In to Backend Portal →'}
+                {loginLoading ? 'Signing In...' : 'Sign In to Backend Console →'}
               </button>
             </form>
 
-            {/* Quick Fill Helper for Chapter Office Bearers */}
+            {/* Quick Fill Demo Helper */}
             <div
               style={{
                 marginTop: '1.35rem',
-                paddingTop: '1.15rem',
-                borderTop: '1px solid var(--color-border)',
+                padding: '0.9rem 1rem',
+                background: '#F8FAFC',
+                border: '1px solid #E2E8F0',
+                borderRadius: '10px',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
                 gap: '0.75rem',
                 flexWrap: 'wrap',
-                fontSize: '0.8rem',
-                color: 'var(--color-muted)',
               }}
             >
-              <span>
-                Default Admin: <strong>admin@istdthrissur.org</strong> /{' '}
-                <code>ISTD@Thrissur2026</code>
-              </span>
+              <div style={{ fontSize: '0.78rem', color: '#475569', lineHeight: 1.45 }}>
+                <div>
+                  <strong>Admin ID:</strong> <code>admin@istdthrissur.org</code>
+                </div>
+                <div>
+                  <strong>Password:</strong> <code>ISTD@Thrissur2026</code>
+                </div>
+              </div>
               <button
                 type="button"
                 onClick={() => {
-                  setLoginEmail('jibintcr@gmail.com');
+                  setLoginEmail('admin@istdthrissur.org');
                   setLoginPassword('ISTD@Thrissur2026');
                 }}
                 className="btn btn-outline-navy btn-sm"
-                style={{ fontSize: '0.75rem', padding: '0.3rem 0.65rem' }}
+                style={{ fontSize: '0.76rem', padding: '0.4rem 0.75rem' }}
               >
-                Auto-Fill Credentials
+                ⚡ Fill Credentials
               </button>
             </div>
           </div>
         </div>
-      </section>
+      </div>
     );
   }
 
   // ============================================================================
-  // VIEW 2: AUTHENTICATED ADMIN BACKEND DASHBOARD
+  // VIEW 2: STANDALONE ENTERPRISE ADMIN CONSOLE (SIDEBAR + TOPBAR + WORKSPACE)
   // ============================================================================
-  const upcomingCount = events.filter((e) => e.status === 'upcoming').length;
-  const pastCount = events.filter((e) => e.status === 'past').length;
+  const moduleMeta: Record<AdminModule, { title: string; subtitle: string }> = {
+    overview: {
+      title: 'Dashboard Overview',
+      subtitle: 'Real-time summary of registrations, upcoming programmes, event reports, and system cache.',
+    },
+    upcoming: {
+      title: 'Upcoming Events Manager',
+      subtitle: 'Schedule upcoming webinars/sessions and manage live participant registration.',
+    },
+    reports: {
+      title: 'Past Event Reports Manager',
+      subtitle: 'Publish and edit completed event reports, speaker notes, and session proceedings.',
+    },
+    registrations: {
+      title: 'Participant Registrations Directory',
+      subtitle: 'Search, filter, update attendance/certificate status, and export participant data to CSV/Excel.',
+    },
+    photos: {
+      title: 'Event Photographs & Gallery Manager',
+      subtitle: 'Upload event photographs, link them to specific event pages, and curate the chapter gallery.',
+    },
+    system: {
+      title: 'MongoDB Database & Cache Controls',
+      subtitle: 'Inspect MongoDB collections, monitor server/client TTL cache hits, and download database backups.',
+    },
+  };
 
   return (
-    <section className="section-padding-sm bg-pale-blue" style={{ minHeight: '82vh' }}>
-      <div className="container">
-        {/* Top Admin Status Bar */}
-        <div
-          style={{
-            background: 'var(--brand-navy)',
-            color: '#FFFFFF',
-            borderRadius: 'var(--radius-lg)',
-            padding: '1.35rem 1.75rem',
-            marginBottom: '1.5rem',
-            display: 'flex',
-            flexWrap: 'wrap',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            gap: '1rem',
-          }}
-        >
-          <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', flexWrap: 'wrap' }}>
-              <span
-                style={{
-                  background: '#10B981',
-                  color: '#FFFFFF',
-                  fontSize: '0.7rem',
-                  fontWeight: 800,
-                  textTransform: 'uppercase',
-                  padding: '0.2rem 0.6rem',
-                  borderRadius: '999px',
-                }}
-              >
-                ● Backend Online
-              </span>
-              <span
-                style={{
-                  background: 'rgba(255,255,255,0.14)',
-                  color: '#FACC15',
-                  fontSize: '0.73rem',
-                  fontWeight: 700,
-                  padding: '0.2rem 0.65rem',
-                  borderRadius: '999px',
-                }}
-              >
-                ⚡ Cache TTL: {cacheStats?.ttlSeconds || 60}s (Hits: {cacheStats?.hits || 0})
-              </span>
-              <span style={{ fontSize: '0.8rem', color: '#CBD5E1' }}>
-                Signed in as <strong>{session.name}</strong>
-              </span>
+    <div className="admin-console-shell">
+      {/* Mobile Sidebar Backdrop */}
+      <div
+        className={`admin-sidebar-backdrop ${sidebarOpen ? 'is-open' : ''}`}
+        onClick={() => setSidebarOpen(false)}
+      />
+
+      {/* =====================================================================
+          LEFT NAVIGATION SIDEBAR (BACKEND-ONLY MENU)
+         ===================================================================== */}
+      <aside className={`admin-sidebar ${sidebarOpen ? 'is-open' : ''}`}>
+        <div>
+          {/* Brand Header */}
+          <div className="admin-sidebar-brand">
+            <div
+              style={{
+                width: '42px',
+                height: '42px',
+                borderRadius: '50%',
+                background: '#FFFFFF',
+                padding: '3px',
+                flexShrink: 0,
+              }}
+            >
+              <img
+                src={assetUrl('/images/logo-circle.png')}
+                alt="ISTD Emblem"
+                style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+              />
             </div>
-            <h1 style={{ fontSize: '1.45rem', fontWeight: 800, color: '#FFFFFF', margin: '0.35rem 0 0' }}>
-              ISTD Thrissur Chapter — Content &amp; Registration Backend
-            </h1>
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                <span style={{ fontWeight: 800, fontSize: '0.98rem', color: '#FFFFFF' }}>
+                  ISTD Thrissur
+                </span>
+                <span
+                  style={{
+                    fontSize: '0.6rem',
+                    fontWeight: 800,
+                    textTransform: 'uppercase',
+                    padding: '0.1rem 0.42rem',
+                    borderRadius: '999px',
+                    background: '#FACC15',
+                    color: '#071524',
+                  }}
+                >
+                  ADMIN
+                </span>
+              </div>
+              <div style={{ fontSize: '0.72rem', color: '#94A3B8' }}>
+                Backend Management Console
+              </div>
+            </div>
           </div>
 
-          <div style={{ display: 'flex', gap: '0.65rem', flexWrap: 'wrap' }}>
+          {/* Core Section */}
+          <div className="admin-sidebar-section-label">Core</div>
+          <button
+            type="button"
+            onClick={() => switchModule('overview')}
+            className={`admin-nav-btn ${activeModule === 'overview' ? 'active' : ''}`}
+          >
+            <span>📊 Dashboard Overview</span>
+          </button>
+
+          {/* Events & Programmes Section */}
+          <div className="admin-sidebar-section-label">Programmes &amp; Reports</div>
+          <button
+            type="button"
+            onClick={() => switchModule('upcoming')}
+            className={`admin-nav-btn ${activeModule === 'upcoming' ? 'active' : ''}`}
+          >
+            <span>📅 Upcoming Events</span>
+            <span className="admin-nav-badge">{upcomingEvents.length}</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => switchModule('reports')}
+            className={`admin-nav-btn ${activeModule === 'reports' ? 'active' : ''}`}
+          >
+            <span>📑 Past Event Reports</span>
+            <span className="admin-nav-badge">{pastEvents.length}</span>
+          </button>
+
+          {/* Participants & Media Section */}
+          <div className="admin-sidebar-section-label">Participants &amp; Media</div>
+          <button
+            type="button"
+            onClick={() => switchModule('registrations')}
+            className={`admin-nav-btn ${activeModule === 'registrations' ? 'active' : ''}`}
+          >
+            <span>👥 Registrations</span>
+            <span className="admin-nav-badge">{registrations.length}</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => switchModule('photos')}
+            className={`admin-nav-btn ${activeModule === 'photos' ? 'active' : ''}`}
+          >
+            <span>🖼️ Event Photos &amp; Gallery</span>
+            <span className="admin-nav-badge">{photos.length}</span>
+          </button>
+
+          {/* System & Database Section */}
+          <div className="admin-sidebar-section-label">Infrastructure</div>
+          <button
+            type="button"
+            onClick={() => switchModule('system')}
+            className={`admin-nav-btn ${activeModule === 'system' ? 'active' : ''}`}
+          >
+            <span>🗄️ MongoDB &amp; Cache</span>
+            <span
+              className="admin-nav-badge"
+              style={{ background: 'rgba(16, 185, 129, 0.2)', color: '#34D399' }}
+            >
+              ONLINE
+            </span>
+          </button>
+        </div>
+
+        {/* Sidebar Footer: Admin User Info & Quick Actions */}
+        <div
+          style={{
+            padding: '1rem',
+            borderTop: '1px solid rgba(255, 255, 255, 0.09)',
+            background: 'rgba(0, 0, 0, 0.2)',
+          }}
+        >
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.65rem',
+              marginBottom: '0.85rem',
+            }}
+          >
+            <div
+              style={{
+                width: '36px',
+                height: '36px',
+                borderRadius: '50%',
+                background: '#1D4ED8',
+                color: '#FFFFFF',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontWeight: 800,
+                fontSize: '0.85rem',
+                flexShrink: 0,
+              }}
+            >
+              {session.name.charAt(0).toUpperCase()}
+            </div>
+            <div style={{ minWidth: 0 }}>
+              <div
+                style={{
+                  fontSize: '0.82rem',
+                  fontWeight: 700,
+                  color: '#FFFFFF',
+                  whiteSpace: 'nowrap',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                }}
+              >
+                {session.name}
+              </div>
+              <div
+                style={{
+                  fontSize: '0.72rem',
+                  color: '#94A3B8',
+                  whiteSpace: 'nowrap',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                }}
+              >
+                {session.email}
+              </div>
+            </div>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem' }}>
+            <Link
+              href="/"
+              style={{
+                padding: '0.48rem 0.6rem',
+                borderRadius: '8px',
+                background: 'rgba(255, 255, 255, 0.08)',
+                color: '#E2E8F0',
+                fontSize: '0.75rem',
+                fontWeight: 600,
+                textDecoration: 'none',
+                textAlign: 'center',
+              }}
+            >
+              🌐 Live Site ↗
+            </Link>
+            <button
+              type="button"
+              onClick={handleLogout}
+              style={{
+                padding: '0.48rem 0.6rem',
+                borderRadius: '8px',
+                background: 'rgba(239, 68, 68, 0.18)',
+                border: '1px solid rgba(239, 68, 68, 0.35)',
+                color: '#FCA5A5',
+                fontSize: '0.75rem',
+                fontWeight: 700,
+                cursor: 'pointer',
+              }}
+            >
+              Sign Out
+            </button>
+          </div>
+        </div>
+      </aside>
+
+      {/* =====================================================================
+          MAIN WORKSPACE AREA
+         ===================================================================== */}
+      <div className="admin-workspace">
+        {/* Sticky Top Application Header */}
+        <header className="admin-topbar">
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
+            <button
+              type="button"
+              className="admin-mobile-toggle"
+              onClick={() => setSidebarOpen((prev) => !prev)}
+              aria-label="Toggle Admin Navigation"
+            >
+              ☰
+            </button>
+            <div>
+              <div
+                style={{
+                  fontSize: '0.72rem',
+                  fontWeight: 700,
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.06em',
+                  color: '#64748B',
+                }}
+              >
+                Admin Console / {moduleMeta[activeModule].title}
+              </div>
+              <h1
+                style={{
+                  fontSize: '1.25rem',
+                  fontWeight: 800,
+                  color: '#0F172A',
+                  margin: 0,
+                }}
+              >
+                {moduleMeta[activeModule].title}
+              </h1>
+            </div>
+          </div>
+
+          {/* Topbar Quick Actions */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.55rem', flexWrap: 'wrap' }}>
+            <button
+              type="button"
+              onClick={() => openNewEventCreator('upcoming')}
+              className="btn btn-primary btn-sm"
+              style={{ fontSize: '0.78rem', padding: '0.45rem 0.85rem' }}
+            >
+              + New Upcoming Event
+            </button>
+            <button
+              type="button"
+              onClick={() => openNewEventCreator('past')}
+              className="btn btn-outline-navy btn-sm"
+              style={{ fontSize: '0.78rem', padding: '0.45rem 0.85rem' }}
+            >
+              + Add Past Report
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setActiveModule('photos');
+                setShowPhotoUploader(true);
+              }}
+              className="btn btn-outline-navy btn-sm"
+              style={{ fontSize: '0.78rem', padding: '0.45rem 0.85rem' }}
+            >
+              + Upload Photo
+            </button>
             <button
               type="button"
               onClick={async () => {
                 const stats = await clearBackendCache();
                 setCacheStats(stats);
                 await loadPortalData(true);
-                showToast('✓ Backend & client cache cleared and reloaded from database.');
+                showToast('✓ Cache flushed and synchronized with backend database.');
               }}
-              className="btn btn-outline-white btn-sm"
+              style={{
+                background: '#ECFDF5',
+                border: '1px solid #A7F3D0',
+                color: '#047857',
+                borderRadius: '999px',
+                padding: '0.38rem 0.75rem',
+                fontSize: '0.74rem',
+                fontWeight: 700,
+                cursor: 'pointer',
+              }}
+              title="Click to flush server & client TTL cache"
             >
-              ⚡ Flush Cache &amp; Sync
-            </button>
-            <Link href="/events" className="btn btn-outline-white btn-sm">
-              View Live Events ↗
-            </Link>
-            <button
-              type="button"
-              onClick={handleLogout}
-              className="btn btn-red btn-sm"
-            >
-              Sign Out
+              ⚡ Cache Active ({cacheStats?.hits || 0} hits) ↻
             </button>
           </div>
-        </div>
+        </header>
 
-        {statusBanner && (
-          <div
-            style={{
-              background: '#ECFDF5',
-              border: '1.5px solid #10B981',
-              color: '#065F46',
-              padding: '0.9rem 1.25rem',
-              borderRadius: 'var(--radius-md)',
-              fontWeight: 700,
-              fontSize: '0.9rem',
-              marginBottom: '1.25rem',
-            }}
-          >
-            {statusBanner}
-          </div>
-        )}
-
-        {/* KPI Summary Cards */}
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))',
-            gap: '1rem',
-            marginBottom: '1.5rem',
-          }}
-        >
-          <div className="CleanCard" style={{ padding: '1.25rem' }}>
-            <div style={{ fontSize: '0.76rem', fontWeight: 800, color: 'var(--color-muted)', textTransform: 'uppercase' }}>
-              Participant Registrations
-            </div>
-            <div style={{ fontSize: '2rem', fontWeight: 900, color: 'var(--brand-blue)' }}>
-              {registrations.length}
-            </div>
-            <div style={{ fontSize: '0.8rem', color: 'var(--color-muted)' }}>
-              Stored in MongoDB / Backend Store
-            </div>
-          </div>
-
-          <div className="CleanCard" style={{ padding: '1.25rem' }}>
-            <div style={{ fontSize: '0.76rem', fontWeight: 800, color: 'var(--color-muted)', textTransform: 'uppercase' }}>
-              Upcoming Events
-            </div>
-            <div style={{ fontSize: '2rem', fontWeight: 900, color: '#047857' }}>
-              {upcomingCount}
-            </div>
-            <div style={{ fontSize: '0.8rem', color: 'var(--color-muted)' }}>
-              Active registration enabled
-            </div>
-          </div>
-
-          <div className="CleanCard" style={{ padding: '1.25rem' }}>
-            <div style={{ fontSize: '0.76rem', fontWeight: 800, color: 'var(--color-muted)', textTransform: 'uppercase' }}>
-              Past Event Reports
-            </div>
-            <div style={{ fontSize: '2rem', fontWeight: 900, color: 'var(--brand-navy)' }}>
-              {pastCount}
-            </div>
-            <div style={{ fontSize: '0.8rem', color: 'var(--color-muted)' }}>
-              Published reports &amp; archives
-            </div>
-          </div>
-
-          <div className="CleanCard" style={{ padding: '1.25rem' }}>
-            <div style={{ fontSize: '0.76rem', fontWeight: 800, color: 'var(--color-muted)', textTransform: 'uppercase' }}>
-              Event &amp; Gallery Photos
-            </div>
-            <div style={{ fontSize: '2rem', fontWeight: 900, color: 'var(--accent-red)' }}>
-              {photos.length}
-            </div>
-            <div style={{ fontSize: '0.8rem', color: 'var(--color-muted)' }}>
-              Indexed with factual captions
-            </div>
-          </div>
-        </div>
-
-        {/* Navigation Tabs */}
-        <div
-          style={{
-            display: 'flex',
-            gap: '0.5rem',
-            flexWrap: 'wrap',
-            marginBottom: '1.5rem',
-            background: '#FFFFFF',
-            padding: '0.5rem',
-            borderRadius: 'var(--radius-lg)',
-            border: '1px solid var(--color-border)',
-          }}
-        >
-          <button
-            type="button"
-            onClick={() => setActiveTab('registrations')}
-            className={`btn btn-sm ${
-              activeTab === 'registrations' ? 'btn-primary' : 'btn-outline-navy'
-            }`}
-          >
-            📋 Participant Registrations ({registrations.length})
-          </button>
-          <button
-            type="button"
-            onClick={() => setActiveTab('events')}
-            className={`btn btn-sm ${
-              activeTab === 'events' ? 'btn-primary' : 'btn-outline-navy'
-            }`}
-          >
-            📅 Upcoming Events &amp; Past Reports ({events.length})
-          </button>
-          <button
-            type="button"
-            onClick={() => setActiveTab('photos')}
-            className={`btn btn-sm ${
-              activeTab === 'photos' ? 'btn-primary' : 'btn-outline-navy'
-            }`}
-          >
-            🖼️ Add Event Photos &amp; Gallery ({photos.length})
-          </button>
-          <button
-            type="button"
-            onClick={() => setActiveTab('system')}
-            className={`btn btn-sm ${
-              activeTab === 'system' ? 'btn-primary' : 'btn-outline-navy'
-            }`}
-          >
-            🗄️ MongoDB &amp; Cache Settings
-          </button>
-        </div>
-
-        {/* ===================================================================
-            TAB 1: PARTICIPANT REGISTRATIONS
-           =================================================================== */}
-        {activeTab === 'registrations' && (
-          <div className="CleanCard">
+        {/* Main Workspace Body */}
+        <div className="admin-main-body">
+          {/* Status Toast Banner */}
+          {statusBanner && (
             <div
               style={{
+                background: '#ECFDF5',
+                border: '1.5px solid #10B981',
+                color: '#065F46',
+                padding: '0.85rem 1.15rem',
+                borderRadius: '10px',
+                fontWeight: 700,
+                fontSize: '0.88rem',
+                marginBottom: '1.25rem',
                 display: 'flex',
-                flexWrap: 'wrap',
                 alignItems: 'center',
                 justifyContent: 'space-between',
-                gap: '1rem',
-                marginBottom: '1.25rem',
               }}
             >
-              <div>
-                <h2 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '0.2rem' }}>
-                  Event Participant Registrations
-                </h2>
-                <p style={{ fontSize: '0.88rem', color: 'var(--color-muted)', marginBottom: 0 }}>
-                  View and export participant details (Name, DOB, Phone, WhatsApp, Email, District,
-                  Organisation, ISTD Membership, and Certificate Status).
-                </p>
-              </div>
+              <span>{statusBanner}</span>
               <button
                 type="button"
-                onClick={handleExportRegistrationsCsv}
-                className="btn btn-primary btn-sm"
-              >
-                ⬇ Export Registrations to CSV / Excel
-              </button>
-            </div>
-
-            {/* Filter & Search Bar */}
-            <div
-              style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-                gap: '1rem',
-                marginBottom: '1.25rem',
-                padding: '1rem',
-                background: 'var(--color-surface-soft)',
-                borderRadius: 'var(--radius-md)',
-              }}
-            >
-              <div>
-                <label className="form-label">Filter by Event</label>
-                <select
-                  className="form-control"
-                  value={regEventFilter}
-                  onChange={(e) => setRegEventFilter(e.target.value)}
-                >
-                  <option value="all">All Events ({registrations.length})</option>
-                  {events.map((ev) => (
-                    <option key={ev.slug} value={ev.slug}>
-                      {ev.title} ({ev.date})
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <div>
-                <label className="form-label">
-                  Search by Name, Phone, WhatsApp, Email, District or ID
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Search participants..."
-                  value={regSearch}
-                  onChange={(e) => setRegSearch(e.target.value)}
-                />
-              </div>
-            </div>
-
-            {filteredRegistrations.length === 0 ? (
-              <div
+                onClick={() => setStatusBanner('')}
                 style={{
-                  padding: '2.5rem',
-                  textAlign: 'center',
-                  color: 'var(--color-muted)',
+                  background: 'none',
+                  border: 'none',
+                  color: '#065F46',
+                  fontWeight: 800,
+                  cursor: 'pointer',
                 }}
               >
-                No participant registrations match the current filter.
-              </div>
-            ) : (
-              <div style={{ overflowX: 'auto' }}>
-                <table
-                  style={{
-                    width: '100%',
-                    borderCollapse: 'collapse',
-                    fontSize: '0.85rem',
-                  }}
-                >
-                  <thead>
-                    <tr
-                      style={{
-                        background: 'var(--bg-pale-blue)',
-                        textAlign: 'left',
-                        borderBottom: '2px solid var(--color-border)',
-                      }}
-                    >
-                      <th style={{ padding: '0.75rem' }}>Reg. ID &amp; Date</th>
-                      <th style={{ padding: '0.75rem' }}>Participant &amp; DOB</th>
-                      <th style={{ padding: '0.75rem' }}>Contact &amp; WhatsApp</th>
-                      <th style={{ padding: '0.75rem' }}>District &amp; Location</th>
-                      <th style={{ padding: '0.75rem' }}>Organisation &amp; Category</th>
-                      <th style={{ padding: '0.75rem' }}>Event</th>
-                      <th style={{ padding: '0.75rem' }}>Status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {filteredRegistrations.map((reg) => (
-                      <tr
-                        key={reg.id}
-                        style={{ borderBottom: '1px solid var(--color-border)' }}
-                      >
-                        <td style={{ padding: '0.85rem 0.75rem', verticalAlign: 'top' }}>
-                          <strong style={{ color: 'var(--brand-navy)', display: 'block' }}>
-                            {reg.registrationCode}
-                          </strong>
-                          <span style={{ fontSize: '0.75rem', color: 'var(--color-muted)' }}>
-                            {new Date(reg.createdAt).toLocaleDateString('en-IN')}
-                          </span>
-                        </td>
-                        <td style={{ padding: '0.85rem 0.75rem', verticalAlign: 'top' }}>
-                          <strong style={{ color: 'var(--color-ink)', display: 'block' }}>
-                            {reg.salutation} {reg.fullName}
-                          </strong>
-                          <span style={{ fontSize: '0.78rem', color: 'var(--color-muted)' }}>
-                            DOB: {reg.dob} {reg.gender ? `• ${reg.gender}` : ''}
-                          </span>
-                        </td>
-                        <td style={{ padding: '0.85rem 0.75rem', verticalAlign: 'top' }}>
-                          <div>📧 {reg.email}</div>
-                          <div>📞 {reg.phone}</div>
-                          <div style={{ color: '#047857', fontWeight: 600 }}>
-                            💬 WA: {reg.whatsapp}
-                          </div>
-                        </td>
-                        <td style={{ padding: '0.85rem 0.75rem', verticalAlign: 'top' }}>
-                          <strong>{reg.district}</strong>
-                          <div style={{ fontSize: '0.78rem', color: 'var(--color-muted)' }}>
-                            {reg.city ? `${reg.city}, ` : ''}
-                            {reg.state}
-                          </div>
-                        </td>
-                        <td style={{ padding: '0.85rem 0.75rem', verticalAlign: 'top' }}>
-                          <strong>{reg.organization}</strong>
-                          <div style={{ fontSize: '0.78rem', color: 'var(--color-body)' }}>
-                            {reg.designation} ({reg.experienceYears})
-                          </div>
-                          <div style={{ fontSize: '0.75rem', color: 'var(--brand-blue)' }}>
-                            {reg.participantCategory} • ISTD: {reg.isIstdMember}
-                          </div>
-                        </td>
-                        <td style={{ padding: '0.85rem 0.75rem', verticalAlign: 'top' }}>
-                          <strong style={{ fontSize: '0.82rem' }}>{reg.eventTitle}</strong>
-                          <div style={{ fontSize: '0.75rem', color: 'var(--color-muted)' }}>
-                            {reg.eventDate} • Cert: {reg.requireCertificate ? 'Yes' : 'No'}
-                          </div>
-                        </td>
-                        <td style={{ padding: '0.85rem 0.75rem', verticalAlign: 'top' }}>
-                          <select
-                            className="form-control"
-                            style={{ padding: '0.35rem 0.5rem', fontSize: '0.78rem', minWidth: '135px' }}
-                            value={reg.status}
-                            onChange={async (e) => {
-                              const nextStatus = e.target.value as EventRegistration['status'];
-                              await updateParticipantStatusInBackend(reg.id, nextStatus);
-                              await loadPortalData(true);
-                              showToast(
-                                `✓ Updated status for ${reg.fullName} to "${nextStatus}".`
-                              );
-                            }}
-                          >
-                            <option value="Confirmed">Confirmed</option>
-                            <option value="Attended">Attended</option>
-                            <option value="Certificate Issued">Certificate Issued</option>
-                            <option value="Cancelled">Cancelled</option>
-                          </select>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            )}
-          </div>
-        )}
+                ✕
+              </button>
+            </div>
+          )}
 
-        {/* ===================================================================
-            TAB 2: MANAGE UPCOMING EVENTS & PAST EVENT REPORTS
-           =================================================================== */}
-        {activeTab === 'events' && (
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '1.75rem' }}>
-            {/* Form to Add / Edit Event or Report */}
-            <div className="CleanCard">
+          {/* =================================================================
+              SHARED EVENT / REPORT EDITOR DRAWER CARD (WHEN ACTIVE)
+             ================================================================= */}
+          {showEventEditor && (
+            <div
+              className="admin-panel-card"
+              style={{
+                borderTop: '4px solid #1D4ED8',
+                background: '#FFFFFF',
+                marginBottom: '1.75rem',
+              }}
+            >
               <div
                 style={{
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'space-between',
-                  marginBottom: '1.25rem',
                   flexWrap: 'wrap',
                   gap: '0.75rem',
+                  marginBottom: '1.25rem',
+                  paddingBottom: '1rem',
+                  borderBottom: '1px solid #E2E8F0',
                 }}
               >
                 <div>
-                  <span className="section-tag tag-blue">
-                    {editingEventSlug ? 'Edit Event / Report' : 'Create Event or Report'}
+                  <span
+                    style={{
+                      display: 'inline-block',
+                      fontSize: '0.7rem',
+                      fontWeight: 800,
+                      textTransform: 'uppercase',
+                      padding: '0.2rem 0.6rem',
+                      borderRadius: '999px',
+                      background: evStatus === 'upcoming' ? '#ECFDF5' : '#EFF6FF',
+                      color: evStatus === 'upcoming' ? '#047857' : '#1D4ED8',
+                      marginBottom: '0.3rem',
+                    }}
+                  >
+                    {evStatus === 'upcoming'
+                      ? '📅 Upcoming Event Editor'
+                      : '📑 Past Event Report Editor'}
                   </span>
-                  <h2 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: 0 }}>
+                  <h2 style={{ fontSize: '1.25rem', fontWeight: 800, margin: 0 }}>
                     {editingEventSlug
                       ? `Editing: ${evTitle}`
-                      : 'Add New Upcoming Event or Completed Event Report'}
+                      : evStatus === 'upcoming'
+                      ? 'Schedule New Upcoming Event'
+                      : 'Publish Completed Past Event Report'}
                   </h2>
                 </div>
-                {editingEventSlug && (
-                  <button
-                    type="button"
-                    onClick={resetEventForm}
-                    className="btn btn-outline-navy btn-sm"
-                  >
-                    Cancel Editing
-                  </button>
-                )}
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowEventEditor(false);
+                    resetEventForm(evStatus);
+                  }}
+                  className="btn btn-outline-navy btn-sm"
+                >
+                  ✕ Close Editor
+                </button>
               </div>
 
               <form onSubmit={handleSaveEvent}>
                 <div
                   style={{
                     display: 'grid',
-                    gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))',
                     gap: '1rem',
                     marginBottom: '1rem',
                   }}
                 >
                   <div className="form-group" style={{ marginBottom: 0 }}>
-                    <label className="form-label">Event Status *</label>
+                    <label className="form-label">Listing Type *</label>
                     <select
                       className="form-control"
                       value={evStatus}
                       onChange={(e) => setEvStatus(e.target.value as 'upcoming' | 'past')}
                     >
-                      <option value="upcoming">Upcoming Event (Registration Open)</option>
-                      <option value="past">Past Event &amp; Completed Report</option>
+                      <option value="upcoming">Upcoming Event (With Registration)</option>
+                      <option value="past">Completed Past Event Report</option>
                     </select>
                   </div>
 
                   <div className="form-group" style={{ marginBottom: 0 }}>
-                    <label className="form-label">Programme Type *</label>
+                    <label className="form-label">Programme Category *</label>
                     <select
                       className="form-control"
                       value={evType}
@@ -1110,7 +1321,7 @@ export function AdminPortalClient() {
                 <div
                   style={{
                     display: 'grid',
-                    gridTemplateColumns: '2fr 1fr',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
                     gap: '1rem',
                     marginBottom: '1rem',
                   }}
@@ -1128,7 +1339,7 @@ export function AdminPortalClient() {
                   </div>
 
                   <div className="form-group" style={{ marginBottom: 0 }}>
-                    <label className="form-label">URL Slug (Auto-generated if blank)</label>
+                    <label className="form-label">URL Slug (Auto-generated if left blank)</label>
                     <input
                       type="text"
                       className="form-control"
@@ -1148,7 +1359,7 @@ export function AdminPortalClient() {
                   }}
                 >
                   <div className="form-group" style={{ marginBottom: 0 }}>
-                    <label className="form-label">Resource Person / Speaker Name</label>
+                    <label className="form-label">Speaker / Resource Person Name</label>
                     <input
                       type="text"
                       className="form-control"
@@ -1170,7 +1381,7 @@ export function AdminPortalClient() {
                   </div>
 
                   <div className="form-group" style={{ marginBottom: 0 }}>
-                    <label className="form-label">Venue / Online Platform *</label>
+                    <label className="form-label">Venue / Platform *</label>
                     <input
                       type="text"
                       className="form-control"
@@ -1183,7 +1394,7 @@ export function AdminPortalClient() {
                 </div>
 
                 <div className="form-group">
-                  <label className="form-label">Opening Subtitle Question (Optional)</label>
+                  <label className="form-label">Lead Question / Subtitle (Optional)</label>
                   <input
                     type="text"
                     className="form-control"
@@ -1194,11 +1405,11 @@ export function AdminPortalClient() {
                 </div>
 
                 <div className="form-group">
-                  <label className="form-label">Short Card Summary *</label>
+                  <label className="form-label">Short Summary (Shown on Event Cards) *</label>
                   <textarea
                     className="form-control"
                     rows={2}
-                    placeholder="Brief 1–2 sentence overview shown on event cards"
+                    placeholder="1–2 sentence executive summary of the session"
                     value={evShortDesc}
                     onChange={(e) => setEvShortDesc(e.target.value)}
                     required
@@ -1207,33 +1418,48 @@ export function AdminPortalClient() {
 
                 <div className="form-group">
                   <label className="form-label">
-                    Full Event Details / Completed Event Report Paragraphs *
+                    {evStatus === 'upcoming'
+                      ? 'Detailed Session Overview (Separate paragraphs with a new line) *'
+                      : 'Completed Event Report Proceedings (Separate paragraphs with a new line) *'}
                   </label>
                   <textarea
                     className="form-control"
                     rows={4}
-                    placeholder="Enter full event description or post-event report proceedings (separate paragraphs with a new line)"
+                    placeholder="Write detailed paragraphs describing the session or completed event report..."
                     value={evFullDesc}
                     onChange={(e) => setEvFullDesc(e.target.value)}
                     required
                   />
                 </div>
 
-                {/* Poster / Image Upload or Path */}
+                <div className="form-group">
+                  <label className="form-label">
+                    Key Highlights / Takeaways (Optional — one bullet point per line)
+                  </label>
+                  <textarea
+                    className="form-control"
+                    rows={3}
+                    placeholder="Key takeaway 1&#10;Key takeaway 2&#10;Key takeaway 3"
+                    value={evHighlights}
+                    onChange={(e) => setEvHighlights(e.target.value)}
+                  />
+                </div>
+
+                {/* Image / Poster Upload Box */}
                 <div
                   style={{
                     display: 'grid',
-                    gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
                     gap: '1rem',
                     marginBottom: '1rem',
                     padding: '1rem',
-                    background: 'var(--color-surface-soft)',
-                    borderRadius: 'var(--radius-md)',
-                    border: '1px solid var(--color-border)',
+                    background: '#F8FAFC',
+                    borderRadius: '10px',
+                    border: '1px solid #E2E8F0',
                   }}
                 >
                   <div>
-                    <label className="form-label">Upload Event Poster / Cover Image</label>
+                    <label className="form-label">Upload Poster / Cover Photo from Device</label>
                     <input
                       type="file"
                       accept="image/*"
@@ -1259,7 +1485,7 @@ export function AdminPortalClient() {
                     <input
                       type="text"
                       className="form-control"
-                      placeholder="Official poster / photo caption"
+                      placeholder="Caption for poster or photograph"
                       value={evImageCaption}
                       onChange={(e) => setEvImageCaption(e.target.value)}
                     />
@@ -1274,7 +1500,15 @@ export function AdminPortalClient() {
                     marginBottom: '1.25rem',
                   }}
                 >
-                  <label style={{ display: 'inline-flex', alignItems: 'center', gap: '0.45rem', fontWeight: 600, fontSize: '0.88rem' }}>
+                  <label
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '0.45rem',
+                      fontWeight: 600,
+                      fontSize: '0.86rem',
+                    }}
+                  >
                     <input
                       type="checkbox"
                       checked={evIsPoster}
@@ -1283,30 +1517,596 @@ export function AdminPortalClient() {
                     Display as Full Uncropped Event Poster
                   </label>
                   {evStatus === 'upcoming' && (
-                    <label style={{ display: 'inline-flex', alignItems: 'center', gap: '0.45rem', fontWeight: 600, fontSize: '0.88rem' }}>
+                    <label
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '0.45rem',
+                        fontWeight: 600,
+                        fontSize: '0.86rem',
+                      }}
+                    >
                       <input
                         type="checkbox"
                         checked={evRegOpen}
                         onChange={(e) => setEvRegOpen(e.target.checked)}
                       />
-                      Enable Participant Registration Form
+                      Enable Participant Registration Form on Event Page
                     </label>
                   )}
                 </div>
 
-                <button type="submit" className="btn btn-red">
-                  {editingEventSlug ? 'Update Event / Report →' : '+ Publish Event / Report →'}
-                </button>
+                <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+                  <button type="submit" className="btn btn-primary">
+                    {editingEventSlug
+                      ? '✓ Save Changes'
+                      : evStatus === 'upcoming'
+                      ? '+ Publish Upcoming Event'
+                      : '+ Publish Completed Event Report'}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setShowEventEditor(false)}
+                    className="btn btn-outline-navy"
+                  >
+                    Cancel
+                  </button>
+                </div>
               </form>
             </div>
+          )}
 
-            {/* Existing Events List */}
-            <div className="CleanCard">
-              <h3 style={{ fontSize: '1.2rem', fontWeight: 800, marginBottom: '1rem' }}>
-                Published Events &amp; Reports ({events.length})
-              </h3>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '1rem' }}>
-                {events.map((ev) => (
+          {/* =================================================================
+              MODULE 1: DASHBOARD OVERVIEW
+             ================================================================= */}
+          {activeModule === 'overview' && (
+            <>
+              {/* 4 KPI Stat Cards */}
+              <div className="admin-kpi-grid">
+                <div
+                  className="admin-kpi-card"
+                  onClick={() => switchModule('registrations')}
+                >
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#64748B', textTransform: 'uppercase' }}>
+                      Total Registrations
+                    </span>
+                    <span style={{ fontSize: '1.25rem' }}>👥</span>
+                  </div>
+                  <div style={{ fontSize: '2.1rem', fontWeight: 900, color: '#1D4ED8', margin: '0.35rem 0' }}>
+                    {registrations.length}
+                  </div>
+                  <div style={{ fontSize: '0.78rem', color: '#1D4ED8', fontWeight: 700 }}>
+                    View &amp; Export CSV →
+                  </div>
+                </div>
+
+                <div
+                  className="admin-kpi-card"
+                  onClick={() => switchModule('upcoming')}
+                >
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#64748B', textTransform: 'uppercase' }}>
+                      Upcoming Events
+                    </span>
+                    <span style={{ fontSize: '1.25rem' }}>📅</span>
+                  </div>
+                  <div style={{ fontSize: '2.1rem', fontWeight: 900, color: '#047857', margin: '0.35rem 0' }}>
+                    {upcomingEvents.length}
+                  </div>
+                  <div style={{ fontSize: '0.78rem', color: '#047857', fontWeight: 700 }}>
+                    Manage Upcoming →
+                  </div>
+                </div>
+
+                <div
+                  className="admin-kpi-card"
+                  onClick={() => switchModule('reports')}
+                >
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#64748B', textTransform: 'uppercase' }}>
+                      Past Event Reports
+                    </span>
+                    <span style={{ fontSize: '1.25rem' }}>📑</span>
+                  </div>
+                  <div style={{ fontSize: '2.1rem', fontWeight: 900, color: '#0F172A', margin: '0.35rem 0' }}>
+                    {pastEvents.length}
+                  </div>
+                  <div style={{ fontSize: '0.78rem', color: '#334155', fontWeight: 700 }}>
+                    Manage Reports →
+                  </div>
+                </div>
+
+                <div
+                  className="admin-kpi-card"
+                  onClick={() => switchModule('photos')}
+                >
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#64748B', textTransform: 'uppercase' }}>
+                      Gallery Photographs
+                    </span>
+                    <span style={{ fontSize: '1.25rem' }}>🖼️</span>
+                  </div>
+                  <div style={{ fontSize: '2.1rem', fontWeight: 900, color: '#E11D48', margin: '0.35rem 0' }}>
+                    {photos.length}
+                  </div>
+                  <div style={{ fontSize: '0.78rem', color: '#E11D48', fontWeight: 700 }}>
+                    Upload &amp; Curate →
+                  </div>
+                </div>
+              </div>
+
+              {/* Quick Actions Bar */}
+              <div className="admin-panel-card">
+                <h2 style={{ fontSize: '1.05rem', fontWeight: 800, marginBottom: '1rem', color: '#0F172A' }}>
+                  Quick Administrator Actions
+                </h2>
+                <div
+                  style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))',
+                    gap: '0.85rem',
+                  }}
+                >
+                  <button
+                    type="button"
+                    onClick={() => openNewEventCreator('upcoming')}
+                    style={{
+                      padding: '1rem',
+                      borderRadius: '12px',
+                      border: '1px solid #BFDBFE',
+                      background: '#EFF6FF',
+                      color: '#1E3A8A',
+                      textAlign: 'left',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    <div style={{ fontWeight: 800, fontSize: '0.9rem', marginBottom: '0.2rem' }}>
+                      📅 + Schedule Upcoming Event
+                    </div>
+                    <div style={{ fontSize: '0.76rem', color: '#475569' }}>
+                      Add a new session with poster &amp; registration form
+                    </div>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => openNewEventCreator('past')}
+                    style={{
+                      padding: '1rem',
+                      borderRadius: '12px',
+                      border: '1px solid #E2E8F0',
+                      background: '#F8FAFC',
+                      color: '#0F172A',
+                      textAlign: 'left',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    <div style={{ fontWeight: 800, fontSize: '0.9rem', marginBottom: '0.2rem' }}>
+                      📑 + Publish Past Event Report
+                    </div>
+                    <div style={{ fontSize: '0.76rem', color: '#475569' }}>
+                      Add proceedings &amp; highlights of a completed session
+                    </div>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setActiveModule('photos');
+                      setShowPhotoUploader(true);
+                    }}
+                    style={{
+                      padding: '1rem',
+                      borderRadius: '12px',
+                      border: '1px solid #E2E8F0',
+                      background: '#F8FAFC',
+                      color: '#0F172A',
+                      textAlign: 'left',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    <div style={{ fontWeight: 800, fontSize: '0.9rem', marginBottom: '0.2rem' }}>
+                      🖼️ + Upload Event Photographs
+                    </div>
+                    <div style={{ fontSize: '0.76rem', color: '#475569' }}>
+                      Add photos to an event page and main chapter gallery
+                    </div>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={handleExportRegistrationsCsv}
+                    style={{
+                      padding: '1rem',
+                      borderRadius: '12px',
+                      border: '1px solid #A7F3D0',
+                      background: '#ECFDF5',
+                      color: '#065F46',
+                      textAlign: 'left',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    <div style={{ fontWeight: 800, fontSize: '0.9rem', marginBottom: '0.2rem' }}>
+                      ⬇ Export Registrations (CSV)
+                    </div>
+                    <div style={{ fontSize: '0.76rem', color: '#047857' }}>
+                      Download Excel-ready spreadsheet of participants
+                    </div>
+                  </button>
+                </div>
+              </div>
+
+              {/* Two-Column Overview: Recent Registrations + Active Upcoming Events */}
+              <div
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))',
+                  gap: '1.25rem',
+                }}
+              >
+                {/* Recent Participant Registrations */}
+                <div className="admin-panel-card" style={{ marginBottom: 0 }}>
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      marginBottom: '1rem',
+                    }}
+                  >
+                    <h3 style={{ fontSize: '1.05rem', fontWeight: 800, margin: 0 }}>
+                      Recent Participant Registrations
+                    </h3>
+                    <button
+                      type="button"
+                      onClick={() => switchModule('registrations')}
+                      style={{
+                        background: 'none',
+                        border: 'none',
+                        color: '#1D4ED8',
+                        fontSize: '0.8rem',
+                        fontWeight: 700,
+                        cursor: 'pointer',
+                      }}
+                    >
+                      View All ({registrations.length}) →
+                    </button>
+                  </div>
+
+                  {registrations.slice(0, 5).map((reg) => (
+                    <div
+                      key={reg.id}
+                      style={{
+                        padding: '0.8rem 0',
+                        borderBottom: '1px solid #F1F5F9',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        gap: '0.75rem',
+                      }}
+                    >
+                      <div>
+                        <div style={{ fontWeight: 700, fontSize: '0.88rem', color: '#0F172A' }}>
+                          {reg.salutation} {reg.fullName}
+                        </div>
+                        <div style={{ fontSize: '0.76rem', color: '#64748B' }}>
+                          {reg.organization} • {reg.district} • WA: {reg.whatsapp}
+                        </div>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => setSelectedRegistration(reg)}
+                        className="btn btn-outline-navy btn-sm"
+                        style={{ fontSize: '0.72rem', padding: '0.28rem 0.6rem' }}
+                      >
+                        Details
+                      </button>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Active Upcoming Events */}
+                <div className="admin-panel-card" style={{ marginBottom: 0 }}>
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      marginBottom: '1rem',
+                    }}
+                  >
+                    <h3 style={{ fontSize: '1.05rem', fontWeight: 800, margin: 0 }}>
+                      Scheduled Upcoming Events
+                    </h3>
+                    <button
+                      type="button"
+                      onClick={() => switchModule('upcoming')}
+                      style={{
+                        background: 'none',
+                        border: 'none',
+                        color: '#1D4ED8',
+                        fontSize: '0.8rem',
+                        fontWeight: 700,
+                        cursor: 'pointer',
+                      }}
+                    >
+                      Manage Events →
+                    </button>
+                  </div>
+
+                  {upcomingEvents.map((ev) => (
+                    <div
+                      key={ev.slug}
+                      style={{
+                        display: 'flex',
+                        gap: '0.9rem',
+                        alignItems: 'center',
+                        padding: '0.85rem',
+                        borderRadius: '10px',
+                        background: '#F8FAFC',
+                        border: '1px solid #E2E8F0',
+                        marginBottom: '0.75rem',
+                      }}
+                    >
+                      <img
+                        src={assetUrl(ev.image)}
+                        alt={ev.title}
+                        style={{
+                          width: '60px',
+                          height: '60px',
+                          borderRadius: '8px',
+                          objectFit: 'cover',
+                          background: '#071524',
+                          flexShrink: 0,
+                        }}
+                      />
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <div style={{ fontSize: '0.72rem', fontWeight: 800, color: '#047857' }}>
+                          ● {ev.date} • {ev.timeIST}
+                        </div>
+                        <div
+                          style={{
+                            fontSize: '0.9rem',
+                            fontWeight: 800,
+                            color: '#0F172A',
+                            whiteSpace: 'nowrap',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                          }}
+                        >
+                          {ev.title}
+                        </div>
+                        <div style={{ fontSize: '0.76rem', color: '#64748B' }}>
+                          {ev.speaker ? `🎙️ ${ev.speaker}` : ev.venue}
+                        </div>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => startEditEvent(ev)}
+                        className="btn btn-outline-navy btn-sm"
+                        style={{ fontSize: '0.72rem', padding: '0.3rem 0.65rem' }}
+                      >
+                        Edit
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </>
+          )}
+
+          {/* =================================================================
+              MODULE 2: UPCOMING EVENTS MANAGER
+             ================================================================= */}
+          {activeModule === 'upcoming' && (
+            <div className="admin-panel-card">
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  flexWrap: 'wrap',
+                  gap: '1rem',
+                  marginBottom: '1.25rem',
+                }}
+              >
+                <div>
+                  <h2 style={{ fontSize: '1.2rem', fontWeight: 800, marginBottom: '0.2rem' }}>
+                    Scheduled Upcoming Events ({upcomingEvents.length})
+                  </h2>
+                  <p style={{ fontSize: '0.86rem', color: '#64748B', margin: 0 }}>
+                    Events listed here appear under the &ldquo;Upcoming Events&rdquo; tab on the
+                    website and accept online participant registrations.
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => openNewEventCreator('upcoming')}
+                  className="btn btn-primary btn-sm"
+                >
+                  + Schedule New Upcoming Event
+                </button>
+              </div>
+
+              {upcomingEvents.length === 0 ? (
+                <div
+                  style={{
+                    padding: '2.5rem',
+                    textAlign: 'center',
+                    background: '#F8FAFC',
+                    borderRadius: '12px',
+                    color: '#64748B',
+                  }}
+                >
+                  No upcoming events scheduled right now. Click{' '}
+                  <strong>+ Schedule New Upcoming Event</strong> above to add one.
+                </div>
+              ) : (
+                <div style={{ display: 'grid', gap: '1rem' }}>
+                  {upcomingEvents.map((ev) => {
+                    const regCount = registrations.filter(
+                      (r) => r.eventSlug === ev.slug
+                    ).length;
+                    return (
+                      <div
+                        key={ev.slug}
+                        style={{
+                          display: 'flex',
+                          flexWrap: 'wrap',
+                          alignItems: 'center',
+                          justifyContent: 'space-between',
+                          gap: '1rem',
+                          padding: '1.15rem',
+                          borderRadius: '12px',
+                          background: '#F8FAFC',
+                          border: '1px solid #E2E8F0',
+                        }}
+                      >
+                        <div
+                          style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '1rem',
+                            flex: 1,
+                            minWidth: '260px',
+                          }}
+                        >
+                          <img
+                            src={assetUrl(ev.image)}
+                            alt={ev.title}
+                            style={{
+                              width: '76px',
+                              height: '76px',
+                              objectFit: 'cover',
+                              borderRadius: '10px',
+                              background: '#071524',
+                              flexShrink: 0,
+                            }}
+                          />
+                          <div>
+                            <div
+                              style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '0.5rem',
+                                flexWrap: 'wrap',
+                                marginBottom: '0.25rem',
+                              }}
+                            >
+                              <span
+                                style={{
+                                  fontSize: '0.68rem',
+                                  fontWeight: 800,
+                                  textTransform: 'uppercase',
+                                  padding: '0.15rem 0.55rem',
+                                  borderRadius: '999px',
+                                  background: '#ECFDF5',
+                                  color: '#047857',
+                                }}
+                              >
+                                ● Registration Open ({regCount} Registered)
+                              </span>
+                              <span style={{ fontSize: '0.78rem', color: '#475569', fontWeight: 600 }}>
+                                📅 {ev.date} • 🕖 {ev.timeIST}
+                              </span>
+                            </div>
+                            <h3 style={{ fontSize: '1.05rem', fontWeight: 800, margin: '0 0 0.2rem' }}>
+                              {ev.title}
+                            </h3>
+                            <div style={{ fontSize: '0.8rem', color: '#1D4ED8', fontWeight: 600 }}>
+                              {ev.speaker
+                                ? `🎙️ ${ev.speaker}${
+                                    ev.speakerDesignation ? ` — ${ev.speakerDesignation}` : ''
+                                  }`
+                                : `📍 ${ev.venue}`}
+                            </div>
+                          </div>
+                        </div>
+
+                        <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                          <Link
+                            href={`/events/${ev.slug}`}
+                            className="btn btn-outline-navy btn-sm"
+                          >
+                            Live Page ↗
+                          </Link>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setRegEventFilter(ev.slug);
+                              switchModule('registrations');
+                            }}
+                            className="btn btn-outline-navy btn-sm"
+                          >
+                            👥 Registrations ({regCount})
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => startEditEvent(ev)}
+                            className="btn btn-primary btn-sm"
+                          >
+                            ✎ Edit Event
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => handleToggleEventStatus(ev)}
+                            className="btn btn-outline-navy btn-sm"
+                          >
+                            ✓ Mark Completed (Move to Reports)
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => handleDeleteEvent(ev.slug, ev.title)}
+                            className="btn btn-outline-navy btn-sm"
+                            style={{ color: '#B91C1C', borderColor: '#FECACA' }}
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* =================================================================
+              MODULE 3: PAST EVENT REPORTS MANAGER
+             ================================================================= */}
+          {activeModule === 'reports' && (
+            <div className="admin-panel-card">
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  flexWrap: 'wrap',
+                  gap: '1rem',
+                  marginBottom: '1.25rem',
+                }}
+              >
+                <div>
+                  <h2 style={{ fontSize: '1.2rem', fontWeight: 800, marginBottom: '0.2rem' }}>
+                    Completed Past Event Reports ({pastEvents.length})
+                  </h2>
+                  <p style={{ fontSize: '0.86rem', color: '#64748B', margin: 0 }}>
+                    Manage post-event reports, executive summaries, speaker profiles, and attached
+                    event photo galleries.
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => openNewEventCreator('past')}
+                  className="btn btn-primary btn-sm"
+                >
+                  + Publish Past Event Report
+                </button>
+              </div>
+
+              <div style={{ display: 'grid', gap: '1rem' }}>
+                {pastEvents.map((ev) => (
                   <div
                     key={ev.slug}
                     style={{
@@ -1315,52 +2115,68 @@ export function AdminPortalClient() {
                       alignItems: 'center',
                       justifyContent: 'space-between',
                       gap: '1rem',
-                      padding: '1rem 1.25rem',
-                      background: 'var(--color-surface-soft)',
-                      borderRadius: 'var(--radius-md)',
-                      border: '1px solid var(--color-border)',
+                      padding: '1.15rem',
+                      borderRadius: '12px',
+                      background: '#F8FAFC',
+                      border: '1px solid #E2E8F0',
                     }}
                   >
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flex: '1', minWidth: '260px' }}>
+                    <div
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '1rem',
+                        flex: 1,
+                        minWidth: '260px',
+                      }}
+                    >
                       <img
                         src={assetUrl(ev.image)}
                         alt={ev.title}
                         style={{
-                          width: '68px',
-                          height: '68px',
+                          width: '76px',
+                          height: '76px',
                           objectFit: 'cover',
-                          borderRadius: 'var(--radius-sm)',
+                          borderRadius: '10px',
                           background: '#071524',
                           flexShrink: 0,
                         }}
                       />
                       <div>
-                        <div style={{ display: 'flex', gap: '0.45rem', alignItems: 'center', marginBottom: '0.25rem' }}>
+                        <div
+                          style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '0.5rem',
+                            flexWrap: 'wrap',
+                            marginBottom: '0.25rem',
+                          }}
+                        >
                           <span
                             style={{
-                              fontSize: '0.7rem',
+                              fontSize: '0.68rem',
                               fontWeight: 800,
                               textTransform: 'uppercase',
                               padding: '0.15rem 0.55rem',
                               borderRadius: '999px',
-                              background: ev.status === 'upcoming' ? '#ECFDF5' : '#EFF6FF',
-                              color: ev.status === 'upcoming' ? '#047857' : '#1D4ED8',
+                              background: '#EFF6FF',
+                              color: '#1D4ED8',
                             }}
                           >
-                            {ev.status === 'upcoming' ? '● Upcoming Event' : '✓ Past Report'}
+                            ✓ Published Report ({ev.programmeType})
                           </span>
-                          <span style={{ fontSize: '0.78rem', color: 'var(--color-muted)', fontWeight: 600 }}>
-                            {ev.date} • {ev.timeIST}
+                          <span style={{ fontSize: '0.78rem', color: '#475569', fontWeight: 600 }}>
+                            📅 {ev.date} • {ev.venue}
                           </span>
                         </div>
-                        <h4 style={{ fontSize: '1.02rem', fontWeight: 800, margin: 0 }}>
+                        <h3 style={{ fontSize: '1.05rem', fontWeight: 800, margin: '0 0 0.2rem' }}>
                           {ev.title}
-                        </h4>
-                        {ev.speaker && (
-                          <div style={{ fontSize: '0.8rem', color: 'var(--brand-blue)', fontWeight: 600 }}>
-                            🎙️ {ev.speaker} {ev.speakerDesignation ? `— ${ev.speakerDesignation}` : ''}
-                          </div>
-                        )}
+                        </h3>
+                        <div style={{ fontSize: '0.8rem', color: '#475569' }}>
+                          {ev.speaker ? `🎙️ ${ev.speaker} • ` : ''}
+                          {(ev.fullDescription || []).length} report paragraphs •{' '}
+                          {(ev.eventPhotos || []).length} attached photos
+                        </div>
                       </div>
                     </div>
 
@@ -1369,23 +2185,32 @@ export function AdminPortalClient() {
                         href={`/events/${ev.slug}`}
                         className="btn btn-outline-navy btn-sm"
                       >
-                        View Page ↗
+                        View Report ↗
                       </Link>
                       <button
                         type="button"
-                        onClick={() => startEditEvent(ev)}
-                        className="btn btn-outline-blue btn-sm"
+                        onClick={() => {
+                          setPhotoEventSlug(ev.slug);
+                          setActiveModule('photos');
+                          setShowPhotoUploader(true);
+                        }}
+                        className="btn btn-outline-navy btn-sm"
                       >
-                        Edit
+                        🖼️ + Add Photos
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => startEditEvent(ev)}
+                        className="btn btn-primary btn-sm"
+                      >
+                        ✎ Edit Report
                       </button>
                       <button
                         type="button"
                         onClick={() => handleToggleEventStatus(ev)}
-                        className="btn btn-primary btn-sm"
+                        className="btn btn-outline-navy btn-sm"
                       >
-                        {ev.status === 'upcoming'
-                          ? 'Move to Past Report'
-                          : 'Move to Upcoming'}
+                        Move to Upcoming
                       </button>
                       {ev.slug !== 'inauguration' && (
                         <button
@@ -1402,334 +2227,854 @@ export function AdminPortalClient() {
                 ))}
               </div>
             </div>
-          </div>
-        )}
+          )}
 
-        {/* ===================================================================
-            TAB 3: EVENT PHOTOS & GALLERY MANAGER
-           =================================================================== */}
-        {activeTab === 'photos' && (
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '1.75rem' }}>
-            <div className="CleanCard">
-              <span className="section-tag tag-blue">Upload Photographs</span>
-              <h2 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '0.35rem' }}>
-                Add Event Photograph to Event Page &amp; Chapter Gallery
-              </h2>
-              <p style={{ fontSize: '0.88rem', color: 'var(--color-muted)', marginBottom: '1.25rem' }}>
-                Upload photographs from your computer or paste an image path/URL, assign it to an
-                event report, and publish it to the gallery.
-              </p>
-
-              <form onSubmit={handleAddPhoto}>
-                <div
-                  style={{
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-                    gap: '1rem',
-                    marginBottom: '1rem',
-                  }}
+          {/* =================================================================
+              MODULE 4: PARTICIPANT REGISTRATIONS DIRECTORY
+             ================================================================= */}
+          {activeModule === 'registrations' && (
+            <div className="admin-panel-card">
+              <div
+                style={{
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  gap: '1rem',
+                  marginBottom: '1.25rem',
+                }}
+              >
+                <div>
+                  <h2 style={{ fontSize: '1.2rem', fontWeight: 800, marginBottom: '0.2rem' }}>
+                    Participant Registrations ({filteredRegistrations.length})
+                  </h2>
+                  <p style={{ fontSize: '0.86rem', color: '#64748B', margin: 0 }}>
+                    Complete participant records including Personal Details, DOB, Phone, WhatsApp,
+                    District, Organisation, ISTD Membership, and Certificate Status.
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={handleExportRegistrationsCsv}
+                  className="btn btn-primary btn-sm"
                 >
-                  <div className="form-group" style={{ marginBottom: 0 }}>
-                    <label className="form-label">Photo Title *</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder="e.g., Interactive Q&A Session During AIoT Webinar"
-                      value={photoTitle}
-                      onChange={(e) => setPhotoTitle(e.target.value)}
-                      required
-                    />
-                  </div>
-
-                  <div className="form-group" style={{ marginBottom: 0 }}>
-                    <label className="form-label">Gallery Category *</label>
-                    <select
-                      className="form-control"
-                      value={photoCategory}
-                      onChange={(e) =>
-                        setPhotoCategory(e.target.value as GalleryPhoto['category'])
-                      }
-                    >
-                      <option value="ceremony">Inaugural Ceremony</option>
-                      <option value="addresses">Addresses &amp; Sessions</option>
-                      <option value="oath">Oath of Office</option>
-                      <option value="felicitations">Felicitations</option>
-                      <option value="portraits">Group Photographs</option>
-                    </select>
-                  </div>
-
-                  <div className="form-group" style={{ marginBottom: 0 }}>
-                    <label className="form-label">Attach to Specific Event (Optional)</label>
-                    <select
-                      className="form-control"
-                      value={photoEventSlug}
-                      onChange={(e) => setPhotoEventSlug(e.target.value)}
-                    >
-                      <option value="">Main Gallery Only</option>
-                      {events.map((ev) => (
-                        <option key={ev.slug} value={ev.slug}>
-                          {ev.title} ({ev.date})
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-
-                  <div className="form-group" style={{ marginBottom: 0 }}>
-                    <label className="form-label">Date &amp; Venue Tag</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder="e.g., 10 November 2026 • Online"
-                      value={photoMetaTag}
-                      onChange={(e) => setPhotoMetaTag(e.target.value)}
-                    />
-                  </div>
-                </div>
-
-                <div className="form-group">
-                  <label className="form-label">Factual Caption (Occasion &amp; People) *</label>
-                  <textarea
-                    className="form-control"
-                    rows={2}
-                    placeholder="Describe the occasion and identify the speakers/participants in the photograph"
-                    value={photoCaption}
-                    onChange={(e) => setPhotoCaption(e.target.value)}
-                    required
-                  />
-                </div>
-
-                <div
-                  style={{
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
-                    gap: '1rem',
-                    marginBottom: '1.25rem',
-                    padding: '1rem',
-                    background: 'var(--color-surface-soft)',
-                    borderRadius: 'var(--radius-md)',
-                    border: '1px solid var(--color-border)',
-                  }}
-                >
-                  <div>
-                    <label className="form-label">Upload Image File from Computer</label>
-                    <input
-                      type="file"
-                      accept="image/*"
-                      className="form-control"
-                      onChange={(e) =>
-                        handleImageFileUpload(e, (dataUrl) => setPhotoSrc(dataUrl))
-                      }
-                    />
-                  </div>
-                  <div>
-                    <label className="form-label">Or Image Path / URL *</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder="/photos/istd-22.jpeg or https://..."
-                      value={photoSrc}
-                      onChange={(e) => setPhotoSrc(e.target.value)}
-                      required
-                    />
-                  </div>
-                </div>
-
-                <button type="submit" className="btn btn-red">
-                  + Upload &amp; Publish Photograph →
+                  ⬇ Export CSV / Excel ({filteredRegistrations.length})
                 </button>
-              </form>
-            </div>
+              </div>
 
-            <div className="CleanCard">
-              <h3 style={{ fontSize: '1.2rem', fontWeight: 800, marginBottom: '1rem' }}>
-                Current Gallery Photographs ({photos.length})
-              </h3>
+              {/* Status Filter Pills */}
+              <div
+                style={{
+                  display: 'flex',
+                  gap: '0.45rem',
+                  flexWrap: 'wrap',
+                  marginBottom: '1rem',
+                }}
+              >
+                {(['all', 'Confirmed', 'Attended', 'Certificate Issued', 'Cancelled'] as const).map(
+                  (st) => (
+                    <button
+                      key={st}
+                      type="button"
+                      onClick={() => setRegStatusFilter(st)}
+                      style={{
+                        padding: '0.38rem 0.85rem',
+                        borderRadius: '999px',
+                        fontSize: '0.78rem',
+                        fontWeight: 700,
+                        border:
+                          regStatusFilter === st
+                            ? '1.5px solid #1D4ED8'
+                            : '1px solid #CBD5E1',
+                        background: regStatusFilter === st ? '#EFF6FF' : '#FFFFFF',
+                        color: regStatusFilter === st ? '#1D4ED8' : '#475569',
+                        cursor: 'pointer',
+                      }}
+                    >
+                      {st === 'all' ? 'All Statuses' : st}
+                    </button>
+                  )
+                )}
+              </div>
+
+              {/* Filter & Search Row */}
               <div
                 style={{
                   display: 'grid',
-                  gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
                   gap: '1rem',
+                  marginBottom: '1.25rem',
+                  padding: '1rem',
+                  background: '#F8FAFC',
+                  borderRadius: '10px',
+                  border: '1px solid #E2E8F0',
                 }}
               >
-                {photos.map((p) => (
-                  <div
-                    key={p.id}
+                <div>
+                  <label className="form-label">Filter by Event</label>
+                  <select
+                    className="form-control"
+                    value={regEventFilter}
+                    onChange={(e) => setRegEventFilter(e.target.value)}
+                  >
+                    <option value="all">All Events ({registrations.length})</option>
+                    {events.map((ev) => (
+                      <option key={ev.slug} value={ev.slug}>
+                        {ev.title} ({ev.date})
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label className="form-label">
+                    Search Name, Phone, WhatsApp, Email, District, or Reg ID
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Type to search participants..."
+                    value={regSearch}
+                    onChange={(e) => setRegSearch(e.target.value)}
+                  />
+                </div>
+              </div>
+
+              {filteredRegistrations.length === 0 ? (
+                <div
+                  style={{
+                    padding: '2.5rem',
+                    textAlign: 'center',
+                    color: '#64748B',
+                    background: '#F8FAFC',
+                    borderRadius: '10px',
+                  }}
+                >
+                  No participant registrations match the selected filters.
+                </div>
+              ) : (
+                <div style={{ overflowX: 'auto' }}>
+                  <table
                     style={{
-                      border: '1px solid var(--color-border)',
-                      borderRadius: 'var(--radius-md)',
-                      overflow: 'hidden',
-                      background: '#FFFFFF',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      justifyContent: 'space-between',
+                      width: '100%',
+                      borderCollapse: 'collapse',
+                      fontSize: '0.84rem',
                     }}
                   >
-                    <div>
-                      <img
-                        src={assetUrl(p.src)}
-                        alt={p.title}
+                    <thead>
+                      <tr
                         style={{
-                          width: '100%',
-                          height: '140px',
-                          objectFit: 'cover',
-                          display: 'block',
-                        }}
-                      />
-                      <div style={{ padding: '0.75rem' }}>
-                        <div style={{ fontSize: '0.7rem', fontWeight: 800, color: 'var(--brand-blue)' }}>
-                          {p.categoryLabel}
-                        </div>
-                        <div style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--color-ink)', marginTop: '0.15rem' }}>
-                          {p.title}
-                        </div>
-                      </div>
-                    </div>
-                    <div style={{ padding: '0.5rem 0.75rem', borderTop: '1px solid var(--color-border)' }}>
-                      <button
-                        type="button"
-                        onClick={() => handleDeletePhoto(p.id, p.title)}
-                        style={{
-                          background: 'none',
-                          border: 'none',
-                          color: '#B91C1C',
-                          fontSize: '0.76rem',
-                          fontWeight: 700,
-                          cursor: 'pointer',
-                          padding: 0,
+                          background: '#F1F5F9',
+                          textAlign: 'left',
+                          borderBottom: '2px solid #E2E8F0',
                         }}
                       >
-                        Remove Photo
-                      </button>
+                        <th style={{ padding: '0.75rem' }}>Reg. ID</th>
+                        <th style={{ padding: '0.75rem' }}>Participant &amp; DOB</th>
+                        <th style={{ padding: '0.75rem' }}>Contact &amp; WhatsApp</th>
+                        <th style={{ padding: '0.75rem' }}>District</th>
+                        <th style={{ padding: '0.75rem' }}>Organisation &amp; Role</th>
+                        <th style={{ padding: '0.75rem' }}>Event</th>
+                        <th style={{ padding: '0.75rem' }}>Status</th>
+                        <th style={{ padding: '0.75rem' }}>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {filteredRegistrations.map((reg) => (
+                        <tr
+                          key={reg.id}
+                          style={{ borderBottom: '1px solid #E2E8F0' }}
+                        >
+                          <td style={{ padding: '0.85rem 0.75rem', verticalAlign: 'top' }}>
+                            <strong style={{ color: '#0F172A', display: 'block' }}>
+                              {reg.registrationCode}
+                            </strong>
+                            <span style={{ fontSize: '0.74rem', color: '#64748B' }}>
+                              {new Date(reg.createdAt).toLocaleDateString('en-IN')}
+                            </span>
+                          </td>
+                          <td style={{ padding: '0.85rem 0.75rem', verticalAlign: 'top' }}>
+                            <strong style={{ color: '#0F172A', display: 'block' }}>
+                              {reg.salutation} {reg.fullName}
+                            </strong>
+                            <span style={{ fontSize: '0.76rem', color: '#64748B' }}>
+                              DOB: {reg.dob}
+                            </span>
+                          </td>
+                          <td style={{ padding: '0.85rem 0.75rem', verticalAlign: 'top' }}>
+                            <div>📧 {reg.email}</div>
+                            <div>📞 {reg.phone}</div>
+                            <div style={{ color: '#047857', fontWeight: 700 }}>
+                              💬 WA: {reg.whatsapp}
+                            </div>
+                          </td>
+                          <td style={{ padding: '0.85rem 0.75rem', verticalAlign: 'top' }}>
+                            <strong>{reg.district}</strong>
+                            <div style={{ fontSize: '0.75rem', color: '#64748B' }}>
+                              {reg.city ? `${reg.city}, ` : ''}
+                              {reg.state}
+                            </div>
+                          </td>
+                          <td style={{ padding: '0.85rem 0.75rem', verticalAlign: 'top' }}>
+                            <strong>{reg.organization}</strong>
+                            <div style={{ fontSize: '0.76rem', color: '#475569' }}>
+                              {reg.designation} ({reg.experienceYears})
+                            </div>
+                            <div style={{ fontSize: '0.73rem', color: '#1D4ED8', fontWeight: 600 }}>
+                              {reg.participantCategory}
+                            </div>
+                          </td>
+                          <td style={{ padding: '0.85rem 0.75rem', verticalAlign: 'top' }}>
+                            <strong style={{ fontSize: '0.8rem' }}>{reg.eventTitle}</strong>
+                            <div style={{ fontSize: '0.74rem', color: '#64748B' }}>
+                              {reg.eventDate}
+                            </div>
+                          </td>
+                          <td style={{ padding: '0.85rem 0.75rem', verticalAlign: 'top' }}>
+                            <select
+                              className="form-control"
+                              style={{
+                                padding: '0.32rem 0.5rem',
+                                fontSize: '0.76rem',
+                                minWidth: '132px',
+                              }}
+                              value={reg.status}
+                              onChange={async (e) => {
+                                const nextStatus = e.target.value as EventRegistration['status'];
+                                await updateParticipantStatusInBackend(reg.id, nextStatus);
+                                await loadPortalData(true);
+                                showToast(
+                                  `✓ Updated status for ${reg.fullName} to "${nextStatus}".`
+                                );
+                              }}
+                            >
+                              <option value="Confirmed">Confirmed</option>
+                              <option value="Attended">Attended</option>
+                              <option value="Certificate Issued">Certificate Issued</option>
+                              <option value="Cancelled">Cancelled</option>
+                            </select>
+                          </td>
+                          <td style={{ padding: '0.85rem 0.75rem', verticalAlign: 'top' }}>
+                            <button
+                              type="button"
+                              onClick={() => setSelectedRegistration(reg)}
+                              className="btn btn-outline-navy btn-sm"
+                              style={{ fontSize: '0.74rem', padding: '0.3rem 0.65rem' }}
+                            >
+                              View Pass
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* =================================================================
+              MODULE 5: EVENT PHOTOS & CHAPTER GALLERY MANAGER
+             ================================================================= */}
+          {activeModule === 'photos' && (
+            <>
+              <div className="admin-panel-card">
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    flexWrap: 'wrap',
+                    gap: '1rem',
+                    marginBottom: showPhotoUploader ? '1.25rem' : 0,
+                  }}
+                >
+                  <div>
+                    <h2 style={{ fontSize: '1.2rem', fontWeight: 800, marginBottom: '0.2rem' }}>
+                      Event Photographs &amp; Chapter Gallery ({photos.length})
+                    </h2>
+                    <p style={{ fontSize: '0.86rem', color: '#64748B', margin: 0 }}>
+                      Upload photographs from your computer or paste an image URL, attach them to an
+                      event report, and curate the gallery.
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setShowPhotoUploader((prev) => !prev)}
+                    className="btn btn-primary btn-sm"
+                  >
+                    {showPhotoUploader ? '✕ Close Photo Uploader' : '+ Upload New Photograph'}
+                  </button>
+                </div>
+
+                {showPhotoUploader && (
+                  <form
+                    onSubmit={handleAddPhoto}
+                    style={{
+                      paddingTop: '1.25rem',
+                      borderTop: '1px solid #E2E8F0',
+                    }}
+                  >
+                    <div
+                      style={{
+                        display: 'grid',
+                        gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))',
+                        gap: '1rem',
+                        marginBottom: '1rem',
+                      }}
+                    >
+                      <div className="form-group" style={{ marginBottom: 0 }}>
+                        <label className="form-label">Photograph Title *</label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          placeholder="e.g., Keynote Address During AIoT Session"
+                          value={photoTitle}
+                          onChange={(e) => setPhotoTitle(e.target.value)}
+                          required
+                        />
+                      </div>
+
+                      <div className="form-group" style={{ marginBottom: 0 }}>
+                        <label className="form-label">Gallery Category *</label>
+                        <select
+                          className="form-control"
+                          value={photoCategory}
+                          onChange={(e) =>
+                            setPhotoCategory(e.target.value as GalleryPhoto['category'])
+                          }
+                        >
+                          <option value="ceremony">Inaugural Ceremony</option>
+                          <option value="addresses">Addresses &amp; Sessions</option>
+                          <option value="oath">Oath of Office</option>
+                          <option value="felicitations">Felicitations</option>
+                          <option value="portraits">Group Photographs</option>
+                        </select>
+                      </div>
+
+                      <div className="form-group" style={{ marginBottom: 0 }}>
+                        <label className="form-label">Link to Specific Event Page (Optional)</label>
+                        <select
+                          className="form-control"
+                          value={photoEventSlug}
+                          onChange={(e) => setPhotoEventSlug(e.target.value)}
+                        >
+                          <option value="">Main Chapter Gallery Only</option>
+                          {events.map((ev) => (
+                            <option key={ev.slug} value={ev.slug}>
+                              {ev.title} ({ev.date})
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+
+                      <div className="form-group" style={{ marginBottom: 0 }}>
+                        <label className="form-label">Date &amp; Location Tag</label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          placeholder="e.g., 10 November 2026 • Thrissur"
+                          value={photoMetaTag}
+                          onChange={(e) => setPhotoMetaTag(e.target.value)}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="form-group">
+                      <label className="form-label">
+                        Factual Caption (Identify Occasion &amp; Dignitaries/Speakers) *
+                      </label>
+                      <textarea
+                        className="form-control"
+                        rows={2}
+                        placeholder="Enter a factual caption describing the occasion and people in the photograph"
+                        value={photoCaption}
+                        onChange={(e) => setPhotoCaption(e.target.value)}
+                        required
+                      />
+                    </div>
+
+                    <div
+                      style={{
+                        display: 'grid',
+                        gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+                        gap: '1rem',
+                        marginBottom: '1.25rem',
+                        padding: '1rem',
+                        background: '#F8FAFC',
+                        borderRadius: '10px',
+                        border: '1px solid #E2E8F0',
+                      }}
+                    >
+                      <div>
+                        <label className="form-label">Upload Image File from Computer</label>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          className="form-control"
+                          onChange={(e) =>
+                            handleImageFileUpload(e, (dataUrl) => setPhotoSrc(dataUrl))
+                          }
+                        />
+                      </div>
+                      <div>
+                        <label className="form-label">Or Image Path / URL *</label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          placeholder="/photos/istd-22.jpeg or https://..."
+                          value={photoSrc}
+                          onChange={(e) => setPhotoSrc(e.target.value)}
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    <button type="submit" className="btn btn-primary">
+                      + Publish Photograph to Gallery →
+                    </button>
+                  </form>
+                )}
+              </div>
+
+              <div className="admin-panel-card">
+                <div
+                  style={{
+                    display: 'flex',
+                    gap: '0.45rem',
+                    flexWrap: 'wrap',
+                    marginBottom: '1.25rem',
+                  }}
+                >
+                  {(
+                    [
+                      { id: 'all', label: `All Photos (${photos.length})` },
+                      { id: 'ceremony', label: 'Ceremony' },
+                      { id: 'addresses', label: 'Addresses & Sessions' },
+                      { id: 'oath', label: 'Oath of Office' },
+                      { id: 'felicitations', label: 'Felicitations' },
+                      { id: 'portraits', label: 'Group Photos' },
+                    ] as const
+                  ).map((cat) => (
+                    <button
+                      key={cat.id}
+                      type="button"
+                      onClick={() => setPhotoCategoryFilter(cat.id)}
+                      style={{
+                        padding: '0.38rem 0.85rem',
+                        borderRadius: '999px',
+                        fontSize: '0.78rem',
+                        fontWeight: 700,
+                        border:
+                          photoCategoryFilter === cat.id
+                            ? '1.5px solid #1D4ED8'
+                            : '1px solid #CBD5E1',
+                        background: photoCategoryFilter === cat.id ? '#EFF6FF' : '#FFFFFF',
+                        color: photoCategoryFilter === cat.id ? '#1D4ED8' : '#475569',
+                        cursor: 'pointer',
+                      }}
+                    >
+                      {cat.label}
+                    </button>
+                  ))}
+                </div>
+
+                <div
+                  style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))',
+                    gap: '1rem',
+                  }}
+                >
+                  {filteredPhotos.map((p) => (
+                    <div
+                      key={p.id}
+                      style={{
+                        border: '1px solid #E2E8F0',
+                        borderRadius: '10px',
+                        overflow: 'hidden',
+                        background: '#FFFFFF',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'space-between',
+                      }}
+                    >
+                      <div>
+                        <img
+                          src={assetUrl(p.src)}
+                          alt={p.title}
+                          style={{
+                            width: '100%',
+                            height: '145px',
+                            objectFit: 'cover',
+                            display: 'block',
+                          }}
+                        />
+                        <div style={{ padding: '0.75rem' }}>
+                          <div
+                            style={{
+                              fontSize: '0.68rem',
+                              fontWeight: 800,
+                              color: '#1D4ED8',
+                              textTransform: 'uppercase',
+                            }}
+                          >
+                            {p.categoryLabel}
+                          </div>
+                          <div
+                            style={{
+                              fontSize: '0.84rem',
+                              fontWeight: 700,
+                              color: '#0F172A',
+                              marginTop: '0.15rem',
+                            }}
+                          >
+                            {p.title}
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        style={{
+                          padding: '0.5rem 0.75rem',
+                          borderTop: '1px solid #F1F5F9',
+                          display: 'flex',
+                          justifyContent: 'space-between',
+                          alignItems: 'center',
+                        }}
+                      >
+                        <span style={{ fontSize: '0.7rem', color: '#64748B' }}>{p.metaTag}</span>
+                        <button
+                          type="button"
+                          onClick={() => handleDeletePhoto(p.id, p.title)}
+                          style={{
+                            background: 'none',
+                            border: 'none',
+                            color: '#B91C1C',
+                            fontSize: '0.74rem',
+                            fontWeight: 700,
+                            cursor: 'pointer',
+                            padding: 0,
+                          }}
+                        >
+                          Remove
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </>
+          )}
+
+          {/* =================================================================
+              MODULE 6: MONGODB DATABASE & CACHE CONTROLS
+             ================================================================= */}
+          {activeModule === 'system' && (
+            <div className="admin-panel-card">
+              <h2 style={{ fontSize: '1.25rem', fontWeight: 800, marginBottom: '0.35rem' }}>
+                MongoDB Collections &amp; Server Cache Controls
+              </h2>
+              <p style={{ fontSize: '0.88rem', color: '#64748B', marginBottom: '1.5rem' }}>
+                Connected via the official <code>mongodb</code> driver (<code>src/lib/mongodb.ts</code>)
+                with a 60-second TTL server/client cache (<code>src/lib/backendStore.ts</code>) that
+                automatically invalidates on every write operation.
+              </p>
+
+              <div
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+                  gap: '1.15rem',
+                  marginBottom: '1.5rem',
+                }}
+              >
+                <div
+                  style={{
+                    padding: '1.25rem',
+                    background: '#F8FAFC',
+                    borderRadius: '12px',
+                    border: '1px solid #E2E8F0',
+                  }}
+                >
+                  <h4 style={{ fontSize: '0.95rem', fontWeight: 800, marginBottom: '0.5rem' }}>
+                    🗄️ MongoDB Storage Status
+                  </h4>
+                  <div style={{ fontSize: '0.85rem', lineHeight: 1.75, color: '#334155' }}>
+                    <div>
+                      <strong>Active Engine:</strong>{' '}
+                      {cacheStats?.storageEngine || 'MongoDB-Compatible Store'}
+                    </div>
+                    <div>
+                      <strong>Database Name:</strong> <code>istd_thrissur</code>
+                    </div>
+                    <div>
+                      <strong>Collections:</strong> <code>events</code> ({events.length}),{' '}
+                      <code>registrations</code> ({registrations.length}),{' '}
+                      <code>gallery_photos</code> ({photos.length})
                     </div>
                   </div>
-                ))}
+                </div>
+
+                <div
+                  style={{
+                    padding: '1.25rem',
+                    background: '#F8FAFC',
+                    borderRadius: '12px',
+                    border: '1px solid #E2E8F0',
+                  }}
+                >
+                  <h4 style={{ fontSize: '0.95rem', fontWeight: 800, marginBottom: '0.5rem' }}>
+                    ⚡ Cache Layer Performance
+                  </h4>
+                  <div style={{ fontSize: '0.85rem', lineHeight: 1.75, color: '#334155' }}>
+                    <div>
+                      <strong>Cache Hits / Misses:</strong> {cacheStats?.hits || 0} hits /{' '}
+                      {cacheStats?.misses || 0} misses
+                    </div>
+                    <div>
+                      <strong>Cache TTL:</strong> {cacheStats?.ttlSeconds || 60} seconds
+                    </div>
+                    <div>
+                      <strong>Last Invalidated:</strong>{' '}
+                      {cacheStats?.lastInvalidatedAt
+                        ? new Date(cacheStats.lastInvalidatedAt).toLocaleTimeString()
+                        : 'Just now'}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                style={{
+                  padding: '1.25rem',
+                  background: '#071524',
+                  color: '#F8FAFC',
+                  borderRadius: '12px',
+                  fontSize: '0.82rem',
+                  marginBottom: '1.5rem',
+                }}
+              >
+                <div style={{ color: '#FACC15', fontWeight: 800, marginBottom: '0.35rem' }}>
+                  Environment Configuration (`.env.local`):
+                </div>
+                <code style={{ display: 'block', whiteSpace: 'pre-wrap', color: '#E2E8F0' }}>
+                  {`MONGODB_URI="mongodb+srv://<username>:<password>@cluster0.mongodb.net/istd_thrissur?retryWrites=true&w=majority"\nMONGODB_DB="istd_thrissur"\nADMIN_EMAIL="admin@istdthrissur.org"\nADMIN_PASSWORD="ISTD@Thrissur2026"`}
+                </code>
+              </div>
+
+              <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+                <button
+                  type="button"
+                  onClick={handleExportDatabaseJson}
+                  className="btn btn-primary btn-sm"
+                >
+                  ⬇ Download Full MongoDB JSON Backup
+                </button>
+                <button
+                  type="button"
+                  onClick={async () => {
+                    const stats = await clearBackendCache();
+                    setCacheStats(stats);
+                    await loadPortalData(true);
+                    showToast('✓ Server and client cache flushed.');
+                  }}
+                  className="btn btn-outline-navy btn-sm"
+                >
+                  ⚡ Flush Server &amp; Client Cache
+                </button>
               </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
+      </div>
 
-        {/* ===================================================================
-            TAB 4: MONGODB & CACHE SETTINGS
-           =================================================================== */}
-        {activeTab === 'system' && (
-          <div className="CleanCard">
-            <span className="section-tag tag-blue">Database &amp; Caching Architecture</span>
-            <h2 style={{ fontSize: '1.35rem', fontWeight: 800, marginBottom: '0.5rem' }}>
-              MongoDB Collections &amp; Server Cache Controls
-            </h2>
-            <p style={{ fontSize: '0.92rem', color: 'var(--color-body)', marginBottom: '1.5rem' }}>
-              The backend uses the official <code>mongodb</code> driver (`src/lib/mongodb.ts`) with
-              connection pooling and an automatic 60-second TTL cache (`src/lib/backendStore.ts`)
-              that invalidates immediately whenever events, photos, or participant registrations are
-              updated.
-            </p>
+      {/* =====================================================================
+          PARTICIPANT REGISTRATION DETAIL / PASS MODAL
+         ===================================================================== */}
+      {selectedRegistration && (
+        <div
+          style={{
+            position: 'fixed',
+            inset: 0,
+            background: 'rgba(7, 21, 36, 0.65)',
+            zIndex: 100,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '1.25rem',
+          }}
+          onClick={() => setSelectedRegistration(null)}
+        >
+          <div
+            style={{
+              background: '#FFFFFF',
+              borderRadius: '16px',
+              maxWidth: '640px',
+              width: '100%',
+              maxHeight: '90vh',
+              overflowY: 'auto',
+              padding: '1.75rem',
+              boxShadow: '0 24px 60px rgba(0, 0, 0, 0.35)',
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'flex-start',
+                borderBottom: '1px solid #E2E8F0',
+                paddingBottom: '1rem',
+                marginBottom: '1.25rem',
+              }}
+            >
+              <div>
+                <span
+                  style={{
+                    fontSize: '0.7rem',
+                    fontWeight: 800,
+                    textTransform: 'uppercase',
+                    padding: '0.2rem 0.6rem',
+                    borderRadius: '999px',
+                    background: '#EFF6FF',
+                    color: '#1D4ED8',
+                  }}
+                >
+                  {selectedRegistration.registrationCode}
+                </span>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 800, margin: '0.35rem 0 0' }}>
+                  {selectedRegistration.salutation} {selectedRegistration.fullName}
+                </h3>
+                <div style={{ fontSize: '0.82rem', color: '#64748B' }}>
+                  Registered for <strong>{selectedRegistration.eventTitle}</strong> (
+                  {selectedRegistration.eventDate})
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => setSelectedRegistration(null)}
+                className="btn btn-outline-navy btn-sm"
+              >
+                ✕ Close
+              </button>
+            </div>
 
             <div
               style={{
                 display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
-                gap: '1.25rem',
-                marginBottom: '1.5rem',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+                gap: '0.9rem',
+                fontSize: '0.85rem',
+                marginBottom: '1.25rem',
               }}
             >
-              <div
-                style={{
-                  padding: '1.25rem',
-                  background: 'var(--color-surface-soft)',
-                  borderRadius: 'var(--radius-md)',
-                  border: '1px solid var(--color-border)',
-                }}
-              >
-                <h4 style={{ fontSize: '0.95rem', fontWeight: 800, marginBottom: '0.5rem' }}>
-                  🗄️ MongoDB Storage Status
-                </h4>
-                <div style={{ fontSize: '0.86rem', lineHeight: 1.7 }}>
-                  <div>
-                    <strong>Active Engine:</strong>{' '}
-                    {cacheStats?.storageEngine || 'MongoDB-Compatible Store'}
-                  </div>
-                  <div>
-                    <strong>Database Name:</strong> <code>istd_thrissur</code>
-                  </div>
-                  <div>
-                    <strong>Collections:</strong> <code>events</code> ({events.length}),{' '}
-                    <code>registrations</code> ({registrations.length}),{' '}
-                    <code>gallery_photos</code> ({photos.length})
-                  </div>
-                </div>
+              <div>
+                <strong style={{ color: '#64748B', display: 'block', fontSize: '0.73rem' }}>
+                  DATE OF BIRTH &amp; GENDER
+                </strong>
+                {selectedRegistration.dob}{' '}
+                {selectedRegistration.gender ? `(${selectedRegistration.gender})` : ''}
               </div>
-
-              <div
-                style={{
-                  padding: '1.25rem',
-                  background: 'var(--color-surface-soft)',
-                  borderRadius: 'var(--radius-md)',
-                  border: '1px solid var(--color-border)',
-                }}
-              >
-                <h4 style={{ fontSize: '0.95rem', fontWeight: 800, marginBottom: '0.5rem' }}>
-                  ⚡ Cache Layer Performance
-                </h4>
-                <div style={{ fontSize: '0.86rem', lineHeight: 1.7 }}>
-                  <div>
-                    <strong>Cache Hits / Misses:</strong> {cacheStats?.hits || 0} hits /{' '}
-                    {cacheStats?.misses || 0} misses
-                  </div>
-                  <div>
-                    <strong>Cache TTL:</strong> {cacheStats?.ttlSeconds || 60} seconds
-                  </div>
-                  <div>
-                    <strong>Last Invalidated:</strong>{' '}
-                    {cacheStats?.lastInvalidatedAt
-                      ? new Date(cacheStats.lastInvalidatedAt).toLocaleTimeString()
-                      : 'Just now'}
-                  </div>
-                </div>
+              <div>
+                <strong style={{ color: '#64748B', display: 'block', fontSize: '0.73rem' }}>
+                  EMAIL ADDRESS
+                </strong>
+                {selectedRegistration.email}
+              </div>
+              <div>
+                <strong style={{ color: '#64748B', display: 'block', fontSize: '0.73rem' }}>
+                  PHONE &amp; WHATSAPP
+                </strong>
+                Phone: {selectedRegistration.phone} | WA: {selectedRegistration.whatsapp}
+              </div>
+              <div>
+                <strong style={{ color: '#64748B', display: 'block', fontSize: '0.73rem' }}>
+                  DISTRICT &amp; LOCATION
+                </strong>
+                {selectedRegistration.district}, {selectedRegistration.city || ''}{' '}
+                {selectedRegistration.state}
+              </div>
+              <div>
+                <strong style={{ color: '#64748B', display: 'block', fontSize: '0.73rem' }}>
+                  ORGANISATION / INSTITUTION
+                </strong>
+                {selectedRegistration.organization}
+              </div>
+              <div>
+                <strong style={{ color: '#64748B', display: 'block', fontSize: '0.73rem' }}>
+                  DESIGNATION &amp; EXPERIENCE
+                </strong>
+                {selectedRegistration.designation} ({selectedRegistration.experienceYears})
+              </div>
+              <div>
+                <strong style={{ color: '#64748B', display: 'block', fontSize: '0.73rem' }}>
+                  PARTICIPANT CATEGORY
+                </strong>
+                {selectedRegistration.participantCategory}
+              </div>
+              <div>
+                <strong style={{ color: '#64748B', display: 'block', fontSize: '0.73rem' }}>
+                  ISTD MEMBERSHIP &amp; CERTIFICATE
+                </strong>
+                ISTD: {selectedRegistration.isIstdMember} | Certificate:{' '}
+                {selectedRegistration.requireCertificate ? 'Requested' : 'No'}
               </div>
             </div>
+
+            {selectedRegistration.expectations && (
+              <div
+                style={{
+                  padding: '0.9rem',
+                  background: '#F8FAFC',
+                  borderRadius: '10px',
+                  border: '1px solid #E2E8F0',
+                  fontSize: '0.84rem',
+                  marginBottom: '1.25rem',
+                }}
+              >
+                <strong style={{ display: 'block', fontSize: '0.74rem', color: '#64748B' }}>
+                  QUESTIONS / EXPECTATIONS FOR SPEAKER:
+                </strong>
+                {selectedRegistration.expectations}
+              </div>
+            )}
 
             <div
               style={{
-                padding: '1.25rem',
-                background: '#0B2239',
-                color: '#F8FAFC',
-                borderRadius: 'var(--radius-md)',
-                fontSize: '0.84rem',
-                marginBottom: '1.5rem',
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                gap: '0.75rem',
+                flexWrap: 'wrap',
+                paddingTop: '1rem',
+                borderTop: '1px solid #E2E8F0',
               }}
             >
-              <div style={{ color: '#FACC15', fontWeight: 800, marginBottom: '0.35rem' }}>
-                MongoDB Atlas Environment Configuration (`.env.local`):
-              </div>
-              <code style={{ display: 'block', whiteSpace: 'pre-wrap', color: '#E2E8F0' }}>
-                {`MONGODB_URI="mongodb+srv://<username>:<password>@cluster0.mongodb.net/istd_thrissur?retryWrites=true&w=majority"\nMONGODB_DB="istd_thrissur"\nADMIN_EMAIL="admin@istdthrissur.org"\nADMIN_PASSWORD="ISTD@Thrissur2026"`}
-              </code>
-            </div>
-
-            <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
-              <button
-                type="button"
-                onClick={handleExportDatabaseJson}
+              <a
+                href={`https://wa.me/${selectedRegistration.whatsapp.replace(
+                  /[^0-9]/g,
+                  ''
+                )}?text=${encodeURIComponent(
+                  `Hello ${selectedRegistration.salutation} ${selectedRegistration.fullName}, your registration (${selectedRegistration.registrationCode}) for "${selectedRegistration.eventTitle}" (${selectedRegistration.eventDate}) with ISTD Thrissur Chapter is confirmed.`
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="btn btn-primary btn-sm"
+                style={{ background: '#047857', borderColor: '#047857' }}
               >
-                ⬇ Download Full MongoDB JSON Backup
-              </button>
+                💬 Send WhatsApp Confirmation ↗
+              </a>
               <button
                 type="button"
-                onClick={async () => {
-                  const stats = await clearBackendCache();
-                  setCacheStats(stats);
-                  await loadPortalData(true);
-                  showToast('✓ Cache flushed and reloaded.');
-                }}
+                onClick={() => setSelectedRegistration(null)}
                 className="btn btn-outline-navy btn-sm"
               >
-                ⚡ Flush Server &amp; Client Cache
+                Done
               </button>
             </div>
           </div>
-        )}
-      </div>
-    </section>
+        </div>
+      )}
+    </div>
   );
 }

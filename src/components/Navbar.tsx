@@ -20,20 +20,24 @@ export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
 
+  const isAdminRoute = pathname?.startsWith('/admin');
+
   useEffect(() => {
+    if (isAdminRoute) return;
     const onScroll = () => {
       setIsScrolled(window.scrollY > 16);
     };
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+  }, [isAdminRoute]);
 
   useEffect(() => {
     setDrawerOpen(false);
   }, [pathname]);
 
   useEffect(() => {
+    if (isAdminRoute) return;
     if (drawerOpen) {
       document.body.style.overflow = 'hidden';
     } else {
@@ -47,7 +51,11 @@ export function Navbar() {
       document.body.style.overflow = '';
       window.removeEventListener('keydown', onKeyDown);
     };
-  }, [drawerOpen]);
+  }, [drawerOpen, isAdminRoute]);
+
+  if (isAdminRoute) {
+    return null;
+  }
 
   const isActive = (href: string) => {
     if (href === '/') return pathname === '/';

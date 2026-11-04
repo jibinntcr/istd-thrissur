@@ -8,6 +8,10 @@ import { assetUrl, OFFICIAL_LINKS } from '@/data/siteData';
 export function Footer() {
   const pathname = usePathname();
 
+  if (pathname?.startsWith('/admin')) {
+    return null;
+  }
+
   const isActive = (href: string) => {
     if (href === '/') return pathname === '/';
     return pathname?.startsWith(href);

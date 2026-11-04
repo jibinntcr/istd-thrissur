@@ -63,6 +63,7 @@ export interface ChapterEvent {
   speakerDesignation?: string;
   shortDescription: string;
   fullDescription: string[];
+  highlights?: string[];
   image: string;
   imageCaption: string;
   isPosterImage?: boolean;
