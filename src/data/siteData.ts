@@ -476,6 +476,16 @@ export const GALLERY_PHOTOS: GalleryPhoto[] = [
 
 export const OFFICE_BEARERS: CommitteeMember[] = [
   {
+    id: 'member-zakkariya',
+    name: 'Prof. Dr. Zakkariya K.A',
+    role: 'Founder & Mentor',
+    title: 'Regional Vice President, ISTD (South)',
+    avatar: '/images/ISTDTeamTCR/zakkariya-ka.jpg',
+    linkedin: 'https://www.linkedin.com/in/zakkariya-k-a-b28606109/',
+    isChairman: true,
+    isOfficeBearer: true,
+  },
+  {
     id: 'member-tony',
     name: 'Tony Chacko',
     role: 'Chairman',
@@ -564,6 +574,11 @@ export const INAUGURATION_DIGNITARIES = [
 ];
 
 export const CHAPTER_CORE_CONTRIBUTORS = [
+  {
+    name: 'Prof. Dr. Zakkariya K.A',
+    role: 'Founder & Mentor',
+    linkedin: 'https://www.linkedin.com/in/zakkariya-k-a-b28606109/',
+  },
   {
     name: 'Shri. Tony Chacko',
     role: 'Chairman',

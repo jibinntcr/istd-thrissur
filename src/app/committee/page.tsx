@@ -97,11 +97,11 @@ export default function CommitteePage() {
       <section className="section-padding bg-white" id="officeBearers">
         <div className="container">
           <div className="section-header text-center">
-            <span className="section-tag tag-red">Office Bearers</span>
-            <h2 className="section-title">Chapter Office Bearers</h2>
+            <span className="section-tag tag-red">Leadership &amp; Office Bearers</span>
+            <h2 className="section-title">Founder, Mentor &amp; Office Bearers</h2>
             <p className="section-subtitle">
-              Primary office bearers coordinating the governance and operations of the ISTD
-              Thrissur Chapter.
+              Founder &amp; Mentor and primary office bearers guiding the governance and operations
+              of the ISTD Thrissur Chapter.
             </p>
           </div>
 
