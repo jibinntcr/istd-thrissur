@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     template: '%s | ISTD Thrissur Chapter',
   },
   description:
-    'ISTD Thrissur Diamond Chapter - Pioneers in Training, Learning & Development. Join the premier network of HR professionals, corporate trainers, and educators in Central Kerala.',
+    'ISTD Thrissur Chapter (Diamond Chapter) — Indian Society for Training & Development. Bringing together trainers, educators, HR professionals, academicians, and industry practitioners in Central Kerala.',
   icons: {
     icon: '/images/logo-circle.png',
     apple: '/images/logo-circle.png',

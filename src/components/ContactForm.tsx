@@ -1,21 +1,114 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { ALL_CHAPTER_EVENTS } from '@/data/siteData';
 
 export function ContactForm() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
-  const [category, setCategory] = useState('');
+  const [category, setCategory] = useState('Events & Programmes Enquiry');
+  const [eventTitle, setEventTitle] = useState(
+    'From AI Assistants to AI Agents: The Next Shift in Business (8 August 2026)'
+  );
   const [message, setMessage] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [result, setResult] = useState<{ referenceId: string; message: string } | null>(null);
+  const [resultMessage, setResultMessage] = useState<string | null>(null);
+  const [copied, setCopied] = useState(false);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const qType = params.get('type');
+    const qEvent = params.get('event');
+    const qCategory = params.get('category');
+
+    if (qEvent) {
+      setCategory('Events & Programmes Enquiry');
+      setEventTitle(qEvent);
+    } else if (qType === 'event') {
+      setCategory('Events & Programmes Enquiry');
+    } else if (qCategory) {
+      setCategory(qCategory);
+    }
+  }, []);
+
+  const buildMailtoHref = () => {
+    const subjectLine =
+      category === 'Events & Programmes Enquiry' && eventTitle
+        ? `ISTD Thrissur Chapter Event Enquiry: ${eventTitle}`
+        : `ISTD Thrissur Chapter Enquiry: ${category} (${name || 'Visitor'})`;
+    const subject = encodeURIComponent(subjectLine);
+    const body = encodeURIComponent(
+      [
+        `ISTD Thrissur Chapter — Contact / Event Enquiry`,
+        `------------------------------------------------`,
+        `Full Name: ${name}`,
+        `Email Address: ${email}`,
+        `Phone / Mobile: ${phone}`,
+        `Enquiry Category: ${category}`,
+        category === 'Events & Programmes Enquiry' ? `Selected Event: ${eventTitle}` : null,
+        ``,
+        `Message:`,
+        `${message}`,
+      ]
+        .filter((line) => line !== null)
+        .join('\n')
+    );
+    return `mailto:tonychacko67@gmail.com,jibintcr@gmail.com?subject=${subject}&body=${body}`;
+  };
+
+  const handleCopyDetails = async () => {
+    const text = [
+      `ISTD Thrissur Chapter — Enquiry`,
+      `Full Name: ${name}`,
+      `Email Address: ${email}`,
+      `Phone / Mobile: ${phone}`,
+      `Enquiry Category: ${category}`,
+      category === 'Events & Programmes Enquiry' ? `Selected Event: ${eventTitle}` : null,
+      `Message: ${message}`,
+    ]
+      .filter((line) => line !== null)
+      .join('\n');
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 3000);
+    } catch {
+      // Ignore clipboard failure
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (submitting) return;
+
+    const trimmedName = name.trim();
+    const trimmedEmail = email.trim();
+    const trimmedPhone = phone.trim();
+    const trimmedMessage = message.trim();
+
+    if (!trimmedName) {
+      setError('Please enter your full name.');
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)) {
+      setError('Please enter a valid email address.');
+      return;
+    }
+    if (trimmedPhone.length < 7) {
+      setError('Please enter a valid phone or mobile number.');
+      return;
+    }
+    if (!trimmedMessage) {
+      setError('Please enter your message or enquiry details.');
+      return;
+    }
+
     setSubmitting(true);
     setError(null);
+    setResultMessage(null);
 
     try {
       const res = await fetch('/api/enquiry', {
@@ -23,206 +116,238 @@ export function ContactForm() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           type: 'contact',
-          name,
-          email,
-          phone,
-          category: category || 'General',
-          message,
+          name: trimmedName,
+          email: trimmedEmail,
+          phone: trimmedPhone,
+          category,
+          eventTitle: category === 'Events & Programmes Enquiry' ? eventTitle : '',
+          message: trimmedMessage,
         }),
       });
-      if (res.status === 404 || res.status === 405) {
-        // Static deployment fallback (e.g., GitHub Pages)
-        const refId = `ISTD-TCR-2026-${Math.floor(1000 + Math.random() * 9000)}`;
-        setResult({
-          referenceId: refId,
-          message: `Thank you, ${name}. Your enquiry regarding "${category || 'General'}" has been received by the ISTD Thrissur Chapter Secretariat.`,
-        });
-        setName('');
-        setEmail('');
-        setPhone('');
-        setCategory('');
-        setMessage('');
+
+      const contentType = res.headers.get('content-type') || '';
+      if (!contentType.includes('application/json')) {
+        setError(
+          'Automated server delivery is not configured on this static host. Your entered details have been preserved in the form—please click "Send via Email Client" below to send your pre-filled enquiry directly to the Thrissur Chapter office bearers.'
+        );
         return;
       }
+
       const data = await res.json();
       if (!res.ok || !data.ok) {
-        setError(data.error || 'Could not send message. Please try again.');
+        setError(
+          data.error ||
+            'Automated form delivery is currently unavailable. Your entered details remain in the form—please use the "Send via Email Client" button below.'
+        );
       } else {
-        setResult({ referenceId: data.referenceId, message: data.message });
+        setResultMessage(data.message);
         setName('');
         setEmail('');
         setPhone('');
-        setCategory('');
         setMessage('');
       }
     } catch {
-      const refId = `ISTD-TCR-2026-${Math.floor(1000 + Math.random() * 9000)}`;
-      setResult({
-        referenceId: refId,
-        message: `Thank you, ${name}. Your enquiry regarding "${category || 'General'}" has been received by the ISTD Thrissur Chapter Secretariat.`,
-      });
-      setName('');
-      setEmail('');
-      setPhone('');
-      setCategory('');
-      setMessage('');
+      setError(
+        'Automated server delivery is not configured on this host. Your entered details have been preserved in the form—please click "Send via Email Client" below to send your pre-filled enquiry directly to the Thrissur Chapter office bearers.'
+      );
     } finally {
       setSubmitting(false);
     }
   };
 
   return (
-    <div className="form-card">
-      <span className="section-tag tag-red">Send an Enquiry</span>
+    <div className="form-card" id="contactEnquiryForm">
+      <span className="section-tag tag-red">Enquiry Form</span>
       <h2
         style={{
-          fontSize: '1.75rem',
+          fontSize: '1.65rem',
           marginBottom: '0.5rem',
           color: 'var(--color-ink)',
           fontWeight: 800,
         }}
       >
-        Connect With Us
+        Send an Enquiry to the Thrissur Chapter
       </h2>
-      <p style={{ fontSize: '0.92rem', color: 'var(--color-muted)', marginBottom: '2rem' }}>
-        Please fill out the form below and our Chapter leadership will respond to you promptly.
+      <p style={{ fontSize: '0.92rem', color: 'var(--color-muted)', marginBottom: '1.75rem' }}>
+        Use this form for event enquiries, speaker proposals, institutional collaboration, or
+        chapter membership questions.
       </p>
 
-      {result && (
+      {resultMessage && (
         <div className="form-success-alert" role="status">
-          <div className="form-success-title">
-            ✓ Enquiry Sent (Ref: {result.referenceId})
-          </div>
-          <p>{result.message}</p>
+          <div className="form-success-title">Enquiry Sent</div>
+          <p>{resultMessage}</p>
           <button
             type="button"
             className="btn btn-outline-navy btn-sm"
             style={{ marginTop: '0.75rem' }}
-            onClick={() => setResult(null)}
+            onClick={() => setResultMessage(null)}
           >
-            Send Another Message
+            Send Another Enquiry
           </button>
         </div>
       )}
 
       {error && (
-        <div className="form-error-alert" role="alert">
-          {error}
+        <div className="form-error-alert" role="alert" style={{ marginBottom: '1.5rem' }}>
+          <p style={{ margin: '0 0 0.85rem 0', fontWeight: 600 }}>{error}</p>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.65rem' }}>
+            <a href={buildMailtoHref()} className="btn btn-primary btn-sm">
+              Send via Email Client (Pre-filled)
+            </a>
+            <button
+              type="button"
+              className="btn btn-outline-navy btn-sm"
+              onClick={handleCopyDetails}
+            >
+              {copied ? 'Copied to Clipboard ✓' : 'Copy Enquiry Details'}
+            </button>
+          </div>
         </div>
       )}
 
-      {!result && (
-        <form id="contactLeadForm" onSubmit={handleSubmit}>
-          <div className="form-row-2">
-            <div className="form-group">
-              <label className="form-label" htmlFor="contactName">
-                Full Name *
-              </label>
-              <input
-                type="text"
-                id="contactName"
-                className="form-control"
-                placeholder="e.g. Anand Varma"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label className="form-label" htmlFor="contactEmail">
-                Email Address *
-              </label>
-              <input
-                type="email"
-                id="contactEmail"
-                className="form-control"
-                placeholder="e.g. anand@company.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-            </div>
-          </div>
-
-          <div className="form-row-2">
-            <div className="form-group">
-              <label className="form-label" htmlFor="contactPhone">
-                Phone / Mobile *
-              </label>
-              <input
-                type="tel"
-                id="contactPhone"
-                className="form-control"
-                placeholder="e.g. +91 9846101034"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label className="form-label" htmlFor="contactCategory">
-                Enquiry Category *
-              </label>
-              <select
-                id="contactCategory"
-                className="form-control"
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-                required
-              >
-                <option value="" disabled>
-                  Select Category
-                </option>
-                <option value="Knowledge Forums & Workshops">
-                  Knowledge Forums, Webinars &amp; Workshops
-                </option>
-                <option value="Industry-Academia Collaboration">
-                  Industry–Academia &amp; Campus Collaboration
-                </option>
-                <option value="Membership">
-                  Membership (Individual / Institutional / Student)
-                </option>
-                <option value="Others">General Enquiry / Speaking Engagements</option>
-              </select>
-            </div>
-          </div>
-
+      <form id="contactLeadForm" onSubmit={handleSubmit} noValidate>
+        <div className="form-row-2">
           <div className="form-group">
-            <label className="form-label" htmlFor="contactMessage">
-              Message *
+            <label className="form-label" htmlFor="contactName">
+              Full Name <span aria-hidden="true">*</span>
             </label>
-            <textarea
-              id="contactMessage"
+            <input
+              type="text"
+              id="contactName"
+              name="name"
               className="form-control"
-              placeholder="Write your message or inquiry details here..."
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
+              placeholder="Enter your full name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
               required
+              autoComplete="name"
             />
           </div>
+          <div className="form-group">
+            <label className="form-label" htmlFor="contactEmail">
+              Email Address <span aria-hidden="true">*</span>
+            </label>
+            <input
+              type="email"
+              id="contactEmail"
+              name="email"
+              className="form-control"
+              placeholder="name@example.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              autoComplete="email"
+            />
+          </div>
+        </div>
 
-          <button
-            type="submit"
-            className="btn btn-red btn-lg"
-            style={{ width: '100%' }}
-            id="contactSubmitBtn"
-            disabled={submitting}
-          >
-            <span>{submitting ? 'Sending Message...' : 'Submit Message'}</span>
-            <svg
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
+        <div className="form-row-2">
+          <div className="form-group">
+            <label className="form-label" htmlFor="contactPhone">
+              Phone / Mobile Number <span aria-hidden="true">*</span>
+            </label>
+            <input
+              type="tel"
+              id="contactPhone"
+              name="phone"
+              className="form-control"
+              placeholder="+91 9846101034"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              required
+              autoComplete="tel"
+            />
+          </div>
+          <div className="form-group">
+            <label className="form-label" htmlFor="contactCategory">
+              Enquiry Category <span aria-hidden="true">*</span>
+            </label>
+            <select
+              id="contactCategory"
+              name="category"
+              className="form-control"
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              required
             >
-              <line x1="22" y1="2" x2="11" y2="13" />
-              <polygon points="22 2 15 22 11 13 2 9 22 2" />
-            </svg>
-          </button>
-        </form>
-      )}
+              <option value="Events & Programmes Enquiry">Events &amp; Programmes Enquiry</option>
+              <option value="Membership Enquiry">Membership Enquiry</option>
+              <option value="Academic / Institutional Collaboration">
+                Academic / Institutional Collaboration
+              </option>
+              <option value="General Chapter Enquiry">General Chapter Enquiry</option>
+            </select>
+          </div>
+        </div>
+
+        {category === 'Events & Programmes Enquiry' && (
+          <div className="form-group">
+            <label className="form-label" htmlFor="contactEventTitle">
+              Selected Event or Programme <span aria-hidden="true">*</span>
+            </label>
+            <select
+              id="contactEventTitle"
+              name="eventTitle"
+              className="form-control"
+              value={eventTitle}
+              onChange={(e) => setEventTitle(e.target.value)}
+              required
+            >
+              {ALL_CHAPTER_EVENTS.map((ev) => (
+                <option key={ev.slug} value={ev.title}>
+                  {ev.title} ({ev.date})
+                </option>
+              ))}
+              <option value="Programme Collaboration or Speaker Proposal">
+                Programme Collaboration or Speaker Proposal
+              </option>
+            </select>
+          </div>
+        )}
+
+        <div className="form-group">
+          <label className="form-label" htmlFor="contactMessage">
+            Message <span aria-hidden="true">*</span>
+          </label>
+          <textarea
+            id="contactMessage"
+            name="message"
+            className="form-control"
+            placeholder="Write your enquiry details or questions here..."
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            required
+          />
+        </div>
+
+        {/* Privacy Notice */}
+        <p
+          style={{
+            fontSize: '0.8rem',
+            color: 'var(--color-muted)',
+            lineHeight: 1.55,
+            marginBottom: '1.25rem',
+          }}
+        >
+          <strong>Privacy Notice:</strong> Your contact information and message are used solely by
+          the ISTD Thrissur Chapter office bearers to respond to your enquiry. See our{' '}
+          <Link href="/privacy" style={{ color: 'var(--brand-blue)', fontWeight: 600 }}>
+            Privacy Policy
+          </Link>
+          .
+        </p>
+
+        <button
+          type="submit"
+          className="btn btn-red btn-lg"
+          style={{ width: '100%' }}
+          id="contactSubmitBtn"
+          disabled={submitting}
+        >
+          <span>{submitting ? 'Checking Enquiry Service...' : 'Submit Enquiry'}</span>
+        </button>
+      </form>
     </div>
   );
 }

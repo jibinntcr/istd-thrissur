@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { type, name, email, phone, category, organization, message } = body ?? {};
+    const { type, name, email, phone, category, organization, eventTitle, message } = body ?? {};
 
     if (!name || typeof name !== 'string' || !name.trim()) {
       return NextResponse.json(
@@ -26,25 +26,52 @@ export async function POST(request: Request) {
       );
     }
 
-    const referenceId = `ISTD-TCR-${Date.now().toString(36).toUpperCase()}`;
+    const webhookUrl = process.env.ENQUIRY_WEBHOOK_URL;
+    if (!webhookUrl) {
+      return NextResponse.json(
+        {
+          ok: false,
+          unconfigured: true,
+          error:
+            'Automated form submission is not yet connected to a backend mail server. Your entered information is preserved below—please use the "Send via Email Client" button to send your pre-filled enquiry directly to the ISTD Thrissur Chapter (tonychacko67@gmail.com, jibintcr@gmail.com).',
+        },
+        { status: 503 }
+      );
+    }
 
-    return NextResponse.json({
-      ok: true,
-      referenceId,
-      type: type || 'general',
-      submittedAt: new Date().toISOString(),
-      summary: {
+    const upstreamRes = await fetch(webhookUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        type: type || 'general',
         name: name.trim(),
         email: email.trim(),
         phone: phone.trim(),
         category: category || 'General',
         organization: organization || '',
+        eventTitle: eventTitle || '',
         message: message || '',
-      },
+        submittedAt: new Date().toISOString(),
+      }),
+    });
+
+    if (!upstreamRes.ok) {
+      return NextResponse.json(
+        {
+          ok: false,
+          error:
+            'The enquiry service could not process your request at this moment. Your entered details remain in the form—please try again or use the direct email option below.',
+        },
+        { status: 502 }
+      );
+    }
+
+    return NextResponse.json({
+      ok: true,
       message:
         type === 'membership'
-          ? 'Thank you! Your ISTD Thrissur Chapter membership application has been registered. Our Secretariat will contact you shortly with the onboarding kit.'
-          : 'Thank you for reaching out! Your enquiry has been received by the ISTD Thrissur Chapter Secretariat.',
+          ? 'Thank you. Your membership enquiry has been sent to the ISTD Thrissur Chapter.'
+          : 'Thank you. Your enquiry has been sent to the ISTD Thrissur Chapter.',
     });
   } catch {
     return NextResponse.json(

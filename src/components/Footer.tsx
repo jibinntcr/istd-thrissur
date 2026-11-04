@@ -17,20 +17,24 @@ export function Footer() {
     <>
       <footer className="site-footer">
         <div className="container">
-          <div className="footer-grid">
-            {/* Col 1: Brand & Bio */}
+          <div
+            className="footer-grid"
+            style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))' }}
+          >
+            {/* Section 1: About the Chapter */}
             <div>
+              <h4 className="footer-heading">About the Chapter</h4>
               <div className="footer-brand-wrap">
                 <div className="brand-seal-ring footer-seal">
                   <img
                     src={assetUrl('/images/logo-circle.png')}
-                    alt="ISTD Thrissur Official Seal"
+                    alt="ISTD Thrissur Chapter Official Seal"
                     width={46}
                     height={46}
                   />
                 </div>
                 <div>
-                  <h3>ISTD Thrissur</h3>
+                  <h3>ISTD Thrissur Chapter</h3>
                   <p
                     style={{
                       fontSize: '0.75rem',
@@ -44,8 +48,10 @@ export function Footer() {
                 </div>
               </div>
               <p className="footer-about-text">
-                Affiliated with ISTD New Delhi (Est. 1970) and IFTDO Geneva. Leading transformation
-                through Training, Learning &amp; Human Resource Development across Central Kerala.
+                Inaugurated on 30 March 2026 as the Diamond Chapter of the Indian Society for
+                Training &amp; Development (ISTD New Delhi, established April 1970). Fostering
+                professional learning, knowledge exchange, and human resource development in
+                Thrissur, Kerala.
               </p>
               <div style={{ display: 'flex', gap: '0.65rem', flexWrap: 'wrap' }}>
                 <a
@@ -55,7 +61,7 @@ export function Footer() {
                   className="btn btn-sm btn-outline-white"
                   style={{ fontSize: '0.76rem' }}
                 >
-                  ISTD Trichur LinkedIn &rarr;
+                  Chapter LinkedIn &rarr;
                 </a>
                 <a
                   href={OFFICIAL_LINKS.istdNationalWeb}
@@ -64,61 +70,45 @@ export function Footer() {
                   className="btn btn-sm btn-outline-white"
                   style={{ fontSize: '0.76rem' }}
                 >
-                  istd.in &rarr;
+                  ISTD National (istd.in) &rarr;
                 </a>
               </div>
             </div>
 
-            {/* Col 2: Quick Links */}
+            {/* Section 2: Quick Links */}
             <div>
-              <h4 className="footer-heading">Chapter Navigation</h4>
+              <h4 className="footer-heading">Quick Links</h4>
               <ul className="footer-links">
                 <li>
-                  <Link href="/about">About ISTD &amp; Chapter</Link>
+                  <Link href="/">Home</Link>
                 </li>
                 <li>
-                  <Link href="/committee">Chapter Leadership</Link>
+                  <Link href="/about">About Us</Link>
                 </li>
                 <li>
-                  <Link href="/events">Events &amp; Chronicles</Link>
+                  <Link href="/committee">Managing Committee</Link>
                 </li>
                 <li>
-                  <Link href="/gallery">Photo Gallery (24 Photos)</Link>
+                  <Link href="/events">Events &amp; Programmes</Link>
                 </li>
                 <li>
-                  <Link href="/membership">Membership Categories</Link>
+                  <Link href="/gallery">Gallery</Link>
                 </li>
                 <li>
-                  <Link href="/contact">Contact Secretariat</Link>
+                  <Link href="/membership">Membership</Link>
+                </li>
+                <li>
+                  <Link href="/contact">Contact Us</Link>
+                </li>
+                <li>
+                  <Link href="/privacy">Privacy Policy</Link>
                 </li>
               </ul>
             </div>
 
-            {/* Col 3: Events & Chronicles */}
+            {/* Section 3: Contact Us */}
             <div>
-              <h4 className="footer-heading">Events &amp; Chronicles</h4>
-              <ul className="footer-links">
-                <li>
-                  <Link href="/events#pastEventReports">Past Event Reports</Link>
-                </li>
-                <li>
-                  <Link href="/events#upcomingEvents">Upcoming Events Calendar</Link>
-                </li>
-                <li>
-                  <Link href="/events#inaugurationReport">Diamond Chapter Inauguration Report</Link>
-                </li>
-                <li>
-                  <Link href="/gallery">Official Photo Archives</Link>
-                </li>
-                <li>
-                  <Link href="/membership#categoriesSection">Join the Chapter</Link>
-                </li>
-              </ul>
-            </div>
-
-            {/* Col 4: Contact Details */}
-            <div>
-              <h4 className="footer-heading">Contact Secretariat</h4>
+              <h4 className="footer-heading">Contact Us</h4>
               <ul className="footer-contact-list">
                 <li>
                   <svg
@@ -128,11 +118,17 @@ export function Footer() {
                     fill="none"
                     stroke="currentColor"
                     strokeWidth="2"
+                    aria-hidden="true"
                   >
                     <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
                     <circle cx="12" cy="10" r="3" />
                   </svg>
-                  <span>ISTD Thrissur (Trichur) Chapter, Kerala, India</span>
+                  <div>
+                    <strong style={{ color: '#fff', display: 'block', fontSize: '0.84rem' }}>
+                      ISTD Thrissur Chapter
+                    </strong>
+                    <span>Thrissur (Trichur), Kerala, India</span>
+                  </div>
                 </li>
                 <li>
                   <svg
@@ -142,12 +138,19 @@ export function Footer() {
                     fill="none"
                     stroke="currentColor"
                     strokeWidth="2"
+                    aria-hidden="true"
                   >
-                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                    <polyline points="22,6 12,13 2,6" />
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
                   </svg>
                   <div>
-                    <a href="mailto:info@istd.in">info@istd.in</a>
+                    <strong style={{ color: '#fff', display: 'block', fontSize: '0.82rem' }}>
+                      Thrissur Chapter Contacts
+                    </strong>
+                    <a href="tel:+919846101034">+91 9846101034</a> (Tony Chacko, Chairman)
+                    <br />
+                    <a href="mailto:tonychacko67@gmail.com">tonychacko67@gmail.com</a>
+                    <br />
+                    <a href="tel:+919496839168">+91 9496839168</a> (Jibin N, Treasurer)
                     <br />
                     <a href="mailto:jibintcr@gmail.com">jibintcr@gmail.com</a>
                   </div>
@@ -160,13 +163,16 @@ export function Footer() {
                     fill="none"
                     stroke="currentColor"
                     strokeWidth="2"
+                    aria-hidden="true"
                   >
-                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                    <polyline points="22,6 12,13 2,6" />
                   </svg>
                   <div>
-                    <a href="tel:+919846101034">+91 9846101034 (Chairman)</a>
-                    <br />
-                    <a href="tel:+919496839168">+91 9496839168 (Treasurer)</a>
+                    <strong style={{ color: '#fff', display: 'block', fontSize: '0.82rem' }}>
+                      ISTD National Office (New Delhi)
+                    </strong>
+                    <a href="mailto:info@istd.in">info@istd.in</a>
                   </div>
                 </li>
               </ul>
@@ -176,14 +182,15 @@ export function Footer() {
           {/* Footer Bottom */}
           <div className="footer-bottom">
             <div className="footer-bottom-inner">
-              <p>© 2026 ISTD Thrissur (Trichur) Chapter. All rights reserved.</p>
+              <p>© 2026 ISTD Thrissur Chapter. Affiliated with ISTD New Delhi (Est. 1970).</p>
               <div className="footer-bottom-links">
-                <Link href="/about">About ISTD</Link>
-                <Link href="/committee">Leadership</Link>
-                <Link href="/events">Events &amp; Reports</Link>
+                <Link href="/about">About Us</Link>
+                <Link href="/committee">Managing Committee</Link>
+                <Link href="/events">Events &amp; Programmes</Link>
                 <Link href="/gallery">Gallery</Link>
                 <Link href="/membership">Membership</Link>
-                <Link href="/contact">Contact</Link>
+                <Link href="/contact">Contact Us</Link>
+                <Link href="/privacy">Privacy Policy</Link>
               </div>
             </div>
           </div>
@@ -196,7 +203,7 @@ export function Footer() {
           href="/"
           className={`mobile-bottom-item ${isActive('/') ? 'active' : ''}`}
         >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
             <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
             <polyline points="9 22 9 12 15 12 15 22" />
           </svg>
@@ -206,7 +213,7 @@ export function Footer() {
           href="/events"
           className={`mobile-bottom-item ${isActive('/events') ? 'active' : ''}`}
         >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
             <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
             <line x1="16" y1="2" x2="16" y2="6" />
             <line x1="8" y1="2" x2="8" y2="6" />
@@ -220,19 +227,19 @@ export function Footer() {
             isActive('/membership') ? 'active' : ''
           }`}
         >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
             <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
             <circle cx="8.5" cy="7" r="4" />
             <line x1="20" y1="8" x2="20" y2="14" />
             <line x1="23" y1="11" x2="17" y2="11" />
           </svg>
-          <span>Join</span>
+          <span>Membership</span>
         </Link>
         <Link
           href="/gallery"
           className={`mobile-bottom-item ${isActive('/gallery') ? 'active' : ''}`}
         >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
             <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
             <circle cx="8.5" cy="8.5" r="1.5" />
             <polyline points="21 15 16 10 5 21" />
@@ -243,10 +250,10 @@ export function Footer() {
           href="/contact"
           className={`mobile-bottom-item ${isActive('/contact') ? 'active' : ''}`}
         >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
             <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
           </svg>
-          <span>Contact</span>
+          <span>Contact Us</span>
         </Link>
       </nav>
     </>

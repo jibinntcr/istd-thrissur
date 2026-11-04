@@ -4210,3 +4210,104 @@ textarea.form-control {
     padding: 1.5rem;
   }
 }
+
+/* ==========================================================================
+   Keyboard Focus & Mobile Drawer Accessibility Safeguards
+   ========================================================================== */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[role="button"]:focus-visible,
+[role="tab"]:focus-visible {
+  outline: 2.5px solid var(--accent-blue);
+  outline-offset: 2px;
+}
+
+.mobile-nav-drawer:not(.is-open) {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* ==========================================================================
+   Shared Layout Cards & Token Aliases
+   ========================================================================== */
+:root {
+  --brand-navy: var(--color-primary-navy);
+  --brand-navy-deep: var(--color-navy-dark);
+  --brand-navy-soft: var(--color-navy-light);
+  --brand-blue: var(--accent-blue);
+  --color-primary-blue: var(--accent-blue);
+  --color-body: var(--color-ink-light);
+  --color-border: var(--border-light);
+  --color-surface-soft: var(--bg-pale-blue-subtle);
+}
+
+.CleanCard {
+  background: #FFFFFF;
+  border: 1.5px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem;
+  box-shadow: var(--shadow-xs);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+}
+
+.CleanCard:hover {
+  border-color: var(--border-blue);
+  box-shadow: var(--shadow-sm);
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+
+@media (max-width: 960px) {
+  .grid-3 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .grid-3 {
+    grid-template-columns: 1fr;
+  }
+}
+
+.cta-banner-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.75rem;
+  text-align: left;
+}
+
+.cta-banner-inner > div:first-child {
+  max-width: 640px;
+}
+
+.cta-banner-inner h2 {
+  color: #FFFFFF;
+  margin-bottom: 0.6rem;
+}
+
+.cta-banner-inner p {
+  color: #E2E8F0;
+  margin-bottom: 0;
+}
+
+@media (max-width: 768px) {
+  .cta-banner-inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

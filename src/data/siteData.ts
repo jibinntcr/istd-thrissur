@@ -33,8 +33,8 @@ export interface CommitteeMember {
   id: string;
   name: string;
   role: string;
-  title: string;
-  avatar: string;
+  title?: string;
+  avatar?: string;
   email?: string;
   phone?: string;
   linkedin?: string;
@@ -42,390 +42,426 @@ export interface CommitteeMember {
   isOfficeBearer?: boolean;
 }
 
-export interface ProgramItem {
+export interface ChapterEvent {
   id: string;
-  badge?: string;
-  duration: string;
+  slug: string;
+  status: 'upcoming' | 'past';
   title: string;
-  shortTitle: string;
-  description: string;
-  fullDescription: string;
-  features: string[];
-  featured?: boolean;
-  iconType: 'diploma' | 'layers' | 'shield';
+  programmeType: 'Webinar' | 'Workshop' | 'Seminar' | 'Conference' | 'Chapter Milestone';
+  date: string;
+  timeIST: string;
+  venue: string;
+  speaker?: string;
+  speakerDesignation?: string;
+  shortDescription: string;
+  fullDescription: string[];
+  image: string;
+  imageCaption: string;
+  registrationAvailable?: boolean;
+  brochureUrl?: string;
+  recordingUrl?: string;
+  hasPhotoGallery?: boolean;
 }
 
-export interface EventItem {
-  id: string;
-  title: string;
-  dateBadge: string;
-  speaker: string;
-  description: string;
-  image: string;
-  venueOrMode: string;
-  isMilestone?: boolean;
-  lightboxTitle?: string;
-  lightboxCaption?: string;
-}
+export const OFFICIAL_LINKS = {
+  istdNationalWeb: 'https://www.istd.in/',
+  istdNationalMembership: 'https://www.istd.in/',
+  istdNationalLinkedin: 'https://www.linkedin.com/school/istd-india/',
+  istdTrichurLinkedin: 'https://www.linkedin.com/company/istd-trichur/',
+};
+
+export const CHAPTER_CONTACTS = {
+  chairman: {
+    name: 'Tony Chacko',
+    role: 'Chairman',
+    designation: 'CEO, Tony & Iby',
+    phoneDisplay: '+91 9846101034',
+    phoneHref: '+919846101034',
+    email: 'tonychacko67@gmail.com',
+    linkedin: 'https://www.linkedin.com/in/tony-chacko-965622240/',
+  },
+  secretary: {
+    name: 'Sneha Rose George',
+    role: 'Secretary',
+    designation: 'Research Scholar, CUSAT',
+    linkedin: 'https://www.linkedin.com/in/sneha-rose-george-4176a325/',
+  },
+  treasurer: {
+    name: 'Jibin N',
+    role: 'Treasurer',
+    designation: 'Technology Director & Consultant',
+    phoneDisplay: '+91 9496839168',
+    phoneHref: '+919496839168',
+    email: 'jibintcr@gmail.com',
+    linkedin: 'https://www.linkedin.com/in/jibintcr/',
+  },
+  location: 'Thrissur, Kerala, India',
+  nationalOffice: {
+    name: 'ISTD National Office (New Delhi)',
+    address: 'Training House, B-23, Qutab Institutional Area, New Mehrauli Road, New Delhi – 110016',
+    email: 'info@istd.in',
+    website: 'https://www.istd.in/',
+  },
+};
 
 export const HERO_SLIDES: HeroSlide[] = [
   {
     src: '/photos/team-istd.jpeg',
-    badge: 'ISTD Thrissur Chapter • 55 Years of ISTD Legacy',
-    title: 'Leading Transformation Through Training & Development',
-    desc: 'Connecting HR Leaders, Corporate Trainers, Academicians & Industry Pioneers across Central Kerala',
+    badge: '30 March 2026 • Hotel Pearl Regency, Thrissur',
+    title: 'ISTD National and Regional Leaders with Thrissur Chapter Members',
+    desc: 'Inauguration of the ISTD Thrissur Chapter as the Diamond Chapter in ISTD’s 55th Year',
     caption:
-      'ISTD National & Regional Executive Leaders together with the ISTD Thrissur (Trichur) Chapter Managing Committee and professional fraternity.',
-  },
-  {
-    src: '/photos/istd-calicut.jpeg',
-    badge: 'Executive Knowledge Exchange',
-    title: 'Strengthening the Regional L&D & HRD Ecosystem',
-    desc: 'A collaborative forum for learning, knowledge exchange, and leadership development',
-    caption:
-      'National and Regional ISTD leaders sharing strategic perspectives on human resource development and workplace learning excellence.',
-  },
-  {
-    src: '/photos/istd-national-president.jpeg',
-    badge: 'National Affiliation • ISTD New Delhi',
-    title: 'Recognized National Platform for L&D Professionals',
-    desc: 'Affiliated with ISTD National (Est. 1970) and IFTDO Geneva',
-    caption:
-      'ISTD National President Shri. Atul Shah, Regional Vice President (South) Prof. (Dr.) Zakkariya K A, and National Treasurer Shri. Nabaghana Pany.',
+      'Shri. Atul Shah (National President, ISTD), Dr. Yogesh Kumar Upadhyay (Past National President, ISTD), Shri. Nabaghana Pany (National Treasurer, ISTD), Prof. (Dr.) Zakkariya K A (Regional Vice President, South), and Shri. Tony Chacko (Chairman, ISTD Thrissur Chapter) with chapter members.',
   },
   {
     src: '/photos/istd-22.jpeg',
-    badge: 'Tradition & Professional Excellence',
-    title: 'Empowering Organizations & Learning Leaders in Kerala',
-    desc: 'Advancing human capital through knowledge exchange, research, and executive forums',
+    badge: 'Inaugural Ceremony • 30 March 2026',
+    title: 'Lighting of the Ceremonial Lamp at the Chapter Inauguration',
+    desc: 'Chairman Shri. Tony Chacko and Regional Vice President Prof. (Dr.) Zakkariya K A with National Office Bearers',
     caption:
-      'Chapter Chairman Shri. Tony Chacko and Regional VP Prof. (Dr.) Zakkariya K A alongside ISTD National Executive leaders.',
+      'Chairman Shri. Tony Chacko and Regional Vice President (South) Prof. (Dr.) Zakkariya K A lighting the ceremonial lamp alongside National President Shri. Atul Shah, National Treasurer Shri. Nabaghana Pany, and Past National President Dr. Yogesh Kumar Upadhyay.',
+  },
+  {
+    src: '/photos/istd-national-president.jpeg',
+    badge: 'Charter Presentation • 30 March 2026',
+    title: 'Presentation of the Diamond Chapter Charter',
+    desc: 'National President Shri. Atul Shah presenting the chapter charter to Regional and Chapter Leadership',
+    caption:
+      'ISTD National President Shri. Atul Shah presenting the Diamond Chapter charter to Regional Vice President (South) Prof. (Dr.) Zakkariya K A in the presence of National Treasurer Shri. Nabaghana Pany.',
+  },
+  {
+    src: '/photos/istd-calicut.jpeg',
+    badge: 'Inaugural Session • Hotel Pearl Regency',
+    title: 'Dignitaries on the Dais During the Chapter Inauguration',
+    desc: 'Dr. Yogesh Kumar Upadhyay, Shri. Nabaghana Pany, Shri. Atul Shah, Prof. (Dr.) Zakkariya K A, and Shri. Tony Chacko',
+    caption:
+      'Dignitaries seated on the dais at Hotel Pearl Regency, Thrissur during the inauguration of the ISTD Thrissur Chapter on 30 March 2026.',
   },
 ];
 
 export const GALLERY_CATEGORIES = [
   { id: 'all', label: 'All Photos', count: 24 },
   { id: 'ceremony', label: 'Inaugural Ceremony', count: 3 },
-  { id: 'addresses', label: 'Keynote & Addresses', count: 3 },
-  { id: 'oath', label: 'Oath & Swearing-In', count: 4 },
-  { id: 'felicitations', label: 'Felicitations & Honors', count: 8 },
-  { id: 'portraits', label: 'Leadership & Community', count: 6 },
+  { id: 'addresses', label: 'Addresses & Dais', count: 3 },
+  { id: 'oath', label: 'Oath of Office', count: 4 },
+  { id: 'felicitations', label: 'Felicitations', count: 8 },
+  { id: 'portraits', label: 'Group Photographs', count: 6 },
 ] as const;
 
 export const GALLERY_PHOTOS: GalleryPhoto[] = [
   {
     id: 'photo-1',
     src: '/photos/istd-22.jpeg',
-    title: 'Auspicious Lamp Lighting by Chapter & Regional Leadership',
+    title: 'Lighting of the Ceremonial Lamp by Chapter and Regional Leaders',
     shortDesc:
-      'Chairman Shri. Tony Chacko and Regional VP Prof. (Dr.) Zakkariya K A lighting the traditional lamp in the presence of ISTD National Leaders.',
+      'Chairman Shri. Tony Chacko and Regional Vice President Prof. (Dr.) Zakkariya K A lighting the lamp in the presence of ISTD National Leaders.',
     caption:
-      'Chairman Shri. Tony Chacko and Regional Vice President (South) Prof. (Dr.) Zakkariya K A lighting the ceremonial Nilavilakku alongside National President Shri. Atul Shah, National Treasurer Shri. Nabaghan Pany, and Past National President Dr. Yogesh Kumar Upadhyay.',
+      'Chairman Shri. Tony Chacko and Regional Vice President (South) Prof. (Dr.) Zakkariya K A lighting the ceremonial lamp alongside National President Shri. Atul Shah, National Treasurer Shri. Nabaghana Pany, and Past National President Dr. Yogesh Kumar Upadhyay on 30 March 2026.',
     category: 'ceremony',
     categoryLabel: 'Inaugural Ceremony',
-    metaTag: 'Pearl Regency, Thrissur',
-    keywords: 'lamp lighting nilavilakku tony chacko zakkariya atul shah nabaghan pany yogesh upadhyay inauguration',
+    metaTag: '30 March 2026 • Hotel Pearl Regency',
+    keywords: 'lamp lighting nilavilakku tony chacko zakkariya atul shah nabaghana pany yogesh upadhyay inauguration',
     featured: true,
   },
   {
     id: 'photo-2',
     src: '/photos/istd-in.jpeg',
-    title: 'Dignitaries Lighting the Ceremonial Nilavilakku',
+    title: 'Past National President Dr. Yogesh Kumar Upadhyay Lighting the Lamp',
     shortDesc:
-      'Past National President Dr. Yogesh Kumar Upadhyay kindling the lamp to mark the official launch of the Diamond Chapter.',
+      'Dr. Yogesh Kumar Upadhyay lighting the ceremonial lamp during the inauguration of the ISTD Thrissur Chapter.',
     caption:
-      'Dr. Yogesh Kumar Upadhyay (Past National President, ISTD) lighting the ceremonial lamp during the Diamond Chapter Inauguration, flanked by Shri. Nabaghan Pany, Shri. Atul Shah, Prof. (Dr.) Zakkariya K A, and Shri. Tony Chacko.',
+      'Dr. Yogesh Kumar Upadhyay (Past National President, ISTD) lighting the ceremonial lamp during the Diamond Chapter inauguration on 30 March 2026, alongside Shri. Nabaghana Pany, Shri. Atul Shah, Prof. (Dr.) Zakkariya K A, and Shri. Tony Chacko.',
     category: 'ceremony',
     categoryLabel: 'Inaugural Ceremony',
-    metaTag: '30th March 2026',
-    keywords: 'lamp lighting yogesh kumar upadhyay atul shah nabaghan pany zakkariya tony chacko',
+    metaTag: '30 March 2026',
+    keywords: 'lamp lighting yogesh kumar upadhyay atul shah nabaghana pany zakkariya tony chacko',
   },
   {
     id: 'photo-3',
     src: '/photos/istd-national-president.jpeg',
-    title: 'Official Diamond Chapter Charter Presentation',
+    title: 'Presentation of the Diamond Chapter Recognition',
     shortDesc:
-      'National President Shri. Atul Shah formally conferring the Diamond Chapter mandate during the inaugural session.',
+      'National President Shri. Atul Shah presenting the Diamond Chapter recognition during the inaugural session.',
     caption:
-      'ISTD National President Shri. Atul Shah formally presenting the Diamond Chapter recognition to Regional Vice President Prof. (Dr.) Zakkariya K A as National Treasurer Shri. Nabaghan Pany applauds.',
+      'ISTD National President Shri. Atul Shah presenting the Diamond Chapter recognition to Regional Vice President (South) Prof. (Dr.) Zakkariya K A as National Treasurer Shri. Nabaghana Pany looks on.',
     category: 'ceremony',
     categoryLabel: 'Inaugural Ceremony',
-    metaTag: 'National Recognition',
-    keywords: 'atul shah national president charter handover zakkariya nabaghan pany',
+    metaTag: '30 March 2026',
+    keywords: 'atul shah national president charter handover zakkariya nabaghana pany',
   },
   {
     id: 'photo-4',
     src: '/photos/istd-tony-chacko.jpeg',
-    title: "Chairman's Vision Address — Shri. Tony Chacko",
+    title: 'Welcome Address by Chapter Chairman Shri. Tony Chacko',
     shortDesc:
-      'Chapter Chairman Shri. Tony Chacko outlining the strategic roadmap for corporate training and HR development in Thrissur.',
+      'Chapter Chairman Shri. Tony Chacko addressing the gathering at Hotel Pearl Regency, Thrissur.',
     caption:
-      "Shri. Tony Chacko, Chairman of ISTD Thrissur Chapter, delivering the welcome and strategic vision address at Hotel Pearl Regency, outlining the chapter's roadmap for L&D excellence across Central Kerala.",
+      'Shri. Tony Chacko, Chairman of the ISTD Thrissur Chapter, delivering the welcome address during the chapter inauguration at Hotel Pearl Regency on 30 March 2026.',
     category: 'addresses',
-    categoryLabel: 'Keynote & Addresses',
-    metaTag: "Chairman's Address",
+    categoryLabel: 'Addresses & Dais',
+    metaTag: '30 March 2026',
     keywords: 'tony chacko chairman speech address podium pearl regency',
   },
   {
     id: 'photo-5',
     src: '/photos/istd-calicut.jpeg',
-    title: 'Inaugural Plenary Session & Dignitary Dais',
+    title: 'Dignitaries on the Dais at Hotel Pearl Regency, Thrissur',
     shortDesc:
-      'National and Regional ISTD leaders seated on the dais during the formal inauguration proceedings at Pearl Regency.',
+      'National and Regional ISTD leaders seated on the dais during the formal inauguration proceedings.',
     caption:
-      'Full view of the inaugural dais at Pearl Regency featuring Dr. Yogesh Kumar Upadhyay, Shri. Nabaghan Pany, Shri. Atul Shah, Prof. (Dr.) Zakkariya K A, and Shri. Tony Chacko.',
+      'Inaugural dais at Hotel Pearl Regency, Thrissur on 30 March 2026 featuring Dr. Yogesh Kumar Upadhyay, Shri. Nabaghana Pany, Shri. Atul Shah, Prof. (Dr.) Zakkariya K A, and Shri. Tony Chacko.',
     category: 'addresses',
-    categoryLabel: 'Keynote & Addresses',
-    metaTag: 'Plenary Session',
+    categoryLabel: 'Addresses & Dais',
+    metaTag: '30 March 2026',
     keywords: 'dais stage banner diamond chapter trichur pearl regency dignitaries',
     featured: true,
   },
   {
     id: 'photo-6',
     src: '/photos/istd-treasurer.jpeg',
-    title: 'Special Address by National Treasurer Shri. Nabaghan Pany',
+    title: 'Address by National Treasurer Shri. Nabaghana Pany',
     shortDesc:
-      'Shri. Nabaghan Pany sharing insights on national L&D standards and chapter excellence from the podium.',
+      'Shri. Nabaghana Pany addressing chapter members during the inaugural session.',
     caption:
-      "Shri. Nabaghan Pany (National Treasurer, ISTD) addressing the Thrissur Chapter members and highlighting ISTD's national growth and collaborative learning initiatives.",
+      'Shri. Nabaghana Pany (National Treasurer, ISTD) addressing the ISTD Thrissur Chapter members at Hotel Pearl Regency on 30 March 2026.',
     category: 'addresses',
-    categoryLabel: 'Keynote & Addresses',
-    metaTag: 'National Leadership',
-    keywords: 'nabaghan pany national treasurer speech address dais',
+    categoryLabel: 'Addresses & Dais',
+    metaTag: '30 March 2026',
+    keywords: 'nabaghana pany national treasurer speech address dais',
   },
   {
     id: 'photo-7',
     src: '/photos/istd-3.jpeg',
-    title: 'Administering the Official Leadership Oath',
+    title: 'Administration of the Oath of Office on the Dais',
     shortDesc:
-      'National President Shri. Atul Shah leading the solemn swearing-in pledge with the dignitaries and Chapter Chairman.',
+      'National President Shri. Atul Shah administering the oath of office with dignitaries and the Chapter Chairman.',
     caption:
-      'National President Shri. Atul Shah administering the solemn oath of office alongside Dr. Yogesh Kumar Upadhyay, Shri. Nabaghan Pany, Prof. (Dr.) Zakkariya K A, and Chapter Chairman Shri. Tony Chacko.',
+      'National President Shri. Atul Shah administering the oath of office alongside Dr. Yogesh Kumar Upadhyay, Shri. Nabaghana Pany, Prof. (Dr.) Zakkariya K A, and Chapter Chairman Shri. Tony Chacko.',
     category: 'oath',
-    categoryLabel: 'Oath & Swearing-In',
-    metaTag: 'Swearing-In Ceremony',
-    keywords: 'oath swearing in pledge dais atul shah tony chacko zakkariya nabaghan pany yogesh',
+    categoryLabel: 'Oath of Office',
+    metaTag: '30 March 2026',
+    keywords: 'oath swearing in pledge dais atul shah tony chacko zakkariya nabaghana pany yogesh',
   },
   {
     id: 'photo-8',
     src: '/photos/istd-higher-officials.jpeg',
-    title: 'Dignitaries Upholding the ISTD Charter Pledge',
+    title: 'Dignitaries During the Swearing-In Ceremony',
     shortDesc:
-      'Shri. Nabaghan Pany, Prof. (Dr.) Zakkariya K A, and Chairman Shri. Tony Chacko during the formal oath ceremony.',
+      'Shri. Nabaghana Pany, Prof. (Dr.) Zakkariya K A, and Chairman Shri. Tony Chacko during the oath ceremony.',
     caption:
-      'Shri. Nabaghan Pany (National Treasurer), Prof. (Dr.) Zakkariya K A (Regional VP - South), and Shri. Tony Chacko (Chairman, ISTD Thrissur) taking the pledge during the swearing-in ceremony.',
+      'Shri. Nabaghana Pany (National Treasurer, ISTD), Prof. (Dr.) Zakkariya K A (Regional Vice President, South), and Shri. Tony Chacko (Chairman, ISTD Thrissur Chapter) during the swearing-in ceremony.',
     category: 'oath',
-    categoryLabel: 'Oath & Swearing-In',
-    metaTag: 'Governance Pledge',
-    keywords: 'oath pledge higher officials nabaghan pany zakkariya tony chacko',
+    categoryLabel: 'Oath of Office',
+    metaTag: '30 March 2026',
+    keywords: 'oath pledge higher officials nabaghana pany zakkariya tony chacko',
   },
   {
     id: 'photo-9',
     src: '/photos/istd-audience.jpeg',
-    title: 'Members Taking the Collective Commitment Oath',
+    title: 'Chapter Members Taking the Membership Pledge',
     shortDesc:
-      'Senior trainers, educators, and committee members pledging their commitment to advancing HRD across Central Kerala.',
+      'Chapter members and committee representatives standing to take the pledge during the inauguration.',
     caption:
-      'ISTD Thrissur Chapter committee members, trainers, and HR professionals standing in unison to take the membership pledge.',
+      'ISTD Thrissur Chapter members and committee representatives taking the pledge during the inauguration ceremony on 30 March 2026.',
     category: 'oath',
-    categoryLabel: 'Oath & Swearing-In',
-    metaTag: 'Member Induction',
+    categoryLabel: 'Oath of Office',
+    metaTag: '30 March 2026',
     keywords: 'audience members oath pledge sureshkumar',
   },
   {
     id: 'photo-10',
     src: '/photos/istd-kozhikkod.jpeg',
-    title: 'Swearing-In of Executive Committee & Members',
+    title: 'Installation of Office Bearers and Managing Committee Members',
     shortDesc:
-      'Chapter Treasurer Jibin N and fellow leaders taking the solemn oath to serve the L&D fraternity.',
+      'Treasurer Mr. Jibin N and fellow office bearers taking the oath of office.',
     caption:
-      'Treasurer Jibin N and fellow office bearers and members taking the oath of office during the Diamond Chapter inauguration.',
+      'Treasurer Mr. Jibin N and fellow office bearers and committee members taking the oath of office during the chapter inauguration on 30 March 2026.',
     category: 'oath',
-    categoryLabel: 'Oath & Swearing-In',
-    metaTag: 'Executive Induction',
-    keywords: 'jibin treasurer oath swearing in members kozhikkod',
+    categoryLabel: 'Oath of Office',
+    metaTag: '30 March 2026',
+    keywords: 'jibin treasurer oath swearing in members',
   },
   {
     id: 'photo-11',
     src: '/photos/istd-national-tony.jpeg',
-    title: 'Commemorative Memento to Chairman Shri. Tony Chacko',
+    title: 'Memento Presentation to Chapter Chairman Shri. Tony Chacko',
     shortDesc:
-      'National President Shri. Atul Shah presenting a token of appreciation to Chapter Chairman Shri. Tony Chacko.',
+      'National President Shri. Atul Shah presenting a memento to Chapter Chairman Shri. Tony Chacko.',
     caption:
-      'ISTD National President Shri. Atul Shah presenting a commemorative memento to Thrissur Chapter Chairman Shri. Tony Chacko, with Regional VP Prof. (Dr.) Zakkariya K A looking on.',
+      'ISTD National President Shri. Atul Shah presenting a memento to Thrissur Chapter Chairman Shri. Tony Chacko, with Regional Vice President Prof. (Dr.) Zakkariya K A.',
     category: 'felicitations',
-    categoryLabel: 'Felicitations & Honors',
-    metaTag: 'Leadership Honor',
+    categoryLabel: 'Felicitations',
+    metaTag: '30 March 2026',
     keywords: 'atul shah tony chacko memento felicitation zakkariya',
   },
   {
     id: 'photo-12',
     src: '/photos/istd-sneha.jpeg',
-    title: 'Honoring Chapter Secretary Sneha Rose George',
+    title: 'Felicitation of Chapter Secretary Ms. Sneha Rose George',
     shortDesc:
-      'Regional Vice President Prof. (Dr.) Zakkariya K A presenting a token of appreciation to Secretary Sneha Rose George.',
+      'Regional Vice President Prof. (Dr.) Zakkariya K A presenting a memento to Secretary Ms. Sneha Rose George.',
     caption:
-      'Regional Vice President (South) Prof. (Dr.) Zakkariya K A presenting a token of appreciation to ISTD Thrissur Chapter Secretary Sneha Rose George.',
+      'Regional Vice President (South) Prof. (Dr.) Zakkariya K A presenting a token of appreciation to ISTD Thrissur Chapter Secretary Ms. Sneha Rose George.',
     category: 'felicitations',
-    categoryLabel: 'Felicitations & Honors',
-    metaTag: 'Executive Recognition',
+    categoryLabel: 'Felicitations',
+    metaTag: '30 March 2026',
     keywords: 'sneha rose george secretary zakkariya tony chacko felicitation',
   },
   {
     id: 'photo-13',
     src: '/photos/istd-participants.jpeg',
-    title: 'Traditional Ponnada Honor to Dr. Yogesh Kumar Upadhyay',
+    title: 'Felicitation of Past National President Dr. Yogesh Kumar Upadhyay',
     shortDesc:
-      'Chapter Treasurer Jibin N honoring Past National President Dr. Yogesh Kumar Upadhyay with a traditional shawl.',
+      'Chapter Treasurer Mr. Jibin N honouring Past National President Dr. Yogesh Kumar Upadhyay with a ponnada.',
     caption:
-      'Chapter Treasurer Jibin N draping a traditional Kerala ponnada (shawl) to honor Past National President Dr. Yogesh Kumar Upadhyay during the inaugural ceremony.',
+      'Chapter Treasurer Mr. Jibin N draping a traditional ponnada (shawl) to honour Past National President Dr. Yogesh Kumar Upadhyay during the inauguration ceremony on 30 March 2026.',
     category: 'felicitations',
-    categoryLabel: 'Felicitations & Honors',
-    metaTag: 'Dignitary Felicitation',
+    categoryLabel: 'Felicitations',
+    metaTag: '30 March 2026',
     keywords: 'jibin treasurer yogesh kumar upadhyay ponnada shawl felicitation',
   },
   {
     id: 'photo-14',
     src: '/photos/istd-national-treasurer.jpeg',
-    title: 'Felicitation of National Treasurer Shri. Nabaghan Pany',
+    title: 'Felicitation of National Treasurer Shri. Nabaghana Pany',
     shortDesc:
-      'Draping the ceremonial ponnada to welcome and honor ISTD National Treasurer Shri. Nabaghan Pany.',
+      'Honouring ISTD National Treasurer Shri. Nabaghana Pany with a traditional ponnada on the dais.',
     caption:
-      'Honoring ISTD National Treasurer Shri. Nabaghan Pany with a traditional ponnada (shawl) on the dais, applauded by National President Shri. Atul Shah and Dr. Yogesh Kumar Upadhyay.',
+      'Honouring ISTD National Treasurer Shri. Nabaghana Pany with a traditional ponnada on the dais, alongside National President Shri. Atul Shah and Dr. Yogesh Kumar Upadhyay.',
     category: 'felicitations',
-    categoryLabel: 'Felicitations & Honors',
-    metaTag: 'Dignitary Felicitation',
-    keywords: 'nabaghan pany national treasurer ponnada shawl atul shah yogesh',
+    categoryLabel: 'Felicitations',
+    metaTag: '30 March 2026',
+    keywords: 'nabaghana pany national treasurer ponnada shawl atul shah yogesh',
   },
   {
     id: 'photo-15',
     src: '/photos/istd-zakkria.jpeg',
-    title: 'Honoring Regional VP Prof. (Dr.) Zakkariya K A',
+    title: 'Felicitation of Regional Vice President Prof. (Dr.) Zakkariya K A',
     shortDesc:
-      'National President Shri. Atul Shah presenting a memento of appreciation to Prof. (Dr.) Zakkariya K A.',
+      'National President Shri. Atul Shah presenting a memento to Prof. (Dr.) Zakkariya K A.',
     caption:
-      'National President Shri. Atul Shah and National Treasurer Shri. Nabaghan Pany presenting a commemorative token of appreciation to Regional Vice President (South) Prof. (Dr.) Zakkariya K A.',
+      'National President Shri. Atul Shah and National Treasurer Shri. Nabaghana Pany presenting a memento to Regional Vice President (South) Prof. (Dr.) Zakkariya K A.',
     category: 'felicitations',
-    categoryLabel: 'Felicitations & Honors',
-    metaTag: 'Regional Leadership',
-    keywords: 'zakkariya atul shah nabaghan pany memento felicitation',
+    categoryLabel: 'Felicitations',
+    metaTag: '30 March 2026',
+    keywords: 'zakkariya atul shah nabaghana pany memento felicitation',
   },
   {
     id: 'photo-16',
     src: '/photos/tony.jpeg',
-    title: 'Commemorative Memento Presentation',
+    title: 'Presentation of Memento by National President Shri. Atul Shah',
     shortDesc:
-      'National President Shri. Atul Shah presenting a token of appreciation during the felicitation ceremony.',
+      'National President Shri. Atul Shah presenting a token of appreciation during the inaugural ceremony.',
     caption:
-      'National President Shri. Atul Shah presenting a commemorative memento of appreciation during the Diamond Chapter inauguration.',
+      'National President Shri. Atul Shah presenting a memento during the ISTD Thrissur Chapter inauguration on 30 March 2026.',
     category: 'felicitations',
-    categoryLabel: 'Felicitations & Honors',
-    metaTag: 'Leadership Recognition',
+    categoryLabel: 'Felicitations',
+    metaTag: '30 March 2026',
     keywords: 'atul shah memento felicitation committee leadership',
   },
   {
     id: 'photo-17',
     src: '/photos/istd-national.jpeg',
-    title: 'Presentation of Commemorative Chapter Artwork',
+    title: 'Presentation of Commemorative Framed Artwork',
     shortDesc:
-      'National President Shri. Atul Shah presenting a custom framed memento during the felicitation ceremony.',
+      'National President Shri. Atul Shah presenting a framed memento during the felicitation ceremony.',
     caption:
-      'National President Shri. Atul Shah presenting a framed commemorative artwork during the Diamond Chapter inauguration ceremony.',
+      'National President Shri. Atul Shah presenting a commemorative framed artwork during the inauguration ceremony on 30 March 2026.',
     category: 'felicitations',
-    categoryLabel: 'Felicitations & Honors',
-    metaTag: 'Special Recognition',
+    categoryLabel: 'Felicitations',
+    metaTag: '30 March 2026',
     keywords: 'atul shah memento presentation appreciation inauguration',
   },
   {
     id: 'photo-18',
     src: '/photos/istd-zakkariya.jpeg',
-    title: 'Recognizing Chapter Contributors & Delegates',
+    title: 'Presentation of Tokens of Appreciation to Chapter Contributors',
     shortDesc:
-      'Prof. (Dr.) Zakkariya K A honoring members and supporters during the inaugural felicitation segment.',
+      'Prof. (Dr.) Zakkariya K A presenting tokens of appreciation during the felicitation segment.',
     caption:
-      'Regional Vice President (South) Prof. (Dr.) Zakkariya K A presenting tokens of appreciation to chapter members and contributors.',
+      'Regional Vice President (South) Prof. (Dr.) Zakkariya K A presenting tokens of appreciation to chapter members and contributors on 30 March 2026.',
     category: 'felicitations',
-    categoryLabel: 'Felicitations & Honors',
-    metaTag: 'Member Felicitation',
+    categoryLabel: 'Felicitations',
+    metaTag: '30 March 2026',
     keywords: 'zakkariya appreciation gift delegates felicitation',
   },
   {
     id: 'photo-19',
     src: '/photos/team-istd.jpeg',
-    title: 'Grand Inaugural Portrait — National & Chapter Leadership',
+    title: 'Group Photograph of ISTD National Leaders and Thrissur Chapter Members',
     shortDesc:
-      'The complete ISTD Thrissur Diamond Chapter cohort together with the National Executive Council dignitaries.',
+      'ISTD Thrissur Chapter members together with ISTD National and Regional office bearers.',
     caption:
-      'Dignitaries Shri. Atul Shah, Dr. Yogesh Kumar Upadhyay, Shri. Nabaghan Pany, Prof. (Dr.) Zakkariya K A, and Chairman Shri. Tony Chacko posing with the full ISTD Thrissur Chapter fraternity.',
+      'Shri. Atul Shah, Dr. Yogesh Kumar Upadhyay, Shri. Nabaghana Pany, Prof. (Dr.) Zakkariya K A, and Chairman Shri. Tony Chacko with the members of the ISTD Thrissur Chapter on 30 March 2026.',
     category: 'portraits',
-    categoryLabel: 'Leadership & Community',
-    metaTag: 'Official Portrait',
-    keywords: 'group photo team istd national leaders tony chacko zakkariya atul shah nabaghan pany yogesh',
+    categoryLabel: 'Group Photographs',
+    metaTag: '30 March 2026 • Hotel Pearl Regency',
+    keywords: 'group photo team istd national leaders tony chacko zakkariya atul shah nabaghana pany yogesh',
     featured: true,
   },
   {
     id: 'photo-20',
     src: '/photos/team.jpeg',
-    title: 'Managing Committee & Dignitaries Ensemble',
+    title: 'Office Bearers and Managing Committee with National Dignitaries',
     shortDesc:
-      'Office bearers and executive committee members of the Thrissur Chapter alongside ISTD National leadership.',
+      'Office bearers and committee members of the Thrissur Chapter alongside ISTD National leadership.',
     caption:
-      'Front row featuring Secretary Sneha Rose George, Treasurer Jibin N, Managing Committee Leaders, National President Shri. Atul Shah, Chairman Shri. Tony Chacko, and Regional VP Prof. (Dr.) Zakkariya K A with chapter members.',
+      'Secretary Ms. Sneha Rose George, Treasurer Mr. Jibin N, Managing Committee members, National President Shri. Atul Shah, Chairman Shri. Tony Chacko, and Regional Vice President Prof. (Dr.) Zakkariya K A.',
     category: 'portraits',
-    categoryLabel: 'Leadership & Community',
-    metaTag: 'Committee Portrait',
+    categoryLabel: 'Group Photographs',
+    metaTag: '30 March 2026',
     keywords: 'team managing committee tony chacko jibin sneha atul shah zakkariya',
   },
   {
     id: 'photo-21',
     src: '/photos/istd.jpeg',
-    title: 'Chapter Leadership & Member Delegation',
+    title: 'ISTD Thrissur Chapter Members with National Office Bearers',
     shortDesc:
-      "A proud moment celebrating the launch of Central Kerala's premier L&D professional community.",
+      'Chapter members and office bearers posing with ISTD National and Regional leaders.',
     caption:
-      'Treasurer Jibin N, Managing Committee Leaders, National President Shri. Atul Shah, Chairman Shri. Tony Chacko, Prof. (Dr.) Zakkariya K A, and Shri. Nabaghan Pany with chapter members.',
+      'Treasurer Mr. Jibin N, Managing Committee members, National President Shri. Atul Shah, Chairman Shri. Tony Chacko, Prof. (Dr.) Zakkariya K A, and Shri. Nabaghana Pany with chapter members.',
     category: 'portraits',
-    categoryLabel: 'Leadership & Community',
-    metaTag: 'Chapter Delegation',
-    keywords: 'istd group portrait jibin tony chacko zakkariya nabaghan pany atul shah',
+    categoryLabel: 'Group Photographs',
+    metaTag: '30 March 2026',
+    keywords: 'istd group portrait jibin tony chacko zakkariya nabaghana pany atul shah',
   },
   {
     id: 'photo-22',
     src: '/photos/istd-participants-group.jpeg',
-    title: 'Core Executive Team & Chapter Members',
+    title: 'Chapter Office Bearers and Members with National President Shri. Atul Shah',
     shortDesc:
-      'Secretary Sneha Rose George, Treasurer Jibin N, and committee leaders with National President Shri. Atul Shah.',
+      'Secretary Ms. Sneha Rose George, Treasurer Mr. Jibin N, and chapter members with National President Shri. Atul Shah.',
     caption:
-      'Secretary Sneha Rose George, Treasurer Jibin N, Managing Committee Leaders, and fellow Thrissur Chapter members posing with National President Shri. Atul Shah.',
+      'Secretary Ms. Sneha Rose George, Treasurer Mr. Jibin N, and Thrissur Chapter members with ISTD National President Shri. Atul Shah on 30 March 2026.',
     category: 'portraits',
-    categoryLabel: 'Leadership & Community',
-    metaTag: 'Core Team',
+    categoryLabel: 'Group Photographs',
+    metaTag: '30 March 2026',
     keywords: 'participants sneha rose jibin atul shah group',
   },
   {
     id: 'photo-23',
     src: '/photos/istd-tcr-inauguration.jpeg',
-    title: 'Executive Networking & Strategic Dialogue',
+    title: 'Interaction Between National President Shri. Atul Shah and Chapter Members',
     shortDesc:
-      'Candid conversation between National President Shri. Atul Shah and Thrissur Chapter committee leaders.',
+      'National President Shri. Atul Shah in conversation with Thrissur Chapter committee members.',
     caption:
-      'National President Shri. Atul Shah engaging in an interactive discussion with chapter leaders during the inaugural meet.',
+      'National President Shri. Atul Shah interacting with Thrissur Chapter members during the inaugural meeting on 30 March 2026.',
     category: 'portraits',
-    categoryLabel: 'Leadership & Community',
-    metaTag: 'Leadership Dialogue',
+    categoryLabel: 'Group Photographs',
+    metaTag: '30 March 2026',
     keywords: 'networking candid atul shah inauguration',
   },
   {
     id: 'photo-24',
     src: '/photos/istd-tony.jpeg',
-    title: 'Chapter Fellowship & Welcome Gathering',
+    title: 'Chairman Shri. Tony Chacko and Chapter Members Welcoming Delegates',
     shortDesc:
-      'Chairman Shri. Tony Chacko and senior leaders welcoming delegates to the Diamond Chapter inauguration.',
+      'Chairman Shri. Tony Chacko and chapter members prior to the inaugural session at Hotel Pearl Regency.',
     caption:
-      'Chairman Shri. Tony Chacko and senior chapter leaders during the pre-inaugural fellowship.',
+      'Chairman Shri. Tony Chacko and chapter members welcoming delegates at Hotel Pearl Regency, Thrissur on 30 March 2026.',
     category: 'portraits',
-    categoryLabel: 'Leadership & Community',
-    metaTag: 'Chapter Fellowship',
+    categoryLabel: 'Group Photographs',
+    metaTag: '30 March 2026',
     keywords: 'tony chacko leaders fellowship',
   },
 ];
@@ -449,7 +485,6 @@ export const OFFICE_BEARERS: CommitteeMember[] = [
     role: 'Secretary',
     title: 'Research Scholar, CUSAT',
     avatar: '/images/ISTDTeamTCR/sneha-rose.jpg',
-    email: 'info@istd.in',
     linkedin: 'https://www.linkedin.com/in/sneha-rose-george-4176a325/',
     isOfficeBearer: true,
   },
@@ -466,11 +501,26 @@ export const OFFICE_BEARERS: CommitteeMember[] = [
   },
 ];
 
-export const OFFICIAL_LINKS = {
-  istdNationalWeb: 'https://www.istd.in/',
-  istdNationalLinkedin: 'https://www.linkedin.com/school/istd-india/',
-  istdTrichurLinkedin: 'https://www.linkedin.com/company/istd-trichur/',
-};
+export const COMMITTEE_MEMBERS: CommitteeMember[] = [
+  {
+    id: 'member-suresh',
+    name: 'Sureshkumar K P',
+    role: 'Committee Member',
+    avatar: '/images/suresh-kp.jpg',
+  },
+  {
+    id: 'member-sajan',
+    name: 'Adv. Sajan Janardanan',
+    role: 'Committee Member',
+    avatar: '/images/sajan-janardanan.jpg',
+  },
+  {
+    id: 'member-fazal',
+    name: 'Fazal Mohamed',
+    role: 'Committee Member',
+    avatar: '/images/fazal-mohamed.jpg',
+  },
+];
 
 export const INAUGURATION_DIGNITARIES = [
   {
@@ -499,7 +549,7 @@ export const INAUGURATION_DIGNITARIES = [
   },
   {
     name: 'Shri. Tony Chacko',
-    designation: 'Chairman, ISTD Trichur Chapter',
+    designation: 'Chairman, ISTD Thrissur Chapter',
     linkedin: 'https://www.linkedin.com/in/tony-chacko-965622240/',
     photo: '/photos/istd-tony-chacko.jpeg',
   },
@@ -508,178 +558,91 @@ export const INAUGURATION_DIGNITARIES = [
 export const CHAPTER_CORE_CONTRIBUTORS = [
   {
     name: 'Shri. Tony Chacko',
-    role: 'Chairman, ISTD Trichur Chapter',
+    role: 'Chairman',
     linkedin: 'https://www.linkedin.com/in/tony-chacko-965622240/',
   },
   {
     name: 'Ms. Sneha Rose George',
-    role: 'Secretary, ISTD Trichur Chapter',
+    role: 'Secretary',
     linkedin: 'https://www.linkedin.com/in/sneha-rose-george-4176a325/',
   },
   {
     name: 'Mr. Jibin N',
-    role: 'Treasurer, ISTD Trichur Chapter',
+    role: 'Treasurer',
     linkedin: 'https://www.linkedin.com/in/jibintcr/',
   },
-  {
-    name: 'Mr. Nisam',
-    role: 'Chapter Leadership & Core Team',
-  },
-  {
-    name: 'Dr. Minu Gopal',
-    role: 'Chapter Leadership & Core Team',
-  },
-  {
-    name: 'Dr. Dhanya Alex',
-    role: 'Chapter Leadership & Core Team',
-  },
-  {
-    name: 'Mr. Jobin Kuriakose',
-    role: 'Chapter Leadership & Core Team',
-  },
-  {
-    name: 'Mr. Anil Komban',
-    role: 'Chapter Leadership & Core Team',
-  },
-  {
-    name: 'Ms. Rohini',
-    role: 'Chapter Leadership & Core Team',
-  },
-  {
-    name: 'Mr. Manoj Pushkaran',
-    role: 'Chapter Leadership & Core Team',
-  },
+  { name: 'Mr. Nisam', role: 'Chapter Member & Contributor' },
+  { name: 'Dr. Minu Gopal', role: 'Chapter Member & Contributor' },
+  { name: 'Dr. Dhanya Alex', role: 'Chapter Member & Contributor' },
+  { name: 'Mr. Jobin Kuriakose', role: 'Chapter Member & Contributor' },
+  { name: 'Mr. Anil Komban', role: 'Chapter Member & Contributor' },
+  { name: 'Ms. Rohini', role: 'Chapter Member & Contributor' },
+  { name: 'Mr. Manoj Pushkaran', role: 'Chapter Member & Contributor' },
 ];
 
-export const COMMITTEE_MEMBERS: CommitteeMember[] = [
-  {
-    id: 'member-suresh',
-    name: 'Sureshkumar K P',
-    role: 'Committee Member',
-    title: 'Senior HR Consultant & Trainer',
-    avatar: '/images/suresh-kp.jpg',
-    email: 'info@istd.in',
-  },
-  {
-    id: 'member-sajan',
-    name: 'Adv. Sajan Janardanan',
-    role: 'Committee Member',
-    title: 'Legal Counsel & Corporate Advisor',
-    avatar: '/images/sajan-janardanan.jpg',
-    email: 'info@istd.in',
-  },
-  {
-    id: 'member-fazal',
-    name: 'Fazal Mohamed',
-    role: 'Committee Member',
-    title: 'L&D Specialist & Facilitator',
-    avatar: '/images/fazal-mohamed.jpg',
-    email: 'info@istd.in',
-  },
-];
-
-export const FLAGSHIP_PROGRAMS: ProgramItem[] = [
-  {
-    id: 'knowledgeForums',
-    badge: 'Core Initiative',
-    duration: 'Monthly & Quarterly Forums',
-    shortTitle: 'Executive Knowledge Sharing & L&D Forums',
-    title: 'Executive Knowledge Sharing & L&D Forums',
-    description:
-      'Interactive conclaves, expert webinars, and leadership roundtables exploring emerging trends in AI, workplace learning, and organizational development.',
-    fullDescription:
-      'Curated monthly and quarterly knowledge-sharing sessions bringing together CHROs, corporate trainers, academicians, and industry practitioners to exchange actionable insights on modern L&D.',
-    features: [
-      'Expert webinars on AI, Future of Work & HR transformation',
-      'Interactive panel discussions with industry & academic leaders',
-      'Case-study presentations on organizational talent practices',
-      'Peer-to-peer problem solving & best-practice exchange',
-      'Open to HR practitioners, trainers, educators & leaders',
-    ],
-    featured: true,
-    iconType: 'layers',
-  },
-  {
-    id: 'academiaCollaboration',
-    duration: 'Institutional Partnerships',
-    shortTitle: 'Industry–Academia & Campus Initiatives',
-    title: 'Industry–Academia & Campus Collaboration',
-    description:
-      'Bridging universities, B-schools, and industry leaders across Central Kerala through Faculty Development Programs (FDPs) and employability labs.',
-    fullDescription:
-      'A dedicated collaborative bridge connecting colleges, universities, and research scholars with corporate HR leaders to align academic learning with real-world workplace readiness.',
-    features: [
-      'Faculty Development Programs (FDPs) on modern pedagogy',
-      'Campus-to-Corporate employability & leadership sessions',
-      'Joint research & scholarly exchange with universities',
-      'Mentorship for management & HR students across Kerala',
-      'Institutional tie-ups with premier colleges in Thrissur',
-    ],
-    iconType: 'diploma',
-  },
-  {
-    id: 'trainerLabs',
-    duration: 'Practitioner Community',
-    shortTitle: 'Facilitator & HRD Skill Labs',
-    title: 'Corporate HRD & Facilitator Skill Labs',
-    description:
-      'Hands-on peer-learning labs and workshops designed for corporate trainers, educators, and OD practitioners to sharpen facilitation methodologies.',
-    fullDescription:
-      'Practical, experiential workshops where trainers, facilitators, and HR professionals co-create learning tools, explore adult learning frameworks, and elevate workplace training impact.',
-    features: [
-      'Experiential facilitation & instructional design clinics',
-      'Training Needs Identification (TNI) & impact evaluation',
-      'Behavioral coaching, leadership labs & group dynamics',
-      'Custom corporate MDP & organizational OD advisory',
-      'Collaborative networking across Central Kerala chapters',
-    ],
-    iconType: 'shield',
-  },
-];
-
-export const CHAPTER_EVENTS: EventItem[] = [
+export const ALL_CHAPTER_EVENTS: ChapterEvent[] = [
   {
     id: 'event-ai-agents',
+    slug: 'ai-agents-in-business',
+    status: 'upcoming',
     title: 'From AI Assistants to AI Agents: The Next Shift in Business',
-    dateBadge: 'August 8, 2026',
-    speaker: 'Speaker: Shaheen Siddique',
-    description:
-      'An exclusive online session exploring the evolution of AI tools and how businesses and trainers can leverage autonomous AI agents for sustainable productivity and workflow innovation.',
+    programmeType: 'Webinar',
+    date: '8 August 2026',
+    timeIST: 'Time to be announced (IST)',
+    venue: 'Online Session',
+    speaker: 'Shaheen Siddique',
+    shortDescription:
+      'An online session exploring the evolution of AI tools and how businesses and professionals can use AI agents for sustainable growth.',
+    fullDescription: [
+      'This online webinar organised by the ISTD Thrissur Chapter examines the transition from conversational AI assistants to autonomous AI agents in workplace and business environments.',
+      'The session covers practical applications for HR professionals, trainers, educators, and business managers looking to integrate AI-assisted workflows responsibly and effectively.',
+    ],
     image: '/images/event-ai-agents.jpg',
-    venueOrMode: 'Mode: Online Webinar',
+    imageCaption: 'Programme announcement illustration for the webinar on AI Assistants and AI Agents.',
+    registrationAvailable: false,
   },
   {
     id: 'event-future-ld',
+    slug: 'future-of-ld-ai-ecosystems',
+    status: 'past',
     title: 'Future of L&D: Building Intelligent Learning Ecosystems with AI',
-    dateBadge: 'April 11, 2026',
-    speaker: 'Speaker: ISTD Expert Panel',
-    description:
-      'A Foundation Day special session exploring how Artificial Intelligence is reshaping Learning and Development for organizations, colleges, and training institutes.',
+    programmeType: 'Seminar',
+    date: '11 April 2026',
+    timeIST: 'Foundation Day Special Session (IST)',
+    venue: 'Online / Chapter Session',
+    speaker: 'Chapter Resource Panel',
+    shortDescription:
+      'A Foundation Day special session exploring how Artificial Intelligence is reshaping Learning and Development for organisations and academic institutions.',
+    fullDescription: [
+      'Held to mark ISTD Foundation Day, this session explored how Artificial Intelligence is reshaping Learning and Development across corporate organisations and educational institutions.',
+      'Participants discussed instructional design, adaptive learning tools, and the evolving role of L&D practitioners.',
+    ],
     image: '/images/event-future-ld.jpg',
-    venueOrMode: 'Foundation Day Special',
-  },
-];
-
-export const TESTIMONIALS = [
-  {
-    id: 't1',
-    quote:
-      'ISTD Thrissur provides an incredible platform for trainers to network, unlearn, and relearn. The local webinars on AI and future tech in HR have been eye-opening and highly practical.',
-    author: 'Senior Corporate Trainer',
-    role: 'ISTD Thrissur Chapter Member',
+    imageCaption: 'Foundation Day special session on Building Intelligent Learning Ecosystems with AI.',
+    hasPhotoGallery: false,
   },
   {
-    id: 't2',
-    quote:
-      'The collaborative spirit of the Thrissur chapter members has helped me elevate my corporate training programs significantly. Highly recommended for any L&D professional.',
-    author: 'Executive L&D Consultant',
-    role: 'Leading Tech & Manufacturing Sectors',
-  },
-  {
-    id: 't3',
-    quote:
-      'Being part of ISTD has connected me with the most seasoned HR leaders and educators across Kerala. The knowledge-sharing sessions and peer network are truly invaluable for learning leaders.',
-    author: 'Head of Talent Development',
-    role: 'Cochin & Thrissur Region',
+    id: 'event-inauguration-2026',
+    slug: 'inauguration',
+    status: 'past',
+    title: 'ISTD Trichur Chapter Inaugurated as Diamond Chapter in ISTD’s 55th Year',
+    programmeType: 'Chapter Milestone',
+    date: '30 March 2026',
+    timeIST: 'Inaugural Session (IST)',
+    venue: 'Hotel Pearl Regency, Thrissur',
+    speaker: 'Shri. Atul Shah (National President, ISTD) & National/Regional Dignitaries',
+    shortDescription:
+      'Official inauguration of the ISTD Thrissur (Trichur) Chapter as the Diamond Chapter of the Indian Society for Training & Development (ISTD) in its 55th year, together with the installation of office bearers.',
+    fullDescription: [
+      'We are pleased to share the successful inauguration of the ISTD Trichur Chapter on 30 March 2026, marking the establishment of the Diamond Chapter of the Indian Society for Training & Development (ISTD) in its 55th year.',
+      'The launch of the Trichur Chapter reflects a collective commitment to strengthening the training and development ecosystem by creating a professional platform for learning, knowledge exchange, collaboration, and leadership development.',
+      'The chapter is envisioned as a space that brings together trainers, educators, HR professionals, academicians, and industry leaders to contribute meaningfully to professional growth in the region.',
+      'The successful formation and inauguration of the chapter, along with the strong membership response and installation of office bearers, reflect the dedication, coordination, and shared vision of everyone involved in this initiative.',
+      'The ISTD Trichur Chapter begins its journey with a clear purpose: to support professional excellence in training, learning, and human resource development through meaningful engagement and sustained collaboration.',
+    ],
+    image: '/photos/istd-22.jpeg',
+    imageCaption:
+      'Chairman Shri. Tony Chacko and Regional Vice President (South) Prof. (Dr.) Zakkariya K A lighting the ceremonial lamp alongside National President Shri. Atul Shah, National Treasurer Shri. Nabaghana Pany, and Past National President Dr. Yogesh Kumar Upadhyay on 30 March 2026.',
+    hasPhotoGallery: true,
   },
 ];

@@ -5,14 +5,14 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { assetUrl, OFFICIAL_LINKS } from '@/data/siteData';
 
-const NAV_ITEMS = [
-  { href: '/', label: 'Home', mobileLabel: 'Home' },
-  { href: '/about', label: 'About Us', mobileLabel: 'About ISTD & Chapter' },
-  { href: '/committee', label: 'Leadership', mobileLabel: 'Chapter Leadership & Committee' },
-  { href: '/events', label: 'Events & Reports', mobileLabel: 'Upcoming Events & Past Reports' },
-  { href: '/gallery', label: 'Photo Gallery', mobileLabel: 'Chapter Photo Gallery' },
-  { href: '/membership', label: 'Membership', mobileLabel: 'Membership & Application' },
-  { href: '/contact', label: 'Contact', mobileLabel: 'Contact Secretariat' },
+export const NAV_ITEMS = [
+  { href: '/', label: 'Home' },
+  { href: '/about', label: 'About Us' },
+  { href: '/committee', label: 'Managing Committee' },
+  { href: '/events', label: 'Events & Programmes' },
+  { href: '/gallery', label: 'Gallery' },
+  { href: '/membership', label: 'Membership' },
+  { href: '/contact', label: 'Contact Us' },
 ];
 
 export function Navbar() {
@@ -60,7 +60,7 @@ export function Navbar() {
       <div className="top-bar">
         <div className="container top-bar-inner">
           <div className="top-bar-left">
-            <span className="top-bar-badge">Affiliated with ISTD New Delhi • Est. 1970</span>
+            <span className="top-bar-badge">Affiliated with ISTD New Delhi (Est. April 1970)</span>
             <div className="top-bar-item">
               <svg
                 width="14"
@@ -69,9 +69,11 @@ export function Navbar() {
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2"
+                aria-hidden="true"
               >
                 <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
               </svg>
+              <span>Thrissur Chapter:</span>
               <a href="tel:+919846101034">+91 9846101034</a>
               <span>/</span>
               <a href="tel:+919496839168">+91 9496839168</a>
@@ -84,10 +86,12 @@ export function Navbar() {
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2"
+                aria-hidden="true"
               >
                 <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
                 <polyline points="22,6 12,13 2,6" />
               </svg>
+              <span>ISTD National Office:</span>
               <a href="mailto:info@istd.in">info@istd.in</a>
             </div>
           </div>
@@ -98,7 +102,7 @@ export function Navbar() {
               rel="noopener noreferrer"
               className="top-bar-item top-bar-portal-link"
             >
-              <span>ISTD Trichur LinkedIn</span>
+              <span>Chapter LinkedIn</span>
               <svg
                 width="12"
                 height="12"
@@ -106,6 +110,7 @@ export function Navbar() {
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2.2"
+                aria-hidden="true"
               >
                 <line x1="7" y1="17" x2="17" y2="7" />
                 <polyline points="7 7 17 7 17 17" />
@@ -117,7 +122,7 @@ export function Navbar() {
               rel="noopener noreferrer"
               className="top-bar-item top-bar-portal-link"
             >
-              <span>ISTD National Portal</span>
+              <span>ISTD National (istd.in)</span>
               <svg
                 width="12"
                 height="12"
@@ -125,6 +130,7 @@ export function Navbar() {
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2.2"
+                aria-hidden="true"
               >
                 <line x1="7" y1="17" x2="17" y2="7" />
                 <polyline points="7 7 17 7 17 17" />
@@ -153,7 +159,7 @@ export function Navbar() {
                   <span className="brand-name">ISTD</span>
                   <span className="brand-diamond-tag">Diamond Chapter</span>
                 </div>
-                <span className="brand-chapter">Thrissur (Trichur) Chapter</span>
+                <span className="brand-chapter">Thrissur Chapter</span>
                 <span className="brand-sub">Indian Society for Training &amp; Development</span>
               </div>
             </Link>
@@ -183,6 +189,7 @@ export function Navbar() {
                 id="hamburgerBtn"
                 aria-label={drawerOpen ? 'Close navigation menu' : 'Open navigation menu'}
                 aria-expanded={drawerOpen}
+                aria-controls="mobileDrawer"
                 onClick={() => setDrawerOpen((prev) => !prev)}
               >
                 <span className="hamburger-icon" aria-hidden="true">
@@ -208,18 +215,21 @@ export function Navbar() {
         className={`mobile-nav-drawer ${drawerOpen ? 'is-open' : ''}`}
         id="mobileDrawer"
         aria-label="Mobile Navigation Menu"
+        aria-hidden={!drawerOpen}
+        style={{ visibility: drawerOpen ? 'visible' : 'hidden' }}
       >
         <div className="mobile-drawer-top">
           <div className="mobile-drawer-header">
             <Link
               href="/"
               className="brand-logo"
+              tabIndex={drawerOpen ? 0 : -1}
               onClick={() => setDrawerOpen(false)}
             >
               <div className="brand-seal-ring sm">
                 <img
                   src={assetUrl('/images/logo-circle.png')}
-                  alt="ISTD Thrissur Emblem"
+                  alt="ISTD Thrissur Chapter Emblem"
                   width={40}
                   height={40}
                 />
@@ -237,6 +247,7 @@ export function Navbar() {
               className="mobile-drawer-close"
               id="mobileDrawerClose"
               aria-label="Close menu"
+              tabIndex={drawerOpen ? 0 : -1}
               onClick={() => setDrawerOpen(false)}
             >
               <svg
@@ -246,6 +257,7 @@ export function Navbar() {
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2.4"
+                aria-hidden="true"
               >
                 <line x1="18" y1="6" x2="6" y2="18" />
                 <line x1="6" y1="6" x2="18" y2="18" />
@@ -259,9 +271,10 @@ export function Navbar() {
                 key={item.href}
                 href={item.href}
                 className={`mobile-nav-link ${isActive(item.href) ? 'active' : ''}`}
+                tabIndex={drawerOpen ? 0 : -1}
                 onClick={() => setDrawerOpen(false)}
               >
-                <span>{item.mobileLabel}</span>
+                <span>{item.label}</span>
                 <svg
                   width="16"
                   height="16"
@@ -269,6 +282,7 @@ export function Navbar() {
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="2.2"
+                  aria-hidden="true"
                 >
                   <polyline points="9 18 15 12 9 6" />
                 </svg>
@@ -282,14 +296,19 @@ export function Navbar() {
             href="/membership"
             className="btn btn-red"
             style={{ width: '100%', marginBottom: '0.75rem' }}
+            tabIndex={drawerOpen ? 0 : -1}
             onClick={() => setDrawerOpen(false)}
           >
-            Apply for Membership
+            Become a Member
           </Link>
           <div className="mobile-drawer-contact">
-            <a href="tel:+919846101034">📞 +91 9846101034</a>
+            <a href="tel:+919846101034" tabIndex={drawerOpen ? 0 : -1}>
+              +91 9846101034
+            </a>
             <span>•</span>
-            <a href="mailto:info@istd.in">✉️ info@istd.in</a>
+            <a href="mailto:jibintcr@gmail.com" tabIndex={drawerOpen ? 0 : -1}>
+              jibintcr@gmail.com
+            </a>
           </div>
         </div>
       </aside>

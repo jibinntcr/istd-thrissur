@@ -4,9 +4,9 @@ import Link from 'next/link';
 import { GalleryClient } from '@/components/GalleryClient';
 
 export const metadata: Metadata = {
-  title: 'Photo Gallery | Diamond Chapter Inauguration & Events',
+  title: 'Gallery',
   description:
-    'Explore the official Photo Gallery of the ISTD Thrissur Diamond Chapter Inauguration held on 30th March 2026 at Pearl Regency, Thrissur, graced by ISTD National and Regional leadership.',
+    'Official photographs from the ISTD Thrissur Chapter inauguration on 30 March 2026 at Hotel Pearl Regency, Thrissur, and chapter events.',
 };
 
 export default function GalleryPage() {
@@ -18,12 +18,12 @@ export default function GalleryPage() {
           <div className="breadcrumb">
             <Link href="/">Home</Link>
             <span>/</span>
-            <span>Photo Gallery</span>
+            <span>Gallery</span>
           </div>
-          <h1 className="page-hero-title">Chapter Photo Gallery &amp; Archives</h1>
+          <h1 className="page-hero-title">Gallery</h1>
           <p className="page-hero-subtitle">
-            Capturing historic milestones, national leadership visits, swearing-in ceremonies, and
-            vibrant community moments of the ISTD Thrissur Chapter.
+            Photographs from the ISTD Thrissur Chapter inauguration on 30 March 2026 at Hotel Pearl
+            Regency, Thrissur, with factual captions identifying the occasion and participants.
           </p>
         </div>
       </section>
@@ -34,30 +34,24 @@ export default function GalleryPage() {
       {/* CTA Banner Section */}
       <section className="section-padding-sm bg-white">
         <div className="container">
-          <div className="cta-banner-card">
-            <div style={{ maxWidth: '650px' }}>
-              <h2
-                style={{
-                  color: '#FFFFFF',
-                  fontSize: '2rem',
-                  marginBottom: '0.5rem',
-                  fontWeight: 800,
-                }}
-              >
-                Be Part of Our Next Chapter Milestone
-              </h2>
-              <p style={{ color: '#CBD5E1', fontSize: '1.05rem', margin: 0 }}>
-                Join ISTD Thrissur Chapter to participate in upcoming workshops, learning forums, and
-                leadership conclaves.
-              </p>
-            </div>
-            <div className="btn-group">
-              <Link href="/membership" className="btn btn-red btn-lg">
-                Apply for Membership
-              </Link>
-              <Link href="/contact" className="btn btn-outline-white btn-lg">
-                Contact Secretariat
-              </Link>
+          <div className="cta-banner">
+            <div className="cta-banner-inner">
+              <div>
+                <span className="section-tag tag-yellow">Join Our Chapter</span>
+                <h2>Participate in Upcoming ISTD Thrissur Chapter Programmes</h2>
+                <p>
+                  Explore our upcoming events or enquire about membership with the ISTD Thrissur
+                  Chapter.
+                </p>
+              </div>
+              <div className="btn-group">
+                <Link href="/events" className="btn btn-red">
+                  Events &amp; Programmes
+                </Link>
+                <Link href="/membership" className="btn btn-outline-white">
+                  Become a Member
+                </Link>
+              </div>
             </div>
           </div>
         </div>

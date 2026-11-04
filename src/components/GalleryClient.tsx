@@ -59,19 +59,19 @@ export function GalleryClient() {
           <div className="gallery-spotlight-banner">
             <div>
               <div className="gallery-spotlight-pill">
-                <span>★ Historic Chapter Milestone</span>
+                <span>30 March 2026 • Hotel Pearl Regency, Thrissur</span>
               </div>
               <h2 className="gallery-spotlight-title">
-                Inauguration of ISTD Diamond Chapter at Thrissur
+                ISTD Thrissur Chapter Inauguration Photographs
               </h2>
               <p className="gallery-spotlight-desc">
-                Held on <strong style={{ color: '#FFFFFF' }}>30th March 2026</strong> at{' '}
+                Held on <strong style={{ color: '#FFFFFF' }}>30 March 2026</strong> at{' '}
                 <strong style={{ color: '#FFFFFF' }}>Hotel Pearl Regency, Thrissur</strong>, the
-                grand inauguration was graced by National President{' '}
+                inauguration was attended by National President{' '}
                 <strong style={{ color: '#FFFFFF' }}>Shri. Atul Shah</strong>, Past National
                 President{' '}
                 <strong style={{ color: '#FFFFFF' }}>Dr. Yogesh Kumar Upadhyay</strong>, National
-                Treasurer <strong style={{ color: '#FFFFFF' }}>Shri. Nabaghan Pany</strong>,
+                Treasurer <strong style={{ color: '#FFFFFF' }}>Shri. Nabaghana Pany</strong>,
                 Regional Vice President (South){' '}
                 <strong style={{ color: '#FFFFFF' }}>Prof. (Dr.) Zakkariya K A</strong>, and
                 Chapter Chairman <strong style={{ color: '#FFFFFF' }}>Shri. Tony Chacko</strong>.

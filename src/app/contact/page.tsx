@@ -1,13 +1,13 @@
 import React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { PhotoCard } from '@/components/PhotoCard';
 import { ContactForm } from '@/components/ContactForm';
+import { CHAPTER_CONTACTS, OFFICIAL_LINKS } from '@/data/siteData';
 
 export const metadata: Metadata = {
   title: 'Contact Us',
   description:
-    'Contact ISTD Thrissur Chapter Secretariat for membership enquiries, training programs, admissions, and institutional collaborations.',
+    'Contact details for the ISTD Thrissur Chapter office bearers and the ISTD National Office, New Delhi.',
 };
 
 export default function ContactPage() {
@@ -21,230 +21,253 @@ export default function ContactPage() {
             <span>/</span>
             <span>Contact Us</span>
           </div>
-          <h1 className="page-hero-title">Contact ISTD Thrissur Chapter</h1>
+          <h1 className="page-hero-title">Contact Us</h1>
           <p className="page-hero-subtitle">
-            Get in touch with the Chapter Secretariat for enquiries, programs, memberships, and
-            collaborations.
+            Get in touch with the ISTD Thrissur Chapter office bearers for local chapter programmes,
+            membership guidance, and academic–industry collaborations.
           </p>
         </div>
       </section>
 
-      {/* Contact Us & Lead Form Grid */}
+      {/* Contact Us Layout Grid */}
       <section className="section-padding bg-white">
         <div className="container">
           <div className="contact-layout-grid">
-            {/* Lead Generation Form */}
+            {/* Left Column: Enquiry Form */}
             <ContactForm />
 
-            {/* Contact Information & Chapter Photo Panel */}
-            <div>
-              <div
-                style={{
-                  backgroundColor: 'var(--bg-pale-blue)',
-                  border: '1.5px solid var(--border-light)',
-                  borderRadius: 'var(--radius-xl)',
-                  padding: '1.5rem',
-                  marginBottom: '2rem',
-                  textAlign: 'center',
-                }}
-              >
-                <PhotoCard
-                  src="/photos/istd.jpeg"
-                  alt="ISTD Thrissur Chapter Leadership & Secretariat Team"
-                  title="ISTD Thrissur Chapter Secretariat & Leadership Team"
-                  caption="Chapter Office Bearers, Managing Committee, and National Executive leaders of the ISTD Thrissur Chapter."
-                  category="Team & Secretariat"
-                  badgeText="Click to Expand Photo"
-                  headingText="ISTD Thrissur Leadership & Secretariat"
-                  style={{ marginBottom: '1.25rem' }}
-                  imgStyle={{ width: '100%', height: '240px', objectFit: 'cover', display: 'block' }}
-                />
-                <h3
-                  style={{
-                    fontSize: '1.2rem',
-                    color: 'var(--color-ink)',
-                    marginBottom: '0.25rem',
-                    fontWeight: 700,
-                  }}
-                >
-                  Secretariat Helpdesk
-                </h3>
-                <p style={{ fontSize: '0.85rem', color: 'var(--color-muted)', margin: 0 }}>
-                  Assisting with admissions, registrations, and chapter activities.
-                </p>
-              </div>
-
-              {/* Direct Phone / Email Cards */}
+            {/* Right Column: Clearly Separated Thrissur Chapter Contacts & ISTD National Office Contacts */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+              {/* Card 1: Thrissur Chapter Contacts */}
               <div
                 style={{
                   background: '#FFFFFF',
-                  border: '1.5px solid var(--border-light)',
-                  borderRadius: 'var(--radius-xl)',
-                  padding: '2rem',
+                  border: '1.5px solid var(--color-border)',
+                  borderTop: '4px solid var(--brand-navy)',
+                  borderRadius: 'var(--radius-lg)',
+                  padding: '1.75rem',
                   boxShadow: 'var(--shadow-sm)',
                 }}
               >
-                <h4
+                <span className="section-tag tag-blue">Local Chapter</span>
+                <h2
                   style={{
-                    fontSize: '1.1rem',
+                    fontSize: '1.28rem',
                     color: 'var(--color-ink)',
-                    marginBottom: '1.25rem',
-                    fontWeight: 700,
+                    marginBottom: '0.5rem',
+                    fontWeight: 800,
                   }}
                 >
-                  Direct Contact Channels
-                </h4>
+                  ISTD Thrissur Chapter Contacts
+                </h2>
+                <p
+                  style={{
+                    fontSize: '0.88rem',
+                    color: 'var(--color-muted)',
+                    marginBottom: '1.25rem',
+                  }}
+                >
+                  Location: {CHAPTER_CONTACTS.location}
+                </p>
 
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                  <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.85rem' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1.1rem' }}>
+                  {/* Chairman */}
+                  <div
+                    style={{
+                      padding: '1rem',
+                      background: 'var(--color-surface-soft)',
+                      borderRadius: 'var(--radius-sm)',
+                      border: '1px solid var(--color-border)',
+                    }}
+                  >
                     <div
                       style={{
-                        width: '38px',
-                        height: '38px',
-                        background: 'var(--bg-pale-blue)',
-                        border: '1px solid var(--border-blue)',
-                        color: 'var(--accent-blue)',
-                        borderRadius: 'var(--radius-sm)',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        flexShrink: 0,
+                        fontSize: '0.76rem',
+                        fontWeight: 800,
+                        color: 'var(--brand-blue)',
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.06em',
+                        marginBottom: '0.2rem',
                       }}
                     >
-                      <svg
-                        width="18"
-                        height="18"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                      >
-                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-                      </svg>
+                      Chapter Chairman
                     </div>
-                    <div>
-                      <div
-                        style={{
-                          fontSize: '0.78rem',
-                          fontWeight: 700,
-                          color: 'var(--color-muted)',
-                          textTransform: 'uppercase',
-                        }}
-                      >
-                        Chairman (Tony Chacko)
-                      </div>
+                    <div
+                      style={{
+                        fontSize: '1rem',
+                        fontWeight: 800,
+                        color: 'var(--color-ink)',
+                        marginBottom: '0.35rem',
+                      }}
+                    >
+                      {CHAPTER_CONTACTS.chairman.name} ({CHAPTER_CONTACTS.chairman.designation})
+                    </div>
+                    <div style={{ fontSize: '0.9rem', color: 'var(--color-body)' }}>
+                      Phone:{' '}
                       <a
-                        href="tel:+919846101034"
-                        style={{
-                          fontSize: '0.95rem',
-                          fontWeight: 600,
-                          color: 'var(--color-ink)',
-                        }}
+                        href={`tel:${CHAPTER_CONTACTS.chairman.phoneHref}`}
+                        style={{ fontWeight: 700, color: 'var(--brand-navy)' }}
                       >
-                        +91 9846101034
+                        {CHAPTER_CONTACTS.chairman.phoneDisplay}
+                      </a>
+                      <br />
+                      Email:{' '}
+                      <a
+                        href={`mailto:${CHAPTER_CONTACTS.chairman.email}`}
+                        style={{ fontWeight: 600, color: 'var(--brand-blue)' }}
+                      >
+                        {CHAPTER_CONTACTS.chairman.email}
                       </a>
                     </div>
                   </div>
 
-                  <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.85rem' }}>
+                  {/* Treasurer */}
+                  <div
+                    style={{
+                      padding: '1rem',
+                      background: 'var(--color-surface-soft)',
+                      borderRadius: 'var(--radius-sm)',
+                      border: '1px solid var(--color-border)',
+                    }}
+                  >
                     <div
                       style={{
-                        width: '38px',
-                        height: '38px',
-                        background: 'var(--bg-pale-blue)',
-                        border: '1px solid var(--border-blue)',
-                        color: 'var(--accent-blue)',
-                        borderRadius: 'var(--radius-sm)',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        flexShrink: 0,
+                        fontSize: '0.76rem',
+                        fontWeight: 800,
+                        color: 'var(--brand-blue)',
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.06em',
+                        marginBottom: '0.2rem',
                       }}
                     >
-                      <svg
-                        width="18"
-                        height="18"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                      >
-                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-                      </svg>
+                      Chapter Treasurer &amp; Chapter Contact
                     </div>
-                    <div>
-                      <div
-                        style={{
-                          fontSize: '0.78rem',
-                          fontWeight: 700,
-                          color: 'var(--color-muted)',
-                          textTransform: 'uppercase',
-                        }}
-                      >
-                        Treasurer (Jibin N)
-                      </div>
+                    <div
+                      style={{
+                        fontSize: '1rem',
+                        fontWeight: 800,
+                        color: 'var(--color-ink)',
+                        marginBottom: '0.35rem',
+                      }}
+                    >
+                      {CHAPTER_CONTACTS.treasurer.name} ({CHAPTER_CONTACTS.treasurer.designation})
+                    </div>
+                    <div style={{ fontSize: '0.9rem', color: 'var(--color-body)' }}>
+                      Phone:{' '}
                       <a
-                        href="tel:+919496839168"
-                        style={{
-                          fontSize: '0.95rem',
-                          fontWeight: 600,
-                          color: 'var(--color-ink)',
-                        }}
+                        href={`tel:${CHAPTER_CONTACTS.treasurer.phoneHref}`}
+                        style={{ fontWeight: 700, color: 'var(--brand-navy)' }}
                       >
-                        +91 9496839168
+                        {CHAPTER_CONTACTS.treasurer.phoneDisplay}
+                      </a>
+                      <br />
+                      Email:{' '}
+                      <a
+                        href={`mailto:${CHAPTER_CONTACTS.treasurer.email}`}
+                        style={{ fontWeight: 600, color: 'var(--brand-blue)' }}
+                      >
+                        {CHAPTER_CONTACTS.treasurer.email}
                       </a>
                     </div>
                   </div>
 
-                  <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.85rem' }}>
+                  {/* Secretary */}
+                  <div
+                    style={{
+                      padding: '1rem',
+                      background: 'var(--color-surface-soft)',
+                      borderRadius: 'var(--radius-sm)',
+                      border: '1px solid var(--color-border)',
+                    }}
+                  >
                     <div
                       style={{
-                        width: '38px',
-                        height: '38px',
-                        background: 'var(--bg-pale-blue)',
-                        border: '1px solid var(--border-blue)',
-                        color: 'var(--accent-blue)',
-                        borderRadius: 'var(--radius-sm)',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        flexShrink: 0,
+                        fontSize: '0.76rem',
+                        fontWeight: 800,
+                        color: 'var(--brand-blue)',
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.06em',
+                        marginBottom: '0.2rem',
                       }}
                     >
-                      <svg
-                        width="18"
-                        height="18"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                      >
-                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                        <polyline points="22,6 12,13 2,6" />
-                      </svg>
+                      Chapter Secretary
                     </div>
-                    <div>
-                      <div
-                        style={{
-                          fontSize: '0.78rem',
-                          fontWeight: 700,
-                          color: 'var(--color-muted)',
-                          textTransform: 'uppercase',
-                        }}
-                      >
-                        Official Email
-                      </div>
+                    <div
+                      style={{
+                        fontSize: '1rem',
+                        fontWeight: 800,
+                        color: 'var(--color-ink)',
+                        marginBottom: '0.25rem',
+                      }}
+                    >
+                      {CHAPTER_CONTACTS.secretary.name} ({CHAPTER_CONTACTS.secretary.designation})
+                    </div>
+                    <div style={{ fontSize: '0.88rem' }}>
                       <a
-                        href="mailto:info@istd.in"
-                        style={{
-                          fontSize: '0.95rem',
-                          fontWeight: 600,
-                          color: 'var(--color-ink)',
-                        }}
+                        href={CHAPTER_CONTACTS.secretary.linkedin}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{ fontWeight: 700, color: 'var(--brand-blue)' }}
                       >
-                        info@istd.in
+                        Connect on LinkedIn ↗
                       </a>
                     </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Card 2: ISTD National Office Contacts */}
+              <div
+                style={{
+                  background: 'var(--color-surface-soft)',
+                  border: '1.5px solid var(--color-border)',
+                  borderTop: '4px solid var(--accent-red)',
+                  borderRadius: 'var(--radius-lg)',
+                  padding: '1.75rem',
+                }}
+              >
+                <span className="section-tag tag-red">Parent Body</span>
+                <h2
+                  style={{
+                    fontSize: '1.22rem',
+                    color: 'var(--color-ink)',
+                    marginBottom: '0.45rem',
+                    fontWeight: 800,
+                  }}
+                >
+                  ISTD National Office (New Delhi)
+                </h2>
+                <p
+                  style={{
+                    fontSize: '0.88rem',
+                    color: 'var(--color-body)',
+                    lineHeight: 1.6,
+                    marginBottom: '1rem',
+                  }}
+                >
+                  For national-level enquiries, central membership processing, and official ISTD
+                  National communications:
+                </p>
+                <div style={{ fontSize: '0.9rem', color: 'var(--color-body)', lineHeight: 1.75 }}>
+                  <div>
+                    <strong>National Office Email:</strong>{' '}
+                    <a
+                      href={`mailto:${CHAPTER_CONTACTS.nationalOffice.email}`}
+                      style={{ fontWeight: 700, color: 'var(--brand-blue)' }}
+                    >
+                      {CHAPTER_CONTACTS.nationalOffice.email}
+                    </a>
+                  </div>
+                  <div>
+                    <strong>National Website:</strong>{' '}
+                    <a
+                      href={OFFICIAL_LINKS.istdNationalWeb}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ fontWeight: 700, color: 'var(--brand-blue)' }}
+                    >
+                      https://www.istd.in/ ↗
+                    </a>
                   </div>
                 </div>
               </div>
