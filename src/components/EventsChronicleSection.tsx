@@ -614,7 +614,9 @@ export function PastEventCard({ event }: { event: ChapterEvent }) {
         </Link>
         {event.hasPhotoGallery && (
           <Link href={`/events/${event.slug}#eventPhotosSection`} className="btn btn-outline-navy btn-sm">
-            24 Event Photos
+            {event.slug === 'inauguration'
+              ? '24 Event Photos'
+              : `${event.eventPhotos?.length || 1} Event Photos`}
           </Link>
         )}
       </div>

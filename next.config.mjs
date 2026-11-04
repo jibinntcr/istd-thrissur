@@ -14,6 +14,7 @@ const nextConfig = {
   ...(isStaticExport
     ? {
         output: 'export',
+        distDir: 'out.nosync',
         images: {
           unoptimized: true,
         },

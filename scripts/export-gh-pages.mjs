@@ -5,7 +5,9 @@ import { execSync } from 'child_process';
 const root = process.cwd();
 const apiDir = path.join(root, 'src', 'app', 'api');
 const backupDir = path.join(root, 'src', '_api_backup');
-const outDir = path.join(root, 'out');
+const outNoSyncDir = path.join(root, 'out.nosync');
+
+fs.rmSync(outNoSyncDir, { recursive: true, force: true });
 
 if (fs.existsSync(apiDir)) {
   fs.renameSync(apiDir, backupDir);
@@ -16,8 +18,8 @@ try {
     stdio: 'inherit',
   });
 
-  if (fs.existsSync(outDir)) {
-    fs.writeFileSync(path.join(outDir, '.nojekyll'), '');
+  if (fs.existsSync(outNoSyncDir)) {
+    fs.writeFileSync(path.join(outNoSyncDir, '.nojekyll'), '');
 
     const copyTxtFiles = (dir) => {
       for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
@@ -37,7 +39,7 @@ try {
       }
     };
 
-    copyTxtFiles(outDir);
+    copyTxtFiles(outNoSyncDir);
   }
 } finally {
   if (fs.existsSync(backupDir)) {

@@ -12,7 +12,7 @@ import type {
   EventRegistration,
 } from './backendStore';
 
-const STORAGE_KEY = 'istd_tcr_backend_db_v2';
+const STORAGE_KEY = 'istd_tcr_backend_db_v4';
 const CACHE_META_KEY = 'istd_tcr_cache_meta_v1';
 const AUTH_SESSION_KEY = 'istd_tcr_admin_session_v1';
 const SAVED_PARTICIPANT_KEY = 'istd_tcr_saved_participant_v1';

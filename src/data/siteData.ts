@@ -481,6 +481,149 @@ export const GALLERY_PHOTOS: GalleryPhoto[] = [
     metaTag: '30 March 2026',
     keywords: 'tony chacko leaders fellowship',
   },
+  {
+    id: 'photo-25',
+    src: '/photos/chapter-connect-2026-poster.jpg',
+    title: 'Official Poster — Chapter Connect 2026 (Members’ Orientation & Networking Programme)',
+    shortDesc:
+      'Official poster for ISTD Trichur Chapter Connect 2026 held on 27 June 2026 at Hotel Elite International, Thrissur.',
+    caption:
+      'Official programme poster for ISTD Trichur Chapter Connect 2026 — Inaugural Members’ Orientation & Professional Networking Programme held on 27 June 2026 (10:30 AM to 1:00 PM) at Hotel Elite International, Thrissur.',
+    category: 'ceremony',
+    categoryLabel: 'Chapter Milestones',
+    metaTag: '27 June 2026 • Chapter Connect',
+    keywords: 'chapter connect 2026 official poster hotel elite international thrissur',
+  },
+  {
+    id: 'photo-26',
+    src: '/photos/chapter-connect-2026-banner.jpg',
+    title: 'Chapter Connect 2026 Stage Banner — ISTD Trichur Chapter',
+    shortDesc:
+      'Official stage backdrop banner for Chapter Connect 2026 at Hotel Elite International, Thrissur.',
+    caption:
+      'Official backdrop banner for ISTD Trichur Chapter Connect 2026 — Professional Networking & Member Engagement Forum (27 June 2026, Hotel Elite International).',
+    category: 'ceremony',
+    categoryLabel: 'Chapter Milestones',
+    metaTag: '27 June 2026 • Chapter Connect',
+    keywords: 'chapter connect 2026 stage banner hotel elite international',
+  },
+  {
+    id: 'photo-27',
+    src: '/photos/chapter-connect-2026-1.jpg',
+    title: 'Chairman Shri. Tony Chacko Addressing Members at Chapter Connect 2026',
+    shortDesc:
+      'Chairman Shri. Tony Chacko addressing members at Chapter Connect 2026 with Prof. (Dr.) Zakkariya K A and office bearers on the dais.',
+    caption:
+      'Chairman Shri. Tony Chacko addressing members during Chapter Connect 2026 (Members’ Orientation & Professional Networking Programme) at Hotel Elite International, Thrissur on 27 June 2026, with Founder & Mentor Prof. (Dr.) Zakkariya K A, Secretary Ms. Sneha Rose George, Treasurer Mr. Jibin N, and committee leaders on the dais.',
+    category: 'addresses',
+    categoryLabel: 'Addresses',
+    metaTag: '27 June 2026 • Chapter Connect',
+    keywords: 'chapter connect 2026 tony chacko zakkariya sneha rose jibin hotel elite international',
+  },
+  {
+    id: 'photo-28',
+    src: '/photos/chapter-connect-2026-6.jpg',
+    title: 'Presidential Address by Chairman Shri. Tony Chacko at Chapter Connect 2026',
+    shortDesc:
+      'Chapter Chairman Shri. Tony Chacko delivering the presidential & orientation address at Hotel Elite International.',
+    caption:
+      'Chapter Chairman Shri. Tony Chacko delivering the welcome and orientation address from the podium at Hotel Elite International during Chapter Connect 2026 (27 June 2026).',
+    category: 'addresses',
+    categoryLabel: 'Addresses',
+    metaTag: '27 June 2026 • Chapter Connect',
+    keywords: 'chapter connect 2026 tony chacko presidential address podium',
+  },
+  {
+    id: 'photo-29',
+    src: '/photos/chapter-connect-2026-2.jpg',
+    title: 'ISTD Trichur Chapter Members Group Photograph at Chapter Connect 2026',
+    shortDesc:
+      'Group photograph of ISTD Trichur Chapter office bearers and members at Chapter Connect 2026, Hotel Elite International.',
+    caption:
+      'Official group photograph of ISTD Trichur Chapter office bearers, leadership team, and members during Chapter Connect 2026 at Hotel Elite International, Thrissur on 27 June 2026.',
+    category: 'portraits',
+    categoryLabel: 'Group Photographs',
+    metaTag: '27 June 2026 • Chapter Connect',
+    keywords: 'chapter connect 2026 group photo members hotel elite international thrissur',
+  },
+  {
+    id: 'photo-30',
+    src: '/photos/chapter-connect-2026-3.jpg',
+    title: 'Member Orientation Address at Chapter Connect 2026',
+    shortDesc:
+      'Address at the podium during the Chapter Connect 2026 Members’ Orientation & Networking Programme at Hotel Elite International.',
+    caption:
+      'Session address during Chapter Connect 2026 at Hotel Elite International, Thrissur on 27 June 2026, sharing perspectives on training, consultancy, and chapter collaboration.',
+    category: 'addresses',
+    categoryLabel: 'Addresses',
+    metaTag: '27 June 2026 • Chapter Connect',
+    keywords: 'chapter connect 2026 podium address orientation hotel elite international',
+  },
+  {
+    id: 'photo-31',
+    src: '/photos/chapter-connect-2026-4.jpg',
+    title: 'Interactive Team-Building & Networking Activity at Chapter Connect 2026',
+    shortDesc:
+      'Chapter members participating in an interactive team-building and ice-breaking activity at Chapter Connect 2026.',
+    caption:
+      'ISTD Trichur Chapter members engaging in an interactive team-building and collaborative networking exercise during Chapter Connect 2026 at Hotel Elite International on 27 June 2026.',
+    category: 'portraits',
+    categoryLabel: 'Chapter Gathering',
+    metaTag: '27 June 2026 • Chapter Connect',
+    keywords: 'chapter connect 2026 team building networking activity members',
+  },
+  {
+    id: 'photo-32',
+    src: '/photos/chapter-connect-2026-5.jpg',
+    title: 'Collaborative Member Presentations & Engagement at Chapter Connect 2026',
+    shortDesc:
+      'Members sharing insights during the interactive networking activity at Chapter Connect 2026.',
+    caption:
+      'Chapter members presenting and collaborating during the interactive networking session at Chapter Connect 2026 at Hotel Elite International, Thrissur on 27 June 2026.',
+    category: 'portraits',
+    categoryLabel: 'Chapter Gathering',
+    metaTag: '27 June 2026 • Chapter Connect',
+    keywords: 'chapter connect 2026 member presentation engagement collaboration',
+  },
+  {
+    id: 'photo-33',
+    src: '/photos/chapter-connect-2026-7.jpg',
+    title: 'Member Introduction & Interactive Networking Forum at Chapter Connect 2026',
+    shortDesc:
+      'Chapter members participating in the interactive stage networking session at Hotel Elite International.',
+    caption:
+      'Members participating in the interactive introduction and networking forum on stage during Chapter Connect 2026 at Hotel Elite International, Thrissur (27 June 2026).',
+    category: 'portraits',
+    categoryLabel: 'Chapter Gathering',
+    metaTag: '27 June 2026 • Chapter Connect',
+    keywords: 'chapter connect 2026 stage networking introduction members',
+  },
+  {
+    id: 'photo-34',
+    src: '/photos/chapter-connect-2026-8.jpg',
+    title: 'Chapter Connect 2026 Interactive Session in Progress',
+    shortDesc:
+      'Wide view of members engaging in collaborative discussions and networking at Hotel Elite International.',
+    caption:
+      'Wide-angle view of the interactive networking session and member engagement activities during Chapter Connect 2026 at Hotel Elite International, Thrissur on 27 June 2026.',
+    category: 'portraits',
+    categoryLabel: 'Chapter Gathering',
+    metaTag: '27 June 2026 • Chapter Connect',
+    keywords: 'chapter connect 2026 wide hall session members networking',
+  },
+  {
+    id: 'photo-35',
+    src: '/photos/chapter-connect-2026-9.jpg',
+    title: 'Main Dais & Venue Setup for Chapter Connect 2026 at Hotel Elite International',
+    shortDesc:
+      'Conference hall and stage setup for ISTD Trichur Chapter Connect 2026 at Hotel Elite International, Thrissur.',
+    caption:
+      'Main conference hall and dais setup at Hotel Elite International, Thrissur for the ISTD Trichur Chapter Connect 2026 Members’ Orientation & Networking Programme (27 June 2026).',
+    category: 'ceremony',
+    categoryLabel: 'Chapter Milestones',
+    metaTag: '27 June 2026 • Chapter Connect',
+    keywords: 'chapter connect 2026 venue stage setup hotel elite international',
+  },
 ];
 
 export const OFFICE_BEARERS: CommitteeMember[] = [
@@ -850,6 +993,114 @@ export const ALL_CHAPTER_EVENTS: ChapterEvent[] = [
         caption:
           'Special session on “Healthy Habits of High Performers” with Dr. Ashik Kareem, Serial Entrepreneur & Speaker on Performance, Mindset & Wellness (25 July 2026, 7:30 PM – 8:30 PM IST).',
         category: 'Event Poster',
+      },
+    ],
+  },
+  {
+    id: 'event-chapter-connect-2026',
+    slug: 'chapter-connect-2026',
+    status: 'past',
+    title:
+      'Chapter Connect 2026 — Members’ Orientation & Professional Networking Programme',
+    subtitleQuestion: 'Connect. Collaborate. Grow.',
+    programmeType: 'Special Session',
+    date: '27 June 2026',
+    timeIST: '10:30 AM – 1:00 PM IST',
+    venue: 'Hotel Elite International, Thrissur',
+    speaker:
+      'Prof. (Dr.) Zakkariya K.A, Shri. Tony Chacko & Chapter Leadership Team',
+    speakerDesignation:
+      'Members’ Orientation & Professional Networking Forum • ISTD Trichur Chapter',
+    shortDescription:
+      'A dedicated members’ orientation and professional networking programme hosted by the ISTD Trichur Chapter at Hotel Elite International, focused on connection, collaboration, and chapter engagement.',
+    fullDescription: [
+      'ISTD Trichur Chapter hosted Chapter Connect 2026, a members’ orientation and professional networking programme focused on connection, collaboration, and chapter engagement.',
+      'The programme was designed to bring members together to understand the chapter’s vision, explore upcoming initiatives, and build meaningful professional relationships within the ISTD community.',
+      'Held on 27 June 2026 from 10:30 AM to 1:00 PM at Hotel Elite International, Thrissur, the session featured leadership addresses, member introductions, interactive team-building exercises, and collaborative discussions under the theme “Connect. Collaborate. Grow.”',
+    ],
+    image: '/photos/chapter-connect-2026-poster.jpg',
+    imageCaption:
+      'Official Event Poster — Chapter Connect 2026 (Members’ Orientation & Professional Networking Programme) held on 27 June 2026 from 10:30 AM to 1:00 PM at Hotel Elite International, Thrissur.',
+    isPosterImage: false,
+    registrationAvailable: false,
+    hasPhotoGallery: true,
+    eventPhotos: [
+      {
+        src: '/photos/chapter-connect-2026-poster.jpg',
+        title: 'Official Programme Poster — Chapter Connect 2026',
+        caption:
+          'Official poster for ISTD Trichur Chapter Connect 2026 — Inaugural Members’ Orientation & Networking Programme held on 27 June 2026 (10:30 AM to 1:00 PM) at Hotel Elite International, Thrissur.',
+        category: 'Event Poster',
+      },
+      {
+        src: '/photos/chapter-connect-2026-banner.jpg',
+        title: 'Chapter Connect 2026 Official Stage Banner',
+        caption:
+          'Official stage banner for ISTD Trichur Chapter Connect 2026 — Professional Networking & Member Engagement Forum (27 June 2026, Hotel Elite International).',
+        category: 'Stage Banner',
+      },
+      {
+        src: '/photos/chapter-connect-2026-1.jpg',
+        title: 'Chairman Shri. Tony Chacko Addressing Chapter Connect 2026',
+        caption:
+          'Chairman Shri. Tony Chacko addressing members from the podium at Hotel Elite International during Chapter Connect 2026 (27 June 2026), with Founder & Mentor Prof. (Dr.) Zakkariya K A, Secretary Ms. Sneha Rose George, Treasurer Mr. Jibin N, and committee leaders on the dais.',
+        category: 'Leadership Address',
+      },
+      {
+        src: '/photos/chapter-connect-2026-6.jpg',
+        title: 'Presidential Address by Chairman Shri. Tony Chacko',
+        caption:
+          'Chapter Chairman Shri. Tony Chacko delivering the orientation and welcome address at Hotel Elite International during Chapter Connect 2026.',
+        category: 'Leadership Address',
+      },
+      {
+        src: '/photos/chapter-connect-2026-2.jpg',
+        title: 'Group Photograph of ISTD Trichur Chapter Members at Chapter Connect 2026',
+        caption:
+          'Official group photograph of ISTD Trichur Chapter office bearers and members during Chapter Connect 2026 at Hotel Elite International, Thrissur on 27 June 2026.',
+        category: 'Group Photograph',
+      },
+      {
+        src: '/photos/chapter-connect-2026-3.jpg',
+        title: 'Member Orientation & Knowledge Sharing Address',
+        caption:
+          'Session address at the podium during Chapter Connect 2026 at Hotel Elite International, Thrissur (27 June 2026).',
+        category: 'Orientation Session',
+      },
+      {
+        src: '/photos/chapter-connect-2026-4.jpg',
+        title: 'Interactive Team-Building & Ice-Breaking Activity',
+        caption:
+          'Chapter members participating in an interactive team-building and networking activity during Chapter Connect 2026 at Hotel Elite International.',
+        category: 'Member Engagement',
+      },
+      {
+        src: '/photos/chapter-connect-2026-5.jpg',
+        title: 'Collaborative Group Presentations by Chapter Members',
+        caption:
+          'Members sharing insights and collaborating during the interactive networking activity at Chapter Connect 2026 (27 June 2026).',
+        category: 'Networking Forum',
+      },
+      {
+        src: '/photos/chapter-connect-2026-7.jpg',
+        title: 'Interactive Stage Networking & Member Introductions',
+        caption:
+          'Members participating in the interactive stage introduction and networking session at Hotel Elite International during Chapter Connect 2026.',
+        category: 'Networking Forum',
+      },
+      {
+        src: '/photos/chapter-connect-2026-8.jpg',
+        title: 'Wide View of Chapter Connect 2026 Interactive Session',
+        caption:
+          'Chapter members engaging in collaborative discussions and networking activities at Hotel Elite International, Thrissur (27 June 2026).',
+        category: 'Member Engagement',
+      },
+      {
+        src: '/photos/chapter-connect-2026-9.jpg',
+        title: 'Main Conference Hall & Dais Setup at Hotel Elite International',
+        caption:
+          'Main conference hall and dais prepared for Chapter Connect 2026 at Hotel Elite International, Thrissur.',
+        category: 'Venue & Dais',
       },
     ],
   },

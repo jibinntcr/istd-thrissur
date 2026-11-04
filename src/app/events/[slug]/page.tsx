@@ -802,11 +802,13 @@ export default async function EventDetailPage({
                 <span className="section-tag tag-blue">Event Photographs &amp; Media</span>
                 <h2 className="section-title" style={{ marginBottom: '0.3rem' }}>
                   {isInauguration
-                    ? `Inauguration Ceremony Photo Gallery (${GALLERY_PHOTOS.length} Photos)`
+                    ? 'Inauguration Ceremony Photo Gallery (24 Photos)'
+                    : (event.eventPhotos?.length || 0) > 1
+                    ? `Event Photographs (${event.eventPhotos?.length} Photos)`
                     : 'Event Poster & Session Photographs'}
                 </h2>
                 <p style={{ color: '#64748B', marginBottom: 0 }}>
-                  {isInauguration
+                  {isInauguration || (event.eventPhotos?.length || 0) > 1
                     ? 'Click any photograph below to open the full-screen lightbox viewer with captions.'
                     : event.status === 'upcoming'
                     ? 'Official event poster below. Photographs and screenshots from the session will be updated here after the event.'
@@ -828,7 +830,7 @@ export default async function EventDetailPage({
                   gap: '1.25rem',
                 }}
               >
-                {GALLERY_PHOTOS.map((photo) => (
+                {GALLERY_PHOTOS.filter((p) => !p.src.includes('chapter-connect')).map((photo) => (
                   <PhotoCard
                     key={photo.id}
                     src={photo.src}
@@ -847,7 +849,10 @@ export default async function EventDetailPage({
               <div
                 style={{
                   display: 'grid',
-                  gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 380px))',
+                  gridTemplateColumns:
+                    (event.eventPhotos?.length || 0) > 1
+                      ? 'repeat(auto-fit, minmax(260px, 1fr))'
+                      : 'repeat(auto-fit, minmax(280px, 380px))',
                   gap: '1.5rem',
                 }}
               >
