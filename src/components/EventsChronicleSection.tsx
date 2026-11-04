@@ -19,7 +19,7 @@ interface EventsChronicleSectionProps {
 const UPCOMING_EVENTS = [
   {
     id: 'upcoming-ai-roundtable',
-    statusBadge: 'Upcoming Session • Registration Open',
+    statusBadge: 'Registration Open',
     category: 'Executive L&D Forum',
     dateLabel: 'Upcoming • 2026–27 Series',
     modeLabel: 'Hybrid / Thrissur & Online',
@@ -35,7 +35,7 @@ const UPCOMING_EVENTS = [
   },
   {
     id: 'upcoming-academia-conclave',
-    statusBadge: 'Upcoming Conclave • Open for Tie-Ups',
+    statusBadge: 'Open for Tie-Ups',
     category: 'Industry–Academia Dialogue',
     dateLabel: 'Upcoming • 2026–27 Series',
     modeLabel: 'In-Person • Thrissur, Kerala',
@@ -47,6 +47,22 @@ const UPCOMING_EVENTS = [
       'CHRO & Academic Leadership panel',
       'Campus-to-Corporate employability frameworks',
       'Institutional partnership opportunities with ISTD Trichur',
+    ],
+  },
+  {
+    id: 'upcoming-facilitation-lab',
+    statusBadge: 'Practitioner Lab',
+    category: 'Trainer Masterclass',
+    dateLabel: 'Upcoming • 2026–27 Series',
+    modeLabel: 'In-Person • Thrissur, Kerala',
+    title: 'Experiential Facilitation & Modern Instructional Design Masterclass',
+    speaker: 'Senior Master Trainers & Behavioral Coaches',
+    description:
+      'A hands-on skill lab for corporate trainers, educators, and OD practitioners focusing on adult learning principles, behavioural simulations, and high-engagement workshop facilitation.',
+    highlights: [
+      'Experiential learning & simulation design toolkits',
+      'Peer coaching & live facilitation feedback',
+      'Networking with Central Kerala L&D practitioners',
     ],
   },
 ];

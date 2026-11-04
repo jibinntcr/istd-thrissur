@@ -29,7 +29,7 @@ export default function HomePage() {
                 trainers, educators, HR professionals, academicians, and industry leaders for
                 knowledge exchange, collaboration, and leadership development.
               </p>
-              <div className="btn-group">
+              <div className="hero-cta-group">
                 <Link href="/membership" className="btn btn-red btn-lg">
                   <span>Become a Member</span>
                   <svg
@@ -47,9 +47,30 @@ export default function HomePage() {
                 <Link href="/events" className="btn btn-outline-navy btn-lg">
                   <span>Events &amp; Reports</span>
                 </Link>
-                <Link href="/about" className="btn btn-outline-blue btn-lg">
-                  <span>About Our Chapter</span>
-                </Link>
+              </div>
+
+              <div className="hero-trust-bar">
+                <div className="hero-trust-item">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                    <polyline points="22 4 12 14.01 9 11.01" />
+                  </svg>
+                  <span>55+ Years National Legacy</span>
+                </div>
+                <div className="hero-trust-item">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                    <polyline points="22 4 12 14.01 9 11.01" />
+                  </svg>
+                  <span>Diamond Chapter (Est. 2026)</span>
+                </div>
+                <div className="hero-trust-item">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                    <polyline points="22 4 12 14.01 9 11.01" />
+                  </svg>
+                  <span>HR, L&amp;D &amp; Academia Network</span>
+                </div>
               </div>
             </div>
 
