@@ -264,13 +264,24 @@ p:last-child {
   padding: 0.75rem 1.45rem;
   font-size: 0.95rem;
   font-weight: 600;
+  line-height: 1.35;
   border-radius: var(--radius-md);
   border: 1.5px solid transparent;
   cursor: pointer;
   text-align: center;
-  white-space: nowrap;
+  white-space: normal;
+  max-width: 100%;
   transition: all var(--transition-fast);
   text-decoration: none;
+}
+
+.header-join-btn {
+  white-space: nowrap;
+}
+
+section[id],
+div[id] {
+  scroll-margin-top: 96px;
 }
 
 .btn-primary {

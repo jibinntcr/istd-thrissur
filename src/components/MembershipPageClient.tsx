@@ -86,8 +86,9 @@ export function MembershipPageClient() {
           <div
             style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 255px), 1fr))',
               gap: '1.5rem',
+              alignItems: 'stretch',
             }}
           >
             {/* Individual Membership */}
@@ -96,10 +97,48 @@ export function MembershipPageClient() {
                 selectedCategory === 'Individual' ? 'featured' : ''
               }`}
               id="catIndividual"
+              style={{
+                padding: '1.75rem 1.5rem',
+                borderTop:
+                  selectedCategory === 'Individual'
+                    ? '4px solid var(--accent-red)'
+                    : '4px solid var(--accent-blue)',
+              }}
             >
               <div>
-                <span className="program-duration">Practitioners &amp; Educators</span>
-                <h3 className="program-title">Individual Membership</h3>
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    gap: '0.5rem',
+                    marginBottom: '0.55rem',
+                  }}
+                >
+                  <span className="program-duration" style={{ marginBottom: 0 }}>
+                    Practitioners &amp; Educators
+                  </span>
+                  {selectedCategory === 'Individual' && (
+                    <span
+                      style={{
+                        fontSize: '0.68rem',
+                        fontWeight: 800,
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.05em',
+                        background: '#FEE2E2',
+                        color: '#B91C1C',
+                        padding: '0.18rem 0.55rem',
+                        borderRadius: '999px',
+                        flexShrink: 0,
+                      }}
+                    >
+                      Active
+                    </span>
+                  )}
+                </div>
+                <h3 className="program-title" style={{ fontSize: '1.28rem' }}>
+                  Individual Membership
+                </h3>
                 <p className="program-description">
                   For professionals, trainers, HR managers, consultants, and faculty members
                   involved in training and development (available as Annual or Life Membership
@@ -111,12 +150,19 @@ export function MembershipPageClient() {
                 className={`btn btn-sm ${
                   selectedCategory === 'Individual' ? 'btn-red' : 'btn-outline-navy'
                 }`}
-                style={{ width: '100%' }}
+                style={{
+                  width: '100%',
+                  padding: '0.68rem 0.9rem',
+                  fontSize: '0.84rem',
+                  fontWeight: 700,
+                  whiteSpace: 'normal',
+                  lineHeight: 1.3,
+                }}
                 onClick={() => handleSelectAndScroll('Individual')}
               >
                 {selectedCategory === 'Individual'
-                  ? 'Selected: Individual Membership ✓'
-                  : 'Select Individual Membership'}
+                  ? '✓ Selected — Individual'
+                  : 'Select Individual →'}
               </button>
             </div>
 
@@ -126,10 +172,48 @@ export function MembershipPageClient() {
                 selectedCategory === 'Institutional' ? 'featured' : ''
               }`}
               id="catInstitutional"
+              style={{
+                padding: '1.75rem 1.5rem',
+                borderTop:
+                  selectedCategory === 'Institutional'
+                    ? '4px solid var(--accent-red)'
+                    : '4px solid var(--accent-blue)',
+              }}
             >
               <div>
-                <span className="program-duration">Organisations &amp; Institutes</span>
-                <h3 className="program-title">Institutional Membership</h3>
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    gap: '0.5rem',
+                    marginBottom: '0.55rem',
+                  }}
+                >
+                  <span className="program-duration" style={{ marginBottom: 0 }}>
+                    Organisations &amp; Institutes
+                  </span>
+                  {selectedCategory === 'Institutional' && (
+                    <span
+                      style={{
+                        fontSize: '0.68rem',
+                        fontWeight: 800,
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.05em',
+                        background: '#FEE2E2',
+                        color: '#B91C1C',
+                        padding: '0.18rem 0.55rem',
+                        borderRadius: '999px',
+                        flexShrink: 0,
+                      }}
+                    >
+                      Active
+                    </span>
+                  )}
+                </div>
+                <h3 className="program-title" style={{ fontSize: '1.28rem' }}>
+                  Institutional Membership
+                </h3>
                 <p className="program-description">
                   For public and private sector organisations, corporate enterprises, universities,
                   colleges, and training institutions committed to human resource development.
@@ -140,12 +224,19 @@ export function MembershipPageClient() {
                 className={`btn btn-sm ${
                   selectedCategory === 'Institutional' ? 'btn-red' : 'btn-outline-navy'
                 }`}
-                style={{ width: '100%' }}
+                style={{
+                  width: '100%',
+                  padding: '0.68rem 0.9rem',
+                  fontSize: '0.84rem',
+                  fontWeight: 700,
+                  whiteSpace: 'normal',
+                  lineHeight: 1.3,
+                }}
                 onClick={() => handleSelectAndScroll('Institutional')}
               >
                 {selectedCategory === 'Institutional'
-                  ? 'Selected: Institutional Membership ✓'
-                  : 'Select Institutional Membership'}
+                  ? '✓ Selected — Institutional'
+                  : 'Select Institutional →'}
               </button>
             </div>
 
@@ -155,10 +246,48 @@ export function MembershipPageClient() {
                 selectedCategory === 'Student' ? 'featured' : ''
               }`}
               id="catStudent"
+              style={{
+                padding: '1.75rem 1.5rem',
+                borderTop:
+                  selectedCategory === 'Student'
+                    ? '4px solid var(--accent-red)'
+                    : '4px solid var(--accent-blue)',
+              }}
             >
               <div>
-                <span className="program-duration">Postgraduate Students</span>
-                <h3 className="program-title">Student Membership</h3>
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    gap: '0.5rem',
+                    marginBottom: '0.55rem',
+                  }}
+                >
+                  <span className="program-duration" style={{ marginBottom: 0 }}>
+                    Postgraduate Students
+                  </span>
+                  {selectedCategory === 'Student' && (
+                    <span
+                      style={{
+                        fontSize: '0.68rem',
+                        fontWeight: 800,
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.05em',
+                        background: '#FEE2E2',
+                        color: '#B91C1C',
+                        padding: '0.18rem 0.55rem',
+                        borderRadius: '999px',
+                        flexShrink: 0,
+                      }}
+                    >
+                      Active
+                    </span>
+                  )}
+                </div>
+                <h3 className="program-title" style={{ fontSize: '1.28rem' }}>
+                  Student Membership
+                </h3>
                 <p className="program-description">
                   For students pursuing degrees or postgraduate programmes in Management, HRM,
                   Social Work, Psychology, or allied disciplines who wish to build a foundation in
@@ -170,12 +299,19 @@ export function MembershipPageClient() {
                 className={`btn btn-sm ${
                   selectedCategory === 'Student' ? 'btn-red' : 'btn-outline-navy'
                 }`}
-                style={{ width: '100%' }}
+                style={{
+                  width: '100%',
+                  padding: '0.68rem 0.9rem',
+                  fontSize: '0.84rem',
+                  fontWeight: 700,
+                  whiteSpace: 'normal',
+                  lineHeight: 1.3,
+                }}
                 onClick={() => handleSelectAndScroll('Student')}
               >
                 {selectedCategory === 'Student'
-                  ? 'Selected: Student Membership ✓'
-                  : 'Select Student Membership'}
+                  ? '✓ Selected — Student'
+                  : 'Select Student →'}
               </button>
             </div>
 
@@ -185,10 +321,48 @@ export function MembershipPageClient() {
                 selectedCategory === 'Associate' ? 'featured' : ''
               }`}
               id="catAssociate"
+              style={{
+                padding: '1.75rem 1.5rem',
+                borderTop:
+                  selectedCategory === 'Associate'
+                    ? '4px solid var(--accent-red)'
+                    : '4px solid var(--accent-blue)',
+              }}
             >
               <div>
-                <span className="program-duration">Allied Professionals</span>
-                <h3 className="program-title">Associate Membership</h3>
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    gap: '0.5rem',
+                    marginBottom: '0.55rem',
+                  }}
+                >
+                  <span className="program-duration" style={{ marginBottom: 0 }}>
+                    Allied Professionals
+                  </span>
+                  {selectedCategory === 'Associate' && (
+                    <span
+                      style={{
+                        fontSize: '0.68rem',
+                        fontWeight: 800,
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.05em',
+                        background: '#FEE2E2',
+                        color: '#B91C1C',
+                        padding: '0.18rem 0.55rem',
+                        borderRadius: '999px',
+                        flexShrink: 0,
+                      }}
+                    >
+                      Active
+                    </span>
+                  )}
+                </div>
+                <h3 className="program-title" style={{ fontSize: '1.28rem' }}>
+                  Associate Membership
+                </h3>
                 <p className="program-description">
                   For early-career professionals and individuals interested in the field of
                   learning, training, and human resource development as per ISTD National criteria.
@@ -199,12 +373,19 @@ export function MembershipPageClient() {
                 className={`btn btn-sm ${
                   selectedCategory === 'Associate' ? 'btn-red' : 'btn-outline-navy'
                 }`}
-                style={{ width: '100%' }}
+                style={{
+                  width: '100%',
+                  padding: '0.68rem 0.9rem',
+                  fontSize: '0.84rem',
+                  fontWeight: 700,
+                  whiteSpace: 'normal',
+                  lineHeight: 1.3,
+                }}
                 onClick={() => handleSelectAndScroll('Associate')}
               >
                 {selectedCategory === 'Associate'
-                  ? 'Selected: Associate Membership ✓'
-                  : 'Select Associate Membership'}
+                  ? '✓ Selected — Associate'
+                  : 'Select Associate →'}
               </button>
             </div>
           </div>
