@@ -8,6 +8,7 @@ import {
   addGalleryOrEventPhoto,
   deleteGalleryPhoto,
   updateRegistrationStatus,
+  lookupParticipantByQuery,
   serverCache,
 } from '@/lib/backendStore';
 
@@ -90,6 +91,21 @@ export async function POST(request: Request) {
         ok: true,
         registration,
         cacheStats: getCacheStats(),
+      });
+    }
+
+    if (action === 'lookup_participant') {
+      const q = String(payload?.query || '').trim();
+      if (!q) {
+        return NextResponse.json(
+          { ok: false, error: 'Please enter a Unique Participant ID, Mobile Number, or Email.' },
+          { status: 400 }
+        );
+      }
+      const participant = await lookupParticipantByQuery(q);
+      return NextResponse.json({
+        ok: Boolean(participant),
+        participant,
       });
     }
 

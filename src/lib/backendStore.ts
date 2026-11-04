@@ -11,6 +11,7 @@ import {
 export interface EventRegistration {
   id: string;
   registrationCode: string;
+  participantCode?: string;
   eventId: string;
   eventSlug: string;
   eventTitle: string;
@@ -130,6 +131,7 @@ function ensureLocalDb(): BackendDatabasePayload {
           {
             id: 'reg-sample-1',
             registrationCode: 'ISTD-TCR-2026-1001',
+            participantCode: 'ISTD-PID-2026-1001',
             eventId: 'event-aiot-boopathy',
             eventSlug: 'advancing-aiot-research',
             eventTitle:
@@ -275,10 +277,31 @@ export async function createEventRegistration(
   input: Omit<EventRegistration, 'id' | 'registrationCode' | 'status' | 'createdAt'>
 ): Promise<EventRegistration> {
   const randomSuffix = Math.floor(1000 + Math.random() * 9000);
+  const local = ensureLocalDb();
+
+  // Check if this participant already has a permanent Unique Participant ID (by email, phone, whatsapp, or passed participantCode)
+  const normEmail = input.email.trim().toLowerCase();
+  const normPhone = input.phone.replace(/[^0-9]/g, '').slice(-10);
+  const existingProfile = local.registrations.find(
+    (r) =>
+      (input.participantCode &&
+        r.participantCode?.toUpperCase() === input.participantCode.trim().toUpperCase()) ||
+      r.email.trim().toLowerCase() === normEmail ||
+      (normPhone.length >= 10 &&
+        (r.phone.replace(/[^0-9]/g, '').slice(-10) === normPhone ||
+          r.whatsapp.replace(/[^0-9]/g, '').slice(-10) === normPhone))
+  );
+
+  const permanentParticipantCode =
+    existingProfile?.participantCode ||
+    input.participantCode?.trim().toUpperCase() ||
+    `ISTD-PID-2026-${randomSuffix}`;
+
   const newReg: EventRegistration = {
     ...input,
     id: `reg-${Date.now()}-${randomSuffix}`,
     registrationCode: `ISTD-TCR-2026-${randomSuffix}`,
+    participantCode: permanentParticipantCode,
     status: 'Confirmed',
     createdAt: new Date().toISOString(),
   };
@@ -288,12 +311,38 @@ export async function createEventRegistration(
     await db.collection('registrations').insertOne({ ...newReg });
   }
 
-  const local = ensureLocalDb();
   local.registrations = [newReg, ...local.registrations];
   saveLocalDb(local);
   serverCache.invalidateAll();
 
   return newReg;
+}
+
+export async function lookupParticipantByQuery(
+  query: string
+): Promise<EventRegistration | null> {
+  const q = query.trim().toLowerCase();
+  if (!q) return null;
+  const digits = q.replace(/[^0-9]/g, '');
+
+  const { data } = await getBackendData(false);
+  const found = data.registrations.find((r) => {
+    const pid = (r.participantCode || '').toLowerCase();
+    const rcode = (r.registrationCode || '').toLowerCase();
+    const mail = (r.email || '').toLowerCase();
+    const phDigits = (r.phone || '').replace(/[^0-9]/g, '');
+    const waDigits = (r.whatsapp || '').replace(/[^0-9]/g, '');
+
+    if (pid === q || rcode === q || mail === q) return true;
+    if (q.length >= 4 && (pid.endsWith(q) || rcode.endsWith(q))) return true;
+    if (digits.length >= 10) {
+      const last10 = digits.slice(-10);
+      if (phDigits.slice(-10) === last10 || waDigits.slice(-10) === last10) return true;
+    }
+    return false;
+  });
+
+  return found || null;
 }
 
 export async function upsertChapterEvent(event: ChapterEvent): Promise<ChapterEvent> {

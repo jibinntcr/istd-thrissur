@@ -7,10 +7,12 @@
 :root {
   /* Core Theme Colors */
   --color-primary-navy: #0B2239;
+  --brand-navy: #0B2239;
   --color-navy-dark: #071524;
   --color-navy-light: #163E66;
   --color-ink: #0F172A;
   --color-ink-light: #334155;
+  --color-body: #334155;
   --color-muted: #64748B;
   --color-subtle: #94A3B8;
   
@@ -20,6 +22,7 @@
   --accent-red-subtle: #FEF2F2;
   
   --accent-blue: #2563EB;
+  --brand-blue: #2563EB;
   --accent-blue-hover: #1D4ED8;
   --accent-blue-subtle: #EFF6FF;
   
@@ -34,12 +37,14 @@
   --bg-white: #FFFFFF;
   --bg-pale-blue: #F0F7FF;
   --bg-pale-blue-subtle: #F8FAFC;
+  --color-surface-soft: #F8FAFC;
   --bg-card: #FFFFFF;
   --bg-dark: #0B2239;
   --bg-dark-surface: #112D4E;
   
   /* Borders & Outlines */
   --border-light: #E2E8F0;
+  --color-border: #E2E8F0;
   --border-medium: #CBD5E1;
   --border-dark: #0F172A;
   --border-blue: #BFDBFE;

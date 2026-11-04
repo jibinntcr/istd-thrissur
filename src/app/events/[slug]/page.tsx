@@ -48,81 +48,225 @@ export default async function EventDetailPage({
   }
 
   const isInauguration = event.slug === 'inauguration';
-  const encodedTitle = encodeURIComponent(event.title);
 
   return (
     <>
-      {/* Page Hero */}
-      <section className="page-hero">
+      {/* =====================================================================
+          HIGH-CONTRAST EXECUTIVE EVENT HERO BANNER
+         ===================================================================== */}
+      <section
+        style={{
+          background: 'linear-gradient(135deg, #071524 0%, #0B2239 60%, #163E66 100%)',
+          color: '#FFFFFF',
+          padding: '3rem 0 2.75rem',
+          borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+        }}
+      >
         <div className="container">
-          <div className="breadcrumb">
-            <Link href="/">Home</Link>
-            <span>/</span>
-            <Link href="/events">Events &amp; Programmes</Link>
-            <span>/</span>
-            <span>{event.programmeType}</span>
+          {/* High-Contrast Breadcrumb */}
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              fontSize: '0.84rem',
+              fontWeight: 600,
+              color: '#CBD5E1',
+              marginBottom: '1rem',
+              flexWrap: 'wrap',
+            }}
+          >
+            <Link href="/" style={{ color: '#93C5FD', textDecoration: 'none' }}>
+              Home
+            </Link>
+            <span style={{ opacity: 0.5 }}>/</span>
+            <Link href="/events" style={{ color: '#93C5FD', textDecoration: 'none' }}>
+              Events &amp; Programmes
+            </Link>
+            <span style={{ opacity: 0.5 }}>/</span>
+            <span style={{ color: '#F8FAFC' }}>{event.programmeType}</span>
           </div>
+
+          {/* Programme Type & Status Pills */}
           <div
             style={{
               display: 'flex',
               gap: '0.6rem',
               flexWrap: 'wrap',
-              marginBottom: '0.85rem',
+              marginBottom: '0.9rem',
             }}
           >
-            <span className="section-tag tag-yellow" style={{ marginBottom: 0 }}>
+            <span
+              style={{
+                display: 'inline-block',
+                background: '#FACC15',
+                color: '#071524',
+                fontSize: '0.74rem',
+                fontWeight: 800,
+                textTransform: 'uppercase',
+                letterSpacing: '0.07em',
+                padding: '0.28rem 0.8rem',
+                borderRadius: '999px',
+              }}
+            >
               {event.programmeType}
             </span>
             <span
-              className="section-tag"
               style={{
-                marginBottom: 0,
-                background: 'rgba(255,255,255,0.14)',
-                color: '#fff',
+                display: 'inline-block',
+                background:
+                  event.status === 'upcoming'
+                    ? 'rgba(16, 185, 129, 0.22)'
+                    : 'rgba(59, 130, 246, 0.25)',
+                border: `1px solid ${
+                  event.status === 'upcoming' ? '#34D399' : '#93C5FD'
+                }`,
+                color: event.status === 'upcoming' ? '#A7F3D0' : '#DBEAFE',
+                fontSize: '0.74rem',
+                fontWeight: 800,
+                textTransform: 'uppercase',
+                letterSpacing: '0.07em',
+                padding: '0.28rem 0.85rem',
+                borderRadius: '999px',
               }}
             >
-              {event.status === 'upcoming' ? 'Upcoming Event' : 'Completed Event Report'}
+              {event.status === 'upcoming'
+                ? '● Upcoming Event — Registration Open'
+                : '✓ Completed Event Report'}
             </span>
           </div>
-          <h1 className="page-hero-title" style={{ maxWidth: '920px' }}>
+
+          <h1
+            style={{
+              fontSize: 'clamp(1.75rem, 3.4vw, 2.55rem)',
+              fontWeight: 800,
+              color: '#FFFFFF',
+              maxWidth: '920px',
+              lineHeight: 1.22,
+              marginBottom: '1rem',
+            }}
+          >
             {event.title}
           </h1>
-          <p className="page-hero-subtitle" style={{ maxWidth: '780px' }}>
-            📅 {event.date} • 🕖 {event.timeIST} • 💻 {event.venue}
-          </p>
+
+          {/* Key Metadata Pills Row */}
+          <div
+            style={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              gap: '0.75rem',
+              alignItems: 'center',
+              marginBottom: event.status === 'upcoming' ? '1.5rem' : '0.25rem',
+            }}
+          >
+            <div
+              style={{
+                background: 'rgba(255, 255, 255, 0.1)',
+                border: '1px solid rgba(255, 255, 255, 0.18)',
+                borderRadius: '10px',
+                padding: '0.45rem 0.9rem',
+                fontSize: '0.88rem',
+                fontWeight: 700,
+                color: '#F8FAFC',
+              }}
+            >
+              📅 {event.date}
+            </div>
+            <div
+              style={{
+                background: 'rgba(255, 255, 255, 0.1)',
+                border: '1px solid rgba(255, 255, 255, 0.18)',
+                borderRadius: '10px',
+                padding: '0.45rem 0.9rem',
+                fontSize: '0.88rem',
+                fontWeight: 700,
+                color: '#F8FAFC',
+              }}
+            >
+              🕖 {event.timeIST}
+            </div>
+            <div
+              style={{
+                background: 'rgba(255, 255, 255, 0.1)',
+                border: '1px solid rgba(255, 255, 255, 0.18)',
+                borderRadius: '10px',
+                padding: '0.45rem 0.9rem',
+                fontSize: '0.88rem',
+                fontWeight: 700,
+                color: '#FACC15',
+              }}
+            >
+              💻 {event.venue}
+            </div>
+            {event.speaker && (
+              <div
+                style={{
+                  background: 'rgba(255, 255, 255, 0.1)',
+                  border: '1px solid rgba(255, 255, 255, 0.18)',
+                  borderRadius: '10px',
+                  padding: '0.45rem 0.9rem',
+                  fontSize: '0.88rem',
+                  fontWeight: 700,
+                  color: '#E2E8F0',
+                }}
+              >
+                🎙️ {event.speaker}
+                {event.speakerDesignation ? ` (${event.speakerDesignation})` : ''}
+              </div>
+            )}
+          </div>
+
+          {event.status === 'upcoming' && (
+            <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+              <a href="#eventRegistrationFormBox" className="btn btn-red">
+                Register Online Now &darr;
+              </a>
+              <Link href="/events" className="btn btn-outline-white">
+                &larr; All Events &amp; Programmes
+              </Link>
+            </div>
+          )}
         </div>
       </section>
 
-      {/* Main Event Detail Content */}
+      {/* =====================================================================
+          MAIN EVENT OVERVIEW & POSTER SECTION
+         ===================================================================== */}
       <section className="section-padding bg-white">
         <div className="container">
           <div className="split-grid" style={{ alignItems: 'start', gap: '2.5rem' }}>
-            {/* Left Column: Event Narrative & Details */}
+            {/* Left Column: Narrative, Resource Person & Schedule */}
             <div>
               <span className="section-tag tag-blue">
-                {event.status === 'upcoming' ? 'Upcoming Session Details' : 'Official Event Report'}
+                {event.status === 'upcoming'
+                  ? 'About This Learning Session'
+                  : 'Official Event Report'}
               </span>
 
               {event.subtitleQuestion && (
-                <p
+                <div
                   style={{
-                    fontSize: '1.08rem',
+                    background: '#EFF6FF',
+                    borderLeft: '4px solid #2563EB',
+                    padding: '0.9rem 1.15rem',
+                    borderRadius: '0 10px 10px 0',
+                    fontSize: '1.05rem',
                     fontStyle: 'italic',
                     fontWeight: 700,
-                    color: 'var(--brand-blue)',
-                    marginBottom: '0.5rem',
+                    color: '#1E3A8A',
+                    marginBottom: '1rem',
                   }}
                 >
-                  {event.subtitleQuestion}
-                </p>
+                  “{event.subtitleQuestion}”
+                </div>
               )}
 
               <h2
                 style={{
-                  fontSize: '1.65rem',
+                  fontSize: '1.6rem',
                   fontWeight: 800,
-                  color: 'var(--color-ink)',
-                  marginBottom: '1.15rem',
+                  color: '#0F172A',
+                  marginBottom: '1.1rem',
                   lineHeight: 1.3,
                 }}
               >
@@ -183,105 +327,163 @@ export default async function EventDetailPage({
                 </>
               )}
 
-              {/* Structured Speaker & Schedule Card */}
+              {/* Resource Person & Session Information Card */}
               <div
                 style={{
                   marginTop: '1.5rem',
-                  padding: '1.35rem 1.5rem',
-                  background: 'var(--color-surface-soft)',
-                  borderRadius: 'var(--radius-md)',
-                  border: '1px solid var(--color-border)',
+                  padding: '1.5rem',
+                  background: '#F8FAFC',
+                  borderRadius: '16px',
+                  border: '1.5px solid #E2E8F0',
                 }}
               >
-                <h3
-                  style={{
-                    fontSize: '1.05rem',
-                    fontWeight: 800,
-                    color: 'var(--brand-navy)',
-                    marginBottom: '0.85rem',
-                  }}
-                >
-                  Session Schedule &amp; Resource Person
-                </h3>
-                <dl
-                  style={{
-                    display: 'grid',
-                    gridTemplateColumns: '1fr',
-                    gap: '0.6rem',
-                    margin: 0,
-                    fontSize: '0.92rem',
-                  }}
-                >
-                  {event.speaker && (
-                    <div style={{ display: 'flex', justifyContent: 'space-between', gap: '1rem' }}>
-                      <dt style={{ fontWeight: 700, color: 'var(--color-muted)' }}>
-                        🎙️ Resource Person / Speaker
-                      </dt>
-                      <dd
-                        style={{
-                          margin: 0,
-                          fontWeight: 800,
-                          color: 'var(--brand-navy)',
-                          textAlign: 'right',
-                        }}
-                      >
-                        {event.speaker}
-                        {event.speakerDesignation ? ` — ${event.speakerDesignation}` : ''}
-                      </dd>
-                    </div>
-                  )}
-                  <div style={{ display: 'flex', justifyContent: 'space-between', gap: '1rem' }}>
-                    <dt style={{ fontWeight: 700, color: 'var(--color-muted)' }}>📅 Date</dt>
-                    <dd style={{ margin: 0, fontWeight: 700, color: 'var(--color-ink)' }}>
-                      {event.date}
-                    </dd>
-                  </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', gap: '1rem' }}>
-                    <dt style={{ fontWeight: 700, color: 'var(--color-muted)' }}>🕖 Time (IST)</dt>
-                    <dd style={{ margin: 0, fontWeight: 700, color: 'var(--color-ink)' }}>
-                      {event.timeIST}
-                    </dd>
-                  </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', gap: '1rem' }}>
-                    <dt style={{ fontWeight: 700, color: 'var(--color-muted)' }}>
-                      💻 Platform / Venue
-                    </dt>
-                    <dd
+                {event.speaker && (
+                  <div
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '1rem',
+                      paddingBottom: '1.15rem',
+                      marginBottom: '1.15rem',
+                      borderBottom: '1px solid #E2E8F0',
+                    }}
+                  >
+                    <div
                       style={{
-                        margin: 0,
-                        fontWeight: 700,
-                        color: 'var(--brand-blue)',
-                        textAlign: 'right',
+                        width: '52px',
+                        height: '52px',
+                        borderRadius: '50%',
+                        background: '#0B2239',
+                        color: '#FACC15',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        fontSize: '1.35rem',
+                        fontWeight: 800,
+                        flexShrink: 0,
                       }}
                     >
+                      🎙️
+                    </div>
+                    <div>
+                      <div
+                        style={{
+                          fontSize: '0.72rem',
+                          fontWeight: 800,
+                          textTransform: 'uppercase',
+                          letterSpacing: '0.07em',
+                          color: '#2563EB',
+                        }}
+                      >
+                        Resource Person / Speaker
+                      </div>
+                      <div style={{ fontSize: '1.15rem', fontWeight: 800, color: '#0F172A' }}>
+                        {event.speaker}
+                      </div>
+                      {event.speakerDesignation && (
+                        <div style={{ fontSize: '0.86rem', color: '#475569', fontWeight: 600 }}>
+                          {event.speakerDesignation}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
+
+                <div
+                  style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
+                    gap: '1rem',
+                    fontSize: '0.88rem',
+                  }}
+                >
+                  <div>
+                    <div style={{ fontSize: '0.72rem', fontWeight: 800, color: '#64748B', textTransform: 'uppercase' }}>
+                      📅 Session Date
+                    </div>
+                    <div style={{ fontWeight: 800, color: '#0F172A', marginTop: '0.15rem' }}>
+                      {event.date}
+                    </div>
+                  </div>
+                  <div>
+                    <div style={{ fontSize: '0.72rem', fontWeight: 800, color: '#64748B', textTransform: 'uppercase' }}>
+                      🕖 Time (IST)
+                    </div>
+                    <div style={{ fontWeight: 800, color: '#0F172A', marginTop: '0.15rem' }}>
+                      {event.timeIST}
+                    </div>
+                  </div>
+                  <div>
+                    <div style={{ fontSize: '0.72rem', fontWeight: 800, color: '#64748B', textTransform: 'uppercase' }}>
+                      💻 Platform / Venue
+                    </div>
+                    <div style={{ fontWeight: 800, color: '#2563EB', marginTop: '0.15rem' }}>
                       {event.venue}
-                    </dd>
+                    </div>
                   </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', gap: '1rem' }}>
-                    <dt style={{ fontWeight: 700, color: 'var(--color-muted)' }}>Organised By</dt>
-                    <dd style={{ margin: 0, fontWeight: 700, color: 'var(--color-ink)' }}>
-                      ISTD Trichur (Thrissur) Chapter
-                    </dd>
+                  <div>
+                    <div style={{ fontSize: '0.72rem', fontWeight: 800, color: '#64748B', textTransform: 'uppercase' }}>
+                      🏛️ Organised By
+                    </div>
+                    <div style={{ fontWeight: 800, color: '#0F172A', marginTop: '0.15rem' }}>
+                      ISTD Thrissur Chapter
+                    </div>
                   </div>
-                </dl>
+                </div>
               </div>
+
+              {/* Who Should Attend Pills (For Upcoming Sessions) */}
+              {event.status === 'upcoming' && (
+                <div style={{ marginTop: '1.35rem' }}>
+                  <div
+                    style={{
+                      fontSize: '0.78rem',
+                      fontWeight: 800,
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.06em',
+                      color: '#475569',
+                      marginBottom: '0.6rem',
+                    }}
+                  >
+                    Who Should Attend
+                  </div>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+                    {[
+                      'Researchers & Academicians',
+                      'Educators & Faculty Members',
+                      'Technology & AIoT Professionals',
+                      'HR & L&D Practitioners',
+                      'Postgraduate & Undergraduate Students',
+                    ].map((tag) => (
+                      <span
+                        key={tag}
+                        style={{
+                          background: '#EFF6FF',
+                          border: '1px solid #BFDBFE',
+                          color: '#1E3A8A',
+                          padding: '0.35rem 0.8rem',
+                          borderRadius: '999px',
+                          fontSize: '0.8rem',
+                          fontWeight: 700,
+                        }}
+                      >
+                        ✓ {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               {/* Action Buttons */}
               <div className="btn-group" style={{ marginTop: '1.75rem' }}>
                 {event.status === 'upcoming' ? (
                   <>
-                    <a
-                      href="#eventRegistrationFormBox"
-                      className="btn btn-red"
-                    >
+                    <a href="#eventRegistrationFormBox" className="btn btn-red">
                       Register Online for This Session &darr;
                     </a>
                     <a href="#eventPhotosSection" className="btn btn-outline-blue">
-                      Event Poster &amp; Photos
+                      View Event Poster
                     </a>
-                    <Link href="/events" className="btn btn-outline-navy">
-                      &larr; All Events &amp; Programmes
-                    </Link>
                   </>
                 ) : (
                   <>
@@ -296,7 +498,7 @@ export default async function EventDetailPage({
               </div>
             </div>
 
-            {/* Right Column: Official Event Poster / Main Visual */}
+            {/* Right Column: Official Event Poster & Quick Registration Callout */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
               <PhotoCard
                 src={event.image}
@@ -314,13 +516,40 @@ export default async function EventDetailPage({
                 }
               />
 
+              {event.status === 'upcoming' && (
+                <div
+                  style={{
+                    padding: '1.25rem 1.35rem',
+                    background: '#F0F7FF',
+                    borderRadius: '14px',
+                    border: '1.5px solid #BFDBFE',
+                  }}
+                >
+                  <div style={{ fontWeight: 800, color: '#0B2239', fontSize: '0.95rem', marginBottom: '0.3rem' }}>
+                    🎟️ Instant Confirmation &amp; Unique Participant ID
+                  </div>
+                  <p style={{ fontSize: '0.84rem', color: '#334155', marginBottom: '0.85rem', lineHeight: 1.5 }}>
+                    Register below to receive your official event pass and a permanent{' '}
+                    <strong>Unique ISTD Participant ID</strong> (`ISTD-PID-2026-XXXX`) for 1-click
+                    auto-fill in future sessions.
+                  </p>
+                  <a
+                    href="#eventRegistrationFormBox"
+                    className="btn btn-primary btn-sm"
+                    style={{ width: '100%', justifyContent: 'center' }}
+                  >
+                    Go to Registration Form &darr;
+                  </a>
+                </div>
+              )}
+
               {isInauguration && (
                 <div
                   style={{
                     padding: '1.25rem',
-                    background: 'var(--color-surface-soft)',
-                    borderRadius: 'var(--radius-md)',
-                    border: '1px solid var(--color-border)',
+                    background: '#F8FAFC',
+                    borderRadius: '12px',
+                    border: '1px solid #E2E8F0',
                     display: 'flex',
                     flexWrap: 'wrap',
                     gap: '0.6rem',
@@ -328,7 +557,7 @@ export default async function EventDetailPage({
                     justifyContent: 'space-between',
                   }}
                 >
-                  <span style={{ fontSize: '0.86rem', fontWeight: 700, color: 'var(--brand-navy)' }}>
+                  <span style={{ fontSize: '0.86rem', fontWeight: 700, color: '#0B2239' }}>
                     Official LinkedIn Announcements:
                   </span>
                   <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
@@ -358,7 +587,7 @@ export default async function EventDetailPage({
               ONLINE PARTICIPANT REGISTRATION FORM (FOR UPCOMING EVENTS)
              ================================================================= */}
           {event.status === 'upcoming' && (
-            <div style={{ marginTop: '3rem' }}>
+            <div style={{ marginTop: '3.25rem' }}>
               <EventRegistrationForm event={event} />
             </div>
           )}
@@ -373,7 +602,7 @@ export default async function EventDetailPage({
                 <h2 className="report-sub-heading">
                   Distinguished ISTD Leaders Who Graced the Occasion
                 </h2>
-                <p style={{ color: 'var(--color-muted)', marginBottom: '1.5rem' }}>
+                <p style={{ color: '#64748B', marginBottom: '1.5rem' }}>
                   We were honoured by the presence of distinguished ISTD leaders who graced the
                   inauguration on 30 March 2026:
                 </p>
@@ -455,14 +684,14 @@ export default async function EventDetailPage({
           )}
 
           {/* =================================================================
-              DEDICATED EVENT PHOTOGRAPHS & VISUAL ARCHIVE SECTION (EVERY EVENT)
+              DEDICATED EVENT PHOTOGRAPHS & VISUAL ARCHIVE SECTION
              ================================================================= */}
           <div
             id="eventPhotosSection"
             style={{
               marginTop: '3.25rem',
               paddingTop: '2.5rem',
-              borderTop: '1.5px solid var(--color-border)',
+              borderTop: '1.5px solid #E2E8F0',
             }}
           >
             <div
@@ -482,7 +711,7 @@ export default async function EventDetailPage({
                     ? `Inauguration Ceremony Photo Gallery (${GALLERY_PHOTOS.length} Photos)`
                     : 'Event Poster & Session Photographs'}
                 </h2>
-                <p style={{ color: 'var(--color-muted)', marginBottom: 0 }}>
+                <p style={{ color: '#64748B', marginBottom: 0 }}>
                   {isInauguration
                     ? 'Click any photograph below to open the full-screen lightbox viewer with captions.'
                     : event.status === 'upcoming'

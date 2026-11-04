@@ -394,7 +394,8 @@ export function AdminPortalClient() {
 
   const handleExportRegistrationsCsv = () => {
     const headers = [
-      'Registration ID',
+      'Registration Pass ID',
+      'Unique Participant ID',
       'Status',
       'Event Title',
       'Event Date',
@@ -422,6 +423,7 @@ export function AdminPortalClient() {
 
     const rows = filteredRegistrations.map((r) => [
       r.registrationCode,
+      r.participantCode || r.registrationCode.replace('TCR', 'PID'),
       r.status,
       r.eventTitle,
       r.eventDate,
@@ -2389,7 +2391,21 @@ export function AdminPortalClient() {
                             <strong style={{ color: '#0F172A', display: 'block' }}>
                               {reg.registrationCode}
                             </strong>
-                            <span style={{ fontSize: '0.74rem', color: '#64748B' }}>
+                            <span
+                              style={{
+                                display: 'inline-block',
+                                fontSize: '0.7rem',
+                                fontWeight: 800,
+                                color: '#1D4ED8',
+                                background: '#EFF6FF',
+                                padding: '0.1rem 0.45rem',
+                                borderRadius: '6px',
+                                marginTop: '0.15rem',
+                              }}
+                            >
+                              ID: {reg.participantCode || reg.registrationCode.replace('TCR', 'PID')}
+                            </span>
+                            <span style={{ fontSize: '0.72rem', color: '#64748B', display: 'block', marginTop: '0.15rem' }}>
                               {new Date(reg.createdAt).toLocaleDateString('en-IN')}
                             </span>
                           </td>

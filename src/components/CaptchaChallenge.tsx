@@ -51,11 +51,12 @@ export function CaptchaChallenge({
   return (
     <div
       style={{
-        background: 'var(--color-surface-soft)',
-        border: `1.5px solid ${isVerified ? '#10B981' : 'var(--color-border)'}`,
-        borderRadius: 'var(--radius-md)',
+        background: isVerified ? '#ECFDF5' : '#F8FAFC',
+        border: `1.5px solid ${isVerified ? '#10B981' : '#CBD5E1'}`,
+        borderRadius: '12px',
         padding: '1rem 1.15rem',
         marginTop: '0.5rem',
+        transition: 'all 0.2s ease',
       }}
     >
       <div
@@ -63,16 +64,16 @@ export function CaptchaChallenge({
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          marginBottom: '0.6rem',
+          marginBottom: '0.65rem',
           gap: '0.5rem',
           flexWrap: 'wrap',
         }}
       >
         <label
           style={{
-            fontSize: '0.84rem',
+            fontSize: '0.85rem',
             fontWeight: 800,
-            color: 'var(--color-ink)',
+            color: '#0F172A',
             margin: 0,
           }}
         >
@@ -84,17 +85,17 @@ export function CaptchaChallenge({
               fontSize: '0.76rem',
               fontWeight: 800,
               color: '#047857',
-              background: '#ECFDF5',
-              border: '1px solid #A7F3D0',
-              padding: '0.18rem 0.6rem',
+              background: '#D1FAE5',
+              border: '1px solid #6EE7B7',
+              padding: '0.2rem 0.65rem',
               borderRadius: '999px',
             }}
           >
-            ✓ CAPTCHA Verified
+            ✓ Security Code Verified
           </span>
         ) : (
-          <span style={{ fontSize: '0.76rem', color: 'var(--color-muted)' }}>
-            Enter the 6-character security code shown below
+          <span style={{ fontSize: '0.76rem', color: '#475569', fontWeight: 600 }}>
+            Type the 6-character code shown below
           </span>
         )}
       </div>
@@ -107,13 +108,13 @@ export function CaptchaChallenge({
           flexWrap: 'wrap',
         }}
       >
-        {/* Visual Distorted SVG CAPTCHA Box */}
+        {/* Distorted SVG CAPTCHA Graphic */}
         <div
           style={{
             display: 'inline-flex',
             alignItems: 'center',
             background: '#0B2239',
-            borderRadius: 'var(--radius-sm)',
+            borderRadius: '8px',
             padding: '0.25rem 0.5rem',
             border: '1px solid #1E3A8A',
             userSelect: 'none',
@@ -122,9 +123,22 @@ export function CaptchaChallenge({
         >
           <svg width="165" height="44" viewBox="0 0 165 44">
             <rect width="165" height="44" fill="#0B2239" rx="6" />
-            {/* Noise lines */}
-            <line x1="8" y1="12" x2="155" y2="34" stroke="rgba(56,189,248,0.28)" strokeWidth="1.5" />
-            <line x1="14" y1="36" x2="148" y2="10" stroke="rgba(250,204,21,0.25)" strokeWidth="1.5" />
+            <line
+              x1="8"
+              y1="12"
+              x2="155"
+              y2="34"
+              stroke="rgba(56,189,248,0.28)"
+              strokeWidth="1.5"
+            />
+            <line
+              x1="14"
+              y1="36"
+              x2="148"
+              y2="10"
+              stroke="rgba(250,204,21,0.25)"
+              strokeWidth="1.5"
+            />
             <path
               d="M 5 22 Q 45 6, 85 24 T 160 18"
               fill="none"
@@ -153,34 +167,36 @@ export function CaptchaChallenge({
           </svg>
         </div>
 
-        <button
-          type="button"
-          onClick={refreshCaptcha}
-          className="btn btn-outline-navy btn-sm"
-          style={{ padding: '0.5rem 0.85rem', fontSize: '0.8rem' }}
-          title="Generate a new CAPTCHA code"
-        >
-          ↻ Refresh Code
-        </button>
-
         <input
           type="text"
           className="form-control"
-          placeholder="Type code here..."
+          placeholder="Enter 6-digit code"
           value={userInput}
           onChange={handleInputChange}
           maxLength={6}
           required
           style={{
             flex: '1',
-            minWidth: '150px',
-            maxWidth: '210px',
+            minWidth: '155px',
+            maxWidth: '205px',
             fontWeight: 800,
             letterSpacing: '0.15em',
             textTransform: 'uppercase',
             background: '#FFFFFF',
+            color: '#0F172A',
+            borderColor: isVerified ? '#10B981' : '#CBD5E1',
           }}
         />
+
+        <button
+          type="button"
+          onClick={refreshCaptcha}
+          className="btn btn-outline-navy btn-sm"
+          style={{ padding: '0.5rem 0.85rem', fontSize: '0.78rem', background: '#FFFFFF' }}
+          title="Generate a new CAPTCHA code"
+        >
+          ↻ New Code
+        </button>
       </div>
     </div>
   );

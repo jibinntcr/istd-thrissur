@@ -15,6 +15,7 @@ import type {
 const STORAGE_KEY = 'istd_tcr_backend_db_v1';
 const CACHE_META_KEY = 'istd_tcr_cache_meta_v1';
 const AUTH_SESSION_KEY = 'istd_tcr_admin_session_v1';
+const SAVED_PARTICIPANT_KEY = 'istd_tcr_saved_participant_v1';
 const CLIENT_CACHE_TTL_MS = 60 * 1000;
 
 let memoryCache: { data: BackendDatabasePayload; expiresAt: number } | null = null;
@@ -27,6 +28,7 @@ function getDefaultPayload(): BackendDatabasePayload {
       {
         id: 'reg-sample-1',
         registrationCode: 'ISTD-TCR-2026-1001',
+        participantCode: 'ISTD-PID-2026-1001',
         eventId: 'event-aiot-boopathy',
         eventSlug: 'advancing-aiot-research',
         eventTitle:
@@ -170,6 +172,76 @@ export async function fetchBackendStore(
   };
 }
 
+export function saveBrowserParticipantProfile(reg: EventRegistration): void {
+  if (typeof window === 'undefined') return;
+  try {
+    window.localStorage.setItem(SAVED_PARTICIPANT_KEY, JSON.stringify(reg));
+  } catch {
+    // ignore storage errors
+  }
+}
+
+export function getSavedBrowserParticipantProfile(): EventRegistration | null {
+  if (typeof window === 'undefined') return null;
+  try {
+    const raw = window.localStorage.getItem(SAVED_PARTICIPANT_KEY);
+    return raw ? (JSON.parse(raw) as EventRegistration) : null;
+  } catch {
+    return null;
+  }
+}
+
+export async function lookupParticipantProfile(
+  query: string
+): Promise<EventRegistration | null> {
+  const q = query.trim().toLowerCase();
+  if (!q) return null;
+  const digits = q.replace(/[^0-9]/g, '');
+
+  // 1. Try Server API first
+  try {
+    const res = await fetch('/api/backend', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        action: 'lookup_participant',
+        payload: { query: query.trim() },
+      }),
+    });
+    if (res.ok) {
+      const json = await res.json();
+      if (json?.ok && json?.participant) {
+        return json.participant as EventRegistration;
+      }
+    }
+  } catch {
+    // Static hosting fallback
+  }
+
+  // 2. Search local synced registrations + saved browser profile
+  const local = getLocalSyncedPayload();
+  const saved = getSavedBrowserParticipantProfile();
+  const pool = saved ? [saved, ...local.registrations] : local.registrations;
+
+  const found = pool.find((r) => {
+    const pid = (r.participantCode || `ISTD-PID-2026-1001`).toLowerCase();
+    const rcode = (r.registrationCode || '').toLowerCase();
+    const mail = (r.email || '').toLowerCase();
+    const phDigits = (r.phone || '').replace(/[^0-9]/g, '');
+    const waDigits = (r.whatsapp || '').replace(/[^0-9]/g, '');
+
+    if (pid === q || rcode === q || mail === q) return true;
+    if (q.length >= 4 && (pid.endsWith(q) || rcode.endsWith(q))) return true;
+    if (digits.length >= 10) {
+      const last10 = digits.slice(-10);
+      if (phDigits.slice(-10) === last10 || waDigits.slice(-10) === last10) return true;
+    }
+    return false;
+  });
+
+  return found || null;
+}
+
 export async function submitParticipantRegistration(
   input: Omit<EventRegistration, 'id' | 'registrationCode' | 'status' | 'createdAt'>
 ): Promise<EventRegistration> {
@@ -191,6 +263,7 @@ export async function submitParticipantRegistration(
           ...local.registrations.filter((r) => r.id !== json.registration.id),
         ];
         saveLocalSyncedPayload(local);
+        saveBrowserParticipantProfile(json.registration);
         return json.registration as EventRegistration;
       }
     }
@@ -199,17 +272,37 @@ export async function submitParticipantRegistration(
   }
 
   const randomSuffix = Math.floor(1000 + Math.random() * 9000);
+  const local = getLocalSyncedPayload();
+  const normEmail = input.email.trim().toLowerCase();
+  const normPhone = input.phone.replace(/[^0-9]/g, '').slice(-10);
+
+  const existingProfile = local.registrations.find(
+    (r) =>
+      (input.participantCode &&
+        r.participantCode?.toUpperCase() === input.participantCode.trim().toUpperCase()) ||
+      r.email.trim().toLowerCase() === normEmail ||
+      (normPhone.length >= 10 &&
+        (r.phone.replace(/[^0-9]/g, '').slice(-10) === normPhone ||
+          r.whatsapp.replace(/[^0-9]/g, '').slice(-10) === normPhone))
+  );
+
+  const permanentParticipantCode =
+    existingProfile?.participantCode ||
+    input.participantCode?.trim().toUpperCase() ||
+    `ISTD-PID-2026-${randomSuffix}`;
+
   const newReg: EventRegistration = {
     ...input,
     id: `reg-${Date.now()}-${randomSuffix}`,
     registrationCode: `ISTD-TCR-2026-${randomSuffix}`,
+    participantCode: permanentParticipantCode,
     status: 'Confirmed',
     createdAt: new Date().toISOString(),
   };
 
-  const local = getLocalSyncedPayload();
   local.registrations = [newReg, ...local.registrations];
   saveLocalSyncedPayload(local);
+  saveBrowserParticipantProfile(newReg);
   return newReg;
 }
 
