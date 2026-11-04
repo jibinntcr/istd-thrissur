@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+
+Sitemap: https://jibinntcr.github.io/istd-thrissur/sitemap.xml
+Host: https://jibinntcr.github.io/istd-thrissur
