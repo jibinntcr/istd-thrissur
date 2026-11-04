@@ -158,7 +158,7 @@ export function EventsChronicleSection({
             <div
               style={{
                 display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))',
                 gap: '1.75rem',
               }}
             >
@@ -205,7 +205,7 @@ export function UpcomingEventCard({ event }: { event: ChapterEvent }) {
         {/* Right: Structured Event Content */}
         <div
           style={{
-            padding: '2rem',
+            padding: 'clamp(1.25rem, 3.5vw, 2rem)',
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'space-between',

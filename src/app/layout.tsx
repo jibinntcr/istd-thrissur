@@ -3,6 +3,7 @@ import './globals.css';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
 import { LightboxProvider } from '@/components/LightboxProvider';
+import { NetworkingParticlesBackground } from '@/components/NetworkingParticlesBackground';
 import {
   SITE_URL,
   SITE_NAME,
@@ -110,6 +111,7 @@ export default function RootLayout({
         />
       </head>
       <body>
+        <NetworkingParticlesBackground />
         <LightboxProvider>
           <Navbar />
           <main id="mainContent">{children}</main>

@@ -54,10 +54,8 @@ export default function AboutPage() {
                 aspectRatio="16/10"
               />
               <div
+                className="photo-sub-grid"
                 style={{
-                  display: 'grid',
-                  gridTemplateColumns: '1fr 1fr',
-                  gap: '1rem',
                   marginTop: '1rem',
                 }}
               >

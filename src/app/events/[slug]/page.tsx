@@ -826,7 +826,7 @@ export default async function EventDetailPage({
               <div
                 style={{
                   display: 'grid',
-                  gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 250px), 1fr))',
                   gap: '1.25rem',
                 }}
               >
@@ -851,8 +851,8 @@ export default async function EventDetailPage({
                   display: 'grid',
                   gridTemplateColumns:
                     (event.eventPhotos?.length || 0) > 1
-                      ? 'repeat(auto-fit, minmax(260px, 1fr))'
-                      : 'repeat(auto-fit, minmax(280px, 380px))',
+                      ? 'repeat(auto-fit, minmax(min(100%, 250px), 1fr))'
+                      : 'repeat(auto-fit, minmax(min(100%, 260px), 380px))',
                   gap: '1.5rem',
                 }}
               >

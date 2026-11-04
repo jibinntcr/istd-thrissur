@@ -308,14 +308,14 @@ export default function HomePage() {
               boxShadow: '0 20px 50px rgba(15, 29, 58, 0.14)',
               overflow: 'hidden',
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(290px, 1fr))',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))',
               alignItems: 'center',
             }}
           >
             <Link
               href="/campus-chapters/christ-college-of-engineering"
               style={{
-                padding: '1.75rem',
+                padding: 'clamp(1.15rem, 3vw, 1.75rem)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -338,7 +338,7 @@ export default function HomePage() {
               />
             </Link>
 
-            <div style={{ padding: '2.25rem', color: '#FFFFFF' }}>
+            <div style={{ padding: 'clamp(1.25rem, 3.5vw, 2.25rem)', color: '#FFFFFF' }}>
               <div
                 style={{
                   display: 'flex',
@@ -575,14 +575,14 @@ export default function HomePage() {
               </p>
             </div>
             <Link href="/gallery" className="btn btn-outline-navy btn-sm">
-              View All 24 Photos in Gallery &rarr;
+              View All 35 Photos in Gallery &rarr;
             </Link>
           </div>
 
           <div
             style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 240px), 1fr))',
               gap: '1.25rem',
             }}
           >

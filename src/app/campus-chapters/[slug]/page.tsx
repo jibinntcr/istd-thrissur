@@ -201,7 +201,7 @@ export default async function CampusChapterDetailPage({
           <div
             style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(310px, 1fr))',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 260px), 1fr))',
               gap: '2.5rem',
               alignItems: 'start',
             }}
@@ -495,7 +495,7 @@ export default async function CampusChapterDetailPage({
           <div
             style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 380px))',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 260px), 380px))',
               gap: '1.5rem',
             }}
           >

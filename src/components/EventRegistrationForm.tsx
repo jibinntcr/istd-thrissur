@@ -284,7 +284,7 @@ export function EventRegistrationForm({ event }: EventRegistrationFormProps) {
           style={{
             background: 'linear-gradient(135deg, #065F46 0%, #047857 100%)',
             color: '#FFFFFF',
-            padding: '2rem 2.25rem',
+            padding: 'clamp(1.25rem, 3.5vw, 2rem) clamp(1.15rem, 3.5vw, 2.25rem)',
             display: 'flex',
             flexWrap: 'wrap',
             alignItems: 'center',
@@ -345,7 +345,7 @@ export function EventRegistrationForm({ event }: EventRegistrationFormProps) {
           </div>
         </div>
 
-        <div style={{ padding: '2rem 2.25rem' }}>
+        <div style={{ padding: 'clamp(1.25rem, 3.5vw, 2rem) clamp(1.15rem, 3.5vw, 2.25rem)' }}>
           {/* Highlighted Permanent Unique Participant ID Box */}
           <div
             style={{
@@ -600,7 +600,7 @@ export function EventRegistrationForm({ event }: EventRegistrationFormProps) {
         style={{
           background: 'linear-gradient(135deg, #0B2239 0%, #163E66 100%)',
           color: '#FFFFFF',
-          padding: '1.75rem 2.25rem',
+          padding: 'clamp(1.25rem, 3vw, 1.75rem) clamp(1.15rem, 3.5vw, 2.25rem)',
           display: 'flex',
           flexWrap: 'wrap',
           alignItems: 'center',

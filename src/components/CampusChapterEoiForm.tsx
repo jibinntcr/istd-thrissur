@@ -343,7 +343,7 @@ export function CampusChapterEoiForm() {
         style={{
           background:
             'linear-gradient(135deg, #0B1933 0%, #152C5B 60%, #1E40AF 100%)',
-          padding: '1.65rem 2rem',
+          padding: 'clamp(1.25rem, 3vw, 1.65rem) clamp(1.15rem, 3.5vw, 2rem)',
           color: '#FFFFFF',
           borderBottom: '3px solid #F59E0B',
         }}
@@ -389,7 +389,7 @@ export function CampusChapterEoiForm() {
         </p>
       </div>
 
-      <form onSubmit={handleSubmit} style={{ padding: '1.85rem 2rem' }}>
+      <form onSubmit={handleSubmit} style={{ padding: 'clamp(1.25rem, 3.5vw, 1.85rem) clamp(1.15rem, 3.5vw, 2rem)' }}>
         {errorMsg && (
           <div
             style={{

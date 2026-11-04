@@ -84,7 +84,7 @@ export default function CampusChaptersPage() {
           <div
             style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 260px), 1fr))',
               gap: '2.5rem',
               alignItems: 'center',
             }}
@@ -358,7 +358,7 @@ export default function CampusChaptersPage() {
                   boxShadow: '0 18px 42px rgba(15, 29, 58, 0.07)',
                   overflow: 'hidden',
                   display: 'grid',
-                  gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 260px), 1fr))',
                 }}
               >
                 {/* Left Poster Showcase */}
@@ -367,7 +367,7 @@ export default function CampusChaptersPage() {
                   style={{
                     background:
                       'linear-gradient(145deg, #071226 0%, #10254C 100%)',
-                    padding: '1.75rem',
+                    padding: 'clamp(1.25rem, 3vw, 1.75rem)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -392,7 +392,7 @@ export default function CampusChaptersPage() {
                 {/* Right Chapter Information */}
                 <div
                   style={{
-                    padding: '2.25rem',
+                    padding: 'clamp(1.35rem, 3.5vw, 2.25rem)',
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'space-between',
@@ -543,7 +543,7 @@ export default function CampusChaptersPage() {
           <div
             style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 260px), 1fr))',
               gap: '2.25rem',
               alignItems: 'start',
             }}
