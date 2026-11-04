@@ -464,9 +464,15 @@ export function PastEventCard({ event }: { event: ChapterEvent }) {
         <div
           style={{
             position: 'relative',
-            aspectRatio: '16/9',
+            aspectRatio: event.isPosterImage ? '1/1' : '16/10',
+            maxHeight: event.isPosterImage ? '360px' : '260px',
+            width: '100%',
             overflow: 'hidden',
-            background: 'var(--brand-navy-deep)',
+            background: '#071524',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            borderBottom: '1px solid var(--color-border)',
           }}
         >
           <img
@@ -475,7 +481,7 @@ export function PastEventCard({ event }: { event: ChapterEvent }) {
             style={{
               width: '100%',
               height: '100%',
-              objectFit: 'cover',
+              objectFit: event.isPosterImage ? 'contain' : 'cover',
               display: 'block',
             }}
             loading="lazy"
@@ -492,7 +498,7 @@ export function PastEventCard({ event }: { event: ChapterEvent }) {
           >
             <span
               style={{
-                background: 'rgba(12, 27, 56, 0.88)',
+                background: 'rgba(12, 27, 56, 0.9)',
                 color: '#fff',
                 fontSize: '0.72rem',
                 fontWeight: 700,
@@ -517,7 +523,7 @@ export function PastEventCard({ event }: { event: ChapterEvent }) {
               marginBottom: '0.45rem',
             }}
           >
-            {event.date} • {event.venue}
+            📅 {event.date} {event.timeIST ? `• 🕢 ${event.timeIST}` : ''} • {event.venue}
           </div>
 
           <h3
@@ -525,7 +531,7 @@ export function PastEventCard({ event }: { event: ChapterEvent }) {
               fontSize: '1.18rem',
               fontWeight: 800,
               color: 'var(--color-ink)',
-              marginBottom: '0.75rem',
+              marginBottom: '0.6rem',
               lineHeight: 1.35,
             }}
           >
@@ -536,6 +542,34 @@ export function PastEventCard({ event }: { event: ChapterEvent }) {
               {event.title}
             </Link>
           </h3>
+
+          {event.speaker && (
+            <div
+              style={{
+                fontSize: '0.84rem',
+                color: 'var(--color-ink)',
+                background: 'var(--color-surface-soft)',
+                border: '1px solid var(--color-border)',
+                borderRadius: 'var(--radius-sm)',
+                padding: '0.55rem 0.75rem',
+                marginBottom: '0.75rem',
+              }}
+            >
+              <strong>🎙️ Speaker: {event.speaker}</strong>
+              {event.speakerDesignation && (
+                <span
+                  style={{
+                    display: 'block',
+                    fontSize: '0.79rem',
+                    color: 'var(--color-muted)',
+                    marginTop: '0.12rem',
+                  }}
+                >
+                  {event.speakerDesignation}
+                </span>
+              )}
+            </div>
+          )}
 
           <p
             style={{
