@@ -10,9 +10,9 @@ import {
 const HOMEPAGE_GALLERY_PREVIEW = [
   {
     src: '/photos/istd-treasurer.jpeg',
-    title: 'Address by Chapter Treasurer Mr. Jibin N',
+    title: 'Address by National Treasurer Shri. Nabaghana Pany',
     caption:
-      'Chapter Treasurer Mr. Jibin N addressing the gathering during the inauguration ceremony on 30 March 2026.',
+      'Shri. Nabaghana Pany (National Treasurer, ISTD) addressing the ISTD Thrissur Chapter members at Hotel Pearl Regency on 30 March 2026.',
     category: 'Addresses',
   },
   {
@@ -377,10 +377,11 @@ export default function HomePage() {
             <div>
               <span className="section-tag tag-blue">Gallery</span>
               <h2 className="section-title" style={{ marginBottom: '0.35rem' }}>
-                Chapter Photographs
+                Moments from Chapter Events
               </h2>
               <p style={{ color: 'var(--color-muted)', marginBottom: 0 }}>
-                Photographs from the ISTD Thrissur Chapter inauguration and member gatherings.
+                Highlights from sessions, ceremonies, and member gatherings of the ISTD Thrissur
+                Chapter.
               </p>
             </div>
             <Link href="/gallery" className="btn btn-outline-navy btn-sm">
