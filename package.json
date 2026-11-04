@@ -1,0 +1,23 @@
+{
+  "name": "istd-thrissur-nextjs",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Official Next.js Website for Indian Society for Training & Development (ISTD) — Thrissur Diamond Chapter",
+  "scripts": {
+    "dev": "node server.mjs",
+    "build": "next build --experimental-build-mode compile",
+    "start": "NODE_ENV=production node server.mjs",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "next": "^14.2.15",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.10",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "typescript": "^5.5.3"
+  }
+}
