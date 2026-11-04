@@ -4566,4 +4566,7 @@ textarea:focus-visible,
   .upcoming-poster-media img {
     max-height: 420px;
   }
+  .reg-grid-row {
+    grid-template-columns: 1fr !important;
+  }
 }

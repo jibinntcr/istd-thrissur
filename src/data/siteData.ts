@@ -48,7 +48,14 @@ export interface ChapterEvent {
   status: 'upcoming' | 'past';
   title: string;
   subtitleQuestion?: string;
-  programmeType: 'Webinar' | 'Workshop' | 'Seminar' | 'Conference' | 'Chapter Milestone';
+  programmeType:
+    | 'Webinar'
+    | 'Workshop'
+    | 'Seminar'
+    | 'Special Session'
+    | '57th Foundation Day Session'
+    | 'Conference'
+    | 'Chapter Milestone';
   date: string;
   timeIST: string;
   venue: string;

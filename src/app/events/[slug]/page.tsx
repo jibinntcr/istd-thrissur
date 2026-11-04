@@ -11,6 +11,7 @@ import {
   assetUrl,
 } from '@/data/siteData';
 import { PhotoCard } from '@/components/PhotoCard';
+import { EventRegistrationForm } from '@/components/EventRegistrationForm';
 
 export function generateStaticParams() {
   return ALL_CHAPTER_EVENTS.map((ev) => ({
@@ -269,12 +270,12 @@ export default async function EventDetailPage({
               <div className="btn-group" style={{ marginTop: '1.75rem' }}>
                 {event.status === 'upcoming' ? (
                   <>
-                    <Link
-                      href={`/contact?type=event&event=${encodedTitle}#contactEnquiryForm`}
+                    <a
+                      href="#eventRegistrationFormBox"
                       className="btn btn-red"
                     >
-                      Register / Enquire for This Session
-                    </Link>
+                      Register Online for This Session &darr;
+                    </a>
                     <a href="#eventPhotosSection" className="btn btn-outline-blue">
                       Event Poster &amp; Photos
                     </a>
@@ -352,6 +353,15 @@ export default async function EventDetailPage({
               )}
             </div>
           </div>
+
+          {/* =================================================================
+              ONLINE PARTICIPANT REGISTRATION FORM (FOR UPCOMING EVENTS)
+             ================================================================= */}
+          {event.status === 'upcoming' && (
+            <div style={{ marginTop: '3rem' }}>
+              <EventRegistrationForm event={event} />
+            </div>
+          )}
 
           {/* =================================================================
               INAUGURATION-SPECIFIC SECTIONS: DIGNITARIES & APPRECIATION

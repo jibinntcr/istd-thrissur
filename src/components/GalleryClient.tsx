@@ -1,12 +1,13 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import {
   GALLERY_CATEGORIES,
   GALLERY_PHOTOS,
   GalleryPhoto,
   assetUrl,
 } from '@/data/siteData';
+import { fetchBackendStore } from '@/lib/clientBackendCache';
 import { useLightbox } from './LightboxProvider';
 
 type ViewMode = 'masonry' | 'grid' | 'compact';
@@ -15,11 +16,25 @@ export function GalleryClient() {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [viewMode, setViewMode] = useState<ViewMode>('masonry');
+  const [photosList, setPhotosList] = useState<GalleryPhoto[]>(GALLERY_PHOTOS);
   const { openLightbox } = useLightbox();
+
+  useEffect(() => {
+    const loadPhotos = () => {
+      fetchBackendStore().then(({ data }) => {
+        if (data?.galleryPhotos?.length) {
+          setPhotosList(data.galleryPhotos);
+        }
+      });
+    };
+    loadPhotos();
+    window.addEventListener('istd-backend-updated', loadPhotos);
+    return () => window.removeEventListener('istd-backend-updated', loadPhotos);
+  }, []);
 
   const filteredPhotos = useMemo(() => {
     const q = searchQuery.trim().toLowerCase();
-    return GALLERY_PHOTOS.filter((photo) => {
+    return photosList.filter((photo) => {
       const catMatch =
         selectedCategory === 'all' || photo.category === selectedCategory;
       if (!catMatch) return false;
@@ -27,10 +42,10 @@ export function GalleryClient() {
       const haystack = `${photo.title} ${photo.shortDesc} ${photo.caption} ${photo.keywords} ${photo.categoryLabel} ${photo.metaTag}`.toLowerCase();
       return haystack.includes(q);
     });
-  }, [selectedCategory, searchQuery]);
+  }, [selectedCategory, searchQuery, photosList]);
 
   const handleOpenPhoto = (clickedPhoto: GalleryPhoto, autoPlay = false) => {
-    const activeList = filteredPhotos.length > 0 ? filteredPhotos : GALLERY_PHOTOS;
+    const activeList = filteredPhotos.length > 0 ? filteredPhotos : photosList;
     const lightboxItems = activeList.map((p) => ({
       src: p.src,
       title: p.title,
@@ -42,7 +57,7 @@ export function GalleryClient() {
   };
 
   const handleStartSlideshow = () => {
-    const activeList = filteredPhotos.length > 0 ? filteredPhotos : GALLERY_PHOTOS;
+    const activeList = filteredPhotos.length > 0 ? filteredPhotos : photosList;
     if (activeList[0]) {
       handleOpenPhoto(activeList[0], true);
     }

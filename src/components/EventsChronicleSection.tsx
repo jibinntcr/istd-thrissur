@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { ALL_CHAPTER_EVENTS, assetUrl, ChapterEvent } from '@/data/siteData';
+import { fetchBackendStore } from '@/lib/clientBackendCache';
 
 type EventTab = 'upcoming' | 'past';
 
@@ -15,6 +16,7 @@ export function EventsChronicleSection({
   initialTab = 'upcoming',
 }: EventsChronicleSectionProps) {
   const [activeTab, setActiveTab] = useState<EventTab>(initialTab);
+  const [eventsList, setEventsList] = useState<ChapterEvent[]>(ALL_CHAPTER_EVENTS);
 
   useEffect(() => {
     const checkHash = () => {
@@ -26,11 +28,25 @@ export function EventsChronicleSection({
     };
     checkHash();
     window.addEventListener('hashchange', checkHash);
-    return () => window.removeEventListener('hashchange', checkHash);
+
+    const loadBackendEvents = () => {
+      fetchBackendStore().then(({ data }) => {
+        if (data?.events?.length) {
+          setEventsList(data.events);
+        }
+      });
+    };
+    loadBackendEvents();
+    window.addEventListener('istd-backend-updated', loadBackendEvents);
+
+    return () => {
+      window.removeEventListener('hashchange', checkHash);
+      window.removeEventListener('istd-backend-updated', loadBackendEvents);
+    };
   }, []);
 
-  const upcomingEvents = ALL_CHAPTER_EVENTS.filter((e) => e.status === 'upcoming');
-  const pastEvents = ALL_CHAPTER_EVENTS.filter((e) => e.status === 'past');
+  const upcomingEvents = eventsList.filter((e) => e.status === 'upcoming');
+  const pastEvents = eventsList.filter((e) => e.status === 'past');
 
   return (
     <section
@@ -422,12 +438,10 @@ export function UpcomingEventCard({ event }: { event: ChapterEvent }) {
             </Link>
             {event.registrationAvailable && (
               <Link
-                href={`/contact?type=event&event=${encodeURIComponent(
-                  event.title
-                )}#contactEnquiryForm`}
+                href={`/events/${event.slug}#eventRegistrationFormBox`}
                 className="btn btn-red btn-sm"
               >
-                Register / Enquire Now
+                Register Now &rarr;
               </Link>
             )}
           </div>

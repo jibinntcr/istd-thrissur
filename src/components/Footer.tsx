@@ -103,6 +103,9 @@ export function Footer() {
                 <li>
                   <Link href="/privacy">Privacy Policy</Link>
                 </li>
+                <li>
+                  <Link href="/admin">Admin Portal</Link>
+                </li>
               </ul>
             </div>
 
@@ -191,6 +194,7 @@ export function Footer() {
                 <Link href="/membership">Membership</Link>
                 <Link href="/contact">Contact Us</Link>
                 <Link href="/privacy">Privacy Policy</Link>
+                <Link href="/admin">Admin Portal</Link>
               </div>
             </div>
           </div>
