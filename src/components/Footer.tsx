@@ -80,7 +80,7 @@ export function Footer() {
                   <Link href="/committee">Managing Committee</Link>
                 </li>
                 <li>
-                  <Link href="/programs">Diploma &amp; Certifications</Link>
+                  <Link href="/programs">Programs &amp; Initiatives</Link>
                 </li>
                 <li>
                   <Link href="/events">Chapter Events &amp; Milestones</Link>
@@ -99,19 +99,19 @@ export function Footer() {
 
             {/* Col 3: Programs */}
             <div>
-              <h4 className="footer-heading">Flagship Programs</h4>
+              <h4 className="footer-heading">Chapter Initiatives</h4>
               <ul className="footer-links">
                 <li>
-                  <Link href="/programs#pgpSection">Dip. TD / PGP-TL&amp;D Diploma</Link>
+                  <Link href="/programs#knowledgeForums">Executive Knowledge Forums</Link>
                 </li>
                 <li>
-                  <Link href="/programs#tttSection">Certified Train The Trainer</Link>
+                  <Link href="/programs#academiaCollaboration">Industry–Academia Tie-Ups</Link>
                 </li>
                 <li>
-                  <Link href="/programs#poshSection">Certified POSH Trainer</Link>
+                  <Link href="/programs#trainerLabs">Facilitator &amp; HRD Skill Labs</Link>
                 </li>
                 <li>
-                  <Link href="/events">Chapter Learning Forums</Link>
+                  <Link href="/events">Chapter Events &amp; Milestones</Link>
                 </li>
                 <li>
                   <Link href="/membership#categoriesSection">Institutional Membership</Link>

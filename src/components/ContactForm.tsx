@@ -173,9 +173,15 @@ export function ContactForm() {
                 <option value="" disabled>
                   Select Category
                 </option>
-                <option value="Trainings">Trainings (Train The Trainer / POSH / Corporate)</option>
-                <option value="PGP-TL&D">PGP-TL&amp;D (15-Month Postgraduate Program)</option>
-                <option value="Membership">Membership (Individual / Institutional / Student)</option>
+                <option value="Knowledge Forums & Workshops">
+                  Knowledge Forums, Webinars &amp; Workshops
+                </option>
+                <option value="Industry-Academia Collaboration">
+                  Industry–Academia &amp; Campus Collaboration
+                </option>
+                <option value="Membership">
+                  Membership (Individual / Institutional / Student)
+                </option>
                 <option value="Others">General Enquiry / Speaking Engagements</option>
               </select>
             </div>

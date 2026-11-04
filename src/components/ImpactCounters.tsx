@@ -31,14 +31,14 @@ const COUNTERS = [
     ),
   },
   {
-    id: 'counterStudents',
-    target: 50,
-    suffix: '+',
-    label: 'Students in PGP Diploma',
+    id: 'counterLegacy',
+    target: 55,
+    suffix: '+ Yrs',
+    label: 'ISTD National Legacy (Est. 1970)',
     icon: (
       <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-        <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
-        <path d="M6 12v5c3 3 9 3 12 0v-5" />
+        <circle cx="12" cy="8" r="7" />
+        <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88" />
       </svg>
     ),
   },

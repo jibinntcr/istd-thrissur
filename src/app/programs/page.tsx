@@ -5,9 +5,9 @@ import { PhotoCard } from '@/components/PhotoCard';
 import { FLAGSHIP_PROGRAMS, CHAPTER_EVENTS, assetUrl } from '@/data/siteData';
 
 export const metadata: Metadata = {
-  title: 'Programs & Events',
+  title: 'Programs & Initiatives',
   description:
-    'Explore ISTD Thrissur training programs, flagship 15-month PGP-TL&D diploma, Train The Trainer workshops, and cutting-edge L&D webinars.',
+    'Explore ISTD Thrissur Chapter learning initiatives, executive knowledge forums, industry-academia collaborations, and corporate HRD workshops.',
 };
 
 export default function ProgramsPage() {
@@ -19,12 +19,12 @@ export default function ProgramsPage() {
           <div className="breadcrumb">
             <Link href="/">Home</Link>
             <span>/</span>
-            <span>Programs &amp; Events</span>
+            <span>Programs &amp; Initiatives</span>
           </div>
-          <h1 className="page-hero-title">Training Programs &amp; Chapter Events</h1>
+          <h1 className="page-hero-title">Chapter Programs &amp; Learning Initiatives</h1>
           <p className="page-hero-subtitle">
-            Comprehensive post-graduate certifications, train-the-trainer masterclasses, and
-            forward-looking webinars.
+            Executive knowledge-sharing forums, industry–academia partnerships, and practitioner
+            skill labs across Central Kerala.
           </p>
         </div>
       </section>
@@ -37,7 +37,7 @@ export default function ProgramsPage() {
         <div className="container">
           <div className="split-banner-card">
             <div>
-              <span className="section-tag tag-yellow">Professional Credentials</span>
+              <span className="section-tag tag-yellow">Collaborative Ecosystem</span>
               <h2
                 style={{
                   fontSize: '1.85rem',
@@ -46,7 +46,7 @@ export default function ProgramsPage() {
                   fontWeight: 800,
                 }}
               >
-                Nationally Accredited L&amp;D Qualifications
+                Strengthening the Regional Training &amp; Development Ecosystem
               </h2>
               <p
                 style={{
@@ -56,19 +56,19 @@ export default function ProgramsPage() {
                   marginBottom: '1.25rem',
                 }}
               >
-                Whether you are stepping into corporate training or leading human capital
-                transformations, ISTD credentials provide recognized benchmark standards across
-                industries.
+                The ISTD Thrissur Chapter serves as a dynamic platform for learning, knowledge
+                exchange, collaboration, and leadership development—bringing together trainers,
+                educators, HR professionals, academicians, and industry leaders.
               </p>
               <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
                 <a href="#flagshipProgramsSection" className="btn btn-primary btn-sm">
-                  Flagship Diploma (PGP)
+                  Core Initiatives
                 </a>
-                <a href="#chapterEventsSection" className="btn btn-outline-navy btn-sm">
+                <Link href="/events" className="btn btn-outline-navy btn-sm">
                   Chapter Events
-                </a>
+                </Link>
                 <Link href="/gallery" className="btn btn-outline-blue btn-sm">
-                  Event Gallery
+                  Photo Gallery
                 </Link>
               </div>
             </div>
@@ -87,14 +87,15 @@ export default function ProgramsPage() {
         </div>
       </section>
 
-      {/* Section 1: National Flagship Programs */}
+      {/* Section 1: Core Chapter Initiatives */}
       <section className="section-padding bg-white" id="flagshipProgramsSection">
         <div className="container">
           <div className="section-header text-center">
-            <span className="section-tag tag-red">National Flagship Certifications</span>
-            <h2 className="section-title">Government Recognized Programs</h2>
+            <span className="section-tag tag-red">Chapter Focus Areas</span>
+            <h2 className="section-title">Core Programs &amp; Collaborative Forums</h2>
             <p className="section-subtitle">
-              Pioneering diploma and certificate credentials with nationwide and global recognition.
+              Action-oriented learning forums, campus tie-ups, and practitioner workshops designed
+              for the L&amp;D community.
             </p>
           </div>
 
@@ -182,7 +183,7 @@ export default function ProgramsPage() {
                     className={`btn ${prog.featured ? 'btn-primary' : 'btn-navy'} btn-sm`}
                     style={{ width: '100%' }}
                   >
-                    {prog.featured ? 'Enquire for Admissions' : 'Enroll in Next Batch'}
+                    {prog.featured ? 'Partner / Participate' : 'Connect With Us'}
                   </Link>
                 </div>
               </div>

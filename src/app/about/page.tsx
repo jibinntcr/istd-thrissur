@@ -81,9 +81,9 @@ export default function AboutPage() {
                 The Indian Society for Training &amp; Development (ISTD) Thrissur Chapter is
                 dedicated to promoting better and more effective utilization of human resources
                 through continuous education, training, and development. We bridge the gap between
-                industry and academia, offering innovative programs, networking opportunities, and
-                professional certifications to equip trainers and organizational leaders for the
-                future.
+                industry and academia, offering innovative learning forums, networking
+                opportunities, and collaborative initiatives to equip trainers and organizational
+                leaders for the future.
               </p>
               <p
                 style={{
@@ -368,12 +368,11 @@ export default function AboutPage() {
                 </svg>
               </div>
               <h3 style={{ fontSize: '1.2rem', marginBottom: '0.65rem', color: 'var(--color-ink)' }}>
-                Flagship PGP-TL&amp;D Program Facilitation
+                Executive Knowledge &amp; Learning Forums
               </h3>
               <p style={{ fontSize: '0.88rem', color: 'var(--color-muted)', lineHeight: 1.6 }}>
-                We facilitate the flagship Post Graduate Program in Training, Learning &amp;
-                Development (PGP-TL&amp;D), a prestigious 15-month diploma recognized by the Govt.
-                of India for aspiring L&amp;D leaders.
+                We curate interactive roundtables, expert panels, and skill labs that empower HR
+                professionals, trainers, and educators with modern L&amp;D methodologies.
               </p>
             </div>
 

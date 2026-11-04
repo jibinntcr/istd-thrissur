@@ -9,7 +9,7 @@ const NAV_ITEMS = [
   { href: '/', label: 'Home', mobileLabel: 'Home' },
   { href: '/about', label: 'About Us', mobileLabel: 'About ISTD & Chapter' },
   { href: '/committee', label: 'Committee', mobileLabel: 'Managing Committee' },
-  { href: '/programs', label: 'Programs', mobileLabel: 'Diploma & Certifications' },
+  { href: '/programs', label: 'Programs', mobileLabel: 'Programs & Initiatives' },
   { href: '/events', label: 'Events', mobileLabel: 'Chapter Events & Milestones' },
   { href: '/gallery', label: 'Gallery', mobileLabel: 'Chapter Photo Gallery' },
   { href: '/membership', label: 'Membership', mobileLabel: 'Membership & Tiers' },

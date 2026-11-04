@@ -28,8 +28,8 @@ export default function HomePage() {
                 The <strong>Indian Society for Training &amp; Development (ISTD)</strong> Thrissur
                 Chapter is Central Kerala’s premier national forum for HR professionals, corporate
                 trainers, educators, academicians, and industry leaders—dedicated to advancing
-                human resource excellence through certifications, research, and collaborative
-                learning.
+                human resource excellence through knowledge exchange, industry–academia
+                collaboration, and leadership development.
               </p>
               <div className="btn-group">
                 <Link href="/membership" className="btn btn-red btn-lg">
@@ -46,11 +46,11 @@ export default function HomePage() {
                     <polyline points="12 5 19 12 12 19" />
                   </svg>
                 </Link>
-                <Link href="/programs" className="btn btn-outline-white btn-lg">
-                  <span>Diploma &amp; Certifications</span>
+                <Link href="/events" className="btn btn-outline-navy btn-lg">
+                  <span>Explore Chapter Events</span>
                 </Link>
-                <Link href="/events" className="btn btn-outline-white btn-lg">
-                  <span>Chapter Events</span>
+                <Link href="/about" className="btn btn-outline-blue btn-lg">
+                  <span>About Our Chapter</span>
                 </Link>
               </div>
             </div>
@@ -248,9 +248,9 @@ export default function HomePage() {
                     </svg>
                   </span>
                   <div>
-                    <strong>Government of India Recognized Diploma (Dip. TD / PGP-TL&amp;D):</strong>{' '}
-                    Recognized by the Ministry of Education &amp; DoPT for superior training &amp;
-                    HRD posts across Central/State Government, PSUs, Banks, and Industry.
+                    <strong>Collaborative Platform for HR Leaders, Trainers &amp; Educators:</strong>{' '}
+                    Uniting corporate L&amp;D practitioners, university faculty, and industry
+                    executives to elevate workplace learning across Central Kerala.
                   </div>
                 </li>
                 <li>
@@ -349,12 +349,12 @@ export default function HomePage() {
                   marginBottom: '0.65rem',
                 }}
               >
-                Diploma in Training &amp; Development (Dip. TD)
+                Knowledge Exchange &amp; Learning Ecosystem
               </h3>
               <p style={{ fontSize: '0.92rem', color: 'var(--color-muted)', lineHeight: 1.65 }}>
-                Introduced in 1979 with over <strong>16,000+ alumni</strong> across corporate
-                houses, PSUs, banks, and defense forces, entitling graduates to the prestigious{' '}
-                <strong>“Dip. TD”</strong> credential.
+                Connecting <strong>10,000+ L&amp;D professionals</strong> across corporate houses,
+                PSUs, banks, and academic institutions to share modern facilitation and talent
+                development practices.
               </p>
             </div>
 
@@ -470,23 +470,23 @@ export default function HomePage() {
                 Regional Conclaves &amp; Chapter Forums
               </h3>
               <p style={{ fontSize: '0.92rem', color: 'var(--color-muted)', lineHeight: 1.65 }}>
-                Continuous peer learning through chapter roundtables, Train-the-Trainer labs, PoSH
-                certification workshops, and industry-academia dialogues in Thrissur.
+                Continuous peer learning through chapter roundtables, facilitator skill labs,
+                leadership workshops, and industry–academia dialogues in Thrissur.
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Flagship Programs & Certifications Section */}
+      {/* Core Chapter Initiatives & Learning Forums Section */}
       <section className="section-padding bg-white" id="programsSection">
         <div className="container">
           <div className="section-header text-center">
-            <span className="section-tag tag-red">Professional Development</span>
-            <h2 className="section-title">Flagship Academic &amp; Certification Programs</h2>
+            <span className="section-tag tag-red">Chapter Initiatives</span>
+            <h2 className="section-title">Core Programs &amp; Collaborative Forums</h2>
             <p className="section-subtitle">
-              Industry-recognized credentials designed to equip L&amp;D professionals, corporate
-              trainers, and HR leaders with world-class facilitation and strategic capabilities.
+              Structured initiatives designed to connect L&amp;D professionals, corporate trainers,
+              academicians, and HR leaders across Central Kerala.
             </p>
           </div>
 

@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'ISTD Thrissur Diamond Chapter | Indian Society for Training & Development',
     description:
-      'Promoting excellence in Human Resource Development, workplace learning, and national certifications across Central Kerala.',
+      'Promoting excellence in Human Resource Development, workplace learning, and leadership development across Central Kerala.',
     type: 'website',
     locale: 'en_IN',
   },

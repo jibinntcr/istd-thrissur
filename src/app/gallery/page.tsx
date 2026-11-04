@@ -47,7 +47,7 @@ export default function GalleryPage() {
                 Be Part of Our Next Chapter Milestone
               </h2>
               <p style={{ color: '#CBD5E1', fontSize: '1.05rem', margin: 0 }}>
-                Join ISTD Thrissur Chapter to participate in upcoming workshops, certifications, and
+                Join ISTD Thrissur Chapter to participate in upcoming workshops, learning forums, and
                 leadership conclaves.
               </p>
             </div>

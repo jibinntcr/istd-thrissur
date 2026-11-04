@@ -424,7 +424,7 @@ export default function CommitteePage() {
               The Managing Committee is committed to fostering fruitful partnerships with
               corporations, colleges, business houses, and freelance trainers across Kerala. Whether
               you would like to speak at our next chapter webinar, propose an institutional tie-up,
-              or enroll in PGP-TL&amp;D, we welcome your active participation.
+              or collaborate on an L&amp;D forum, we welcome your active participation.
             </p>
             <div className="btn-group">
               <Link href="/contact" className="btn btn-red">

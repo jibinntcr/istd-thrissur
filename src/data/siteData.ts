@@ -97,7 +97,7 @@ export const HERO_SLIDES: HeroSlide[] = [
     src: '/photos/istd-22.jpeg',
     badge: 'Tradition & Professional Excellence',
     title: 'Empowering Organizations & Learning Leaders in Kerala',
-    desc: 'Advancing human capital through certifications, research, and executive forums',
+    desc: 'Advancing human capital through knowledge exchange, research, and executive forums',
     caption:
       'Chapter Chairman Shri. Tony Chacko and Regional VP Prof. (Dr.) Zakkariya K A alongside ISTD National Executive leaders.',
   },
@@ -187,7 +187,7 @@ export const GALLERY_PHOTOS: GalleryPhoto[] = [
     shortDesc:
       'Shri. Nabaghan Pany sharing insights on national L&D standards and chapter excellence from the podium.',
     caption:
-      "Shri. Nabaghan Pany (National Treasurer, ISTD) addressing the Thrissur Chapter members and highlighting ISTD's national growth and flagship certification initiatives.",
+      "Shri. Nabaghan Pany (National Treasurer, ISTD) addressing the Thrissur Chapter members and highlighting ISTD's national growth and collaborative learning initiatives.",
     category: 'addresses',
     categoryLabel: 'Keynote & Addresses',
     metaTag: 'National Leadership',
@@ -580,58 +580,58 @@ export const COMMITTEE_MEMBERS: CommitteeMember[] = [
 
 export const FLAGSHIP_PROGRAMS: ProgramItem[] = [
   {
-    id: 'pgpSection',
-    badge: 'National Diploma',
-    duration: '15-Month Postgraduate Program',
-    shortTitle: 'PGP-TL&D',
-    title: 'PGP-TL&D (Post Graduate Program in Training, Learning & Development)',
+    id: 'knowledgeForums',
+    badge: 'Core Initiative',
+    duration: 'Monthly & Quarterly Forums',
+    shortTitle: 'Executive Knowledge Sharing & L&D Forums',
+    title: 'Executive Knowledge Sharing & L&D Forums',
     description:
-      'Post Graduate Program in Training, Learning & Development: A comprehensive 15-month program recognized by Govt of India to create impactful learning leaders.',
+      'Interactive conclaves, expert webinars, and leadership roundtables exploring emerging trends in AI, workplace learning, and organizational development.',
     fullDescription:
-      'A 15-month program designed to equip professionals with the skills to create impactful learning experiences. Recognised by the Ministry of Education, Govt. of India for recruitment to superior posts under the Central Government.',
+      'Curated monthly and quarterly knowledge-sharing sessions bringing together CHROs, corporate trainers, academicians, and industry practitioners to exchange actionable insights on modern L&D.',
     features: [
-      'Govt. of India recognized qualification',
-      'Comprehensive 4-Semester modular curriculum',
-      'Live weekend masterclasses & expert faculty mentorship',
-      'Real-world organizational training project work',
-      '50+ students actively enrolled in Kerala cohort',
+      'Expert webinars on AI, Future of Work & HR transformation',
+      'Interactive panel discussions with industry & academic leaders',
+      'Case-study presentations on organizational talent practices',
+      'Peer-to-peer problem solving & best-practice exchange',
+      'Open to HR practitioners, trainers, educators & leaders',
     ],
     featured: true,
-    iconType: 'diploma',
-  },
-  {
-    id: 'tttSection',
-    duration: 'Master Certification',
-    shortTitle: 'Certified Train The Trainer',
-    title: 'Certified Train The Trainer',
-    description:
-      'A masterclass in modern experiential facilitation, adult learning pedagogy, instructional design, and stage presentation skills.',
-    fullDescription:
-      'A comprehensive program to master modern facilitation and training methodologies. Empowers emerging and practicing trainers with experiential tools and adult learning frameworks.',
-    features: [
-      'Training Needs Analysis (TNA) & Kirkpatrick Evaluation',
-      'Adult learning theories & ADDIE framework',
-      'Facilitation psychology and gamified learning design',
-      'Micro-teaching assessment with individual feedback',
-      'Certified Trainer credential from ISTD',
-    ],
     iconType: 'layers',
   },
   {
-    id: 'poshSection',
-    duration: 'Compliance & Legal Specialization',
-    shortTitle: 'Certified POSH Trainer',
-    title: 'Certified POSH Trainer',
+    id: 'academiaCollaboration',
+    duration: 'Institutional Partnerships',
+    shortTitle: 'Industry–Academia & Campus Initiatives',
+    title: 'Industry–Academia & Campus Collaboration',
     description:
-      'Equip yourself to build safe workplaces with our specialized Prevention of Sexual Harassment trainer certification and legal compliance insights.',
+      'Bridging universities, B-schools, and industry leaders across Central Kerala through Faculty Development Programs (FDPs) and employability labs.',
     fullDescription:
-      'Equip yourself to build safe workplaces with our specialized Prevention of Sexual Harassment trainer certification. Covers legal mandates, sensitivity handling, and IC committee enablement.',
+      'A dedicated collaborative bridge connecting colleges, universities, and research scholars with corporate HR leaders to align academic learning with real-world workplace readiness.',
     features: [
-      'Deep-dive into PoSH Act (2013) legal provisions',
-      'Internal Committee (IC) capacity building',
-      'Inquiry procedures, drafting reports & compliance audits',
-      'Interactive role-plays & investigation protocols',
-      'Empanelled certified POSH consultant badge',
+      'Faculty Development Programs (FDPs) on modern pedagogy',
+      'Campus-to-Corporate employability & leadership sessions',
+      'Joint research & scholarly exchange with universities',
+      'Mentorship for management & HR students across Kerala',
+      'Institutional tie-ups with premier colleges in Thrissur',
+    ],
+    iconType: 'diploma',
+  },
+  {
+    id: 'trainerLabs',
+    duration: 'Practitioner Community',
+    shortTitle: 'Facilitator & HRD Skill Labs',
+    title: 'Corporate HRD & Facilitator Skill Labs',
+    description:
+      'Hands-on peer-learning labs and workshops designed for corporate trainers, educators, and OD practitioners to sharpen facilitation methodologies.',
+    fullDescription:
+      'Practical, experiential workshops where trainers, facilitators, and HR professionals co-create learning tools, explore adult learning frameworks, and elevate workplace training impact.',
+    features: [
+      'Experiential facilitation & instructional design clinics',
+      'Training Needs Identification (TNI) & impact evaluation',
+      'Behavioral coaching, leadership labs & group dynamics',
+      'Custom corporate MDP & organizational OD advisory',
+      'Collaborative networking across Central Kerala chapters',
     ],
     iconType: 'shield',
   },
@@ -678,7 +678,7 @@ export const TESTIMONIALS = [
   {
     id: 't3',
     quote:
-      'Being part of ISTD has connected me with the most seasoned HR leaders and educators across Kerala. The PGP program is truly a game-changer for aspiring learning leaders.',
+      'Being part of ISTD has connected me with the most seasoned HR leaders and educators across Kerala. The knowledge-sharing sessions and peer network are truly invaluable for learning leaders.',
     author: 'Head of Talent Development',
     role: 'Cochin & Thrissur Region',
   },
