@@ -490,6 +490,14 @@ export default async function EventDetailPage({
                     <a href="#eventPhotosSection" className="btn btn-primary">
                       View Event Photographs &darr;
                     </a>
+                    {event.slug === 'christ-college-student-chapter-inauguration' && (
+                      <Link
+                        href="/campus-chapters/christ-college-of-engineering"
+                        className="btn btn-red"
+                      >
+                        Visit Exclusive Campus Chapter Page &rarr;
+                      </Link>
+                    )}
                     <Link href="/events#pastEvents" className="btn btn-outline-navy">
                       &larr; Back to Events &amp; Programmes
                     </Link>
@@ -516,7 +524,7 @@ export default async function EventDetailPage({
                 }
               />
 
-              {event.status === 'upcoming' && (
+              {event.status === 'upcoming' && event.registrationAvailable !== false ? (
                 <div
                   style={{
                     padding: '1.25rem 1.35rem',
@@ -540,6 +548,47 @@ export default async function EventDetailPage({
                   >
                     Go to Registration Form &darr;
                   </a>
+                </div>
+              ) : (
+                <div
+                  style={{
+                    padding: '1.25rem 1.35rem',
+                    background: '#F8FAFC',
+                    borderRadius: '14px',
+                    border: '1.5px solid #CBD5E1',
+                  }}
+                >
+                  <div
+                    style={{
+                      display: 'inline-block',
+                      padding: '0.22rem 0.65rem',
+                      borderRadius: '999px',
+                      background: '#E2E8F0',
+                      color: '#334155',
+                      fontSize: '0.7rem',
+                      fontWeight: 800,
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.06em',
+                      marginBottom: '0.45rem',
+                    }}
+                  >
+                    Registration Closed • Programme Completed
+                  </div>
+                  <div style={{ fontWeight: 800, color: '#0F172A', fontSize: '0.95rem', marginBottom: '0.3rem' }}>
+                    ✓ Official Completed Event Report
+                  </div>
+                  <p style={{ fontSize: '0.84rem', color: '#475569', marginBottom: event.slug === 'christ-college-student-chapter-inauguration' ? '0.85rem' : 0, lineHeight: 1.5 }}>
+                    This programme has successfully concluded and participant registration is closed. Explore the official report and media archive on this page.
+                  </p>
+                  {event.slug === 'christ-college-student-chapter-inauguration' && (
+                    <Link
+                      href="/campus-chapters/christ-college-of-engineering"
+                      className="btn btn-primary btn-sm"
+                      style={{ width: '100%', justifyContent: 'center' }}
+                    >
+                      Open Christ College Student Chapter Page &rarr;
+                    </Link>
+                  )}
                 </div>
               )}
 
@@ -586,7 +635,7 @@ export default async function EventDetailPage({
           {/* =================================================================
               ONLINE PARTICIPANT REGISTRATION FORM (FOR UPCOMING EVENTS)
              ================================================================= */}
-          {event.status === 'upcoming' && (
+          {event.status === 'upcoming' && event.registrationAvailable !== false && (
             <div style={{ marginTop: '3.25rem' }}>
               <EventRegistrationForm event={event} />
             </div>

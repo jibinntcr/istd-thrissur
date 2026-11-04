@@ -52,7 +52,7 @@ export default function HomePage() {
           <div className="upcoming-ticker-viewport">
             <div className="upcoming-ticker-track">
               <Link href="/campus-chapters/christ-college-of-engineering" className="upcoming-ticker-item">
-                <strong>First Student Chapter Inauguration:</strong> ISTD Trichur Chapter announces
+                <strong>First Student Chapter Inaugurated:</strong> ISTD Trichur Chapter inaugurates
                 its First Student Chapter at Christ College of Engineering (Autonomous) &rarr;
               </Link>
               <span className="upcoming-ticker-sep" aria-hidden="true">
@@ -74,7 +74,7 @@ export default function HomePage() {
                 •
               </span>
               <Link href="/campus-chapters/christ-college-of-engineering" className="upcoming-ticker-item">
-                <strong>First Student Chapter Inauguration:</strong> ISTD Trichur Chapter announces
+                <strong>First Student Chapter Inaugurated:</strong> ISTD Trichur Chapter inaugurates
                 its First Student Chapter at Christ College of Engineering (Autonomous) &rarr;
               </Link>
               <span className="upcoming-ticker-sep" aria-hidden="true">
@@ -384,9 +384,9 @@ export default function HomePage() {
                   marginBottom: '0.9rem',
                 }}
               >
-                ISTD Trichur Chapter is pleased to announce the inauguration of its first student
-                chapter at <strong style={{ color: '#FFFFFF' }}>Christ College of Engineering (Autonomous)</strong>. The
-                chapter will create a space for students to connect academic learning with
+                ISTD Trichur Chapter successfully inaugurated its first student chapter at{' '}
+                <strong style={{ color: '#FFFFFF' }}>Christ College of Engineering (Autonomous)</strong>. The
+                chapter creates a dedicated space for students to connect academic learning with
                 professional practice, engage with experienced practitioners, and develop as future
                 professionals.
               </p>
@@ -399,7 +399,7 @@ export default function HomePage() {
                   marginBottom: '1.35rem',
                 }}
               >
-                The inaugural program includes an address by{' '}
+                The inaugural program featured an inspiring address by{' '}
                 <strong style={{ color: '#FDE68A' }}>Prof. (Dr.) Zakkariya</strong>, National Vice
                 President, ISTD, followed by the official inauguration and lighting of the lamp, and
                 an address by <strong style={{ color: '#FDE68A' }}>Mr. Tony Chacko</strong>, Chairman

@@ -151,13 +151,13 @@ export default async function CampusChapterDetailPage({
               }}
             >
               <a href="#inaugurationAnnouncement" className="btn btn-red">
-                Read Official Announcement &rarr;
+                Read Official Inauguration Report &rarr;
               </a>
               <Link
                 href="/events/christ-college-student-chapter-inauguration"
                 className="btn btn-outline-white"
               >
-                Event Registration &amp; Details
+                View Event Chronicle &amp; Report
               </Link>
               <Link
                 href="/campus-chapters#submitCampusChapterEOI"
@@ -216,7 +216,7 @@ export default async function CampusChapterDetailPage({
             {/* Right: Official Inauguration Statement & Dignitaries */}
             <div>
               <span className="section-tag tag-blue">
-                Official Chapter Announcement
+                Official Inauguration Report
               </span>
               <h2
                 className="section-title"

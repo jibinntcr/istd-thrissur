@@ -518,7 +518,7 @@ export default function CampusChaptersPage() {
                       href="/events/christ-college-student-chapter-inauguration"
                       className="btn btn-outline-navy btn-sm"
                     >
-                      View Event Chronicle &amp; Registration
+                      View Completed Event Report &amp; Chronicle
                     </Link>
                   </div>
                 </div>

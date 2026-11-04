@@ -55,7 +55,8 @@ export interface ChapterEvent {
     | 'Special Session'
     | '57th Foundation Day Session'
     | 'Conference'
-    | 'Chapter Milestone';
+    | 'Chapter Milestone'
+    | 'Campus Chapter Milestone';
   date: string;
   timeIST: string;
   venue: string;
@@ -655,12 +656,12 @@ export const CAMPUS_CHAPTERS: CampusChapter[] = [
     posterCaption:
       'Official Inauguration Poster — ISTD Trichur First Student Chapter at Christ College of Engineering (Autonomous).',
     summary:
-      'ISTD Trichur Chapter’s first student chapter at Christ College of Engineering (Autonomous), creating a dedicated platform for students to connect academic learning with professional practice, engage with experienced practitioners, and develop as future professionals.',
+      'Inaugurated as the ISTD Trichur Chapter’s first student chapter at Christ College of Engineering (Autonomous), creating a dedicated platform for students to connect academic learning with professional practice, engage with experienced practitioners, and develop as future professionals.',
     descriptionParagraphs: [
-      'ISTD Trichur Chapter is pleased to announce the inauguration of its first student chapter at Christ College of Engineering (Autonomous).',
-      'The chapter will create a space for students to connect academic learning with professional practice, engage with experienced practitioners, and develop as future professionals.',
-      'The inaugural program will include an address by Prof. (Dr.) Zakkariya, National Vice President, ISTD, followed by the official inauguration and lighting of the lamp. Mr. Tony Chacko, Chairman of the ISTD Trichur Chapter, will also address the gathering.',
-      'We look forward to beginning this association with the students and faculty of Christ College of Engineering.',
+      'ISTD Trichur Chapter successfully inaugurated its first student chapter at Christ College of Engineering (Autonomous), marking a major academic-industry milestone for the chapter.',
+      'The chapter creates a dedicated space for students to connect academic learning with professional practice, engage with experienced practitioners, and develop as future professionals.',
+      'The inaugural program featured an inspiring address by Prof. (Dr.) Zakkariya, National Vice President, ISTD, followed by the official inauguration and lighting of the ceremonial lamp. Mr. Tony Chacko, Chairman of the ISTD Trichur Chapter, also addressed the gathering of students and faculty.',
+      'Through this association with the students and faculty of Christ College of Engineering (Autonomous), the ISTD Trichur Chapter continues its mission of nurturing future-ready professionals and leaders.',
     ],
     dignitaries: [
       {
@@ -718,33 +719,35 @@ export const ALL_CHAPTER_EVENTS: ChapterEvent[] = [
   {
     id: 'event-campus-cce-inauguration',
     slug: 'christ-college-student-chapter-inauguration',
-    status: 'upcoming',
+    status: 'past',
     title:
       'Inauguration of First Student Chapter at Christ College of Engineering (Autonomous)',
-    programmeType: 'Chapter Milestone',
-    date: '2026 Inaugural Programme',
+    programmeType: 'Campus Chapter Milestone',
+    date: 'Completed Inaugural Ceremony (2026)',
     timeIST: 'Campus Inaugural Session (IST)',
     venue: 'Christ College of Engineering (Autonomous), Irinjalakuda, Thrissur',
-    speaker: 'Prof. (Dr.) Zakkariya (National Vice President, ISTD) & Mr. Tony Chacko (Chairman, ISTD Trichur Chapter)',
+    speaker:
+      'Prof. (Dr.) Zakkariya (National Vice President, ISTD) & Mr. Tony Chacko (Chairman, ISTD Trichur Chapter)',
     shortDescription:
-      'ISTD Trichur Chapter is pleased to announce the inauguration of its first student chapter at Christ College of Engineering (Autonomous), creating a space for students to connect academic learning with professional practice.',
+      'Successful inauguration of the ISTD Trichur Chapter’s first student chapter at Christ College of Engineering (Autonomous), featuring the inaugural address and lamp-lighting ceremony by Prof. (Dr.) Zakkariya (National Vice President, ISTD) and an address by Mr. Tony Chacko (Chairman, ISTD Trichur Chapter).',
     fullDescription: [
-      'ISTD Trichur Chapter is pleased to announce the inauguration of its first student chapter at Christ College of Engineering (Autonomous).',
-      'The chapter will create a space for students to connect academic learning with professional practice, engage with experienced practitioners, and develop as future professionals.',
-      'The inaugural program will include an address by Prof. (Dr.) Zakkariya, National Vice President, ISTD, followed by the official inauguration and lighting of the lamp. Mr. Tony Chacko, Chairman of the ISTD Trichur Chapter, will also address the gathering.',
-      'We look forward to beginning this association with the students and faculty of Christ College of Engineering.',
+      'ISTD Trichur Chapter successfully inaugurated its first student chapter at Christ College of Engineering (Autonomous), establishing a vibrant institutional bridge between academia and industry.',
+      'The student chapter creates a dedicated space for students to connect academic learning with professional practice, engage with experienced practitioners, and develop as future professionals.',
+      'The inaugural program featured a keynote address by Prof. (Dr.) Zakkariya, National Vice President, ISTD, followed by the official inauguration of the student chapter and lighting of the ceremonial lamp. Mr. Tony Chacko, Chairman of the ISTD Trichur Chapter, also addressed the gathering of faculty members and students.',
+      'This milestone marks the beginning of a sustained collaboration with the students and faculty of Christ College of Engineering (Autonomous) through practitioner sessions, leadership forums, and skill-development initiatives.',
     ],
     image: '/images/campus-chapter-cce.jpg',
     imageCaption:
       'Official Poster — Inauguration of ISTD Trichur First Student Chapter at Christ College of Engineering (Autonomous).',
     isPosterImage: true,
-    registrationAvailable: true,
+    registrationAvailable: false,
+    hasPhotoGallery: false,
     eventPhotos: [
       {
         src: '/images/campus-chapter-cce.jpg',
         title: 'Inauguration of First Student Chapter — Christ College of Engineering (Autonomous)',
         caption:
-          'ISTD Trichur First Student Chapter Inauguration at Christ College of Engineering (Autonomous).',
+          'ISTD Trichur First Student Chapter Inauguration at Christ College of Engineering (Autonomous), featuring addresses by Prof. (Dr.) Zakkariya (National Vice President, ISTD) and Mr. Tony Chacko (Chairman, ISTD Trichur Chapter).',
         category: 'Campus Chapter Milestone',
       },
     ],
