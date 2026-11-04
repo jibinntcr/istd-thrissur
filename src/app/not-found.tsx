@@ -9,7 +9,7 @@ export default function NotFound() {
           <span className="section-tag tag-red">404 • Page Not Found</span>
           <h1 className="section-title" style={{ marginTop: '0.5rem' }}>We Couldn&apos;t Find That Page</h1>
           <p style={{ color: 'var(--color-muted)', marginBottom: '1.75rem' }}>
-            The page you are looking for may have moved or no longer exists. Explore our flagship programs, inauguration gallery, or return to the homepage.
+            The page you are looking for may have moved or no longer exists. Explore our flagship programs, chapter events, or return to the homepage.
           </p>
           <div className="btn-group" style={{ justifyContent: 'center' }}>
             <Link href="/" className="btn btn-primary">

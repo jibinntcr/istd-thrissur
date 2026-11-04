@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { assetUrl } from '@/data/siteData';
+import { assetUrl, OFFICIAL_LINKS } from '@/data/siteData';
 
 export function Footer() {
   const pathname = usePathname();
@@ -44,37 +44,49 @@ export function Footer() {
                 </div>
               </div>
               <p className="footer-about-text">
-                Promoting excellence in Human Resource Development, workplace learning, and
-                professional certifications across Central Kerala since establishment.
+                Affiliated with ISTD New Delhi (Est. 1970) and IFTDO Geneva. Leading transformation
+                through Training, Learning &amp; Human Resource Development across Central Kerala.
               </p>
-              <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+              <div style={{ display: 'flex', gap: '0.65rem', flexWrap: 'wrap' }}>
                 <a
-                  href="https://www.istd.in/"
+                  href={OFFICIAL_LINKS.istdTrichurLinkedin}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn btn-sm btn-outline-white"
-                  style={{ fontSize: '0.78rem' }}
+                  style={{ fontSize: '0.76rem' }}
                 >
-                  Visit National Portal &rarr;
+                  ISTD Trichur LinkedIn &rarr;
+                </a>
+                <a
+                  href={OFFICIAL_LINKS.istdNationalWeb}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-sm btn-outline-white"
+                  style={{ fontSize: '0.76rem' }}
+                >
+                  istd.in &rarr;
                 </a>
               </div>
             </div>
 
             {/* Col 2: Quick Links */}
             <div>
-              <h4 className="footer-heading">Quick Links</h4>
+              <h4 className="footer-heading">Chapter Navigation</h4>
               <ul className="footer-links">
                 <li>
-                  <Link href="/about">About ISTD Thrissur</Link>
+                  <Link href="/about">About ISTD &amp; Chapter</Link>
                 </li>
                 <li>
                   <Link href="/committee">Managing Committee</Link>
                 </li>
                 <li>
-                  <Link href="/programs">Programs &amp; Events</Link>
+                  <Link href="/programs">Diploma &amp; Certifications</Link>
                 </li>
                 <li>
-                  <Link href="/gallery">Photo Gallery (24 Photos)</Link>
+                  <Link href="/events">Chapter Events &amp; Milestones</Link>
+                </li>
+                <li>
+                  <Link href="/gallery">Chapter Photo Gallery</Link>
                 </li>
                 <li>
                   <Link href="/membership">Membership Categories</Link>
@@ -90,7 +102,7 @@ export function Footer() {
               <h4 className="footer-heading">Flagship Programs</h4>
               <ul className="footer-links">
                 <li>
-                  <Link href="/programs#pgpSection">PGP-TL&amp;D (15-Month Diploma)</Link>
+                  <Link href="/programs#pgpSection">Dip. TD / PGP-TL&amp;D Diploma</Link>
                 </li>
                 <li>
                   <Link href="/programs#tttSection">Certified Train The Trainer</Link>
@@ -99,7 +111,7 @@ export function Footer() {
                   <Link href="/programs#poshSection">Certified POSH Trainer</Link>
                 </li>
                 <li>
-                  <Link href="/programs#chapterEventsSection">AI for Business Agents</Link>
+                  <Link href="/events">Chapter Learning Forums</Link>
                 </li>
                 <li>
                   <Link href="/membership#categoriesSection">Institutional Membership</Link>
@@ -123,7 +135,7 @@ export function Footer() {
                     <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
                     <circle cx="12" cy="10" r="3" />
                   </svg>
-                  <span>ISTD Thrissur Chapter, Kerala, India</span>
+                  <span>ISTD Thrissur (Trichur) Chapter, Kerala, India</span>
                 </li>
                 <li>
                   <svg
@@ -167,11 +179,12 @@ export function Footer() {
           {/* Footer Bottom */}
           <div className="footer-bottom">
             <div className="footer-bottom-inner">
-              <p>© 2026 ISTD Thrissur Chapter. All rights reserved.</p>
+              <p>© 2026 ISTD Thrissur (Trichur) Chapter. All rights reserved.</p>
               <div className="footer-bottom-links">
                 <Link href="/about">About ISTD</Link>
-                <Link href="/committee">Managing Committee</Link>
-                <Link href="/gallery">Photo Gallery</Link>
+                <Link href="/committee">Committee</Link>
+                <Link href="/events">Events</Link>
+                <Link href="/gallery">Gallery</Link>
                 <Link href="/membership">Membership</Link>
                 <Link href="/contact">Contact</Link>
               </div>
@@ -193,15 +206,16 @@ export function Footer() {
           <span>Home</span>
         </Link>
         <Link
-          href="/gallery"
-          className={`mobile-bottom-item ${isActive('/gallery') ? 'active' : ''}`}
+          href="/events"
+          className={`mobile-bottom-item ${isActive('/events') ? 'active' : ''}`}
         >
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-            <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-            <circle cx="8.5" cy="8.5" r="1.5" />
-            <polyline points="21 15 16 10 5 21" />
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+            <line x1="16" y1="2" x2="16" y2="6" />
+            <line x1="8" y1="2" x2="8" y2="6" />
+            <line x1="3" y1="10" x2="21" y2="10" />
           </svg>
-          <span>Gallery</span>
+          <span>Events</span>
         </Link>
         <Link
           href="/membership"
@@ -228,13 +242,15 @@ export function Footer() {
           <span>Programs</span>
         </Link>
         <Link
-          href="/contact"
-          className={`mobile-bottom-item ${isActive('/contact') ? 'active' : ''}`}
+          href="/gallery"
+          className={`mobile-bottom-item ${isActive('/gallery') ? 'active' : ''}`}
         >
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+            <circle cx="8.5" cy="8.5" r="1.5" />
+            <polyline points="21 15 16 10 5 21" />
           </svg>
-          <span>Contact</span>
+          <span>Gallery</span>
         </Link>
       </nav>
     </>

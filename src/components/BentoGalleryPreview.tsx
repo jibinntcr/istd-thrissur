@@ -9,37 +9,37 @@ const BENTO_ITEMS = [
   {
     src: '/photos/team-istd.jpeg',
     wide: true,
-    badge: 'Leadership & Community',
+    badge: 'Leadership & Fraternity',
     title: 'ISTD National Executive & Thrissur Chapter Cohort',
-    desc: 'Grand group portrait from the Diamond Chapter Inauguration at Pearl Regency, Thrissur.',
+    desc: 'Bringing together trainers, educators, HR professionals, academicians, and industry leaders across Central Kerala.',
   },
   {
     src: '/photos/istd-22.jpeg',
     wide: true,
-    badge: 'Inaugural Ceremony',
-    title: 'Ceremonial Nilavilakku Lighting by Dignitaries',
-    desc: 'Inaugurating a new era of Learning & Development excellence in Central Kerala.',
+    badge: 'Tradition & Excellence',
+    title: 'Upholding 55+ Years of ISTD National Legacy',
+    desc: 'Advancing human resource development, workplace learning, and collaborative leadership in Kerala.',
   },
   {
     src: '/photos/istd-tony-chacko.jpeg',
     wide: false,
-    badge: "Chairman's Address",
-    title: "Chairman Shri. Tony Chacko's Address",
-    desc: 'Setting the strategic vision for the Thrissur Chapter.',
+    badge: 'Chapter Vision',
+    title: 'Chairman Shri. Tony Chacko',
+    desc: 'Driving strategic industry-academia synergy and L&D transformation.',
   },
   {
     src: '/photos/istd-sneha.jpeg',
     wide: false,
-    badge: 'Felicitations',
-    title: 'Honoring Secretary Sneha Rose George',
-    desc: 'Presented by Regional VP Prof. (Dr.) Zakkariya K A.',
+    badge: 'Academic & Research Excellence',
+    title: 'Secretary Ms. Sneha Rose George with Prof. (Dr.) Zakkariya K A',
+    desc: 'Strengthening scholarly collaboration and trainer development.',
   },
   {
     src: '/photos/istd-participants.jpeg',
     wide: false,
-    badge: 'Dignitary Honor',
-    title: 'Treasurer Jibin N Honoring National Leadership',
-    desc: 'Draping the ceremonial ponnada to Dr. Yogesh Kumar Upadhyay.',
+    badge: 'National Mentorship',
+    title: 'Treasurer Mr. Jibin N with Dr. Yogesh Kumar Upadhyay',
+    desc: 'Connecting regional talent with national L&D pioneers.',
   },
 ];
 
@@ -61,15 +61,16 @@ export function BentoGalleryPreview() {
     <section
       className="section-padding bg-pale-blue"
       id="galleryPreview"
-      aria-label="Chapter Photo Gallery Highlights"
+      aria-label="Chapter Community & Visual Highlights"
     >
       <div className="container">
         <div className="section-header text-center">
-          <span className="section-tag tag-red">Visual Moments &amp; Archives</span>
-          <h2 className="section-title">Diamond Chapter Inauguration Gallery</h2>
+          <span className="section-tag tag-red">Chapter Community in Action</span>
+          <h2 className="section-title">Leadership, Fellowship &amp; Knowledge Exchange</h2>
           <p className="section-subtitle">
-            Glimpses from the grand inauguration of the ISTD Thrissur Diamond Chapter held at Hotel
-            Pearl Regency. Click any photograph to launch the interactive fullscreen viewer.
+            A vibrant professional forum uniting HR practitioners, corporate facilitators,
+            academicians, and enterprise leaders across Thrissur and Central Kerala. Click any
+            photograph to view in fullscreen.
           </p>
         </div>
 
@@ -118,9 +119,17 @@ export function BentoGalleryPreview() {
           ))}
         </div>
 
-        <div style={{ textAlign: 'center', marginTop: '2.75rem' }}>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            gap: '1rem',
+            flexWrap: 'wrap',
+            marginTop: '2.75rem',
+          }}
+        >
           <Link href="/gallery" className="btn btn-red btn-lg">
-            <span>Explore Full Photo Gallery (24 Official Photos)</span>
+            <span>Explore Chapter Photo Gallery</span>
             <svg
               width="18"
               height="18"
@@ -131,6 +140,9 @@ export function BentoGalleryPreview() {
             >
               <polyline points="9 18 15 12 9 6" />
             </svg>
+          </Link>
+          <Link href="/events" className="btn btn-outline-navy btn-lg">
+            <span>View Chapter Events &amp; Milestones</span>
           </Link>
         </div>
       </div>

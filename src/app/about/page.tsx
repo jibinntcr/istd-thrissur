@@ -36,33 +36,33 @@ export default function AboutPage() {
               <div className="photo-collage-wrapper">
                 <PhotoCard
                   src="/photos/istd-in.jpeg"
-                  alt="ISTD Thrissur Diamond Chapter Inauguration Ceremony"
-                  title="Inauguration of ISTD Diamond Chapter at Thrissur"
-                  caption="Dr. Yogesh Kumar Upadhyay (Past National President, ISTD) lighting the ceremonial lamp alongside Shri. Nabaghan Pany, Shri. Atul Shah, Prof. (Dr.) Zakkariya K A, and Chairman Shri. Tony Chacko."
-                  category="Inaugural Ceremony"
-                  badgeText="Diamond Chapter Launch • 30th March 2026"
-                  headingText="Auspicious Lamp Lighting by National Dignitaries"
+                  alt="ISTD National and Thrissur Chapter Leadership"
+                  title="National & Regional ISTD Leadership"
+                  caption="Past National President Dr. Yogesh Kumar Upadhyay, National Treasurer Shri. Nabaghana Pany, National President Shri. Atul Shah, Regional VP Prof. (Dr.) Zakkariya K A, and Chapter Chairman Shri. Tony Chacko."
+                  category="Leadership"
+                  badgeText="ISTD National & Chapter Leadership"
+                  headingText="Upholding 55+ Years of ISTD Excellence"
                 />
                 <div className="photo-sub-grid">
                   <PhotoCard
                     src="/photos/istd-national-president.jpeg"
-                    alt="Official Charter Presentation"
-                    title="Official Charter Presentation by National President"
-                    caption="National President Shri. Atul Shah formally presenting the Diamond Chapter mandate."
-                    category="National Recognition"
-                    badgeText="National Mandate"
-                    headingText="Charter Handover"
+                    alt="Official ISTD National Mandate"
+                    title="National Recognition & Affiliation"
+                    caption="ISTD National President Shri. Atul Shah with Regional Vice President Prof. (Dr.) Zakkariya K A and National Treasurer Shri. Nabaghana Pany."
+                    category="National Affiliation"
+                    badgeText="ISTD New Delhi"
+                    headingText="National Affiliation"
                     aspectRatio="4 / 3"
                     compactCaption
                   />
                   <PhotoCard
                     src="/photos/istd-treasurer.jpeg"
-                    alt="National Treasurer Address"
-                    title="National Treasurer Addressing the Chapter"
-                    caption="Shri. Nabaghan Pany (National Treasurer, ISTD) addressing delegates at Pearl Regency, Thrissur."
-                    category="Keynote Address"
-                    badgeText="Plenary Session"
-                    headingText="Keynote Address"
+                    alt="Executive Knowledge Forum"
+                    title="Executive Knowledge Forum"
+                    caption="National and Chapter leaders sharing perspectives on advancing L&D across Kerala."
+                    category="Plenary Dialogue"
+                    badgeText="Plenary Forum"
+                    headingText="Executive Dialogue"
                     aspectRatio="4 / 3"
                     compactCaption
                   />
@@ -437,15 +437,15 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Historic Milestone: Diamond Chapter Inauguration Showcase */}
+      {/* Chapter Ecosystem & Collaborative Forum Showcase */}
       <section className="section-padding bg-pale-blue">
         <div className="container">
           <div className="section-header text-center">
-            <span className="section-tag tag-red">Chapter Milestone</span>
-            <h2 className="section-title">Inauguration of the Diamond Chapter at Thrissur</h2>
+            <span className="section-tag tag-red">Leadership &amp; Community</span>
+            <h2 className="section-title">A Vibrant Ecosystem of L&amp;D Practitioners</h2>
             <p className="section-subtitle">
-              On 30th March 2026 at Hotel Pearl Regency, Thrissur, the ISTD National Executive
-              Council officially inaugurated the Thrissur Diamond Chapter.
+              Uniting national ISTD leaders, regional academicians, HR heads, and corporate
+              facilitators to elevate professional standards in Central Kerala.
             </p>
           </div>
 
@@ -458,39 +458,50 @@ export default function AboutPage() {
           >
             <PhotoCard
               src="/photos/istd-calicut.jpeg"
-              alt="Inaugural Plenary Dais"
-              title="Inaugural Plenary Session at Pearl Regency"
-              caption="Dr. Yogesh Kumar Upadhyay, Shri. Nabaghan Pany, Shri. Atul Shah, Prof. (Dr.) Zakkariya K A, and Chairman Shri. Tony Chacko on the dais."
-              category="Inaugural Plenary"
-              badgeText="National Dais"
-              headingText="Inaugural Plenary at Pearl Regency"
+              alt="National and Regional Leadership Dais"
+              title="National & Regional Executive Dais"
+              caption="Dr. Yogesh Kumar Upadhyay, Shri. Nabaghana Pany, Shri. Atul Shah, Prof. (Dr.) Zakkariya K A, and Chairman Shri. Tony Chacko."
+              category="Executive Leadership"
+              badgeText="National & Regional Dais"
+              headingText="Strategic HRD & L&D Leadership"
               style={{ background: '#FFFFFF' }}
             />
             <PhotoCard
               src="/photos/istd-3.jpeg"
-              alt="Oath Taking Ceremony"
-              title="Oath-Taking & Swearing-In Ceremony"
-              caption="National President Shri. Atul Shah administering the official leadership oath."
-              category="Oath & Swearing-In"
+              alt="Chapter Governance and Commitment"
+              title="Commitment to Professional Standards"
+              caption="Chapter office bearers and members upholding ISTD's code of professional excellence."
+              category="Governance"
               badgeText="Governance"
-              headingText="Official Swearing-In Ceremony"
+              headingText="Shared Vision & Governance"
               style={{ background: '#FFFFFF' }}
             />
             <PhotoCard
               src="/photos/istd-audience.jpeg"
-              alt="Members Taking Oath"
-              title="Chapter Members Taking the Collective Pledge"
-              caption="ISTD Thrissur Chapter members and office bearers standing in unison to take the membership pledge."
-              category="Member Induction"
+              alt="ISTD Thrissur Chapter Fraternity"
+              title="Thrissur Chapter Professional Fraternity"
+              caption="Trainers, educators, HR professionals, academicians, and industry leaders of the ISTD Thrissur Chapter."
+              category="Chapter Community"
               badgeText="Community"
-              headingText="Collective Membership Pledge"
+              headingText="Active Chapter Fraternity"
               style={{ background: '#FFFFFF' }}
             />
           </div>
 
-          <div style={{ textAlign: 'center', marginTop: '2.25rem' }}>
-            <Link href="/gallery" className="btn btn-primary">
-              Explore All 24 Inauguration Photos &rarr;
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              gap: '1rem',
+              flexWrap: 'wrap',
+              marginTop: '2.25rem',
+            }}
+          >
+            <Link href="/events" className="btn btn-primary">
+              View Chapter Events &amp; Milestones &rarr;
+            </Link>
+            <Link href="/gallery" className="btn btn-outline-navy">
+              Explore Photo Gallery &rarr;
             </Link>
           </div>
         </div>

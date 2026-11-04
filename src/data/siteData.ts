@@ -37,6 +37,7 @@ export interface CommitteeMember {
   avatar: string;
   email?: string;
   phone?: string;
+  linkedin?: string;
   isChairman?: boolean;
   isOfficeBearer?: boolean;
 }
@@ -69,36 +70,36 @@ export interface EventItem {
 
 export const HERO_SLIDES: HeroSlide[] = [
   {
-    src: '/photos/istd-22.jpeg',
-    badge: 'Diamond Chapter Inauguration',
-    title: 'Diamond Chapter Inauguration — Ceremonial Lamp Lighting',
-    desc: 'Graced by ISTD National & Regional Dignitaries at Pearl Regency, Thrissur',
-    caption:
-      'Chairman Shri. Tony Chacko and Regional VP Prof. (Dr.) Zakkariya K A lighting the ceremonial Nilavilakku alongside ISTD National President Shri. Atul Shah, National Treasurer Shri. Nabaghan Pany, and Past National President Dr. Yogesh Kumar Upadhyay.',
-  },
-  {
     src: '/photos/team-istd.jpeg',
-    badge: 'Leadership & Fraternity',
-    title: 'ISTD National Leaders & Thrissur Chapter Cohort',
-    desc: 'National President Shri. Atul Shah & Executive Dignitaries with Thrissur Chapter Members',
+    badge: 'ISTD Thrissur Chapter • 55 Years of ISTD Legacy',
+    title: 'Leading Transformation Through Training & Development',
+    desc: 'Connecting HR Leaders, Corporate Trainers, Academicians & Industry Pioneers across Central Kerala',
     caption:
-      'National President Shri. Atul Shah, Past National President Dr. Yogesh Kumar Upadhyay, National Treasurer Shri. Nabaghan Pany, Regional VP Prof. (Dr.) Zakkariya K A, and Chairman Shri. Tony Chacko with the Thrissur Chapter fraternity.',
-  },
-  {
-    src: '/photos/istd-national-president.jpeg',
-    badge: 'Charter Presentation',
-    title: 'Official Diamond Chapter Charter Presentation',
-    desc: 'National President Shri. Atul Shah presenting the official chapter mandate',
-    caption:
-      'ISTD National President Shri. Atul Shah formally presenting the Diamond Chapter recognition to Regional Vice President Prof. (Dr.) Zakkariya K A as National Treasurer Shri. Nabaghan Pany applauds.',
+      'ISTD National & Regional Executive Leaders together with the ISTD Thrissur (Trichur) Chapter Managing Committee and professional fraternity.',
   },
   {
     src: '/photos/istd-calicut.jpeg',
-    badge: 'Inaugural Plenary',
-    title: 'Inaugural Session at Hotel Pearl Regency, Thrissur',
-    desc: 'Dignitaries on the dais during the historic 30th March 2026 inauguration',
+    badge: 'Executive Knowledge Exchange',
+    title: 'Strengthening the Regional L&D & HRD Ecosystem',
+    desc: 'A collaborative forum for learning, knowledge exchange, and leadership development',
     caption:
-      'Full view of the inaugural dais at Hotel Pearl Regency, Thrissur featuring Dr. Yogesh Kumar Upadhyay, Shri. Nabaghan Pany, Shri. Atul Shah, Prof. (Dr.) Zakkariya K A, and Chairman Shri. Tony Chacko.',
+      'National and Regional ISTD leaders sharing strategic perspectives on human resource development and workplace learning excellence.',
+  },
+  {
+    src: '/photos/istd-national-president.jpeg',
+    badge: 'National Affiliation • ISTD New Delhi',
+    title: 'Recognized National Platform for L&D Professionals',
+    desc: 'Affiliated with ISTD National (Est. 1970) and IFTDO Geneva',
+    caption:
+      'ISTD National President Shri. Atul Shah, Regional Vice President (South) Prof. (Dr.) Zakkariya K A, and National Treasurer Shri. Nabaghana Pany.',
+  },
+  {
+    src: '/photos/istd-22.jpeg',
+    badge: 'Tradition & Professional Excellence',
+    title: 'Empowering Organizations & Learning Leaders in Kerala',
+    desc: 'Advancing human capital through certifications, research, and executive forums',
+    caption:
+      'Chapter Chairman Shri. Tony Chacko and Regional VP Prof. (Dr.) Zakkariya K A alongside ISTD National Executive leaders.',
   },
 ];
 
@@ -438,6 +439,7 @@ export const OFFICE_BEARERS: CommitteeMember[] = [
     avatar: '/images/ISTDTeamTCR/tony-chacko.jpg',
     email: 'tonychacko67@gmail.com',
     phone: '+919846101034',
+    linkedin: 'https://www.linkedin.com/in/tony-chacko-965622240/',
     isChairman: true,
     isOfficeBearer: true,
   },
@@ -448,6 +450,7 @@ export const OFFICE_BEARERS: CommitteeMember[] = [
     title: 'Research Scholar, CUSAT',
     avatar: '/images/ISTDTeamTCR/sneha-rose.jpg',
     email: 'info@istd.in',
+    linkedin: 'https://www.linkedin.com/in/sneha-rose-george-4176a325/',
     isOfficeBearer: true,
   },
   {
@@ -458,7 +461,93 @@ export const OFFICE_BEARERS: CommitteeMember[] = [
     avatar: '/images/ISTDTeamTCR/jibin-n.jpg',
     email: 'jibintcr@gmail.com',
     phone: '+919496839168',
+    linkedin: 'https://www.linkedin.com/in/jibintcr/',
     isOfficeBearer: true,
+  },
+];
+
+export const OFFICIAL_LINKS = {
+  istdNationalWeb: 'https://www.istd.in/',
+  istdNationalLinkedin: 'https://www.linkedin.com/school/istd-india/',
+  istdTrichurLinkedin: 'https://www.linkedin.com/company/istd-trichur/',
+};
+
+export const INAUGURATION_DIGNITARIES = [
+  {
+    name: 'Shri. Atul Shah',
+    designation: 'National President, ISTD',
+    linkedin: 'https://www.linkedin.com/in/atul-shah-5333b4241/',
+    photo: '/photos/istd-national-president.jpeg',
+  },
+  {
+    name: 'Shri. Nabaghana Pany',
+    designation: 'National Treasurer, ISTD',
+    linkedin: 'https://www.linkedin.com/in/nabaghana-pany-56322019/',
+    photo: '/photos/istd-national-treasurer.jpeg',
+  },
+  {
+    name: 'Dr. Yogesh Kumar Upadhyay',
+    designation: 'Past National President, ISTD',
+    linkedin: 'https://www.linkedin.com/in/dr-yogesh-kumar-upadhyay-694849a/',
+    photo: '/photos/istd-participants.jpeg',
+  },
+  {
+    name: 'Prof. (Dr.) Zakkariya K A',
+    designation: 'Regional Vice President, ISTD (South)',
+    linkedin: 'https://www.linkedin.com/in/zakkariya-k-a-b28606109/',
+    photo: '/photos/istd-zakkariya.jpeg',
+  },
+  {
+    name: 'Shri. Tony Chacko',
+    designation: 'Chairman, ISTD Trichur Chapter',
+    linkedin: 'https://www.linkedin.com/in/tony-chacko-965622240/',
+    photo: '/photos/istd-tony-chacko.jpeg',
+  },
+];
+
+export const CHAPTER_CORE_CONTRIBUTORS = [
+  {
+    name: 'Shri. Tony Chacko',
+    role: 'Chairman, ISTD Trichur Chapter',
+    linkedin: 'https://www.linkedin.com/in/tony-chacko-965622240/',
+  },
+  {
+    name: 'Ms. Sneha Rose George',
+    role: 'Secretary, ISTD Trichur Chapter',
+    linkedin: 'https://www.linkedin.com/in/sneha-rose-george-4176a325/',
+  },
+  {
+    name: 'Mr. Jibin N',
+    role: 'Treasurer, ISTD Trichur Chapter',
+    linkedin: 'https://www.linkedin.com/in/jibintcr/',
+  },
+  {
+    name: 'Mr. Nisam',
+    role: 'Chapter Leadership & Core Team',
+  },
+  {
+    name: 'Dr. Minu Gopal',
+    role: 'Chapter Leadership & Core Team',
+  },
+  {
+    name: 'Dr. Dhanya Alex',
+    role: 'Chapter Leadership & Core Team',
+  },
+  {
+    name: 'Mr. Jobin Kuriakose',
+    role: 'Chapter Leadership & Core Team',
+  },
+  {
+    name: 'Mr. Anil Komban',
+    role: 'Chapter Leadership & Core Team',
+  },
+  {
+    name: 'Ms. Rohini',
+    role: 'Chapter Leadership & Core Team',
+  },
+  {
+    name: 'Mr. Manoj Pushkaran',
+    role: 'Chapter Leadership & Core Team',
   },
 ];
 

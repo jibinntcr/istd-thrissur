@@ -52,7 +52,7 @@ export default function ContactPage() {
                   src="/photos/istd.jpeg"
                   alt="ISTD Thrissur Chapter Leadership & Secretariat Team"
                   title="ISTD Thrissur Chapter Secretariat & Leadership Team"
-                  caption="Chapter Office Bearers, Managing Committee, and National Dignitaries at the ISTD Diamond Chapter Inauguration in Thrissur."
+                  caption="Chapter Office Bearers, Managing Committee, and National Executive leaders of the ISTD Thrissur Chapter."
                   category="Team & Secretariat"
                   badgeText="Click to Expand Photo"
                   headingText="ISTD Thrissur Leadership & Secretariat"

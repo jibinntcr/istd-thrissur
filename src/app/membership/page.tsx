@@ -84,22 +84,22 @@ export default function MembershipPage() {
               <div className="photo-collage-wrapper">
                 <PhotoCard
                   src="/photos/istd-audience.jpeg"
-                  alt="ISTD Thrissur Membership Oath Ceremony"
-                  title="ISTD Thrissur Chapter Members Taking the Collective Pledge"
-                  caption="Chapter members, trainers, and HR leaders standing in unison to take the membership oath at the Diamond Chapter Inauguration."
-                  category="Member Induction"
-                  badgeText="150+ Active Local Members"
-                  headingText="Chapter Members Taking the Collective Oath"
+                  alt="ISTD Thrissur Chapter Professional Community"
+                  title="ISTD Thrissur Chapter Professional Network"
+                  caption="Trainers, educators, HR professionals, academicians, and industry leaders of the ISTD Thrissur Chapter."
+                  category="Chapter Community"
+                  badgeText="Active L&D Fraternity"
+                  headingText="A Vibrant Network of L&D Practitioners"
                 />
                 <div className="photo-sub-grid">
                   <PhotoCard
                     src="/photos/istd-kozhikkod.jpeg"
-                    alt="Members Swearing-In"
-                    title="Swearing-In of Executive Committee & Members"
-                    caption="Office bearers and members taking the solemn oath of commitment."
-                    category="Oath Ceremony"
-                    badgeText="Commitment"
-                    headingText="Executive Swearing-In"
+                    alt="Executive Committee and Members"
+                    title="Shared Commitment to HRD Excellence"
+                    caption="Chapter leadership and members collaborating to strengthen the regional L&D ecosystem."
+                    category="Chapter Leadership"
+                    badgeText="Collaboration"
+                    headingText="Executive & Member Cohort"
                     aspectRatio="4 / 3"
                     compactCaption
                   />
@@ -107,7 +107,7 @@ export default function MembershipPage() {
                     src="/photos/istd.jpeg"
                     alt="ISTD Thrissur Community"
                     title="ISTD Thrissur Chapter Delegation with National Leaders"
-                    caption="Chapter members and office bearers with ISTD National Executive dignitaries."
+                    caption="Chapter members and office bearers with ISTD National Executive leaders."
                     category="Community"
                     badgeText="Fraternity"
                     headingText="Vibrant L&D Network"

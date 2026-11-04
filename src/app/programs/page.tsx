@@ -75,12 +75,12 @@ export default function ProgramsPage() {
 
             <PhotoCard
               src="/photos/istd-treasurer.jpeg"
-              alt="ISTD Thrissur Keynote Session at Pearl Regency"
-              title="Keynote Address at the ISTD Thrissur Diamond Chapter Inauguration"
-              caption="National Treasurer Shri. Nabaghan Pany addressing delegates alongside National President Shri. Atul Shah, Past National President Dr. Yogesh Kumar Upadhyay, Regional VP Prof. (Dr.) Zakkariya K A, and Chairman Shri. Tony Chacko."
-              category="Chapter Symposium"
-              badgeText="National Leadership Symposium"
-              headingText="Keynote Session at Hotel Pearl Regency"
+              alt="ISTD National & Regional Executive Forum"
+              title="Executive Knowledge Exchange & Academic Leadership"
+              caption="National Treasurer Shri. Nabaghana Pany, National President Shri. Atul Shah, Past National President Dr. Yogesh Kumar Upadhyay, Regional VP Prof. (Dr.) Zakkariya K A, and Chapter Chairman Shri. Tony Chacko."
+              category="Academic & L&D Leadership"
+              badgeText="National & Regional Forum"
+              headingText="Advancing Professional L&D Standards"
               style={{ background: '#FFFFFF' }}
             />
           </div>
@@ -202,64 +202,6 @@ export default function ProgramsPage() {
               organizational psychology, and agile learning ecosystems.
             </p>
           </div>
-
-          {/* Featured Milestone Event Banner Card */}
-          <article className="event-card milestone-event-card">
-            <PhotoCard
-              src="/photos/istd-calicut.jpeg"
-              alt="Inauguration of ISTD Diamond Chapter at Thrissur"
-              title="Inauguration of ISTD Diamond Chapter at Thrissur — 30th March 2026"
-              caption="Dignitaries on the dais at Hotel Pearl Regency, Thrissur: Dr. Yogesh Kumar Upadhyay, Shri. Nabaghan Pany, Shri. Atul Shah, Prof. (Dr.) Zakkariya K A, and Chairman Shri. Tony Chacko."
-              category="Chapter Inauguration"
-              badgeText="★ March 30, 2026 • Flagship Milestone"
-              headingText="Click to View Inauguration Plenary"
-              className="event-image-box"
-              style={{ borderRadius: 0, border: 'none' }}
-            />
-            <div className="event-body">
-              <div>
-                <div className="event-speaker-tag" style={{ color: 'var(--accent-red)' }}>
-                  <svg
-                    width="15"
-                    height="15"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                  >
-                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                  </svg>
-                  <span>
-                    Dignitaries: Shri. Atul Shah, Dr. Yogesh Kumar Upadhyay, Shri. Nabaghan Pany,
-                    Prof. (Dr.) Zakkariya K A
-                  </span>
-                </div>
-                <h3 className="event-title" style={{ fontSize: '1.4rem' }}>
-                  Grand Inauguration of ISTD Diamond Chapter at Thrissur
-                </h3>
-                <p className="event-desc" style={{ marginBottom: '1.25rem' }}>
-                  The formal inauguration of the ISTD Diamond Chapter at Hotel Pearl Regency,
-                  Thrissur, featuring the auspicious lamp lighting, charter handover, keynote
-                  addresses by National &amp; Regional leadership, and swearing-in of the Managing
-                  Committee.
-                </p>
-              </div>
-              <div className="event-footer">
-                <span
-                  style={{
-                    fontSize: '0.85rem',
-                    fontWeight: 700,
-                    color: 'var(--color-primary-navy)',
-                  }}
-                >
-                  Venue: Hotel Pearl Regency, Thrissur
-                </span>
-                <Link href="/gallery" className="btn btn-primary btn-sm">
-                  Explore 24 Event Photos &rarr;
-                </Link>
-              </div>
-            </div>
-          </article>
 
           <div className="events-grid">
             {CHAPTER_EVENTS.map((ev) => (

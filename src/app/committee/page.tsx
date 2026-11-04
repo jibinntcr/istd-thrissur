@@ -2,7 +2,12 @@ import React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { PhotoCard } from '@/components/PhotoCard';
-import { OFFICE_BEARERS, COMMITTEE_MEMBERS, assetUrl } from '@/data/siteData';
+import {
+  OFFICE_BEARERS,
+  COMMITTEE_MEMBERS,
+  CHAPTER_CORE_CONTRIBUTORS,
+  assetUrl,
+} from '@/data/siteData';
 
 export const metadata: Metadata = {
   title: 'Managing Committee 2024–2026',
@@ -66,8 +71,8 @@ export default function CommitteePage() {
                 <a href="#committeeMembers" className="btn btn-outline-navy btn-sm">
                   Committee Members
                 </a>
-                <Link href="/gallery" className="btn btn-outline-blue btn-sm">
-                  Inauguration Photos
+                <Link href="/events" className="btn btn-outline-blue btn-sm">
+                  Chapter Events
                 </Link>
               </div>
             </div>
@@ -162,6 +167,19 @@ export default function CommitteePage() {
                       </svg>
                     </a>
                   )}
+                  {member.linkedin && (
+                    <a
+                      href={member.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      title={`${member.name} on LinkedIn`}
+                      aria-label={`${member.name} on LinkedIn`}
+                    >
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z" />
+                      </svg>
+                    </a>
+                  )}
                 </div>
               </div>
             ))}
@@ -221,10 +239,88 @@ export default function CommitteePage() {
               </div>
             ))}
           </div>
+          {/* Extended Leadership & Core Chapter Contributors */}
+          <div
+            style={{
+              marginTop: '2.5rem',
+              background: '#FFFFFF',
+              borderRadius: 'var(--radius-lg)',
+              padding: '2rem',
+              border: '1.5px solid var(--border-light)',
+              boxShadow: 'var(--shadow-xs)',
+            }}
+          >
+            <h3
+              style={{
+                fontSize: '1.25rem',
+                fontWeight: 800,
+                color: 'var(--color-ink)',
+                marginBottom: '0.6rem',
+              }}
+            >
+              Chapter Leadership Cohort &amp; Key Contributors
+            </h3>
+            <p
+              style={{
+                fontSize: '0.92rem',
+                color: 'var(--color-muted)',
+                marginBottom: '1.25rem',
+              }}
+            >
+              Dedicated educators, HR leaders, and trainers driving chapter initiatives across
+              Thrissur and Central Kerala:
+            </p>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.65rem' }}>
+              {CHAPTER_CORE_CONTRIBUTORS.map((person) =>
+                person.linkedin ? (
+                  <a
+                    key={person.name}
+                    href={person.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '0.45rem',
+                      background: 'var(--bg-pale-blue)',
+                      border: '1.5px solid #BFDBFE',
+                      padding: '0.5rem 0.95rem',
+                      borderRadius: '999px',
+                      fontSize: '0.86rem',
+                      fontWeight: 700,
+                      color: 'var(--color-primary-navy)',
+                    }}
+                  >
+                    <span>{person.name}</span>
+                    <span style={{ fontSize: '0.74rem', color: '#0A66C2', fontWeight: 800 }}>
+                      in ↗
+                    </span>
+                  </a>
+                ) : (
+                  <span
+                    key={person.name}
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      background: 'var(--bg-pale-blue)',
+                      border: '1.5px solid var(--border-light)',
+                      padding: '0.5rem 0.95rem',
+                      borderRadius: '999px',
+                      fontSize: '0.86rem',
+                      fontWeight: 700,
+                      color: 'var(--color-ink)',
+                    }}
+                  >
+                    {person.name}
+                  </span>
+                )
+              )}
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* Leadership in Action: Inauguration & Swearing-In Moments */}
+      {/* Leadership in Action */}
       <section
         className="section-padding bg-white"
         style={{ borderTop: '1px solid var(--border-light)' }}
@@ -232,10 +328,10 @@ export default function CommitteePage() {
         <div className="container">
           <div className="section-header text-center">
             <span className="section-tag tag-yellow">Leadership in Action</span>
-            <h2 className="section-title">Swearing-In &amp; Inaugural Moments</h2>
+            <h2 className="section-title">Executive Governance &amp; Chapter Fellowship</h2>
             <p className="section-subtitle">
-              Highlights of the Thrissur Chapter Office Bearers and Managing Committee during the
-              Diamond Chapter Inauguration at Pearl Regency.
+              Highlights of the Thrissur Chapter Office Bearers and Managing Committee engaging with
+              ISTD National and Regional leaders.
             </p>
           </div>
 
@@ -249,8 +345,8 @@ export default function CommitteePage() {
             <PhotoCard
               src="/photos/istd-tony-chacko.jpeg"
               alt="Chairman Tony Chacko Address"
-              title="Chairman Shri. Tony Chacko Delivering the Vision Address"
-              caption="Chapter Chairman Shri. Tony Chacko addressing the delegates at the Diamond Chapter Inauguration."
+              title="Chairman Shri. Tony Chacko Delivering the Chapter Vision"
+              caption="Chapter Chairman Shri. Tony Chacko outlining the strategic roadmap for L&D in Central Kerala."
               category="Chairman's Address"
               badgeText="Chairman"
               headingText="Shri. Tony Chacko's Vision Address"
@@ -258,26 +354,26 @@ export default function CommitteePage() {
             <PhotoCard
               src="/photos/istd-sneha.jpeg"
               alt="Secretary Sneha Rose George Felicitation"
-              title="Felicitation of Chapter Secretary Sneha Rose George"
-              caption="Regional Vice President (South) Prof. (Dr.) Zakkariya K A honoring Chapter Secretary Sneha Rose George."
+              title="Chapter Secretary Ms. Sneha Rose George with Prof. (Dr.) Zakkariya K A"
+              caption="Regional Vice President (South) Prof. (Dr.) Zakkariya K A honoring Chapter Secretary Ms. Sneha Rose George."
               category="Secretary Recognition"
               badgeText="Secretary"
-              headingText="Sneha Rose George Honored"
+              headingText="Ms. Sneha Rose George"
             />
             <PhotoCard
               src="/photos/istd-participants.jpeg"
               alt="Treasurer Jibin N Honoring Dr. Yogesh Kumar Upadhyay"
-              title="Treasurer Jibin N Honoring Past National President Dr. Yogesh Kumar Upadhyay"
-              caption="Chapter Treasurer Jibin N draping a traditional ponnada to honor Past National President Dr. Yogesh Kumar Upadhyay."
+              title="Treasurer Mr. Jibin N with Past National President Dr. Yogesh Kumar Upadhyay"
+              caption="Chapter Treasurer Mr. Jibin N honoring Past National President Dr. Yogesh Kumar Upadhyay."
               category="Treasurer in Action"
               badgeText="Treasurer"
-              headingText="Jibin N Honoring National Leadership"
+              headingText="Mr. Jibin N with National Leadership"
             />
             <PhotoCard
               src="/photos/istd-participants-group.jpeg"
               alt="Core Executive Team and Members"
               title="Core Executive Team & Members with National President"
-              caption="Office Bearers and Committee Members posing with National President Shri. Atul Shah."
+              caption="Office Bearers and Committee Members with National President Shri. Atul Shah."
               category="Committee Cohort"
               badgeText="Executive Team"
               headingText="Core Team with National President"
@@ -286,7 +382,7 @@ export default function CommitteePage() {
 
           <div style={{ textAlign: 'center', marginTop: '2rem' }}>
             <Link href="/gallery" className="btn btn-outline-navy">
-              View Complete 24-Photo Inauguration Gallery &rarr;
+              Explore Complete Chapter Photo Gallery &rarr;
             </Link>
           </div>
         </div>

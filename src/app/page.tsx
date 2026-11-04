@@ -5,32 +5,34 @@ import { ImpactCounters } from '@/components/ImpactCounters';
 import { PhotoCard } from '@/components/PhotoCard';
 import { BentoGalleryPreview } from '@/components/BentoGalleryPreview';
 import { TestimonialCarousel } from '@/components/TestimonialCarousel';
-import { FLAGSHIP_PROGRAMS, CHAPTER_EVENTS, assetUrl } from '@/data/siteData';
+import { FLAGSHIP_PROGRAMS, CHAPTER_EVENTS, OFFICIAL_LINKS, assetUrl } from '@/data/siteData';
 
 export default function HomePage() {
   return (
     <>
-      {/* Main Hero Banner Section */}
-      <section className="hero-section" id="heroSection">
+      {/* Hero Section */}
+      <section className="hero-section">
         <div className="container">
           <div className="hero-grid">
+            {/* Hero Left Content */}
             <div className="hero-content">
-              <div className="hero-badge-container">
-                <div className="hero-badge">
-                  <span className="dot" />
-                  <span>Diamond Chapter • Central Kerala&apos;s Premier L&amp;D Ecosystem</span>
-                </div>
+              <div className="hero-eyebrow">
+                <span className="dot" />
+                <span>Affiliated with ISTD New Delhi (Est. 1970) • Member of IFTDO Geneva</span>
               </div>
-              <h1 className="hero-headline">
-                Empowering <span className="highlight-blue">L&amp;D Leaders</span> &amp;{' '}
-                <span className="highlight-red">Trainers</span> in Thrissur
+              <h1 className="hero-title">
+                Leading Transformation Through{' '}
+                <span className="highlight">Training, Learning &amp; Development</span>
               </h1>
-              <p className="hero-subheadline">
-                Pioneers in Training, Learning &amp; Development. Join India&apos;s foremost
-                professional network of corporate facilitators, HR executives, and educators.
+              <p className="hero-subtitle">
+                The <strong>Indian Society for Training &amp; Development (ISTD)</strong> Thrissur
+                Chapter is Central Kerala’s premier national forum for HR professionals, corporate
+                trainers, educators, academicians, and industry leaders—dedicated to advancing
+                human resource excellence through certifications, research, and collaborative
+                learning.
               </p>
-              <div className="hero-cta-group">
-                <Link href="/membership" className="btn btn-red btn-lg" id="heroJoinBtn">
+              <div className="btn-group">
+                <Link href="/membership" className="btn btn-red btn-lg">
                   <span>Become a Member</span>
                   <svg
                     width="18"
@@ -40,201 +42,254 @@ export default function HomePage() {
                     stroke="currentColor"
                     strokeWidth="2.5"
                   >
-                    <polyline points="9 18 15 12 9 6" />
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                    <polyline points="12 5 19 12 12 19" />
                   </svg>
                 </Link>
-                <Link href="/gallery" className="btn btn-outline-navy btn-lg" id="heroGalleryBtn">
-                  <span>Inauguration Gallery</span>
+                <Link href="/programs" className="btn btn-outline-white btn-lg">
+                  <span>Diploma &amp; Certifications</span>
                 </Link>
-              </div>
-              <div className="hero-trust-bar">
-                <div className="hero-trust-item">
-                  <svg
-                    width="18"
-                    height="18"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2.5"
-                  >
-                    <polyline points="20 6 9 17 4 12" />
-                  </svg>
-                  <span>National Govt Recognition</span>
-                </div>
-                <div className="hero-trust-item">
-                  <svg
-                    width="18"
-                    height="18"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2.5"
-                  >
-                    <polyline points="20 6 9 17 4 12" />
-                  </svg>
-                  <span>Industry-Academia Network</span>
-                </div>
+                <Link href="/events" className="btn btn-outline-white btn-lg">
+                  <span>Chapter Events</span>
+                </Link>
               </div>
             </div>
 
-            <div className="hero-media-wrapper">
-              <HeroShowcase />
-            </div>
+            {/* Hero Right Live Interactive Photo Showcase */}
+            <HeroShowcase />
           </div>
         </div>
       </section>
 
-      {/* Impact Statistics (Counters Grid of 3) */}
+      {/* Impact Metrics Counter Bar */}
       <ImpactCounters />
 
-      {/* About ISTD Thrissur Section */}
+      {/* About ISTD & Thrissur Chapter Section (Official ISTD.in Content) */}
       <section className="section-padding bg-white" id="aboutSection">
         <div className="container">
-          <div className="about-grid">
-            <div className="about-image-wrapper">
-              <div className="photo-collage-wrapper">
+          <div className="split-grid">
+            {/* Photo Collage */}
+            <div className="about-image-frame">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                 <PhotoCard
                   src="/photos/istd-calicut.jpeg"
-                  alt="ISTD Thrissur Diamond Chapter Inauguration Plenary Session"
-                  title="Inauguration of ISTD Diamond Chapter at Thrissur"
-                  caption="Dignitaries on the dais at Hotel Pearl Regency, Thrissur during the official Diamond Chapter Inauguration on 30th March 2026."
-                  category="Chapter Heritage"
-                  badgeText="30th March 2026 • Pearl Regency, Thrissur"
-                  headingText="Inauguration of the ISTD Diamond Chapter"
+                  alt="ISTD National and Regional Leadership Session"
+                  title="National & Regional L&D Leadership Forum"
+                  caption="ISTD National President Shri. Atul Shah, Past National President Dr. Yogesh Kumar Upadhyay, National Treasurer Shri. Nabaghana Pany, Regional VP Prof. (Dr.) Zakkariya K A, and Chapter Chairman Shri. Tony Chacko."
+                  category="Leadership & Strategy"
+                  badgeText="ISTD Leadership • Click to Expand"
+                  headingText="National & Regional Executive Forum"
+                  aspectRatio="16/10"
                 />
-                <div className="photo-sub-grid">
+
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
                   <PhotoCard
                     src="/photos/istd-3.jpeg"
-                    alt="Swearing-In Ceremony at ISTD Thrissur"
-                    title="Swearing-In of Chapter Leadership"
-                    caption="National President Shri. Atul Shah administering the official oath of office to the leadership on the dais."
-                    category="Oath & Swearing-In"
-                    badgeText="Governance"
-                    headingText="Swearing-In Ceremony"
-                    aspectRatio="4 / 3"
+                    alt="Knowledge Exchange by Prof. (Dr.) Zakkariya K A"
+                    title="Academic & Industry Knowledge Exchange"
+                    caption="Regional Vice President (South) Prof. (Dr.) Zakkariya K A sharing insights on strengthening the Training & Development ecosystem in Kerala."
+                    category="Knowledge Exchange"
+                    badgeText="Regional Perspective"
+                    headingText="Prof. (Dr.) Zakkariya K A"
+                    aspectRatio="4/3"
                     compactCaption
                   />
                   <PhotoCard
                     src="/photos/istd-national-tony.jpeg"
-                    alt="National President Shri. Atul Shah with Chairman Tony Chacko"
-                    title="National President Honoring Chapter Chairman"
-                    caption="ISTD National President Shri. Atul Shah presenting a commemorative memento to Chairman Shri. Tony Chacko."
-                    category="Leadership Recognition"
-                    badgeText="National Tie-Up"
-                    headingText="Leadership Felicitation"
-                    aspectRatio="4 / 3"
+                    alt="Chairman Shri. Tony Chacko with National President Shri. Atul Shah"
+                    title="National & Chapter Leadership Synergy"
+                    caption="Chapter Chairman Shri. Tony Chacko in conversation with ISTD National President Shri. Atul Shah."
+                    category="Chapter Governance"
+                    badgeText="Leadership Synergy"
+                    headingText="National & Chapter Leadership"
+                    aspectRatio="4/3"
                     compactCaption
                   />
                 </div>
               </div>
-              <div className="about-experience-badge">
-                <div className="exp-num">50+</div>
-                <div className="exp-label">Years National Legacy</div>
-              </div>
             </div>
 
-            <div className="about-content-block">
-              <span className="section-tag tag-red">About ISTD Thrissur</span>
-              <h2 className="section-title">Advancing Human Resource Development</h2>
-              <p className="about-lead">
-                The ISTD Thrissur Chapter is dedicated to promoting better and more effective
-                utilization of human resources through continuous education, professional training,
-                and career development. We bridge corporate industry standards with academic
-                excellence.
+            {/* Content Side */}
+            <div>
+              <span className="section-tag tag-blue">About ISTD &amp; Thrissur Chapter</span>
+              <h2 className="section-title">
+                India’s Premier Professional Society for Human Resource Development
+              </h2>
+              <p
+                style={{
+                  color: 'var(--color-body)',
+                  marginBottom: '1rem',
+                  fontSize: '1.02rem',
+                  lineHeight: 1.75,
+                }}
+              >
+                Established in <strong>April 1970</strong> under the Societies Registration Act,
+                1860, the{' '}
+                <a
+                  href={OFFICIAL_LINKS.istdNationalWeb}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ color: 'var(--color-primary-blue)', fontWeight: 700 }}
+                >
+                  Indian Society for Training &amp; Development (ISTD)
+                </a>{' '}
+                is a national-level autonomous non-profit institution affiliated with the{' '}
+                <strong>
+                  International Federation of Training and Development Organizations (IFTDO),
+                  Geneva
+                </strong>
+                .
+              </p>
+              <p
+                style={{
+                  color: 'var(--color-muted)',
+                  marginBottom: '1.35rem',
+                  lineHeight: 1.72,
+                }}
+              >
+                Operating from the Cultural Capital of Kerala, the{' '}
+                <strong>ISTD Thrissur (Trichur) Chapter</strong> brings together corporate trainers,
+                HR leaders, educators, academicians, and public/private sector executives to
+                promote the effective utilization of human resources through education, training,
+                research, and leadership development.
               </p>
 
-              <div className="pillar-list">
-                <div className="pillar-item">
-                  <div className="pillar-icon">
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2.5"
-                    >
-                      <polyline points="20 6 9 17 4 12" />
-                    </svg>
-                  </div>
-                  <div className="pillar-text">
-                    <h4>Continuous Learning</h4>
-                    <p>Equipping facilitators with modern adult learning pedagogies.</p>
-                  </div>
+              {/* Official ISTD Vision & Mission Cards (from istd.in) */}
+              <div
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(230px, 1fr))',
+                  gap: '1rem',
+                  marginBottom: '1.5rem',
+                }}
+              >
+                <div
+                  style={{
+                    background: 'var(--bg-pale-blue)',
+                    padding: '1.15rem 1.25rem',
+                    borderRadius: 'var(--radius-md)',
+                    borderLeft: '4px solid var(--color-primary-blue)',
+                  }}
+                >
+                  <span
+                    style={{
+                      display: 'block',
+                      fontSize: '0.72rem',
+                      fontWeight: 800,
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.07em',
+                      color: 'var(--color-primary-blue)',
+                      marginBottom: '0.3rem',
+                    }}
+                  >
+                    Official ISTD Vision
+                  </span>
+                  <p
+                    style={{
+                      fontSize: '0.93rem',
+                      fontWeight: 700,
+                      color: 'var(--color-primary-navy)',
+                      marginBottom: 0,
+                      lineHeight: 1.5,
+                    }}
+                  >
+                    “Leading Transformation through Training &amp; Development.”
+                  </p>
                 </div>
-                <div className="pillar-item">
-                  <div className="pillar-icon">
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2.5"
-                    >
-                      <polyline points="20 6 9 17 4 12" />
-                    </svg>
-                  </div>
-                  <div className="pillar-text">
-                    <h4>Industry Synergies</h4>
-                    <p>Bridging corporate HR requirements with academic talent.</p>
-                  </div>
-                </div>
-                <div className="pillar-item">
-                  <div className="pillar-icon">
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2.5"
-                    >
-                      <polyline points="20 6 9 17 4 12" />
-                    </svg>
-                  </div>
-                  <div className="pillar-text">
-                    <h4>Flagship PGP-TL&amp;D</h4>
-                    <p>Government recognized 15-month postgraduate diploma.</p>
-                  </div>
-                </div>
-                <div className="pillar-item">
-                  <div className="pillar-icon">
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2.5"
-                    >
-                      <polyline points="20 6 9 17 4 12" />
-                    </svg>
-                  </div>
-                  <div className="pillar-text">
-                    <h4>Knowledge Sharing</h4>
-                    <p>Monthly webinars, research papers, and national journal access.</p>
-                  </div>
+
+                <div
+                  style={{
+                    background: 'var(--bg-pale-blue)',
+                    padding: '1.15rem 1.25rem',
+                    borderRadius: 'var(--radius-md)',
+                    borderLeft: '4px solid var(--accent-red)',
+                  }}
+                >
+                  <span
+                    style={{
+                      display: 'block',
+                      fontSize: '0.72rem',
+                      fontWeight: 800,
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.07em',
+                      color: 'var(--accent-red)',
+                      marginBottom: '0.3rem',
+                    }}
+                  >
+                    Official ISTD Mission
+                  </span>
+                  <p
+                    style={{
+                      fontSize: '0.88rem',
+                      fontWeight: 600,
+                      color: 'var(--color-ink)',
+                      marginBottom: 0,
+                      lineHeight: 1.5,
+                    }}
+                  >
+                    To facilitate individuals &amp; organizations to excel in T&amp;D and serve as a
+                    reservoir of universal HRD knowledge.
+                  </p>
                 </div>
               </div>
 
-              <div className="btn-group">
-                <Link href="/about" className="btn btn-navy" id="readMoreAboutBtn">
-                  <span>Read More About Us</span>
+              <ul className="check-list">
+                <li>
+                  <span className="check-icon">
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="3"
+                    >
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                  </span>
+                  <div>
+                    <strong>Government of India Recognized Diploma (Dip. TD / PGP-TL&amp;D):</strong>{' '}
+                    Recognized by the Ministry of Education &amp; DoPT for superior training &amp;
+                    HRD posts across Central/State Government, PSUs, Banks, and Industry.
+                  </div>
+                </li>
+                <li>
+                  <span className="check-icon">
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="3"
+                    >
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                  </span>
+                  <div>
+                    <strong>Research, IJTD Journal &amp; Consultancy:</strong> Access to the
+                    peer-reviewed <em>Indian Journal of Training &amp; Development (IJTD)</em>,
+                    national conventions, and organizational OD/training consultancy.
+                  </div>
+                </li>
+              </ul>
+
+              <div className="btn-group" style={{ marginTop: '1.75rem' }}>
+                <Link href="/about" className="btn btn-primary">
+                  <span>Discover ISTD Mandate</span>
                   <svg
                     width="16"
                     height="16"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
-                    strokeWidth="2"
+                    strokeWidth="2.5"
                   >
-                    <line x1="5" y1="12" x2="19" y2="12" />
-                    <polyline points="12 5 19 12 12 19" />
+                    <polyline points="9 18 15 12 9 6" />
                   </svg>
                 </Link>
                 <Link href="/committee" className="btn btn-outline-navy">
-                  Meet Managing Committee
+                  <span>Meet Managing Committee</span>
                 </Link>
               </div>
             </div>
@@ -242,179 +297,294 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Flagship Programs Showcase */}
-      <section className="section-padding bg-pale-blue" id="programsPreview">
+      {/* Core Pillars of the ISTD Ecosystem (Based on istd.in) */}
+      <section
+        className="section-padding bg-pale-blue"
+        style={{ borderTop: '1px solid var(--border-light)' }}
+      >
         <div className="container">
           <div className="section-header text-center">
-            <span className="section-tag tag-yellow">National Flagship Certifications</span>
-            <h2 className="section-title">Premier Learning &amp; Certification Programs</h2>
+            <span className="section-tag tag-blue">National Capabilities &amp; Ecosystem</span>
+            <h2 className="section-title">What ISTD Delivers for Professionals &amp; Enterprises</h2>
             <p className="section-subtitle">
-              Nationally accredited credentials designed to empower trainers, HR executives, and
-              organizational change-makers.
+              Across 50+ chapters in India, ISTD bridges academia, government, public sector
+              undertakings, and corporate enterprises through four strategic pillars.
+            </p>
+          </div>
+
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+              gap: '1.5rem',
+            }}
+          >
+            <div
+              style={{
+                background: '#FFFFFF',
+                padding: '2rem 1.75rem',
+                borderRadius: 'var(--radius-lg)',
+                border: '1.5px solid var(--border-light)',
+                boxShadow: 'var(--shadow-sm)',
+              }}
+            >
+              <div className="program-icon" style={{ marginBottom: '1.15rem' }}>
+                <svg
+                  width="26"
+                  height="26"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
+                  <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+                  <path d="M6 12v5c3 3 9 3 12 0v-5" />
+                </svg>
+              </div>
+              <h3
+                style={{
+                  fontSize: '1.18rem',
+                  fontWeight: 800,
+                  color: 'var(--color-ink)',
+                  marginBottom: '0.65rem',
+                }}
+              >
+                Diploma in Training &amp; Development (Dip. TD)
+              </h3>
+              <p style={{ fontSize: '0.92rem', color: 'var(--color-muted)', lineHeight: 1.65 }}>
+                Introduced in 1979 with over <strong>16,000+ alumni</strong> across corporate
+                houses, PSUs, banks, and defense forces, entitling graduates to the prestigious{' '}
+                <strong>“Dip. TD”</strong> credential.
+              </p>
+            </div>
+
+            <div
+              style={{
+                background: '#FFFFFF',
+                padding: '2rem 1.75rem',
+                borderRadius: 'var(--radius-lg)',
+                border: '1.5px solid var(--border-light)',
+                boxShadow: 'var(--shadow-sm)',
+              }}
+            >
+              <div className="program-icon" style={{ marginBottom: '1.15rem' }}>
+                <svg
+                  width="26"
+                  height="26"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
+                  <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+                  <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+                </svg>
+              </div>
+              <h3
+                style={{
+                  fontSize: '1.18rem',
+                  fontWeight: 800,
+                  color: 'var(--color-ink)',
+                  marginBottom: '0.65rem',
+                }}
+              >
+                In-House Training &amp; Consultancy
+              </h3>
+              <p style={{ fontSize: '0.92rem', color: 'var(--color-muted)', lineHeight: 1.65 }}>
+                Bespoke MDPs, Training Needs Identification (TNI), Competency Mapping, Assessment
+                Centers, and Evaluation studies for government departments, banks, and industries.
+              </p>
+            </div>
+
+            <div
+              style={{
+                background: '#FFFFFF',
+                padding: '2rem 1.75rem',
+                borderRadius: 'var(--radius-lg)',
+                border: '1.5px solid var(--border-light)',
+                boxShadow: 'var(--shadow-sm)',
+              }}
+            >
+              <div className="program-icon" style={{ marginBottom: '1.15rem' }}>
+                <svg
+                  width="26"
+                  height="26"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
+                  <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+                  <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+                </svg>
+              </div>
+              <h3
+                style={{
+                  fontSize: '1.18rem',
+                  fontWeight: 800,
+                  color: 'var(--color-ink)',
+                  marginBottom: '0.65rem',
+                }}
+              >
+                IJTD Journal &amp; National Awards
+              </h3>
+              <p style={{ fontSize: '0.92rem', color: 'var(--color-muted)', lineHeight: 1.65 }}>
+                Publication of the quarterly{' '}
+                <em>Indian Journal of Training &amp; Development (IJTD)</em> and the annual{' '}
+                <strong>ISTD National Awards for Innovative Training Practices</strong>.
+              </p>
+            </div>
+
+            <div
+              style={{
+                background: '#FFFFFF',
+                padding: '2rem 1.75rem',
+                borderRadius: 'var(--radius-lg)',
+                border: '1.5px solid var(--border-light)',
+                boxShadow: 'var(--shadow-sm)',
+              }}
+            >
+              <div className="program-icon" style={{ marginBottom: '1.15rem' }}>
+                <svg
+                  width="26"
+                  height="26"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                  <circle cx="9" cy="7" r="4" />
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                </svg>
+              </div>
+              <h3
+                style={{
+                  fontSize: '1.18rem',
+                  fontWeight: 800,
+                  color: 'var(--color-ink)',
+                  marginBottom: '0.65rem',
+                }}
+              >
+                Regional Conclaves &amp; Chapter Forums
+              </h3>
+              <p style={{ fontSize: '0.92rem', color: 'var(--color-muted)', lineHeight: 1.65 }}>
+                Continuous peer learning through chapter roundtables, Train-the-Trainer labs, PoSH
+                certification workshops, and industry-academia dialogues in Thrissur.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Flagship Programs & Certifications Section */}
+      <section className="section-padding bg-white" id="programsSection">
+        <div className="container">
+          <div className="section-header text-center">
+            <span className="section-tag tag-red">Professional Development</span>
+            <h2 className="section-title">Flagship Academic &amp; Certification Programs</h2>
+            <p className="section-subtitle">
+              Industry-recognized credentials designed to equip L&amp;D professionals, corporate
+              trainers, and HR leaders with world-class facilitation and strategic capabilities.
             </p>
           </div>
 
           <div className="programs-grid">
             {FLAGSHIP_PROGRAMS.map((prog) => (
-              <div
+              <article
                 key={prog.id}
                 className={`program-card ${prog.featured ? 'featured' : ''}`}
               >
-                <div>
-                  {prog.featured && <span className="program-card-badge">Flagship</span>}
-                  <div className="program-icon-wrap">
-                    {prog.iconType === 'diploma' && (
-                      <svg
-                        width="26"
-                        height="26"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                      >
-                        <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
-                        <path d="M6 12v5c3 3 9 3 12 0v-5" />
-                      </svg>
-                    )}
-                    {prog.iconType === 'layers' && (
-                      <svg
-                        width="26"
-                        height="26"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                      >
-                        <polygon points="12 2 2 7 12 12 22 7 12 2" />
-                        <polyline points="2 17 12 22 22 17" />
-                        <polyline points="2 12 12 17 22 12" />
-                      </svg>
-                    )}
-                    {prog.iconType === 'shield' && (
-                      <svg
-                        width="26"
-                        height="26"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                      >
-                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                      </svg>
-                    )}
-                  </div>
-                  <span className="program-duration">{prog.duration}</span>
-                  <h3 className="program-title">{prog.shortTitle}</h3>
-                  <p className="program-description">{prog.description}</p>
-                  <ul className="program-features">
-                    {prog.features.slice(0, 3).map((feat) => (
-                      <li key={feat}>
-                        <svg
-                          width="14"
-                          height="14"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                        >
-                          <polyline points="20 6 9 17 4 12" />
-                        </svg>
-                        {feat}
-                      </li>
-                    ))}
-                  </ul>
+                {prog.badge && <span className="program-badge">{prog.badge}</span>}
+                <div className="program-icon">
+                  {prog.iconType === 'diploma' && (
+                    <svg
+                      width="28"
+                      height="28"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                    >
+                      <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+                      <path d="M6 12v5c3 3 9 3 12 0v-5" />
+                    </svg>
+                  )}
+                  {prog.iconType === 'layers' && (
+                    <svg
+                      width="28"
+                      height="28"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                    >
+                      <polygon points="12 2 2 7 12 12 22 7 12 2" />
+                      <polyline points="2 17 12 22 22 17" />
+                      <polyline points="2 12 12 17 22 12" />
+                    </svg>
+                  )}
+                  {prog.iconType === 'shield' && (
+                    <svg
+                      width="28"
+                      height="28"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                    >
+                      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                    </svg>
+                  )}
                 </div>
+                <span className="program-duration">{prog.duration}</span>
+                <h3 className="program-title">{prog.shortTitle}</h3>
+                <p className="program-desc">{prog.description}</p>
+                <ul className="program-features">
+                  {prog.features.slice(0, 3).map((feat) => (
+                    <li key={feat}>{feat}</li>
+                  ))}
+                </ul>
                 <Link
                   href={`/programs#${prog.id}`}
-                  className={`btn ${prog.featured ? 'btn-primary' : 'btn-outline-navy'} btn-sm`}
+                  className={`btn ${prog.featured ? 'btn-primary' : 'btn-outline-navy'}`}
                   style={{ width: '100%' }}
                 >
-                  {prog.featured ? 'Program Details & Syllabus' : 'Learn More'}
+                  Explore Program Details
                 </Link>
-              </div>
+              </article>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Recent & Upcoming Chapter Events */}
-      <section className="section-padding bg-white" id="eventsPreview">
+      {/* Chapter Community Visual Showcase (Bento Grid) */}
+      <BentoGalleryPreview />
+
+      {/* Knowledge Sharing Sessions & Webinars */}
+      <section className="section-padding bg-white" id="eventsSection">
         <div className="container">
           <div className="section-header text-center">
-            <span className="section-tag tag-blue">
-              Chapter Knowledge Sessions &amp; Milestones
-            </span>
-            <h2 className="section-title">Recent &amp; Upcoming Events</h2>
+            <span className="section-tag tag-blue">Knowledge Sharing &amp; Forums</span>
+            <h2 className="section-title">Executive Sessions &amp; Learning Events</h2>
             <p className="section-subtitle">
-              Historic chapter milestones, cutting-edge webinars, and interactive learning
-              symposiums led by top thought leaders.
+              Stay updated with our latest webinars, expert panels, and chapter milestones shaping
+              the future of workplace learning.
             </p>
           </div>
-
-          {/* Featured Milestone Event Banner Card */}
-          <article className="event-card milestone-event-card">
-            <PhotoCard
-              src="/photos/istd-in.jpeg"
-              alt="Inauguration of ISTD Diamond Chapter at Thrissur"
-              title="Inauguration of ISTD Diamond Chapter at Thrissur — 30th March 2026"
-              caption="Dr. Yogesh Kumar Upadhyay (Past National President) lighting the ceremonial lamp alongside Shri. Nabaghan Pany, Shri. Atul Shah, Prof. (Dr.) Zakkariya K A, and Chairman Shri. Tony Chacko at Hotel Pearl Regency, Thrissur."
-              category="Chapter Inauguration"
-              badgeText="★ March 30, 2026 • Flagship Milestone"
-              headingText="Click to View Inauguration Photo"
-              className="event-image-box"
-              style={{ borderRadius: 0, border: 'none' }}
-            />
-            <div className="event-body">
-              <div>
-                <div className="event-speaker-tag" style={{ color: 'var(--accent-red)' }}>
-                  <svg
-                    width="15"
-                    height="15"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                  >
-                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                  </svg>
-                  <span>
-                    Chief Guests: Shri. Atul Shah (National President) &amp; National Executive
-                    Council
-                  </span>
-                </div>
-                <h3 className="event-title" style={{ fontSize: '1.45rem' }}>
-                  Grand Inauguration of ISTD Diamond Chapter at Thrissur
-                </h3>
-                <p className="event-desc" style={{ marginBottom: '1.25rem' }}>
-                  Held at Hotel Pearl Regency, Thrissur, the historic inauguration of the ISTD
-                  Diamond Chapter brought together National President Shri. Atul Shah, Past
-                  National President Dr. Yogesh Kumar Upadhyay, National Treasurer Shri. Nabaghan
-                  Pany, Regional VP (South) Prof. (Dr.) Zakkariya K A, and Chairman Shri. Tony
-                  Chacko for the charter presentation and swearing-in of office bearers.
-                </p>
-              </div>
-              <div className="event-footer">
-                <span
-                  style={{
-                    fontSize: '0.84rem',
-                    fontWeight: 700,
-                    color: 'var(--color-primary-navy)',
-                  }}
-                >
-                  Venue: Hotel Pearl Regency, Thrissur
-                </span>
-                <Link href="/gallery" className="btn btn-primary btn-sm">
-                  View 24 Event Photos &rarr;
-                </Link>
-              </div>
-            </div>
-          </article>
 
           <div className="events-grid">
             {CHAPTER_EVENTS.map((ev) => (
               <article className="event-card" key={ev.id}>
                 <div className="event-image-box">
-                  <img src={assetUrl(ev.image)} alt={ev.title} width={560} height={230} loading="lazy" />
+                  <img
+                    src={assetUrl(ev.image)}
+                    alt={ev.title}
+                    width={560}
+                    height={230}
+                    loading="lazy"
+                  />
                   <span className="event-date-badge">{ev.dateBadge}</span>
                 </div>
                 <div className="event-body">
@@ -439,15 +609,15 @@ export default function HomePage() {
                   <div className="event-footer">
                     <span
                       style={{
-                        fontSize: '0.82rem',
+                        fontSize: '0.85rem',
                         fontWeight: 700,
                         color: 'var(--color-primary-navy)',
                       }}
                     >
                       {ev.venueOrMode}
                     </span>
-                    <Link href="/programs" className="btn btn-outline-blue btn-sm">
-                      Event Details
+                    <Link href="/events" className="btn btn-outline-navy btn-sm">
+                      View Event Details &rarr;
                     </Link>
                   </div>
                 </div>
@@ -455,63 +625,56 @@ export default function HomePage() {
             ))}
           </div>
 
-          <div style={{ textAlign: 'center', marginTop: '2.5rem' }}>
-            <Link href="/programs" className="btn btn-navy">
-              View All Events &amp; Workshops
+          <div className="text-center" style={{ marginTop: '2.5rem' }}>
+            <Link href="/events" className="btn btn-primary btn-lg">
+              <span>Explore All Chapter Events &amp; Milestones</span>
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+              >
+                <polyline points="9 18 15 12 9 6" />
+              </svg>
             </Link>
           </div>
         </div>
       </section>
 
-      {/* Featured Photo Gallery Showcase Section (Bento Grid) */}
-      <BentoGalleryPreview />
+      {/* Member Voices / Testimonials Carousel */}
+      <TestimonialCarousel />
 
-      {/* Testimonial Section (Swipeable Carousel) */}
-      <section
-        className="section-padding testimonial-section"
-        id="testimonialSection"
-        aria-label="Member Testimonials"
-      >
-        <div className="container">
-          <div className="section-header text-center">
-            <span className="section-tag tag-white">Member Voices</span>
-            <h2 className="section-title title-white">What Our Community Says</h2>
-            <p className="section-subtitle" style={{ color: '#CBD5E1' }}>
-              Hear from experienced corporate trainers, HR consultants, and educators who have
-              elevated their careers with ISTD Thrissur.
-            </p>
-          </div>
-
-          <TestimonialCarousel />
-        </div>
-      </section>
-
-      {/* CTA Banner Section */}
+      {/* Join CTA Banner */}
       <section className="section-padding-sm bg-white">
         <div className="container">
-          <div className="cta-banner-card">
-            <div style={{ maxWidth: '650px' }}>
-              <h2
-                style={{
-                  color: '#FFFFFF',
-                  fontSize: '2rem',
-                  marginBottom: '0.5rem',
-                  fontWeight: 800,
-                }}
-              >
-                Ready to Accelerate Your Career in Training &amp; HR?
-              </h2>
-              <p style={{ color: '#CBD5E1', fontSize: '1.05rem', margin: 0 }}>
-                Join India&apos;s most prestigious society for Learning &amp; Development
-                professionals today.
-              </p>
-            </div>
-            <div className="btn-group">
+          <div className="cta-banner">
+            <span className="section-tag tag-yellow" style={{ marginBottom: '1rem' }}>
+              Join the L&amp;D Fraternity
+            </span>
+            <h2>Ready to Elevate Your Training &amp; HRD Journey?</h2>
+            <p>
+              Become an Individual, Institutional, or Student member of the ISTD Thrissur Chapter
+              and connect with top HR leaders, trainers, and academicians across India.
+            </p>
+            <div className="btn-group" style={{ justifyContent: 'center' }}>
               <Link href="/membership" className="btn btn-red btn-lg">
-                Apply for Membership
+                <span>Apply for Membership</span>
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                >
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                  <polyline points="12 5 19 12 12 19" />
+                </svg>
               </Link>
               <Link href="/contact" className="btn btn-outline-white btn-lg">
-                Contact Secretariat
+                <span>Contact Secretariat</span>
               </Link>
             </div>
           </div>

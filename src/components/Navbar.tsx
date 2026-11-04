@@ -3,14 +3,15 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { assetUrl } from '@/data/siteData';
+import { assetUrl, OFFICIAL_LINKS } from '@/data/siteData';
 
 const NAV_ITEMS = [
   { href: '/', label: 'Home', mobileLabel: 'Home' },
-  { href: '/about', label: 'About Us', mobileLabel: 'About ISTD Thrissur' },
-  { href: '/committee', label: 'Committee', mobileLabel: 'Managing Committee 2024–26' },
-  { href: '/programs', label: 'Programs', mobileLabel: 'Programs & Events' },
-  { href: '/gallery', label: 'Photo Gallery', mobileLabel: 'Inauguration Photo Gallery' },
+  { href: '/about', label: 'About Us', mobileLabel: 'About ISTD & Chapter' },
+  { href: '/committee', label: 'Committee', mobileLabel: 'Managing Committee' },
+  { href: '/programs', label: 'Programs', mobileLabel: 'Diploma & Certifications' },
+  { href: '/events', label: 'Events', mobileLabel: 'Chapter Events & Milestones' },
+  { href: '/gallery', label: 'Gallery', mobileLabel: 'Chapter Photo Gallery' },
   { href: '/membership', label: 'Membership', mobileLabel: 'Membership & Tiers' },
   { href: '/contact', label: 'Contact', mobileLabel: 'Contact Secretariat' },
 ];
@@ -62,7 +63,7 @@ export function Navbar() {
       <div className="top-bar">
         <div className="container top-bar-inner">
           <div className="top-bar-left">
-            <span className="top-bar-badge">Affiliated with ISTD National • Est. 1970</span>
+            <span className="top-bar-badge">Affiliated with ISTD New Delhi • Est. 1970</span>
             <div className="top-bar-item">
               <svg
                 width="14"
@@ -93,9 +94,28 @@ export function Navbar() {
               <a href="mailto:info@istd.in">info@istd.in</a>
             </div>
           </div>
-          <div className="top-bar-right">
+          <div className="top-bar-right" style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
             <a
-              href="https://www.istd.in/"
+              href={OFFICIAL_LINKS.istdTrichurLinkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="top-bar-item top-bar-portal-link"
+            >
+              <span>ISTD Trichur LinkedIn</span>
+              <svg
+                width="12"
+                height="12"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.2"
+              >
+                <line x1="7" y1="17" x2="17" y2="7" />
+                <polyline points="7 7 17 7 17 17" />
+              </svg>
+            </a>
+            <a
+              href={OFFICIAL_LINKS.istdNationalWeb}
               target="_blank"
               rel="noopener noreferrer"
               className="top-bar-item top-bar-portal-link"
@@ -136,7 +156,7 @@ export function Navbar() {
                   <span className="brand-name">ISTD</span>
                   <span className="brand-diamond-tag">Diamond Chapter</span>
                 </div>
-                <span className="brand-chapter">Thrissur Chapter</span>
+                <span className="brand-chapter">Thrissur (Trichur) Chapter</span>
                 <span className="brand-sub">Indian Society for Training &amp; Development</span>
               </div>
             </Link>
