@@ -3,12 +3,21 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { PhotoCard } from '@/components/PhotoCard';
 import { OFFICIAL_LINKS } from '@/data/siteData';
+import { buildPageMetadata } from '@/lib/seoConfig';
 
-export const metadata: Metadata = {
-  title: 'About Us',
+export const metadata: Metadata = buildPageMetadata({
+  title: 'About Us — History, Vision & Mission',
   description:
-    'Learn about the Indian Society for Training & Development (ISTD, established April 1970) and the ISTD Thrissur Chapter (inaugurated 30 March 2026).',
-};
+    'Learn about the Indian Society for Training & Development (ISTD, established April 1970 in New Delhi) and the ISTD Thrissur Diamond Chapter (inaugurated 30 March 2026 in Thrissur, Kerala).',
+  path: '/about',
+  image: '/photos/istd-national-president.jpeg',
+  keywords: [
+    'About ISTD Thrissur Chapter',
+    'ISTD History April 1970',
+    'ISTD Diamond Chapter Thrissur Inauguration',
+    'ISTD Vision and Mission',
+  ],
+});
 
 export default function AboutPage() {
   return (

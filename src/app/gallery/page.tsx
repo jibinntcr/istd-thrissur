@@ -2,12 +2,20 @@ import React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { GalleryClient } from '@/components/GalleryClient';
+import { buildPageMetadata } from '@/lib/seoConfig';
 
-export const metadata: Metadata = {
-  title: 'Gallery',
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Photo Gallery — Inauguration & Chapter Events',
   description:
-    'Official photographs from the ISTD Thrissur Chapter inauguration on 30 March 2026 at Hotel Pearl Regency, Thrissur, and chapter events.',
-};
+    'Official photo gallery of the ISTD Thrissur Diamond Chapter inauguration on 30 March 2026 at Hotel Pearl Regency, Thrissur, and chapter learning sessions.',
+  path: '/gallery',
+  image: '/photos/istd-22.jpeg',
+  keywords: [
+    'ISTD Thrissur Photo Gallery',
+    'ISTD Diamond Chapter Inauguration Photos',
+    'Hotel Pearl Regency Thrissur ISTD',
+  ],
+});
 
 export default function GalleryPage() {
   return (

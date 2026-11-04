@@ -1,4 +1,5 @@
 import React from 'react';
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { HeroShowcase } from '@/components/HeroShowcase';
 import { PhotoCard } from '@/components/PhotoCard';
@@ -7,6 +8,16 @@ import {
   OFFICIAL_LINKS,
   assetUrl,
 } from '@/data/siteData';
+import { buildPageMetadata } from '@/lib/seoConfig';
+
+export const metadata: Metadata = buildPageMetadata({
+  title:
+    'ISTD Thrissur Chapter (Diamond Chapter) | Indian Society for Training & Development',
+  description:
+    'Official website of the ISTD Thrissur Chapter (ISTD Trichur Diamond Chapter), inaugurated on 30 March 2026 under the Indian Society for Training & Development (New Delhi, Est. 1970). Explore upcoming AI & L&D webinars, campus student chapters, managing committee, photo gallery, and membership.',
+  path: '/',
+  image: '/photos/istd-22.jpeg',
+});
 
 const HOMEPAGE_GALLERY_PREVIEW = [
   {

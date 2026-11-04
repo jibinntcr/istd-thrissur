@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { CAMPUS_CHAPTERS, assetUrl, OFFICIAL_LINKS } from '@/data/siteData';
 import { PhotoCard } from '@/components/PhotoCard';
+import { buildPageMetadata, getCampusChapterJsonLd } from '@/lib/seoConfig';
 
 export function generateStaticParams() {
   return CAMPUS_CHAPTERS.map((chapter) => ({
@@ -23,10 +24,20 @@ export async function generateMetadata({
       title: 'Campus Chapter | ISTD Thrissur Chapter',
     };
   }
-  return {
-    title: `${chapter.institutionName} — First Student Chapter | ISTD Thrissur Chapter`,
+  return buildPageMetadata({
+    title: `${chapter.institutionName} — First Student Chapter`,
     description: chapter.summary,
-  };
+    path: `/campus-chapters/${chapter.slug}`,
+    image: chapter.posterImage,
+    type: 'article',
+    keywords: [
+      chapter.institutionName,
+      'ISTD Trichur First Student Chapter',
+      'Christ College of Engineering Irinjalakuda ISTD',
+      'Prof. Dr. Zakkariya ISTD Student Chapter Inauguration',
+      'Tony Chacko ISTD Student Chapter',
+    ],
+  });
 }
 
 export default async function CampusChapterDetailPage({
@@ -41,8 +52,14 @@ export default async function CampusChapterDetailPage({
     notFound();
   }
 
+  const chapterJsonLd = getCampusChapterJsonLd(chapter);
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(chapterJsonLd) }}
+      />
       {/* 1. High-Contrast Executive Hero */}
       <section
         style={{
@@ -337,15 +354,32 @@ export default async function CampusChapterDetailPage({
                             href={dignitary.linkedin}
                             target="_blank"
                             rel="noopener noreferrer"
+                            aria-label={`${dignitary.name} on LinkedIn`}
+                            title={`${dignitary.name} on LinkedIn`}
                             style={{
-                              display: 'inline-block',
-                              marginTop: '0.35rem',
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              gap: '0.35rem',
+                              marginTop: '0.45rem',
+                              padding: '0.25rem 0.65rem',
+                              borderRadius: '8px',
+                              background: '#EFF6FF',
                               fontSize: '0.76rem',
                               fontWeight: 700,
                               color: '#0A66C2',
+                              textDecoration: 'none',
                             }}
                           >
-                            LinkedIn Profile &#8599;
+                            <svg
+                              width="14"
+                              height="14"
+                              viewBox="0 0 24 24"
+                              fill="currentColor"
+                              aria-hidden="true"
+                            >
+                              <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z" />
+                            </svg>
+                            <span>LinkedIn</span>
                           </a>
                         )}
                       </div>
@@ -511,8 +545,19 @@ export default async function CampusChapterDetailPage({
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn btn-outline-white"
+                  aria-label="Follow ISTD Thrissur Chapter on LinkedIn"
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: '0.45rem' }}
                 >
-                  Follow on LinkedIn
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z" />
+                  </svg>
+                  <span>LinkedIn</span>
                 </a>
               </div>
             </div>

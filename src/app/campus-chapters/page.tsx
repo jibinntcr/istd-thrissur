@@ -3,12 +3,21 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { CAMPUS_CHAPTERS, assetUrl } from '@/data/siteData';
 import { CampusChapterEoiForm } from '@/components/CampusChapterEoiForm';
+import { buildPageMetadata } from '@/lib/seoConfig';
 
-export const metadata: Metadata = {
-  title: 'Campus & Student Chapters | ISTD Thrissur Chapter',
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Campus & Student Chapters — Academia–Industry Bridge & EOI',
   description:
-    'Explore ISTD Campus and Student Chapters under the ISTD Thrissur (Trichur) Chapter, including our first Student Chapter at Christ College of Engineering (Autonomous), and submit an Expression of Interest (EOI) to establish a chapter at your institution.',
-};
+    'Explore ISTD Campus and Student Chapters under the ISTD Thrissur (Trichur) Chapter, including our First Student Chapter at Christ College of Engineering (Autonomous), and submit an Expression of Interest (EOI) to establish a chapter at your institution.',
+  path: '/campus-chapters',
+  image: '/images/campus-chapter-cce.jpg',
+  keywords: [
+    'ISTD Campus Chapters Kerala',
+    'ISTD Student Chapter Thrissur',
+    'Christ College of Engineering Autonomous ISTD Student Chapter',
+    'Establish ISTD Student Chapter EOI',
+  ],
+});
 
 const CAMPUS_CHAPTER_PILLARS = [
   {

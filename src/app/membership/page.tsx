@@ -2,12 +2,21 @@ import React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { MembershipPageClient } from '@/components/MembershipPageClient';
+import { buildPageMetadata } from '@/lib/seoConfig';
 
-export const metadata: Metadata = {
-  title: 'Membership',
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Membership Categories, Benefits, Fees & Application',
   description:
-    'Explore ISTD Membership Categories, Benefits, Eligibility, Membership Fees, How to Apply, and submit a Membership Enquiry for the ISTD Thrissur Chapter.',
-};
+    'Explore ISTD Individual, Institutional, and Student Membership categories, benefits, eligibility, fee structure, and apply through the ISTD Thrissur Chapter.',
+  path: '/membership',
+  image: '/photos/istd-audience.jpeg',
+  keywords: [
+    'ISTD Membership Kerala',
+    'Join ISTD Thrissur Chapter',
+    'ISTD Life Membership Fees',
+    'ISTD Institutional Membership',
+  ],
+});
 
 export default function MembershipPage() {
   return (

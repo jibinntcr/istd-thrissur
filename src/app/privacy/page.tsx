@@ -2,12 +2,14 @@ import React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { CHAPTER_CONTACTS } from '@/data/siteData';
+import { buildPageMetadata } from '@/lib/seoConfig';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
   title: 'Privacy Policy',
   description:
-    'Privacy Policy of the ISTD Thrissur Chapter website explaining how membership and contact enquiries are handled.',
-};
+    'Privacy Policy of the ISTD Thrissur Chapter website explaining how membership, event registrations, and contact enquiries are handled.',
+  path: '/privacy',
+});
 
 export default function PrivacyPolicyPage() {
   return (

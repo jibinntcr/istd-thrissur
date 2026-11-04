@@ -2,12 +2,21 @@ import React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { EventsChronicleSection } from '@/components/EventsChronicleSection';
+import { buildPageMetadata } from '@/lib/seoConfig';
 
-export const metadata: Metadata = {
-  title: 'Events & Programmes',
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Events, Webinars & Programmes',
   description:
-    'Explore learning sessions, workshops, seminars, and other activities organised by the ISTD Thrissur Chapter.',
-};
+    'Explore upcoming webinars, learning sessions, workshops, seminars, and completed event reports organised by the ISTD Thrissur (Trichur) Chapter.',
+  path: '/events',
+  image: '/images/event-aiot-boopathy.jpg',
+  keywords: [
+    'ISTD Thrissur Events',
+    'ISTD Trichur Webinars',
+    'HR and L&D Workshops Kerala',
+    'Advancing AIoT Research Boopathy ISTD',
+  ],
+});
 
 export default function EventsPage() {
   return (
