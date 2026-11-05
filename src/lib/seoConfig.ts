@@ -186,10 +186,11 @@ export function getOrganizationJsonLd() {
           OFFICIAL_LINKS.istdNationalLinkedin,
           OFFICIAL_LINKS.istdNationalWeb,
         ],
-        member: [...OFFICE_BEARERS, ...COMMITTEE_MEMBERS].map((person) => ({
+        member: OFFICE_BEARERS.map((person) => ({
           '@type': 'Person',
           name: person.name,
           jobTitle: `${person.role}, ISTD Thrissur Chapter`,
+          url: `${SITE_URL}/committee/${person.slug}/`,
           ...(person.linkedin ? { sameAs: person.linkedin } : {}),
         })),
       },
@@ -358,5 +359,8 @@ export function getAllStaticRoutes(): string[] {
   const campusRoutes = CAMPUS_CHAPTERS.map(
     (ch) => `/campus-chapters/${ch.slug}/`
   );
-  return [...baseRoutes, ...eventRoutes, ...campusRoutes];
+  const committeeRoutes = OFFICE_BEARERS.map(
+    (member) => `/committee/${member.slug}/`
+  );
+  return [...baseRoutes, ...eventRoutes, ...campusRoutes, ...committeeRoutes];
 }
