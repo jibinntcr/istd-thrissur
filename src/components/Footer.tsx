@@ -216,7 +216,7 @@ export function Footer() {
                     <br />
                     <a href="mailto:tonychacko67@gmail.com">tonychacko67@gmail.com</a>
                     <br />
-                    <a href="tel:+919496839168">+91 9496839168</a> (Jibin N, Treasurer)
+                    <a href="tel:+919496839168">+91 9496839168</a> (Jibin N, Secretary)
                     <br />
                     <a href="mailto:jibintcr@gmail.com">jibintcr@gmail.com</a>
                   </div>

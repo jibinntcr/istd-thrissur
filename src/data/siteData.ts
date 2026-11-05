@@ -34,17 +34,41 @@ export interface CommitteeMember {
   slug: string;
   name: string;
   role: string;
+  organisation?: string;
   title?: string;
   headline?: string;
   shortBio?: string;
+  metaTitle?: string;
+  metaDescription?: string;
   avatar?: string;
+  avatarWidth?: number;
+  avatarHeight?: number;
+  avatarAlt?: string;
   secondaryAvatar?: string;
+  secondaryAvatarCaption?: string;
   email?: string;
   phone?: string;
   linkedin?: string;
+  sameAs?: string[];
+  confirmedProfiles?: {
+    label: string;
+    url: string;
+    context?: string;
+  }[];
   isChairman?: boolean;
   isOfficeBearer?: boolean;
   biography?: string[];
+  chapterRoleSection?: string;
+  professionalBackground?: {
+    organisation: string;
+    role: string;
+    category: string;
+    description: string;
+  }[];
+  schemaAffiliations?: {
+    name: string;
+    url?: string;
+  }[];
   istdRoles?: string[];
   careerHighlights?: string[];
   educationAndCredentials?: string[];
@@ -113,19 +137,22 @@ export const CHAPTER_CONTACTS = {
     linkedin: 'https://www.linkedin.com/in/tony-chacko-965622240/',
   },
   secretary: {
-    name: 'Sneha Rose George',
-    role: 'Secretary',
-    designation: 'Research Scholar, CUSAT',
-    linkedin: 'https://www.linkedin.com/in/sneha-rose-george-4176a325/',
-  },
-  treasurer: {
     name: 'Jibin N',
-    role: 'Treasurer',
-    designation: 'Technology Director & Consultant',
+    role: 'Secretary',
+    designation: 'IT Professional & Entrepreneur',
     phoneDisplay: '+91 9496839168',
     phoneHref: '+919496839168',
     email: 'jibintcr@gmail.com',
     linkedin: 'https://www.linkedin.com/in/jibintcr/',
+  },
+  treasurer: {
+    name: 'Sneha Rose George',
+    role: 'Treasurer',
+    designation: 'Research Scholar, CUSAT',
+    phoneDisplay: '+91 9496839168',
+    phoneHref: '+919496839168',
+    email: 'jibintcr@gmail.com',
+    linkedin: 'https://www.linkedin.com/in/sneha-rose-george-4176a325/',
   },
   location: 'Thrissur, Kerala, India',
   nationalOffice: {
@@ -647,20 +674,77 @@ export const OFFICE_BEARERS: CommitteeMember[] = [
     slug: 'prof-dr-zakkariya-k-a',
     name: 'Prof. (Dr.) Zakkariya K. A.',
     role: 'Founder & Mentor',
+    organisation: 'ISTD Thrissur Chapter',
     title: 'National Vice President, ISTD & Senior Professor, School of Management Studies, CUSAT',
-    headline:
-      'National Vice President, ISTD • Senior Professor & Former Director, School of Management Studies, CUSAT • Institution Builder & Management Researcher',
+    headline: 'Founder & Mentor, ISTD Thrissur Chapter',
     shortBio:
       'Senior Professor and former Director at the School of Management Studies, CUSAT, and National Vice President of ISTD. Instrumental in founding and mentoring the ISTD Thrissur Diamond Chapter.',
+    metaTitle: 'Prof. (Dr.) Zakkariya K. A. | Founder & Mentor | ISTD Thrissur Chapter',
+    metaDescription:
+      'Meet Prof. (Dr.) Zakkariya K. A., Founder & Mentor of ISTD Thrissur Chapter, National Vice President of ISTD, and Senior Professor at the School of Management Studies, CUSAT.',
     avatar: '/images/ISTDTeamTCR/zakkariya-ka.jpg',
+    avatarWidth: 682,
+    avatarHeight: 1024,
+    avatarAlt: 'Prof. (Dr.) Zakkariya K. A., Founder & Mentor of ISTD Thrissur Chapter',
     secondaryAvatar: '/images/ISTDTeamTCR/zakkariya-ka-2.jpg',
+    secondaryAvatarCaption:
+      'Prof. (Dr.) Zakkariya K. A. — Senior Professor at the School of Management Studies, CUSAT & National Vice President, ISTD.',
     linkedin: 'https://www.linkedin.com/in/zakkariya-k-a-b28606109/',
+    sameAs: ['https://www.linkedin.com/in/zakkariya-k-a-b28606109/'],
+    confirmedProfiles: [
+      {
+        label: 'LinkedIn Profile',
+        url: 'https://www.linkedin.com/in/zakkariya-k-a-b28606109/',
+        context: 'linkedin.com/in/zakkariya-k-a-b28606109',
+      },
+    ],
     isChairman: true,
     isOfficeBearer: true,
     biography: [
       'Prof. (Dr.) Zakkariya K. A. is a distinguished academician, institution builder, and Senior Professor of Management at the School of Management Studies (SMS), Cochin University of Science and Technology (CUSAT), Kerala. He serves as the National Vice President of the Indian Society for Training & Development (ISTD), New Delhi, and is the Founder & Mentor of the ISTD Thrissur (Trichur) Diamond Chapter.',
       'With over two decades of academic, research, and administrative leadership, Dr. Zakkariya has served as Director of the School of Management Studies (CUSAT), Founder-Director of the DDU KAUSHAL Kendra (DDUKK) at CUSAT, Director of Students’ Welfare (CUSAT), and Director of the Aligarh Muslim University (AMU) Centre at Malappuram. He was nominated three times to the Syndicate of CUSAT by the Government of Kerala—becoming the youngest-ever Syndicate member in 2003—and is the only university professor in Kerala elected six consecutive times to a University Senate.',
       'An internationally recognized researcher and mentor, he played a pivotal role in integrating CUSAT into a multi-million-euro European Union Erasmus+ Capacity Building project in Higher Education and served as a Guest Researcher at Dresden University of Technology (TU Dresden), Germany (2023). He has co-authored over 100 research papers in leading international journals (Emerald, Taylor & Francis, InderScience, and Sage) and has guided numerous Ph.D. scholars in Organizational Behavior, Human Resource Management, Marketing, and Sustainability.',
+    ],
+    chapterRoleSection:
+      'As Founder & Mentor of ISTD Thrissur Chapter and National Vice President of ISTD, Prof. (Dr.) Zakkariya K. A. provides institutional guidance, strategic mentorship, and academic–industry linkage for the chapter’s professional learning initiatives, student chapters, and leadership programmes.',
+    professionalBackground: [
+      {
+        organisation: 'ISTD Thrissur Chapter',
+        role: 'Founder & Mentor',
+        category: 'Chapter Governance & Mentorship',
+        description:
+          'Provides strategic guidance and mentorship to the chapter’s office bearers, student chapters, and professional development initiatives.',
+      },
+      {
+        organisation: 'Indian Society for Training & Development (ISTD), New Delhi',
+        role: 'National Vice President & Former Regional Vice President (South)',
+        category: 'National Professional Body Leadership',
+        description:
+          'Conferred the ISTD Fellowship (2022–23) and National ISTD Best Member Award; previously served as Chairman and Hon. Secretary of ISTD Kochi Chapter.',
+      },
+      {
+        organisation: 'School of Management Studies (SMS), CUSAT',
+        role: 'Senior Professor & Former Director',
+        category: 'Higher Education & Management Research',
+        description:
+          'Over two decades of postgraduate teaching, doctoral supervision, and research in Organizational Behavior, Human Resource Management, and Marketing.',
+      },
+      {
+        organisation: 'DDU KAUSHAL Kendra (DDUKK), CUSAT',
+        role: 'Founder-Director',
+        category: 'Institution Building & Vocational Education',
+        description:
+          'Established the UGC-funded Centre for Vocational Education at CUSAT and founded the Centre for Employee Empowerment & Skill Acquisition (CEESA) and Centre for Teaching Excellence (CTE).',
+      },
+    ],
+    schemaAffiliations: [
+      {
+        name: 'Cochin University of Science and Technology (CUSAT)',
+      },
+      {
+        name: 'Indian Society for Training & Development (ISTD)',
+        url: 'https://www.istd.in/',
+      },
     ],
     istdRoles: [
       'Founder & Mentor, ISTD Thrissur (Trichur) Diamond Chapter (Inaugurated 30 March 2026)',
@@ -696,20 +780,6 @@ export const OFFICE_BEARERS: CommitteeMember[] = [
     ],
     featuredPhotos: [
       {
-        src: '/images/ISTDTeamTCR/zakkariya-ka.jpg',
-        title: 'Prof. (Dr.) Zakkariya K. A. — Official Portrait',
-        caption:
-          'Prof. (Dr.) Zakkariya K. A., Founder & Mentor of the ISTD Thrissur Chapter and National Vice President, ISTD.',
-        category: 'Executive Portrait',
-      },
-      {
-        src: '/images/ISTDTeamTCR/zakkariya-ka-2.jpg',
-        title: 'Prof. (Dr.) Zakkariya K. A. — Official Leadership Portrait',
-        caption:
-          'Prof. (Dr.) Zakkariya K. A., Senior Professor at School of Management Studies, CUSAT & National Vice President, ISTD.',
-        category: 'Executive Portrait',
-      },
-      {
         src: '/photos/hero-slide-1.jpg',
         title: 'Keynote Address at the ISTD Thrissur Chapter Inauguration',
         caption:
@@ -723,31 +793,75 @@ export const OFFICE_BEARERS: CommitteeMember[] = [
           'ISTD National President Shri. Atul Shah presenting the Diamond Chapter recognition to Prof. (Dr.) Zakkariya K. A. on 30 March 2026.',
         category: 'Chapter Milestone',
       },
+      {
+        src: '/photos/istd-zakkria.jpeg',
+        title: 'Felicitation by ISTD National Leadership',
+        caption:
+          'National President Shri. Atul Shah and National Treasurer Shri. Nabaghana Pany presenting a memento to Prof. (Dr.) Zakkariya K. A.',
+        category: 'Felicitation',
+      },
     ],
   },
   {
     id: 'member-tony',
     slug: 'tony-chacko',
-    name: 'Shri. Tony Chacko',
-    role: 'Chairman / President',
+    name: 'Tony Chacko',
+    role: 'Chairman',
+    organisation: 'ISTD Thrissur Chapter',
     title: 'CEO & Principal Consultant, Tony & Iby Global Solutions Pvt. Ltd.',
-    headline:
-      'Chairman, ISTD Thrissur Chapter • CEO & Principal Consultant, Tony & Iby Global Solutions • Corporate, Legal & Management Advisor',
+    headline: 'Chairman, ISTD Thrissur Chapter',
     shortBio:
-      'Multidisciplinary management consultant, legal expert, and CEO of Tony & Iby Global Solutions with over 30 years of corporate advisory experience. Leads the ISTD Thrissur Chapter as Chairman.',
+      'Multidisciplinary management consultant, legal advisor, and CEO of Tony & Iby Global Solutions with over 30 years of corporate advisory experience. Leads ISTD Thrissur Chapter as Chairman.',
+    metaTitle: 'Tony Chacko | Chairman | ISTD Thrissur Chapter',
+    metaDescription:
+      'Meet Tony Chacko, Chairman of ISTD Thrissur Chapter, management consultant, legal advisor, and CEO of Tony & Iby Global Solutions Pvt. Ltd.',
     avatar: '/images/ISTDTeamTCR/tony-chacko.jpg',
+    avatarWidth: 640,
+    avatarHeight: 641,
+    avatarAlt: 'Tony Chacko, Chairman of ISTD Thrissur Chapter',
     email: 'tonychacko67@gmail.com',
     phone: '+919846101034',
     linkedin: 'https://www.linkedin.com/in/tony-chacko-965622240/',
+    sameAs: ['https://www.linkedin.com/in/tony-chacko-965622240/'],
+    confirmedProfiles: [
+      {
+        label: 'LinkedIn Profile',
+        url: 'https://www.linkedin.com/in/tony-chacko-965622240/',
+        context: 'linkedin.com/in/tony-chacko-965622240',
+      },
+    ],
     isChairman: true,
     isOfficeBearer: true,
     biography: [
-      'Shri. Tony Chacko serves as the Chairman (President) of the ISTD Thrissur (Trichur) Chapter, leading the chapter’s strategic vision, institutional partnerships, corporate outreach, and member engagement across Central Kerala.',
-      'He is the Founder, CEO, and Principal Consultant of Tony & Iby Global Solutions Private Limited (carrying forward the legacy established in 1989 with Tony & Tony Management Consultants in Thrissur). With over three decades of multidisciplinary leadership, he advises enterprises, SMEs, startups, and educational institutions across corporate governance, finance, taxation, legal compliance, and organizational transformation.',
-      'Under his chairmanship, the ISTD Thrissur Chapter was inaugurated as ISTD’s Diamond Chapter on 30 March 2026, established its first institutional Student Chapter at Christ College of Engineering (Autonomous), and launched flagship practitioner forums including Chapter Connect 2026.',
+      'Tony Chacko serves as Chairman of ISTD Thrissur Chapter, leading the chapter’s strategic direction, institutional partnerships, corporate outreach, and member engagement across Thrissur and Central Kerala.',
+      'He is the Founder, CEO, and Principal Consultant of Tony & Iby Global Solutions Private Limited (continuing the management consultancy practice established in 1989 in Thrissur). With over three decades of multidisciplinary advisory experience, he works with enterprises, SMEs, startups, and educational institutions across corporate governance, finance, taxation, legal compliance, and organisational development.',
+      'Under his chairmanship, ISTD Thrissur Chapter was inaugurated as an ISTD Diamond Chapter on 30 March 2026, established its first Student Chapter at Christ College of Engineering (Autonomous), and convened Chapter Connect 2026.',
+    ],
+    chapterRoleSection:
+      'As Chairman, Tony Chacko presides over chapter governance, represents ISTD Thrissur Chapter in regional and national forums, and guides institutional collaborations across industry and academia.',
+    professionalBackground: [
+      {
+        organisation: 'ISTD Thrissur Chapter',
+        role: 'Chairman',
+        category: 'Chapter Governance & Leadership',
+        description:
+          'Leads the chapter’s executive committee, institutional collaborations, campus chapters, and professional networking initiatives.',
+      },
+      {
+        organisation: 'Tony & Iby Global Solutions Pvt. Ltd.',
+        role: 'Founder, CEO & Principal Consultant',
+        category: 'Management, Legal & Financial Consultancy',
+        description:
+          'Advises enterprises, SMEs, startups, and institutions on corporate strategy, governance, legal compliance, taxation, and organisational transformation.',
+      },
+    ],
+    schemaAffiliations: [
+      {
+        name: 'Tony & Iby Global Solutions Private Limited',
+      },
     ],
     istdRoles: [
-      'Chairman / President, ISTD Thrissur (Trichur) Diamond Chapter',
+      'Chairman, ISTD Thrissur (Trichur) Diamond Chapter',
       'Presidential Speaker, First ISTD Student Chapter Inauguration at Christ College of Engineering (Autonomous)',
       'Convenor & Host Chairman, Chapter Connect 2026 — Members’ Orientation & Professional Networking Forum',
       'Lead Institutional Liaison for Corporate & Campus Chapter Partnerships in Central Kerala',
@@ -773,13 +887,6 @@ export const OFFICE_BEARERS: CommitteeMember[] = [
     ],
     featuredPhotos: [
       {
-        src: '/images/ISTDTeamTCR/tony-chacko.jpg',
-        title: 'Shri. Tony Chacko — Chairman, ISTD Thrissur Chapter',
-        caption:
-          'Shri. Tony Chacko, Chairman of the ISTD Thrissur Chapter and CEO of Tony & Iby Global Solutions.',
-        category: 'Executive Portrait',
-      },
-      {
         src: '/photos/istd-tony-chacko.jpeg',
         title: 'Welcome Address at the Chapter Inauguration',
         caption:
@@ -796,27 +903,157 @@ export const OFFICE_BEARERS: CommitteeMember[] = [
     ],
   },
   {
-    id: 'member-sneha',
-    slug: 'sneha-rose-george',
-    name: 'Ms. Sneha Rose George',
+    id: 'member-jibin',
+    slug: 'jibin-n',
+    name: 'Jibin N',
     role: 'Secretary',
-    title: 'Research Scholar, School of Management Studies, CUSAT',
-    headline:
-      'Hon. Secretary, ISTD Thrissur Chapter • Management Researcher, School of Management Studies, CUSAT • Academic & L&D Programme Coordinator',
+    organisation: 'ISTD Thrissur Chapter',
+    title: 'IT Professional & Entrepreneur',
+    headline: 'Secretary, ISTD Thrissur Chapter',
     shortBio:
-      'Management researcher at the School of Management Studies, Cochin University of Science and Technology (CUSAT), serving as Hon. Secretary coordinating academic programmes and chapter operations.',
-    avatar: '/images/ISTDTeamTCR/sneha-rose.jpg',
-    linkedin: 'https://www.linkedin.com/in/sneha-rose-george-4176a325/',
+      'Jibin N serves as Secretary of ISTD Thrissur Chapter. An IT professional and entrepreneur, his background includes technology, teaching, professional development and community initiatives.',
+    metaTitle: 'Jibin N | Secretary | ISTD Thrissur Chapter',
+    metaDescription:
+      'Meet Jibin N, Secretary of ISTD Thrissur Chapter, an IT professional and entrepreneur involved in professional learning, teaching and community initiatives.',
+    avatar: '/images/team/jibin-n-istd-thrissur-secretary.jpg',
+    avatarWidth: 400,
+    avatarHeight: 400,
+    avatarAlt: 'Jibin N, Secretary of ISTD Thrissur Chapter',
+    email: 'jibintcr@gmail.com',
+    phone: '+919496839168',
+    linkedin: 'https://www.linkedin.com/in/jibintcr/',
+    sameAs: [
+      'https://www.linkedin.com/in/jibintcr/',
+      'https://neompanels-new.vercel.app/team/jibin-n',
+    ],
+    confirmedProfiles: [
+      {
+        label: 'LinkedIn Profile',
+        url: 'https://www.linkedin.com/in/jibintcr/',
+        context: 'linkedin.com/in/jibintcr',
+      },
+      {
+        label: 'NEOM Panels Leadership Profile',
+        url: 'https://neompanels-new.vercel.app/team/jibin-n',
+        context: 'Managing Director — NEOM Panels',
+      },
+    ],
     isOfficeBearer: true,
     biography: [
-      'Ms. Sneha Rose George serves as the Hon. Secretary of the ISTD Thrissur (Trichur) Chapter, overseeing chapter secretariat operations, monthly knowledge-sharing sessions, research dialogues, and academic–practitioner coordination.',
+      'Jibin N serves as Secretary of ISTD Thrissur Chapter. An IT professional and entrepreneur, he brings a background spanning information technology, business leadership, teaching and community initiatives.',
+      'He is the Founder of Infinio Technology Solutions and Flexon Sports Foundation, and the Managing Director of NEOM Panels. His academic activities include teaching and evaluation through BITS Pilani’s Work Integrated Learning Programmes.',
+      'His involvement with ISTD Thrissur Chapter reflects his interest in professional learning, knowledge exchange and connecting people across industry and academia.',
+    ],
+    chapterRoleSection:
+      'As Secretary, Jibin supports the coordination of chapter activities, communication with members and the organisation of professional learning programmes, working with the chapter’s office bearers and committee.',
+    professionalBackground: [
+      {
+        organisation: 'ISTD Thrissur Chapter',
+        role: 'Secretary',
+        category: 'Professional Association & Chapter Role',
+        description:
+          'Supports the coordination of chapter activities, communication with members, and the organisation of professional learning programmes alongside the chapter’s office bearers and committee.',
+      },
+      {
+        organisation: 'Infinio Technology Solutions',
+        role: 'Founder',
+        category: 'Information Technology & Business Leadership',
+        description:
+          'Founder leading technology services, software solutions, and business operations.',
+      },
+      {
+        organisation: 'Flexon Sports Foundation',
+        role: 'Founder',
+        category: 'Community & Sports Initiatives',
+        description:
+          'Founder supporting community engagement and sports development initiatives.',
+      },
+      {
+        organisation: 'NEOM Panels',
+        role: 'Managing Director',
+        category: 'Enterprise Leadership',
+        description:
+          'Managing Director overseeing executive strategy, governance, and operations.',
+      },
+      {
+        organisation: 'BITS Pilani Work Integrated Learning Programmes',
+        role: 'Teaching & Evaluation',
+        category: 'Academic Activity',
+        description:
+          'Involved in academic teaching and evaluation through BITS Pilani’s Work Integrated Learning Programmes.',
+      },
+    ],
+    schemaAffiliations: [
+      {
+        name: 'Infinio Technology Solutions',
+      },
+      {
+        name: 'Flexon Sports Foundation',
+      },
+      {
+        name: 'NEOM Panels',
+      },
+    ],
+  },
+  {
+    id: 'member-sneha',
+    slug: 'sneha-rose-george',
+    name: 'Sneha Rose George',
+    role: 'Treasurer',
+    organisation: 'ISTD Thrissur Chapter',
+    title: 'Research Scholar, School of Management Studies, CUSAT',
+    headline: 'Treasurer, ISTD Thrissur Chapter',
+    shortBio:
+      'Management researcher at the School of Management Studies, Cochin University of Science and Technology (CUSAT), serving on the executive leadership of ISTD Thrissur Chapter.',
+    metaTitle: 'Sneha Rose George | Treasurer | ISTD Thrissur Chapter',
+    metaDescription:
+      'Meet Sneha Rose George, Treasurer of ISTD Thrissur Chapter and Research Scholar at the School of Management Studies, Cochin University of Science and Technology (CUSAT).',
+    avatar: '/images/ISTDTeamTCR/sneha-rose.jpg',
+    avatarWidth: 600,
+    avatarHeight: 600,
+    avatarAlt: 'Sneha Rose George, Treasurer of ISTD Thrissur Chapter',
+    linkedin: 'https://www.linkedin.com/in/sneha-rose-george-4176a325/',
+    sameAs: ['https://www.linkedin.com/in/sneha-rose-george-4176a325/'],
+    confirmedProfiles: [
+      {
+        label: 'LinkedIn Profile',
+        url: 'https://www.linkedin.com/in/sneha-rose-george-4176a325/',
+        context: 'linkedin.com/in/sneha-rose-george-4176a325',
+      },
+    ],
+    isOfficeBearer: true,
+    biography: [
+      'Sneha Rose George serves on the executive committee of ISTD Thrissur Chapter as Treasurer, supporting chapter administration, member engagement, and academic–practitioner programmes.',
       'She is a doctoral Research Scholar at the School of Management Studies (SMS), Cochin University of Science and Technology (CUSAT), Kochi. Her academic research focuses on customer engagement, digital consumer behavior, mobile application adoption, and the role of artificial intelligence in modern services.',
-      'As Chapter Secretary, she plays a key role in curating speaker sessions, coordinating campus chapter initiatives, documenting chapter chronicles, and fostering engagement among academicians, research scholars, and L&D practitioners.',
+      'Within ISTD Thrissur Chapter, she contributes to curating knowledge-sharing sessions, academic dialogues, and student chapter coordination across Thrissur and Central Kerala.',
+    ],
+    chapterRoleSection:
+      'As Treasurer on the executive committee of ISTD Thrissur Chapter, Sneha Rose George supports chapter administration, member coordination, and the organisation of academic and professional learning programmes.',
+    professionalBackground: [
+      {
+        organisation: 'ISTD Thrissur Chapter',
+        role: 'Treasurer',
+        category: 'Chapter Governance & Administration',
+        description:
+          'Supports chapter operations, resource stewardship, member onboarding, and academic–industry learning sessions.',
+      },
+      {
+        organisation: 'School of Management Studies (SMS), CUSAT',
+        role: 'Research Scholar',
+        category: 'Academic Research',
+        description:
+          'Conducts doctoral research in management, focusing on digital consumer behavior, customer engagement, and AI in services.',
+      },
+    ],
+    schemaAffiliations: [
+      {
+        name: 'Cochin University of Science and Technology (CUSAT)',
+      },
     ],
     istdRoles: [
-      'Hon. Secretary, ISTD Thrissur (Trichur) Diamond Chapter (Installed 30 March 2026)',
+      'Executive Office Bearer, ISTD Thrissur (Trichur) Diamond Chapter (Installed 30 March 2026)',
       'Programme Coordinator for ISTD Thrissur Knowledge Webinars, Foundation Day Sessions & Research Forums',
-      'Secretariat Lead for Member Onboarding, Chapter Connect 2026 & Student Chapter Coordination',
+      'Committee Lead for Member Onboarding, Chapter Connect 2026 & Student Chapter Coordination',
     ],
     careerHighlights: [
       'Doctoral Research Scholar, School of Management Studies (SMS), Cochin University of Science and Technology (CUSAT)',
@@ -836,75 +1073,10 @@ export const OFFICE_BEARERS: CommitteeMember[] = [
     ],
     featuredPhotos: [
       {
-        src: '/images/ISTDTeamTCR/sneha-rose.jpg',
-        title: 'Ms. Sneha Rose George — Hon. Secretary, ISTD Thrissur Chapter',
-        caption:
-          'Ms. Sneha Rose George, Hon. Secretary of the ISTD Thrissur Chapter and Research Scholar at SMS, CUSAT.',
-        category: 'Executive Portrait',
-      },
-      {
         src: '/photos/istd-sneha.jpeg',
         title: 'Felicitation at the Diamond Chapter Inauguration',
         caption:
-          'Prof. (Dr.) Zakkariya K. A. presenting a token of appreciation to Chapter Secretary Ms. Sneha Rose George during the inauguration on 30 March 2026.',
-        category: 'Chapter Inauguration',
-      },
-    ],
-  },
-  {
-    id: 'member-jibin',
-    slug: 'jibin-n',
-    name: 'Mr. Jibin N',
-    role: 'Treasurer',
-    title: 'Technology Director, Academician & Innovation Consultant',
-    headline:
-      'Treasurer, ISTD Thrissur Chapter • Technology Director, Academician & Innovation Consultant • Digital Transformation & EdTech Lead',
-    shortBio:
-      'Technology leader, academician, and innovation consultant serving as Treasurer of the ISTD Thrissur Chapter, spearheading financial stewardship, digital systems, and AI/technology learning initiatives.',
-    avatar: '/images/ISTDTeamTCR/jibin-n.jpg',
-    email: 'jibintcr@gmail.com',
-    phone: '+919496839168',
-    linkedin: 'https://www.linkedin.com/in/jibintcr/',
-    isOfficeBearer: true,
-    biography: [
-      'Mr. Jibin N serves as the Treasurer of the ISTD Thrissur (Trichur) Chapter, managing the chapter’s financial governance, membership desk, digital infrastructure, and technology-driven learning programmes.',
-      'Bridging technology leadership and management education, he has extensive experience as a Technology Director, Computer Applications faculty member, and Innovation & Entrepreneurship (IEDC) mentor in Kerala. He works closely with academic institutions, engineering colleges, and industry practitioners to integrate emerging technologies—including Artificial Intelligence, AIoT, and cloud ecosystems—into professional training and talent development.',
-      'At the ISTD Thrissur Chapter, he oversees financial compliance in alignment with ISTD National norms, coordinates membership enquiries, and leads the chapter’s digital portal and technical webinars.',
-    ],
-    istdRoles: [
-      'Treasurer, ISTD Thrissur (Trichur) Diamond Chapter (Installed 30 March 2026)',
-      'Head of Membership Enquiries, Fee Tariff Guidance & Financial Stewardship',
-      'Lead Architect of the ISTD Thrissur Digital Portal, Event Registration System & AI/Tech Programme Series',
-    ],
-    careerHighlights: [
-      'Technology Director, IT Consultant & Academician in Computer Applications and Management Education',
-      'Institutional Coordinator & Nodal Officer for Innovation and Entrepreneurship Development (IEDC) and campus technology initiatives',
-      'Organiser and host for technical and AI-focused chapter sessions including “Advancing AIoT Research” and “From AI Assistants to AI Agents”',
-    ],
-    educationAndCredentials: [
-      'Postgraduate Degree in Computer Applications / Technology & Management',
-      'Academician, Technology Consultant & Innovation Mentor',
-    ],
-    expertiseDomains: [
-      'Digital Transformation & Web Systems Architecture',
-      'Artificial Intelligence, AIoT & EdTech Ecosystems',
-      'Financial Governance & Chapter Treasury Management',
-      'Innovation & Entrepreneurship Mentoring (IEDC)',
-      'Technical Training & Faculty Development',
-    ],
-    featuredPhotos: [
-      {
-        src: '/images/ISTDTeamTCR/jibin-n.jpg',
-        title: 'Mr. Jibin N — Treasurer, ISTD Thrissur Chapter',
-        caption:
-          'Mr. Jibin N, Treasurer of the ISTD Thrissur Chapter and Technology Director & Consultant.',
-        category: 'Executive Portrait',
-      },
-      {
-        src: '/photos/istd-participants.jpeg',
-        title: 'Felicitating Past National President Dr. Yogesh Kumar Upadhyay',
-        caption:
-          'Chapter Treasurer Mr. Jibin N honouring Past National President Dr. Yogesh Kumar Upadhyay during the inauguration ceremony on 30 March 2026.',
+          'Prof. (Dr.) Zakkariya K. A. presenting a token of appreciation to Sneha Rose George during the inauguration on 30 March 2026.',
         category: 'Chapter Inauguration',
       },
     ],
@@ -953,19 +1125,19 @@ export const CHAPTER_CORE_CONTRIBUTORS = [
     linkedin: 'https://www.linkedin.com/in/zakkariya-k-a-b28606109/',
   },
   {
-    name: 'Shri. Tony Chacko',
+    name: 'Tony Chacko',
     role: 'Chairman',
     linkedin: 'https://www.linkedin.com/in/tony-chacko-965622240/',
   },
   {
-    name: 'Ms. Sneha Rose George',
+    name: 'Jibin N',
     role: 'Secretary',
-    linkedin: 'https://www.linkedin.com/in/sneha-rose-george-4176a325/',
+    linkedin: 'https://www.linkedin.com/in/jibintcr/',
   },
   {
-    name: 'Mr. Jibin N',
+    name: 'Sneha Rose George',
     role: 'Treasurer',
-    linkedin: 'https://www.linkedin.com/in/jibintcr/',
+    linkedin: 'https://www.linkedin.com/in/sneha-rose-george-4176a325/',
   },
   { name: 'Mr. Nisam', role: 'Chapter Member & Contributor' },
   { name: 'Dr. Minu Gopal', role: 'Chapter Member & Contributor' },

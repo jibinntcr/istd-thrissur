@@ -3,10 +3,10 @@ import {
   ALL_CHAPTER_EVENTS,
   CAMPUS_CHAPTERS,
   OFFICE_BEARERS,
-  COMMITTEE_MEMBERS,
   OFFICIAL_LINKS,
   ChapterEvent,
   CampusChapter,
+  CommitteeMember,
 } from '@/data/siteData';
 
 export const SITE_URL = 'https://jibinntcr.github.io/istd-thrissur';
@@ -39,24 +39,39 @@ export const GLOBAL_SEO_KEYWORDS = [
 
 interface PageSeoOptions {
   title: string;
+  exactTitle?: boolean;
   description: string;
   path: string;
+  canonicalPath?: string;
   image?: string;
-  type?: 'website' | 'article';
+  imageAlt?: string;
+  imageWidth?: number;
+  imageHeight?: number;
+  type?: 'website' | 'article' | 'profile';
+  twitterCard?: 'summary' | 'summary_large_image';
   keywords?: string[];
   noIndex?: boolean;
 }
 
 export function buildPageMetadata({
   title,
+  exactTitle = false,
   description,
   path,
+  canonicalPath,
   image = DEFAULT_OG_IMAGE,
+  imageAlt,
+  imageWidth = 1200,
+  imageHeight = 630,
   type = 'website',
+  twitterCard = 'summary_large_image',
   keywords = [],
   noIndex = false,
 }: PageSeoOptions): Metadata {
-  const normalizedPath = path.startsWith('/') ? path : `/${path}`;
+  const effectivePath = canonicalPath || path;
+  const normalizedPath = effectivePath.startsWith('/')
+    ? effectivePath
+    : `/${effectivePath}`;
   const canonicalUrl =
     normalizedPath === '/'
       ? `${SITE_URL}/`
@@ -69,8 +84,11 @@ export function buildPageMetadata({
     new Set([...keywords, ...GLOBAL_SEO_KEYWORDS])
   );
 
+  const socialTitle = exactTitle ? title : `${title} | ISTD Thrissur Chapter`;
+  const resolvedImageAlt = imageAlt || title;
+
   return {
-    title,
+    title: exactTitle ? { absolute: title } : title,
     description,
     keywords: mergedKeywords,
     authors: [
@@ -101,7 +119,7 @@ export function buildPageMetadata({
           },
         },
     openGraph: {
-      title: `${title} | ISTD Thrissur Chapter`,
+      title: socialTitle,
       description,
       url: canonicalUrl,
       siteName: SITE_NAME,
@@ -110,17 +128,22 @@ export function buildPageMetadata({
       images: [
         {
           url: fullImageUrl,
-          width: 1200,
-          height: 630,
-          alt: title,
+          width: imageWidth,
+          height: imageHeight,
+          alt: resolvedImageAlt,
         },
       ],
     },
     twitter: {
-      card: 'summary_large_image',
-      title: `${title} | ISTD Thrissur Chapter`,
+      card: twitterCard,
+      title: socialTitle,
       description,
-      images: [fullImageUrl],
+      images: [
+        {
+          url: fullImageUrl,
+          alt: resolvedImageAlt,
+        },
+      ],
     },
   };
 }
@@ -148,6 +171,7 @@ export function getOrganizationJsonLd() {
         foundingDate: '2026-03-30',
         parentOrganization: {
           '@type': 'Organization',
+          '@id': 'https://www.istd.in/#organization',
           name: 'Indian Society for Training & Development (ISTD)',
           url: OFFICIAL_LINKS.istdNationalWeb,
           foundingDate: '1970-04',
@@ -175,7 +199,7 @@ export function getOrganizationJsonLd() {
           {
             '@type': 'ContactPoint',
             telephone: '+91-9496839168',
-            contactType: 'Treasurer & Membership Desk',
+            contactType: 'Secretary & Membership Desk',
             email: 'jibintcr@gmail.com',
             areaServed: 'IN-KL',
             availableLanguage: ['English', 'Malayalam'],
@@ -187,11 +211,17 @@ export function getOrganizationJsonLd() {
           OFFICIAL_LINKS.istdNationalWeb,
         ],
         member: OFFICE_BEARERS.map((person) => ({
-          '@type': 'Person',
-          name: person.name,
-          jobTitle: `${person.role}, ISTD Thrissur Chapter`,
-          url: `${SITE_URL}/committee/${person.slug}/`,
-          ...(person.linkedin ? { sameAs: person.linkedin } : {}),
+          '@type': 'OrganizationRole',
+          roleName: person.role,
+          member: {
+            '@type': 'Person',
+            '@id': `${SITE_URL}/team/${person.slug}/#person`,
+            name: person.name,
+            url: `${SITE_URL}/team/${person.slug}/`,
+            ...(person.sameAs && person.sameAs.length > 0
+              ? { sameAs: person.sameAs }
+              : {}),
+          },
         })),
       },
       {
@@ -203,6 +233,182 @@ export function getOrganizationJsonLd() {
           '@id': `${SITE_URL}/#organization`,
         },
         inLanguage: 'en-IN',
+      },
+    ],
+  };
+}
+
+export function getCommitteeCollectionJsonLd() {
+  const pageUrl = `${SITE_URL}/committee/`;
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'CollectionPage',
+        '@id': `${pageUrl}#collectionpage`,
+        url: pageUrl,
+        name: 'Managing Committee | ISTD Thrissur Chapter',
+        description:
+          'Office bearers and managing committee of ISTD Thrissur Chapter: Founder & Mentor Prof. (Dr.) Zakkariya K. A., Chairman Tony Chacko, Secretary Jibin N, and Treasurer Sneha Rose George.',
+        isPartOf: {
+          '@id': `${SITE_URL}/#website`,
+        },
+        about: {
+          '@id': `${SITE_URL}/#organization`,
+        },
+        breadcrumb: {
+          '@id': `${pageUrl}#breadcrumb`,
+        },
+        mainEntity: {
+          '@type': 'ItemList',
+          itemListElement: OFFICE_BEARERS.map((person, index) => ({
+            '@type': 'ListItem',
+            position: index + 1,
+            url: `${SITE_URL}/team/${person.slug}/`,
+            name: `${person.name} — ${person.role}, ISTD Thrissur Chapter`,
+          })),
+        },
+      },
+      {
+        '@type': 'BreadcrumbList',
+        '@id': `${pageUrl}#breadcrumb`,
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Home',
+            item: `${SITE_URL}/`,
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: 'Managing Committee',
+            item: pageUrl,
+          },
+        ],
+      },
+    ],
+  };
+}
+
+export function getTeamMemberJsonLd(member: CommitteeMember) {
+  const profileUrl = `${SITE_URL}/team/${member.slug}/`;
+  const portraitUrl = member.avatar
+    ? member.avatar.startsWith('http')
+      ? member.avatar
+      : `${SITE_URL}${member.avatar}`
+    : undefined;
+  const portraitAlt =
+    member.avatarAlt ||
+    `${member.name}, ${member.role} of ISTD Thrissur Chapter`;
+  const personDescription =
+    member.biography && member.biography.length > 0
+      ? member.biography[0]
+      : member.shortBio;
+
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'ProfilePage',
+        '@id': `${profileUrl}#profilepage`,
+        url: profileUrl,
+        name:
+          member.metaTitle ||
+          `${member.name} | ${member.role} | ISTD Thrissur Chapter`,
+        description: member.metaDescription || member.shortBio,
+        inLanguage: 'en-IN',
+        isPartOf: {
+          '@id': `${SITE_URL}/#website`,
+        },
+        about: {
+          '@id': `${profileUrl}#person`,
+        },
+        mainEntity: {
+          '@id': `${profileUrl}#person`,
+        },
+        breadcrumb: {
+          '@id': `${profileUrl}#breadcrumb`,
+        },
+      },
+      {
+        '@type': 'Person',
+        '@id': `${profileUrl}#person`,
+        name: member.name,
+        url: profileUrl,
+        mainEntityOfPage: {
+          '@id': `${profileUrl}#profilepage`,
+        },
+        description: personDescription,
+        ...(portraitUrl
+          ? {
+              image: {
+                '@type': 'ImageObject',
+                '@id': `${profileUrl}#portrait`,
+                url: portraitUrl,
+                contentUrl: portraitUrl,
+                ...(member.avatarWidth ? { width: member.avatarWidth } : {}),
+                ...(member.avatarHeight ? { height: member.avatarHeight } : {}),
+                caption: portraitAlt,
+              },
+            }
+          : {}),
+        memberOf: [
+          {
+            '@type': 'OrganizationRole',
+            roleName: member.role,
+            memberOf: {
+              '@type': 'Organization',
+              '@id': `${SITE_URL}/#organization`,
+              name: 'ISTD Thrissur Chapter',
+              url: `${SITE_URL}/`,
+              parentOrganization: {
+                '@type': 'Organization',
+                '@id': 'https://www.istd.in/#organization',
+                name: 'Indian Society for Training & Development (ISTD)',
+                url: OFFICIAL_LINKS.istdNationalWeb,
+              },
+            },
+          },
+        ],
+        ...(member.schemaAffiliations && member.schemaAffiliations.length > 0
+          ? {
+              affiliation: member.schemaAffiliations.map((aff) => ({
+                '@type': 'Organization',
+                name: aff.name,
+                ...(aff.url ? { url: aff.url } : {}),
+              })),
+            }
+          : {}),
+        ...(member.sameAs && member.sameAs.length > 0
+          ? {
+              sameAs: member.sameAs,
+            }
+          : {}),
+      },
+      {
+        '@type': 'BreadcrumbList',
+        '@id': `${profileUrl}#breadcrumb`,
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Home',
+            item: `${SITE_URL}/`,
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: 'Managing Committee',
+            item: `${SITE_URL}/committee/`,
+          },
+          {
+            '@type': 'ListItem',
+            position: 3,
+            name: member.name,
+            item: profileUrl,
+          },
+        ],
       },
     ],
   };
@@ -359,8 +565,8 @@ export function getAllStaticRoutes(): string[] {
   const campusRoutes = CAMPUS_CHAPTERS.map(
     (ch) => `/campus-chapters/${ch.slug}/`
   );
-  const committeeRoutes = OFFICE_BEARERS.map(
-    (member) => `/committee/${member.slug}/`
+  const teamRoutes = OFFICE_BEARERS.map(
+    (member) => `/team/${member.slug}/`
   );
-  return [...baseRoutes, ...eventRoutes, ...campusRoutes, ...committeeRoutes];
+  return [...baseRoutes, ...eventRoutes, ...campusRoutes, ...teamRoutes];
 }

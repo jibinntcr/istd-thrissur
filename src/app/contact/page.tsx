@@ -128,56 +128,6 @@ export default function ContactPage() {
                     </div>
                   </div>
 
-                  {/* Treasurer */}
-                  <div
-                    style={{
-                      padding: '1rem',
-                      background: 'var(--color-surface-soft)',
-                      borderRadius: 'var(--radius-sm)',
-                      border: '1px solid var(--color-border)',
-                    }}
-                  >
-                    <div
-                      style={{
-                        fontSize: '0.76rem',
-                        fontWeight: 800,
-                        color: 'var(--brand-blue)',
-                        textTransform: 'uppercase',
-                        letterSpacing: '0.06em',
-                        marginBottom: '0.2rem',
-                      }}
-                    >
-                      Chapter Treasurer &amp; Chapter Contact
-                    </div>
-                    <div
-                      style={{
-                        fontSize: '1rem',
-                        fontWeight: 800,
-                        color: 'var(--color-ink)',
-                        marginBottom: '0.35rem',
-                      }}
-                    >
-                      {CHAPTER_CONTACTS.treasurer.name} ({CHAPTER_CONTACTS.treasurer.designation})
-                    </div>
-                    <div style={{ fontSize: '0.9rem', color: 'var(--color-body)' }}>
-                      Phone:{' '}
-                      <a
-                        href={`tel:${CHAPTER_CONTACTS.treasurer.phoneHref}`}
-                        style={{ fontWeight: 700, color: 'var(--brand-navy)' }}
-                      >
-                        {CHAPTER_CONTACTS.treasurer.phoneDisplay}
-                      </a>
-                      <br />
-                      Email:{' '}
-                      <a
-                        href={`mailto:${CHAPTER_CONTACTS.treasurer.email}`}
-                        style={{ fontWeight: 600, color: 'var(--brand-blue)' }}
-                      >
-                        {CHAPTER_CONTACTS.treasurer.email}
-                      </a>
-                    </div>
-                  </div>
-
                   {/* Secretary */}
                   <div
                     style={{
@@ -197,7 +147,57 @@ export default function ContactPage() {
                         marginBottom: '0.2rem',
                       }}
                     >
-                      Chapter Secretary
+                      Chapter Secretary &amp; Chapter Contact
+                    </div>
+                    <div
+                      style={{
+                        fontSize: '1rem',
+                        fontWeight: 800,
+                        color: 'var(--color-ink)',
+                        marginBottom: '0.35rem',
+                      }}
+                    >
+                      {CHAPTER_CONTACTS.secretary.name} ({CHAPTER_CONTACTS.secretary.designation})
+                    </div>
+                    <div style={{ fontSize: '0.9rem', color: 'var(--color-body)' }}>
+                      Phone:{' '}
+                      <a
+                        href={`tel:${CHAPTER_CONTACTS.secretary.phoneHref}`}
+                        style={{ fontWeight: 700, color: 'var(--brand-navy)' }}
+                      >
+                        {CHAPTER_CONTACTS.secretary.phoneDisplay}
+                      </a>
+                      <br />
+                      Email:{' '}
+                      <a
+                        href={`mailto:${CHAPTER_CONTACTS.secretary.email}`}
+                        style={{ fontWeight: 600, color: 'var(--brand-blue)' }}
+                      >
+                        {CHAPTER_CONTACTS.secretary.email}
+                      </a>
+                    </div>
+                  </div>
+
+                  {/* Treasurer */}
+                  <div
+                    style={{
+                      padding: '1rem',
+                      background: 'var(--color-surface-soft)',
+                      borderRadius: 'var(--radius-sm)',
+                      border: '1px solid var(--color-border)',
+                    }}
+                  >
+                    <div
+                      style={{
+                        fontSize: '0.76rem',
+                        fontWeight: 800,
+                        color: 'var(--brand-blue)',
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.06em',
+                        marginBottom: '0.2rem',
+                      }}
+                    >
+                      Chapter Treasurer
                     </div>
                     <div
                       style={{
@@ -207,15 +207,15 @@ export default function ContactPage() {
                         marginBottom: '0.25rem',
                       }}
                     >
-                      {CHAPTER_CONTACTS.secretary.name} ({CHAPTER_CONTACTS.secretary.designation})
+                      {CHAPTER_CONTACTS.treasurer.name} ({CHAPTER_CONTACTS.treasurer.designation})
                     </div>
                     <div style={{ fontSize: '0.88rem' }}>
                       <a
-                        href={CHAPTER_CONTACTS.secretary.linkedin}
+                        href={CHAPTER_CONTACTS.treasurer.linkedin}
                         target="_blank"
                         rel="noopener noreferrer"
-                        aria-label={`${CHAPTER_CONTACTS.secretary.name} on LinkedIn`}
-                        title={`${CHAPTER_CONTACTS.secretary.name} on LinkedIn`}
+                        aria-label={`${CHAPTER_CONTACTS.treasurer.name} on LinkedIn`}
+                        title={`${CHAPTER_CONTACTS.treasurer.name} on LinkedIn`}
                         style={{
                           display: 'inline-flex',
                           alignItems: 'center',
