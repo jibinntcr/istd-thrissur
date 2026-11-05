@@ -75,6 +75,7 @@ export default function CommitteePage() {
                   color: 'var(--color-body)',
                   lineHeight: 1.68,
                   marginBottom: '1.25rem',
+                  textAlign: 'justify',
                 }}
               >
                 Formally installed during the Diamond Chapter inauguration on 30
@@ -204,15 +205,18 @@ export default function CommitteePage() {
                         color: '#1E3A8A',
                       }}
                     >
-                      {member.organisation || 'ISTD Thrissur Chapter'}
+                      {member.slug === 'prof-dr-zakkariya-k-a'
+                        ? 'National Vice President, ISTD • ISTD Thrissur Chapter'
+                        : member.organisation || 'ISTD Thrissur Chapter'}
                     </p>
                     {member.shortBio && (
                       <p
                         style={{
                           fontSize: '0.84rem',
                           color: 'var(--color-muted)',
-                          lineHeight: 1.55,
+                          lineHeight: 1.62,
                           marginBottom: '1.15rem',
+                          textAlign: 'justify',
                         }}
                       >
                         {member.shortBio}

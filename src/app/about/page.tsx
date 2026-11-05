@@ -45,9 +45,9 @@ export default function AboutPage() {
             <div>
               <PhotoCard
                 src="/photos/istd-national-president.jpeg"
-                alt="National President Shri. Atul Shah presenting the Diamond Chapter Charter to Regional Vice President Prof. (Dr.) Zakkariya K A"
+                alt="National President Shri. Atul Shah presenting the Diamond Chapter Charter to National Vice President Prof. (Dr.) Zakkariya K. A."
                 title="Presentation of the Diamond Chapter Charter"
-                caption="National President Shri. Atul Shah presenting the Diamond Chapter Charter to Regional Vice President (South) Prof. (Dr.) Zakkariya K A as National Treasurer Shri. Nabaghana Pany looks on (30 March 2026)."
+                caption="National President Shri. Atul Shah presenting the Diamond Chapter Charter to National Vice President Prof. (Dr.) Zakkariya K. A. as National Treasurer Shri. Nabaghana Pany looks on (30 March 2026)."
                 category="Charter Presentation"
                 badgeText="30 March 2026 • Thrissur"
                 headingText="Presentation of the Diamond Chapter Charter"
@@ -74,7 +74,7 @@ export default function AboutPage() {
                   src="/photos/istd-calicut.jpeg"
                   alt="Dignitaries seated on the dais at the Thrissur Chapter inauguration"
                   title="Dignitaries on the Dais"
-                  caption="Past National President Dr. Yogesh Kumar Upadhyay, National Treasurer Shri. Nabaghana Pany, National President Shri. Atul Shah, Regional VP (South) Prof. (Dr.) Zakkariya K A, and Chapter Chairman Shri. Tony Chacko."
+                  caption="Past National President Dr. Yogesh Kumar Upadhyay, National Treasurer Shri. Nabaghana Pany, National President Shri. Atul Shah, National Vice President Prof. (Dr.) Zakkariya K. A., and Chapter Chairman Tony Chacko."
                   category="Inauguration"
                   badgeText="30 March 2026"
                   headingText="Dignitaries on the Dais"

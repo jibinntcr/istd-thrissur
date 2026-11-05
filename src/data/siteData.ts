@@ -85,6 +85,8 @@ export interface ChapterEvent {
   id: string;
   slug: string;
   status: 'upcoming' | 'past';
+  year?: string;
+  monthLabel?: string;
   title: string;
   subtitleQuestion?: string;
   programmeType:
@@ -167,26 +169,26 @@ export const HERO_SLIDES: HeroSlide[] = [
   {
     src: '/photos/hero-slide-1.jpg',
     badge: 'Keynote Address • Thrissur Chapter',
-    title: 'Prof. (Dr.) Zakkariya K A Addressing the Gathering',
-    desc: 'Regional Vice President (South), ISTD speaking at the Thrissur Chapter',
+    title: 'Prof. (Dr.) Zakkariya K. A. Addressing the Gathering',
+    desc: 'National Vice President, ISTD & Founder-Mentor speaking at the Thrissur Chapter',
     caption:
-      'Prof. (Dr.) Zakkariya K A (Regional Vice President – South, ISTD) addressing the gathering at Hotel Pearl Regency, Thrissur.',
+      'Prof. (Dr.) Zakkariya K. A. (National Vice President, ISTD & Founder-Mentor, ISTD Thrissur Chapter) addressing the gathering at Hotel Pearl Regency, Thrissur.',
   },
   {
     src: '/photos/hero-slide-2.jpg',
     badge: 'Chairman’s Address • Thrissur Chapter',
-    title: 'Welcome Address by Chapter Chairman Shri. Tony Chacko',
+    title: 'Welcome Address by Chapter Chairman Tony Chacko',
     desc: 'Outlining the vision and programmes of the ISTD Thrissur Chapter',
     caption:
-      'Shri. Tony Chacko, Chairman of the ISTD Thrissur Chapter, addressing members and delegates at Hotel Pearl Regency, Thrissur.',
+      'Tony Chacko, Chairman of the ISTD Thrissur Chapter, addressing members and delegates at Hotel Pearl Regency, Thrissur.',
   },
   {
     src: '/photos/hero-slide-3.jpg',
     badge: 'Chapter Leadership & Dignitaries',
     title: 'ISTD National Leaders & Thrissur Chapter Managing Committee',
-    desc: 'National and Regional ISTD leaders alongside the Thrissur Chapter Office Bearers and Committee',
+    desc: 'National ISTD leaders alongside the Thrissur Chapter Office Bearers and Committee',
     caption:
-      'ISTD National President Shri. Atul Shah, Past National President Dr. Yogesh Kumar Upadhyay, National Treasurer Shri. Nabaghana Pany, Regional VP (South) Prof. (Dr.) Zakkariya K A, Chairman Shri. Tony Chacko, Secretary Ms. Sneha Rose George, Treasurer Mr. Jibin N, and committee members.',
+      'ISTD National President Shri. Atul Shah, Past National President Dr. Yogesh Kumar Upadhyay, National Treasurer Shri. Nabaghana Pany, National Vice President Prof. (Dr.) Zakkariya K. A., Chairman Tony Chacko, Secretary Jibin N, Treasurer Sneha Rose George, and committee members.',
   },
   {
     src: '/photos/hero-slide-4.jpg',
@@ -676,26 +678,26 @@ export const OFFICE_BEARERS: CommitteeMember[] = [
     role: 'Founder & Mentor',
     organisation: 'ISTD Thrissur Chapter',
     title: 'National Vice President, ISTD & Senior Professor, School of Management Studies, CUSAT',
-    headline: 'Founder & Mentor, ISTD Thrissur Chapter',
+    headline: 'Founder & Mentor, ISTD Thrissur Chapter • National Vice President, ISTD',
     shortBio:
-      'Senior Professor and former Director at the School of Management Studies, CUSAT, and National Vice President of ISTD. Instrumental in founding and mentoring the ISTD Thrissur Diamond Chapter.',
-    metaTitle: 'Prof. (Dr.) Zakkariya K. A. | Founder & Mentor | ISTD Thrissur Chapter',
+      'National Vice President of ISTD and Senior Professor & former Director at the School of Management Studies, CUSAT. Instrumental in founding and mentoring the ISTD Thrissur Diamond Chapter.',
+    metaTitle: 'Prof. (Dr.) Zakkariya K. A. | National Vice President, ISTD & Founder-Mentor | ISTD Thrissur Chapter',
     metaDescription:
-      'Meet Prof. (Dr.) Zakkariya K. A., Founder & Mentor of ISTD Thrissur Chapter, National Vice President of ISTD, and Senior Professor at the School of Management Studies, CUSAT.',
+      'Meet Prof. (Dr.) Zakkariya K. A., National Vice President of ISTD, Founder & Mentor of ISTD Thrissur Chapter, and Senior Professor at the School of Management Studies, CUSAT.',
     avatar: '/images/ISTDTeamTCR/zakkariya-ka.jpg',
     avatarWidth: 682,
     avatarHeight: 1024,
-    avatarAlt: 'Prof. (Dr.) Zakkariya K. A., Founder & Mentor of ISTD Thrissur Chapter',
+    avatarAlt: 'Prof. (Dr.) Zakkariya K. A., National Vice President of ISTD and Founder & Mentor of ISTD Thrissur Chapter',
     secondaryAvatar: '/images/ISTDTeamTCR/zakkariya-ka-2.jpg',
     secondaryAvatarCaption:
-      'Prof. (Dr.) Zakkariya K. A. — Senior Professor at the School of Management Studies, CUSAT & National Vice President, ISTD.',
+      'Prof. (Dr.) Zakkariya K. A. — National Vice President, ISTD & Senior Professor at the School of Management Studies, CUSAT.',
     linkedin: 'https://www.linkedin.com/in/zakkariya-k-a-b28606109/',
     sameAs: ['https://www.linkedin.com/in/zakkariya-k-a-b28606109/'],
     confirmedProfiles: [
       {
-        label: 'LinkedIn Profile',
+        label: 'LinkedIn',
         url: 'https://www.linkedin.com/in/zakkariya-k-a-b28606109/',
-        context: 'linkedin.com/in/zakkariya-k-a-b28606109',
+        context: 'Official Professional Profile',
       },
     ],
     isChairman: true,
@@ -825,9 +827,9 @@ export const OFFICE_BEARERS: CommitteeMember[] = [
     sameAs: ['https://www.linkedin.com/in/tony-chacko-965622240/'],
     confirmedProfiles: [
       {
-        label: 'LinkedIn Profile',
+        label: 'LinkedIn',
         url: 'https://www.linkedin.com/in/tony-chacko-965622240/',
-        context: 'linkedin.com/in/tony-chacko-965622240',
+        context: 'Official Professional Profile',
       },
     ],
     isChairman: true,
@@ -928,14 +930,14 @@ export const OFFICE_BEARERS: CommitteeMember[] = [
     ],
     confirmedProfiles: [
       {
-        label: 'LinkedIn Profile',
+        label: 'LinkedIn',
         url: 'https://www.linkedin.com/in/jibintcr/',
-        context: 'linkedin.com/in/jibintcr',
+        context: 'Professional Network Profile',
       },
       {
-        label: 'NEOM Panels Leadership Profile',
+        label: 'NEOM Panels',
         url: 'https://neompanels-new.vercel.app/team/jibin-n',
-        context: 'Managing Director — NEOM Panels',
+        context: 'Managing Director — Executive Leadership Profile',
       },
     ],
     isOfficeBearer: true,
@@ -1016,9 +1018,9 @@ export const OFFICE_BEARERS: CommitteeMember[] = [
     sameAs: ['https://www.linkedin.com/in/sneha-rose-george-4176a325/'],
     confirmedProfiles: [
       {
-        label: 'LinkedIn Profile',
+        label: 'LinkedIn',
         url: 'https://www.linkedin.com/in/sneha-rose-george-4176a325/',
-        context: 'linkedin.com/in/sneha-rose-george-4176a325',
+        context: 'Official Professional Profile',
       },
     ],
     isOfficeBearer: true,
@@ -1105,10 +1107,10 @@ export const INAUGURATION_DIGNITARIES = [
     photo: '/photos/istd-participants.jpeg',
   },
   {
-    name: 'Prof. (Dr.) Zakkariya K A',
-    designation: 'Regional Vice President, ISTD (South)',
+    name: 'Prof. (Dr.) Zakkariya K. A.',
+    designation: 'National Vice President, ISTD',
     linkedin: 'https://www.linkedin.com/in/zakkariya-k-a-b28606109/',
-    photo: '/photos/istd-zakkariya.jpeg',
+    photo: '/images/ISTDTeamTCR/zakkariya-ka.jpg',
   },
   {
     name: 'Shri. Tony Chacko',
@@ -1256,6 +1258,8 @@ export const ALL_CHAPTER_EVENTS: ChapterEvent[] = [
     id: 'event-campus-cce-inauguration',
     slug: 'christ-college-student-chapter-inauguration',
     status: 'past',
+    year: '2026',
+    monthLabel: '2026 • Campus Milestone',
     title:
       'Inauguration of First Student Chapter at Christ College of Engineering (Autonomous)',
     programmeType: 'Campus Chapter Milestone',
@@ -1263,13 +1267,15 @@ export const ALL_CHAPTER_EVENTS: ChapterEvent[] = [
     timeIST: 'Campus Inaugural Session (IST)',
     venue: 'Christ College of Engineering (Autonomous), Irinjalakuda, Thrissur',
     speaker:
-      'Prof. (Dr.) Zakkariya (National Vice President, ISTD) & Mr. Tony Chacko (Chairman, ISTD Trichur Chapter)',
+      'Prof. (Dr.) Zakkariya K. A. (National Vice President, ISTD) & Tony Chacko (Chairman, ISTD Thrissur Chapter)',
+    speakerDesignation:
+      'National Vice President, ISTD & Chairman, ISTD Thrissur Chapter',
     shortDescription:
-      'Successful inauguration of the ISTD Trichur Chapter’s first student chapter at Christ College of Engineering (Autonomous), featuring the inaugural address and lamp-lighting ceremony by Prof. (Dr.) Zakkariya (National Vice President, ISTD) and an address by Mr. Tony Chacko (Chairman, ISTD Trichur Chapter).',
+      'Successful inauguration of the ISTD Trichur Chapter’s first student chapter at Christ College of Engineering (Autonomous), featuring the inaugural address and lamp-lighting ceremony by Prof. (Dr.) Zakkariya K. A. (National Vice President, ISTD) and an address by Tony Chacko (Chairman, ISTD Trichur Chapter).',
     fullDescription: [
       'ISTD Trichur Chapter successfully inaugurated its first student chapter at Christ College of Engineering (Autonomous), establishing a vibrant institutional bridge between academia and industry.',
       'The student chapter creates a dedicated space for students to connect academic learning with professional practice, engage with experienced practitioners, and develop as future professionals.',
-      'The inaugural program featured a keynote address by Prof. (Dr.) Zakkariya, National Vice President, ISTD, followed by the official inauguration of the student chapter and lighting of the ceremonial lamp. Mr. Tony Chacko, Chairman of the ISTD Trichur Chapter, also addressed the gathering of faculty members and students.',
+      'The inaugural program featured a keynote address by Prof. (Dr.) Zakkariya K. A., National Vice President, ISTD, followed by the official inauguration of the student chapter and lighting of the ceremonial lamp. Tony Chacko, Chairman of the ISTD Trichur Chapter, also addressed the gathering of faculty members and students.',
       'This milestone marks the beginning of a sustained collaboration with the students and faculty of Christ College of Engineering (Autonomous) through practitioner sessions, leadership forums, and skill-development initiatives.',
     ],
     image: '/images/campus-chapter-cce.jpg',
@@ -1283,7 +1289,7 @@ export const ALL_CHAPTER_EVENTS: ChapterEvent[] = [
         src: '/images/campus-chapter-cce.jpg',
         title: 'Inauguration of First Student Chapter — Christ College of Engineering (Autonomous)',
         caption:
-          'ISTD Trichur First Student Chapter Inauguration at Christ College of Engineering (Autonomous), featuring addresses by Prof. (Dr.) Zakkariya (National Vice President, ISTD) and Mr. Tony Chacko (Chairman, ISTD Trichur Chapter).',
+          'ISTD Trichur First Student Chapter Inauguration at Christ College of Engineering (Autonomous), featuring addresses by Prof. (Dr.) Zakkariya K. A. (National Vice President, ISTD) and Tony Chacko (Chairman, ISTD Trichur Chapter).',
         category: 'Campus Chapter Milestone',
       },
     ],
@@ -1292,6 +1298,8 @@ export const ALL_CHAPTER_EVENTS: ChapterEvent[] = [
     id: 'event-aiot-boopathy',
     slug: 'advancing-aiot-research',
     status: 'upcoming',
+    year: '2026',
+    monthLabel: 'November 2026',
     title: 'Advancing AIoT Research: From Intelligent Algorithms to Real-World Applications',
     subtitleQuestion: 'How can intelligent algorithms translate into real-world applications?',
     programmeType: 'Webinar',
@@ -1328,6 +1336,8 @@ export const ALL_CHAPTER_EVENTS: ChapterEvent[] = [
     id: 'event-ai-agents',
     slug: 'ai-agents-in-business',
     status: 'past',
+    year: '2026',
+    monthLabel: 'August 2026',
     title: 'From AI Assistants to AI Agents: The Next Shift in Business',
     programmeType: 'Webinar',
     date: '8 August 2026',
@@ -1360,6 +1370,8 @@ export const ALL_CHAPTER_EVENTS: ChapterEvent[] = [
     id: 'event-healthy-habits',
     slug: 'healthy-habits-of-high-performers',
     status: 'past',
+    year: '2026',
+    monthLabel: 'July 2026',
     title: 'Healthy Habits of High Performers',
     programmeType: 'Special Session',
     date: '25 July 2026',
@@ -1393,6 +1405,8 @@ export const ALL_CHAPTER_EVENTS: ChapterEvent[] = [
     id: 'event-chapter-connect-2026',
     slug: 'chapter-connect-2026',
     status: 'past',
+    year: '2026',
+    monthLabel: 'June 2026',
     title:
       'Chapter Connect 2026 — Members’ Orientation & Professional Networking Programme',
     subtitleQuestion: 'Connect. Collaborate. Grow.',
@@ -1401,15 +1415,15 @@ export const ALL_CHAPTER_EVENTS: ChapterEvent[] = [
     timeIST: '10:30 AM – 1:00 PM IST',
     venue: 'Hotel Elite International, Thrissur',
     speaker:
-      'Prof. (Dr.) Zakkariya K.A, Shri. Tony Chacko & Chapter Leadership Team',
+      'Prof. (Dr.) Zakkariya K. A. (National Vice President, ISTD), Tony Chacko (Chairman) & Chapter Leadership Team',
     speakerDesignation:
-      'Members’ Orientation & Professional Networking Forum • ISTD Trichur Chapter',
+      'National Vice President, ISTD • Members’ Orientation & Professional Networking Forum',
     shortDescription:
       'A dedicated members’ orientation and professional networking programme hosted by the ISTD Trichur Chapter at Hotel Elite International, focused on connection, collaboration, and chapter engagement.',
     fullDescription: [
       'ISTD Trichur Chapter hosted Chapter Connect 2026, a members’ orientation and professional networking programme focused on connection, collaboration, and chapter engagement.',
       'The programme was designed to bring members together to understand the chapter’s vision, explore upcoming initiatives, and build meaningful professional relationships within the ISTD community.',
-      'Held on 27 June 2026 from 10:30 AM to 1:00 PM at Hotel Elite International, Thrissur, the session featured leadership addresses, member introductions, interactive team-building exercises, and collaborative discussions under the theme “Connect. Collaborate. Grow.”',
+      'Held on 27 June 2026 from 10:30 AM to 1:00 PM at Hotel Elite International, Thrissur, the session featured leadership addresses by Prof. (Dr.) Zakkariya K. A. (National Vice President, ISTD & Founder-Mentor) and Tony Chacko (Chairman, ISTD Thrissur Chapter), member introductions, interactive team-building exercises, and collaborative discussions under the theme “Connect. Collaborate. Grow.”',
     ],
     image: '/photos/chapter-connect-2026-poster.jpg',
     imageCaption:
@@ -1434,16 +1448,16 @@ export const ALL_CHAPTER_EVENTS: ChapterEvent[] = [
       },
       {
         src: '/photos/chapter-connect-2026-1.jpg',
-        title: 'Chairman Shri. Tony Chacko Addressing Chapter Connect 2026',
+        title: 'Chairman Tony Chacko Addressing Chapter Connect 2026',
         caption:
-          'Chairman Shri. Tony Chacko addressing members from the podium at Hotel Elite International during Chapter Connect 2026 (27 June 2026), with Founder & Mentor Prof. (Dr.) Zakkariya K A, Secretary Ms. Sneha Rose George, Treasurer Mr. Jibin N, and committee leaders on the dais.',
+          'Chairman Tony Chacko addressing members from the podium at Hotel Elite International during Chapter Connect 2026 (27 June 2026), with National Vice President & Founder-Mentor Prof. (Dr.) Zakkariya K. A., Secretary Jibin N, Treasurer Sneha Rose George, and committee leaders on the dais.',
         category: 'Leadership Address',
       },
       {
         src: '/photos/chapter-connect-2026-6.jpg',
-        title: 'Presidential Address by Chairman Shri. Tony Chacko',
+        title: 'Presidential Address by Chairman Tony Chacko',
         caption:
-          'Chapter Chairman Shri. Tony Chacko delivering the orientation and welcome address at Hotel Elite International during Chapter Connect 2026.',
+          'Chapter Chairman Tony Chacko delivering the orientation and welcome address at Hotel Elite International during Chapter Connect 2026.',
         category: 'Leadership Address',
       },
       {
@@ -1501,6 +1515,8 @@ export const ALL_CHAPTER_EVENTS: ChapterEvent[] = [
     id: 'event-future-ld',
     slug: 'future-of-ld-ai-ecosystems',
     status: 'past',
+    year: '2026',
+    monthLabel: 'April 2026',
     title: 'Future of L&D: Building Intelligent Learning Ecosystems with AI',
     programmeType: '57th Foundation Day Session',
     date: 'Saturday, 11 April 2026',
@@ -1534,12 +1550,15 @@ export const ALL_CHAPTER_EVENTS: ChapterEvent[] = [
     id: 'event-inauguration-2026',
     slug: 'inauguration',
     status: 'past',
+    year: '2026',
+    monthLabel: 'March 2026',
     title: 'ISTD Trichur Chapter Inaugurated as Diamond Chapter in ISTD’s 55th Year',
     programmeType: 'Chapter Milestone',
     date: '30 March 2026',
     timeIST: 'Inaugural Session (IST)',
     venue: 'Hotel Pearl Regency, Thrissur',
-    speaker: 'Shri. Atul Shah (National President, ISTD) & National/Regional Dignitaries',
+    speaker: 'Shri. Atul Shah (National President, ISTD), Prof. (Dr.) Zakkariya K. A. (National Vice President, ISTD) & Dignitaries',
+    speakerDesignation: 'ISTD National Leadership & Thrissur Chapter Office Bearers',
     shortDescription:
       'Official inauguration of the ISTD Thrissur (Trichur) Chapter as the Diamond Chapter of the Indian Society for Training & Development (ISTD) in its 55th year, together with the installation of office bearers.',
     fullDescription: [
@@ -1551,7 +1570,7 @@ export const ALL_CHAPTER_EVENTS: ChapterEvent[] = [
     ],
     image: '/photos/istd-22.jpeg',
     imageCaption:
-      'Chairman Shri. Tony Chacko and Regional Vice President (South) Prof. (Dr.) Zakkariya K A lighting the ceremonial lamp alongside National President Shri. Atul Shah, National Treasurer Shri. Nabaghana Pany, and Past National President Dr. Yogesh Kumar Upadhyay on 30 March 2026.',
+      'Chairman Tony Chacko and National Vice President Prof. (Dr.) Zakkariya K. A. lighting the ceremonial lamp alongside National President Shri. Atul Shah, National Treasurer Shri. Nabaghana Pany, and Past National President Dr. Yogesh Kumar Upadhyay on 30 March 2026.',
     hasPhotoGallery: true,
   },
 ];

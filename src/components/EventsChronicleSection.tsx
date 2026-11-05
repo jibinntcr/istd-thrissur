@@ -1,29 +1,48 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { ALL_CHAPTER_EVENTS, assetUrl, ChapterEvent } from '@/data/siteData';
 import { fetchBackendStore } from '@/lib/clientBackendCache';
 
-type EventTab = 'upcoming' | 'past';
+type EventStatusFilter = 'all' | 'upcoming' | 'past';
+type EventCategoryFilter =
+  | 'all'
+  | 'milestones'
+  | 'webinars'
+  | 'campus';
 
 interface EventsChronicleSectionProps {
-  initialTab?: EventTab;
+  initialTab?: EventStatusFilter;
+  compactHomeView?: boolean;
+}
+
+function extractEventYear(event: ChapterEvent): string {
+  if (event.year) return event.year;
+  const match = event.date.match(/\b(20\d{2})\b/);
+  return match ? match[1] : '2026';
 }
 
 export function EventsChronicleSection({
-  initialTab = 'upcoming',
+  initialTab = 'all',
+  compactHomeView = false,
 }: EventsChronicleSectionProps) {
-  const [activeTab, setActiveTab] = useState<EventTab>(initialTab);
-  const [eventsList, setEventsList] = useState<ChapterEvent[]>(ALL_CHAPTER_EVENTS);
+  const [statusFilter, setStatusFilter] =
+    useState<EventStatusFilter>(initialTab);
+  const [selectedYear, setSelectedYear] = useState<string>('all');
+  const [categoryFilter, setCategoryFilter] =
+    useState<EventCategoryFilter>('all');
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [eventsList, setEventsList] =
+    useState<ChapterEvent[]>(ALL_CHAPTER_EVENTS);
 
   useEffect(() => {
     const checkHash = () => {
       if (window.location.hash === '#pastEvents') {
-        setActiveTab('past');
+        setStatusFilter('past');
       } else if (window.location.hash === '#upcomingEvents') {
-        setActiveTab('upcoming');
+        setStatusFilter('upcoming');
       }
     };
     checkHash();
@@ -45,8 +64,100 @@ export function EventsChronicleSection({
     };
   }, []);
 
-  const upcomingEvents = eventsList.filter((e) => e.status === 'upcoming');
-  const pastEvents = eventsList.filter((e) => e.status === 'past');
+  const availableYears = useMemo(() => {
+    const yearsSet = new Set<string>();
+    eventsList.forEach((ev) => yearsSet.add(extractEventYear(ev)));
+    return Array.from(yearsSet).sort((a, b) => Number(b) - Number(a));
+  }, [eventsList]);
+
+  const upcomingCount = useMemo(
+    () => eventsList.filter((e) => e.status === 'upcoming').length,
+    [eventsList]
+  );
+  const pastCount = useMemo(
+    () => eventsList.filter((e) => e.status === 'past').length,
+    [eventsList]
+  );
+
+  const filteredEvents = useMemo(() => {
+    const q = searchQuery.trim().toLowerCase();
+
+    return eventsList.filter((ev) => {
+      const evYear = extractEventYear(ev);
+      if (selectedYear !== 'all' && evYear !== selectedYear) {
+        return false;
+      }
+
+      if (statusFilter === 'upcoming' && ev.status !== 'upcoming') {
+        return false;
+      }
+      if (statusFilter === 'past' && ev.status !== 'past') {
+        return false;
+      }
+
+      if (categoryFilter === 'milestones') {
+        const isMilestone =
+          ev.programmeType === 'Chapter Milestone' ||
+          ev.programmeType === '57th Foundation Day Session' ||
+          ev.slug === 'chapter-connect-2026';
+        if (!isMilestone) return false;
+      } else if (categoryFilter === 'webinars') {
+        const isWebinar =
+          ev.programmeType === 'Webinar' ||
+          ev.programmeType === 'Special Session' ||
+          ev.programmeType === '57th Foundation Day Session';
+        if (!isWebinar) return false;
+      } else if (categoryFilter === 'campus') {
+        const isCampus =
+          ev.programmeType === 'Campus Chapter Milestone' ||
+          ev.slug.includes('student-chapter');
+        if (!isCampus) return false;
+      }
+
+      if (q) {
+        const searchable = [
+          ev.title,
+          ev.programmeType,
+          ev.date,
+          ev.monthLabel || '',
+          evYear,
+          ev.venue,
+          ev.speaker || '',
+          ev.speakerDesignation || '',
+          ev.shortDescription,
+          ...(ev.fullDescription || []),
+        ]
+          .join(' ')
+          .toLowerCase();
+
+        if (!searchable.includes(q)) {
+          return false;
+        }
+      }
+
+      return true;
+    });
+  }, [eventsList, selectedYear, statusFilter, categoryFilter, searchQuery]);
+
+  const groupedByYear = useMemo(() => {
+    const map = new Map<string, ChapterEvent[]>();
+    filteredEvents.forEach((ev) => {
+      const yr = extractEventYear(ev);
+      const list = map.get(yr) || [];
+      list.push(ev);
+      map.set(yr, list);
+    });
+    return Array.from(map.entries()).sort(
+      (a, b) => Number(b[0]) - Number(a[0])
+    );
+  }, [filteredEvents]);
+
+  const resetFilters = () => {
+    setSearchQuery('');
+    setSelectedYear('all');
+    setStatusFilter('all');
+    setCategoryFilter('all');
+  };
 
   return (
     <section
@@ -55,117 +166,584 @@ export function EventsChronicleSection({
       aria-label="Events and Programmes"
     >
       <div className="container">
-        {/* Two-Tab Navigation Header: Upcoming Events | Past Events & Reports */}
+        {/* Section Header */}
         <div
-          className="events-chronicle-header"
-          style={{ marginBottom: '2rem', paddingBottom: '1.25rem' }}
+          style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            alignItems: 'flex-end',
+            justifyContent: 'space-between',
+            gap: '1.25rem',
+            marginBottom: '1.75rem',
+          }}
         >
           <div>
-            <span className="section-tag tag-blue">Events &amp; Programmes</span>
+            <span className="section-tag tag-blue">
+              Year-Wise Programme Directory
+            </span>
             <h2 className="section-title" style={{ marginBottom: '0.35rem' }}>
-              {activeTab === 'upcoming' ? 'Upcoming Events' : 'Completed Events & Reports'}
+              Events, Webinars &amp; Chapter Milestones
             </h2>
             <p
               style={{
                 color: 'var(--color-muted)',
                 fontSize: '0.96rem',
-                maxWidth: '640px',
+                maxWidth: '680px',
                 marginBottom: 0,
+                textAlign: 'justify',
               }}
             >
-              {activeTab === 'upcoming'
-                ? 'Explore scheduled learning sessions and programmes organised by the ISTD Thrissur Chapter. Click any event card to view full details.'
-                : 'Reports and photographs of completed learning sessions, seminars, and milestones organised by the ISTD Thrissur Chapter. Click any event card to open its full report and photo gallery.'}
+              Browse and search ISTD Thrissur Chapter programmes by year,
+              category, speaker, or session status. Select any programme card to
+              view its complete report, resource person details, and photographs.
             </p>
           </div>
 
-          <div className="events-tab-bar" role="tablist" aria-label="Event categories">
-            <button
-              type="button"
-              role="tab"
-              id="tab-upcoming"
-              aria-selected={activeTab === 'upcoming'}
-              aria-controls="panel-upcoming"
-              className={`events-tab-btn ${activeTab === 'upcoming' ? 'active' : ''}`}
-              onClick={() => setActiveTab('upcoming')}
+          {compactHomeView && (
+            <Link href="/events" className="btn btn-outline-navy btn-sm">
+              Open Full Events Directory &rarr;
+            </Link>
+          )}
+        </div>
+
+        {/* Interactive Search & Year / Category Filter Console */}
+        <div
+          style={{
+            background: 'linear-gradient(135deg, #F8FAFC 0%, #EFF6FF 100%)',
+            border: '1.5px solid #DBEAFE',
+            borderRadius: '20px',
+            padding: 'clamp(1.15rem, 2.5vw, 1.65rem)',
+            marginBottom: '2.25rem',
+            boxShadow: '0 10px 28px -8px rgba(15, 23, 42, 0.06)',
+          }}
+        >
+          {/* Top Row: Search Input + Year Filter Pills */}
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))',
+              gap: '1rem',
+              alignItems: 'center',
+              marginBottom: '1.1rem',
+            }}
+          >
+            {/* Search Box */}
+            <div style={{ position: 'relative' }}>
+              <label
+                htmlFor="events-search-input"
+                className="sr-only"
+                style={{
+                  position: 'absolute',
+                  width: '1px',
+                  height: '1px',
+                  overflow: 'hidden',
+                  clip: 'rect(0,0,0,0)',
+                }}
+              >
+                Search events by title, speaker, topic, or venue
+              </label>
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#2563EB"
+                strokeWidth="2.2"
+                aria-hidden="true"
+                style={{
+                  position: 'absolute',
+                  left: '1rem',
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                  pointerEvents: 'none',
+                }}
+              >
+                <circle cx="11" cy="11" r="8" />
+                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+              </svg>
+              <input
+                id="events-search-input"
+                type="search"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search by event title, speaker (e.g., Zakkariya, Boopathy), topic, or venue..."
+                style={{
+                  width: '100%',
+                  padding: '0.78rem 2.6rem 0.78rem 2.75rem',
+                  borderRadius: '12px',
+                  border: '1.5px solid #BFDBFE',
+                  background: '#FFFFFF',
+                  color: '#0F172A',
+                  fontSize: '0.92rem',
+                  fontWeight: 500,
+                  outline: 'none',
+                  boxShadow: '0 2px 6px rgba(15, 23, 42, 0.03)',
+                }}
+              />
+              {searchQuery && (
+                <button
+                  type="button"
+                  onClick={() => setSearchQuery('')}
+                  aria-label="Clear search"
+                  style={{
+                    position: 'absolute',
+                    right: '0.75rem',
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    background: '#E2E8F0',
+                    border: 'none',
+                    borderRadius: '999px',
+                    width: '22px',
+                    height: '22px',
+                    fontSize: '0.75rem',
+                    fontWeight: 800,
+                    color: '#334155',
+                    cursor: 'pointer',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  ✕
+                </button>
+              )}
+            </div>
+
+            {/* Year Selector Pills */}
+            <div
+              style={{
+                display: 'flex',
+                flexWrap: 'wrap',
+                alignItems: 'center',
+                gap: '0.5rem',
+                justifyContent: 'flex-start',
+              }}
+              role="group"
+              aria-label="Filter by Year"
             >
-              <span className="pulse-dot-green" aria-hidden="true" />
-              <span>Upcoming Events</span>
-              <span className="events-tab-badge">{upcomingEvents.length}</span>
-            </button>
-            <button
-              type="button"
-              role="tab"
-              id="tab-past"
-              aria-selected={activeTab === 'past'}
-              aria-controls="panel-past"
-              className={`events-tab-btn ${activeTab === 'past' ? 'active' : ''}`}
-              onClick={() => setActiveTab('past')}
+              <span
+                style={{
+                  fontSize: '0.76rem',
+                  fontWeight: 800,
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.07em',
+                  color: '#1E3A8A',
+                  marginRight: '0.25rem',
+                }}
+              >
+                Year:
+              </span>
+              <button
+                type="button"
+                onClick={() => setSelectedYear('all')}
+                style={{
+                  padding: '0.45rem 0.95rem',
+                  borderRadius: '999px',
+                  border:
+                    selectedYear === 'all'
+                      ? '1.5px solid #0B2239'
+                      : '1.5px solid #CBD5E1',
+                  background: selectedYear === 'all' ? '#0B2239' : '#FFFFFF',
+                  color: selectedYear === 'all' ? '#FFFFFF' : '#334155',
+                  fontSize: '0.82rem',
+                  fontWeight: 700,
+                  cursor: 'pointer',
+                  transition: 'all 0.15s ease',
+                }}
+              >
+                All Years ({eventsList.length})
+              </button>
+              {availableYears.map((yr) => {
+                const count = eventsList.filter(
+                  (e) => extractEventYear(e) === yr
+                ).length;
+                const active = selectedYear === yr;
+                return (
+                  <button
+                    key={yr}
+                    type="button"
+                    onClick={() => setSelectedYear(yr)}
+                    style={{
+                      padding: '0.45rem 0.95rem',
+                      borderRadius: '999px',
+                      border: active
+                        ? '1.5px solid #2563EB'
+                        : '1.5px solid #CBD5E1',
+                      background: active ? '#2563EB' : '#FFFFFF',
+                      color: active ? '#FFFFFF' : '#1E293B',
+                      fontSize: '0.82rem',
+                      fontWeight: 800,
+                      cursor: 'pointer',
+                      transition: 'all 0.15s ease',
+                    }}
+                  >
+                    🗓️ {yr} ({count})
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Bottom Row: Status Filter & Category Filter */}
+          <div
+            style={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              gap: '0.85rem',
+              paddingTop: '0.95rem',
+              borderTop: '1px solid #DBEAFE',
+            }}
+          >
+            {/* Status Tabs */}
+            <div
+              style={{ display: 'flex', flexWrap: 'wrap', gap: '0.45rem' }}
+              role="tablist"
+              aria-label="Event status filter"
             >
-              <span>Past Events &amp; Reports</span>
-              <span className="events-tab-badge">{pastEvents.length}</span>
-            </button>
+              <button
+                type="button"
+                role="tab"
+                aria-selected={statusFilter === 'all'}
+                onClick={() => setStatusFilter('all')}
+                style={{
+                  padding: '0.42rem 0.9rem',
+                  borderRadius: '10px',
+                  border:
+                    statusFilter === 'all'
+                      ? '1.5px solid #1E40AF'
+                      : '1px solid #CBD5E1',
+                  background: statusFilter === 'all' ? '#1E40AF' : '#FFFFFF',
+                  color: statusFilter === 'all' ? '#FFFFFF' : '#334155',
+                  fontSize: '0.82rem',
+                  fontWeight: 700,
+                  cursor: 'pointer',
+                }}
+              >
+                All Programmes ({eventsList.length})
+              </button>
+              <button
+                type="button"
+                role="tab"
+                aria-selected={statusFilter === 'upcoming'}
+                onClick={() => setStatusFilter('upcoming')}
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.4rem',
+                  padding: '0.42rem 0.9rem',
+                  borderRadius: '10px',
+                  border:
+                    statusFilter === 'upcoming'
+                      ? '1.5px solid #059669'
+                      : '1px solid #CBD5E1',
+                  background:
+                    statusFilter === 'upcoming' ? '#059669' : '#FFFFFF',
+                  color: statusFilter === 'upcoming' ? '#FFFFFF' : '#334155',
+                  fontSize: '0.82rem',
+                  fontWeight: 700,
+                  cursor: 'pointer',
+                }}
+              >
+                <span className="pulse-dot-green" aria-hidden="true" />
+                <span>Upcoming ({upcomingCount})</span>
+              </button>
+              <button
+                type="button"
+                role="tab"
+                aria-selected={statusFilter === 'past'}
+                onClick={() => setStatusFilter('past')}
+                style={{
+                  padding: '0.42rem 0.9rem',
+                  borderRadius: '10px',
+                  border:
+                    statusFilter === 'past'
+                      ? '1.5px solid #0B2239'
+                      : '1px solid #CBD5E1',
+                  background: statusFilter === 'past' ? '#0B2239' : '#FFFFFF',
+                  color: statusFilter === 'past' ? '#FFFFFF' : '#334155',
+                  fontSize: '0.82rem',
+                  fontWeight: 700,
+                  cursor: 'pointer',
+                }}
+              >
+                Completed Reports ({pastCount})
+              </button>
+            </div>
+
+            {/* Category Pills */}
+            <div
+              style={{ display: 'flex', flexWrap: 'wrap', gap: '0.45rem' }}
+              role="group"
+              aria-label="Programme category filter"
+            >
+              {(
+                [
+                  { id: 'all', label: 'All Categories' },
+                  { id: 'milestones', label: 'Chapter Milestones' },
+                  { id: 'campus', label: 'Campus Chapters' },
+                  { id: 'webinars', label: 'Webinars & Sessions' },
+                ] as { id: EventCategoryFilter; label: string }[]
+              ).map((cat) => {
+                const active = categoryFilter === cat.id;
+                return (
+                  <button
+                    key={cat.id}
+                    type="button"
+                    onClick={() => setCategoryFilter(cat.id)}
+                    style={{
+                      padding: '0.38rem 0.8rem',
+                      borderRadius: '999px',
+                      border: active
+                        ? '1.5px solid #2563EB'
+                        : '1px solid #CBD5E1',
+                      background: active ? '#EFF6FF' : '#FFFFFF',
+                      color: active ? '#1D4ED8' : '#475569',
+                      fontSize: '0.78rem',
+                      fontWeight: 700,
+                      cursor: 'pointer',
+                    }}
+                  >
+                    {cat.label}
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </div>
 
-        {/* =====================================================================
-            TAB 1: UPCOMING EVENTS (SHOWN FIRST)
-           ===================================================================== */}
-        {activeTab === 'upcoming' && (
-          <div id="panel-upcoming" role="tabpanel" aria-labelledby="tab-upcoming">
-            {upcomingEvents.length === 0 ? (
-              <div
-                style={{
-                  padding: '3rem 2rem',
-                  textAlign: 'center',
-                  background: 'var(--color-surface-soft)',
-                  borderRadius: 'var(--radius-lg)',
-                  border: '1px solid var(--color-border)',
-                }}
-              >
-                <p
-                  style={{
-                    fontSize: '1.05rem',
-                    fontWeight: 600,
-                    color: 'var(--color-ink)',
-                    marginBottom: 0,
-                  }}
-                >
-                  Details of upcoming events will be published here.
-                </p>
-              </div>
-            ) : (
-              <div
-                style={{
-                  display: 'grid',
-                  gridTemplateColumns: '1fr',
-                  gap: '1.75rem',
-                }}
-              >
-                {upcomingEvents.map((ev) => (
-                  <UpcomingEventCard key={ev.slug} event={ev} />
-                ))}
-              </div>
-            )}
+        {/* Results Summary Bar */}
+        {(searchQuery ||
+          selectedYear !== 'all' ||
+          statusFilter !== 'all' ||
+          categoryFilter !== 'all') && (
+          <div
+            style={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              gap: '0.75rem',
+              marginBottom: '1.5rem',
+              padding: '0.75rem 1.1rem',
+              background: '#F8FAFC',
+              borderRadius: '12px',
+              border: '1px solid #E2E8F0',
+              fontSize: '0.88rem',
+              color: '#334155',
+            }}
+          >
+            <div>
+              Showing <strong>{filteredEvents.length}</strong> of{' '}
+              <strong>{eventsList.length}</strong> programmes
+              {selectedYear !== 'all' ? ` in ${selectedYear}` : ''}
+              {searchQuery ? ` matching “${searchQuery}”` : ''}
+            </div>
+            <button
+              type="button"
+              onClick={resetFilters}
+              style={{
+                background: 'none',
+                border: 'none',
+                color: '#2563EB',
+                fontWeight: 700,
+                cursor: 'pointer',
+                fontSize: '0.85rem',
+                textDecoration: 'underline',
+              }}
+            >
+              Reset All Filters
+            </button>
           </div>
         )}
 
-        {/* =====================================================================
-            TAB 2: PAST EVENTS & COMPLETED REPORTS (MOST RECENT FIRST)
-           ===================================================================== */}
-        {activeTab === 'past' && (
-          <div id="panel-past" role="tabpanel" aria-labelledby="tab-past">
-            <div
+        {/* Empty State */}
+        {groupedByYear.length === 0 ? (
+          <div
+            style={{
+              padding: '3.25rem 2rem',
+              textAlign: 'center',
+              background: '#F8FAFC',
+              borderRadius: '20px',
+              border: '1.5px dashed #CBD5E1',
+            }}
+          >
+            <h3
               style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))',
-                gap: '1.75rem',
+                fontSize: '1.2rem',
+                fontWeight: 800,
+                color: '#0F172A',
+                marginBottom: '0.45rem',
               }}
             >
-              {pastEvents.map((ev) => (
-                <PastEventCard key={ev.slug} event={ev} />
-              ))}
-            </div>
+              No matching programmes found
+            </h3>
+            <p
+              style={{
+                color: '#64748B',
+                fontSize: '0.94rem',
+                marginBottom: '1.15rem',
+              }}
+            >
+              Try clearing your search query or switching the year/category
+              filters above.
+            </p>
+            <button
+              type="button"
+              onClick={resetFilters}
+              className="btn btn-primary btn-sm"
+            >
+              Show All Programmes
+            </button>
+          </div>
+        ) : (
+          <div style={{ display: 'grid', gap: '3rem' }}>
+            {groupedByYear.map(([year, yearEvents]) => {
+              const yearUpcoming = yearEvents.filter(
+                (e) => e.status === 'upcoming'
+              );
+              const yearPast = yearEvents.filter((e) => e.status === 'past');
+
+              return (
+                <div key={year} id={`year-${year}`}>
+                  {/* Year Section Banner */}
+                  <div
+                    style={{
+                      display: 'flex',
+                      flexWrap: 'wrap',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      gap: '1rem',
+                      padding: '1rem 1.35rem',
+                      marginBottom: '1.65rem',
+                      background:
+                        'linear-gradient(135deg, #071524 0%, #0B2239 65%, #163E66 100%)',
+                      color: '#FFFFFF',
+                      borderRadius: '16px',
+                      borderLeft: '5px solid #FACC15',
+                      boxShadow: '0 10px 25px -6px rgba(11, 34, 57, 0.16)',
+                    }}
+                  >
+                    <div
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.85rem',
+                        flexWrap: 'wrap',
+                      }}
+                    >
+                      <span
+                        style={{
+                          padding: '0.32rem 0.85rem',
+                          borderRadius: '999px',
+                          background: '#FACC15',
+                          color: '#071524',
+                          fontSize: '0.85rem',
+                          fontWeight: 900,
+                          letterSpacing: '0.04em',
+                        }}
+                      >
+                        YEAR {year}
+                      </span>
+                      <div>
+                        <h3
+                          style={{
+                            color: '#FFFFFF',
+                            fontSize: '1.22rem',
+                            fontWeight: 800,
+                            margin: 0,
+                          }}
+                        >
+                          {year} Chapter Programmes &amp; Milestones
+                        </h3>
+                      </div>
+                    </div>
+
+                    <div
+                      style={{
+                        display: 'flex',
+                        flexWrap: 'wrap',
+                        gap: '0.5rem',
+                        fontSize: '0.78rem',
+                        fontWeight: 700,
+                      }}
+                    >
+                      <span
+                        style={{
+                          padding: '0.28rem 0.75rem',
+                          borderRadius: '999px',
+                          background: 'rgba(255,255,255,0.12)',
+                          color: '#F8FAFC',
+                        }}
+                      >
+                        {yearEvents.length}{' '}
+                        {yearEvents.length === 1 ? 'Programme' : 'Programmes'}
+                      </span>
+                      {yearUpcoming.length > 0 && (
+                        <span
+                          style={{
+                            padding: '0.28rem 0.75rem',
+                            borderRadius: '999px',
+                            background: 'rgba(16, 185, 129, 0.22)',
+                            border: '1px solid #34D399',
+                            color: '#A7F3D0',
+                          }}
+                        >
+                          {yearUpcoming.length} Upcoming
+                        </span>
+                      )}
+                      {yearPast.length > 0 && (
+                        <span
+                          style={{
+                            padding: '0.28rem 0.75rem',
+                            borderRadius: '999px',
+                            background: 'rgba(59, 130, 246, 0.25)',
+                            border: '1px solid #93C5FD',
+                            color: '#DBEAFE',
+                          }}
+                        >
+                          {yearPast.length} Completed
+                        </span>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Upcoming Events in this Year */}
+                  {yearUpcoming.length > 0 && (
+                    <div style={{ marginBottom: yearPast.length > 0 ? '2rem' : 0 }}>
+                      <div
+                        style={{
+                          display: 'grid',
+                          gridTemplateColumns: '1fr',
+                          gap: '1.5rem',
+                        }}
+                      >
+                        {yearUpcoming.map((ev) => (
+                          <UpcomingEventCard key={ev.slug} event={ev} />
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Completed Events in this Year */}
+                  {yearPast.length > 0 && (
+                    <div
+                      style={{
+                        display: 'grid',
+                        gridTemplateColumns:
+                          'repeat(auto-fit, minmax(min(100%, 300px), 1fr))',
+                        gap: '1.65rem',
+                      }}
+                    >
+                      {yearPast.map((ev) => (
+                        <PastEventCard key={ev.slug} event={ev} />
+                      ))}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
           </div>
         )}
       </div>
@@ -175,6 +753,7 @@ export function EventsChronicleSection({
 
 export function UpcomingEventCard({ event }: { event: ChapterEvent }) {
   const router = useRouter();
+  const eventYear = extractEventYear(event);
 
   const handleCardClick = (e: React.MouseEvent<HTMLElement>) => {
     const target = e.target as HTMLElement;
@@ -223,6 +802,20 @@ export function UpcomingEventCard({ event }: { event: ChapterEvent }) {
             >
               <span
                 style={{
+                  background: '#059669',
+                  color: '#fff',
+                  fontSize: '0.72rem',
+                  fontWeight: 800,
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.06em',
+                  padding: '0.3rem 0.75rem',
+                  borderRadius: '999px',
+                }}
+              >
+                ● Upcoming • {eventYear}
+              </span>
+              <span
+                style={{
                   background: 'var(--brand-navy)',
                   color: '#fff',
                   fontSize: '0.73rem',
@@ -247,19 +840,6 @@ export function UpcomingEventCard({ event }: { event: ChapterEvent }) {
                 }}
               >
                 📅 {event.date} • 🕖 {event.timeIST}
-              </span>
-              <span
-                style={{
-                  background: '#ECFDF5',
-                  color: '#047857',
-                  border: '1px solid #A7F3D0',
-                  fontSize: '0.75rem',
-                  fontWeight: 700,
-                  padding: '0.28rem 0.75rem',
-                  borderRadius: '999px',
-                }}
-              >
-                💻 {event.venue}
               </span>
             </div>
 
@@ -322,7 +902,13 @@ export function UpcomingEventCard({ event }: { event: ChapterEvent }) {
                   >
                     🎙️ Resource Person
                   </dt>
-                  <dd style={{ margin: 0, color: 'var(--color-ink)', fontWeight: 800 }}>
+                  <dd
+                    style={{
+                      margin: 0,
+                      color: 'var(--color-ink)',
+                      fontWeight: 800,
+                    }}
+                  >
                     {event.speaker}
                     {event.speakerDesignation && (
                       <span
@@ -353,7 +939,13 @@ export function UpcomingEventCard({ event }: { event: ChapterEvent }) {
                 >
                   📅 Date &amp; Time (IST)
                 </dt>
-                <dd style={{ margin: 0, color: 'var(--color-ink)', fontWeight: 700 }}>
+                <dd
+                  style={{
+                    margin: 0,
+                    color: 'var(--color-ink)',
+                    fontWeight: 700,
+                  }}
+                >
                   {event.date}
                   <span
                     style={{
@@ -381,7 +973,13 @@ export function UpcomingEventCard({ event }: { event: ChapterEvent }) {
                 >
                   💻 Platform / Venue
                 </dt>
-                <dd style={{ margin: 0, color: 'var(--color-ink)', fontWeight: 700 }}>
+                <dd
+                  style={{
+                    margin: 0,
+                    color: 'var(--color-ink)',
+                    fontWeight: 700,
+                  }}
+                >
                   {event.venue}
                   <span
                     style={{
@@ -391,7 +989,7 @@ export function UpcomingEventCard({ event }: { event: ChapterEvent }) {
                       color: 'var(--color-body)',
                     }}
                   >
-                    Organised by ISTD Trichur Chapter
+                    Organised by ISTD Thrissur Chapter
                   </span>
                 </dd>
               </div>
@@ -401,23 +999,12 @@ export function UpcomingEventCard({ event }: { event: ChapterEvent }) {
               style={{
                 fontSize: '0.94rem',
                 color: 'var(--color-body)',
-                lineHeight: 1.68,
-                marginBottom: '0.6rem',
-              }}
-            >
-              Explore the convergence of Artificial Intelligence and the Internet of Things, and how
-              research can connect intelligent algorithms with practical applications.
-            </p>
-            <p
-              style={{
-                fontSize: '0.92rem',
-                color: 'var(--color-muted)',
-                lineHeight: 1.65,
+                lineHeight: 1.72,
                 marginBottom: 0,
+                textAlign: 'justify',
               }}
             >
-              We welcome researchers, educators, students, and technology professionals to join us
-              for an evening of learning and fresh perspectives on AIoT.
+              {event.shortDescription}
             </p>
           </div>
 
@@ -433,7 +1020,10 @@ export function UpcomingEventCard({ event }: { event: ChapterEvent }) {
               alignItems: 'center',
             }}
           >
-            <Link href={`/events/${event.slug}`} className="btn btn-primary btn-sm">
+            <Link
+              href={`/events/${event.slug}`}
+              className="btn btn-primary btn-sm"
+            >
               View Details &amp; Poster &rarr;
             </Link>
             {event.registrationAvailable && (
@@ -453,6 +1043,7 @@ export function UpcomingEventCard({ event }: { event: ChapterEvent }) {
 
 export function PastEventCard({ event }: { event: ChapterEvent }) {
   const router = useRouter();
+  const eventYear = extractEventYear(event);
 
   const handleCardClick = (e: React.MouseEvent<HTMLElement>) => {
     const target = e.target as HTMLElement;
@@ -479,7 +1070,7 @@ export function PastEventCard({ event }: { event: ChapterEvent }) {
           style={{
             position: 'relative',
             aspectRatio: event.isPosterImage ? '1/1' : '16/10',
-            maxHeight: event.isPosterImage ? '360px' : '260px',
+            maxHeight: event.isPosterImage ? '340px' : '250px',
             width: '100%',
             overflow: 'hidden',
             background: '#071524',
@@ -506,23 +1097,35 @@ export function PastEventCard({ event }: { event: ChapterEvent }) {
               top: '0.85rem',
               left: '0.85rem',
               display: 'flex',
-              gap: '0.5rem',
+              gap: '0.45rem',
               flexWrap: 'wrap',
             }}
           >
             <span
               style={{
-                background: 'rgba(12, 27, 56, 0.9)',
+                background: 'rgba(12, 27, 56, 0.92)',
                 color: '#fff',
                 fontSize: '0.72rem',
                 fontWeight: 700,
                 textTransform: 'uppercase',
                 letterSpacing: '0.06em',
-                padding: '0.3rem 0.7rem',
+                padding: '0.28rem 0.7rem',
                 borderRadius: '999px',
               }}
             >
               {event.programmeType}
+            </span>
+            <span
+              style={{
+                background: '#FACC15',
+                color: '#071524',
+                fontSize: '0.72rem',
+                fontWeight: 800,
+                padding: '0.28rem 0.65rem',
+                borderRadius: '999px',
+              }}
+            >
+              {event.monthLabel || eventYear}
             </span>
           </div>
         </div>
@@ -537,15 +1140,16 @@ export function PastEventCard({ event }: { event: ChapterEvent }) {
               marginBottom: '0.45rem',
             }}
           >
-            📅 {event.date} {event.timeIST ? `• 🕢 ${event.timeIST}` : ''} • {event.venue}
+            📅 {event.date}{' '}
+            {event.timeIST ? `• 🕢 ${event.timeIST}` : ''} • {event.venue}
           </div>
 
           <h3
             style={{
-              fontSize: '1.18rem',
+              fontSize: '1.16rem',
               fontWeight: 800,
               color: 'var(--color-ink)',
-              marginBottom: '0.6rem',
+              marginBottom: '0.65rem',
               lineHeight: 1.35,
             }}
           >
@@ -569,7 +1173,7 @@ export function PastEventCard({ event }: { event: ChapterEvent }) {
                 marginBottom: '0.75rem',
               }}
             >
-              <strong>🎙️ Speaker: {event.speaker}</strong>
+              <strong>🎙️ {event.speaker}</strong>
               {event.speakerDesignation && (
                 <span
                   style={{
@@ -589,8 +1193,9 @@ export function PastEventCard({ event }: { event: ChapterEvent }) {
             style={{
               fontSize: '0.92rem',
               color: 'var(--color-body)',
-              lineHeight: 1.65,
+              lineHeight: 1.68,
               marginBottom: 0,
+              textAlign: 'justify',
             }}
           >
             {event.shortDescription}
@@ -609,11 +1214,17 @@ export function PastEventCard({ event }: { event: ChapterEvent }) {
           alignItems: 'center',
         }}
       >
-        <Link href={`/events/${event.slug}`} className="btn btn-primary btn-sm">
-          View Report &amp; Photos &rarr;
+        <Link
+          href={`/events/${event.slug}`}
+          className="btn btn-primary btn-sm"
+        >
+          View Official Report &rarr;
         </Link>
         {event.hasPhotoGallery && (
-          <Link href={`/events/${event.slug}#eventPhotosSection`} className="btn btn-outline-navy btn-sm">
+          <Link
+            href={`/events/${event.slug}#eventPhotosSection`}
+            className="btn btn-outline-navy btn-sm"
+          >
             {event.slug === 'inauguration'
               ? '24 Event Photos'
               : `${event.eventPhotos?.length || 1} Event Photos`}

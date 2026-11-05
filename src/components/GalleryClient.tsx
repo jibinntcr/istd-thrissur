@@ -87,9 +87,9 @@ export function GalleryClient() {
                 President{' '}
                 <strong style={{ color: '#FFFFFF' }}>Dr. Yogesh Kumar Upadhyay</strong>, National
                 Treasurer <strong style={{ color: '#FFFFFF' }}>Shri. Nabaghana Pany</strong>,
-                Regional Vice President (South){' '}
-                <strong style={{ color: '#FFFFFF' }}>Prof. (Dr.) Zakkariya K A</strong>, and
-                Chapter Chairman <strong style={{ color: '#FFFFFF' }}>Shri. Tony Chacko</strong>.
+                National Vice President{' '}
+                <strong style={{ color: '#FFFFFF' }}>Prof. (Dr.) Zakkariya K. A.</strong>, and
+                Chapter Chairman <strong style={{ color: '#FFFFFF' }}>Tony Chacko</strong>.
               </p>
               <div className="gallery-spotlight-meta">
                 <span>
