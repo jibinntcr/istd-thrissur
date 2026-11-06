@@ -6336,18 +6336,115 @@ main p,
   }
 }
 
-@media (max-width: 640px) {
-  .upcoming-ticker-cta {
-    display: none;
+@media (max-width: 768px) {
+  .hero-grand-slider-card {
+    padding: 0.6rem;
+    border-radius: 18px;
+  }
+
+  .hero-grand-viewport {
+    aspect-ratio: auto;
+    display: flex;
+    flex-direction: column;
+    border-radius: 14px;
+  }
+
+  .hero-grand-track {
+    aspect-ratio: 16 / 10;
+    height: auto;
+  }
+
+  .hero-grand-slide {
+    aspect-ratio: 16 / 10;
+  }
+
+  .hero-grand-top-overlay {
+    top: 0.45rem;
+    left: 0.5rem;
+    right: 0.5rem;
+    gap: 0.35rem;
+  }
+
+  .hero-grand-badge {
+    font-size: 0.62rem;
+    padding: 0.2rem 0.55rem;
+    gap: 0.3rem;
+    max-width: calc(100% - 64px);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .hero-grand-badge span:last-child {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .hero-cinema-dot {
+    width: 5px;
+    height: 5px;
+    flex-shrink: 0;
+  }
+
+  .hero-grand-counter-pill {
+    font-size: 0.62rem;
+    padding: 0.18rem 0.48rem;
+    flex-shrink: 0;
+  }
+
+  .hero-slider-side-arrow {
+    width: 30px;
+    height: 30px;
+    top: 38%;
+  }
+
+  .hero-slider-side-arrow.prev {
+    left: 0.45rem;
+  }
+
+  .hero-slider-side-arrow.next {
+    right: 0.45rem;
+  }
+
+  .hero-grand-bottom-overlay {
+    position: relative;
+    padding: 0.65rem 0.8rem 0.7rem;
+    background: linear-gradient(180deg, #071524 0%, #0b2239 100%);
+    border-top: 1px solid rgba(56, 189, 248, 0.22);
+  }
+
+  .hero-grand-caption h4 {
+    font-size: 0.85rem;
+    margin: 0 0 0.15rem;
+    line-height: 1.25;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .hero-grand-caption p {
+    font-size: 0.72rem;
+    line-height: 1.35;
+    -webkit-line-clamp: 1;
   }
 
   .hero-grand-selector-bar {
     grid-template-columns: repeat(2, 1fr);
+    gap: 0.42rem;
+    margin-top: 0.5rem;
   }
 
-  .hero-slider-side-arrow {
-    width: 36px;
-    height: 36px;
+  .hero-grand-selector-item {
+    padding: 0.35rem 0.45rem;
+    border-radius: 10px;
+  }
+}
+
+@media (max-width: 640px) {
+  .upcoming-ticker-cta {
+    display: none;
   }
 }
 
