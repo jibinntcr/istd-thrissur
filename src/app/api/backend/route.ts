@@ -101,12 +101,31 @@ export async function POST(request: Request) {
           { status: 400 }
         );
       }
-      const registration = await createEventRegistration(payload);
-      return NextResponse.json({
-        ok: true,
-        registration,
-        cacheStats: getCacheStats(),
-      });
+      try {
+        const registration = await createEventRegistration(payload);
+        return NextResponse.json({
+          ok: true,
+          registration,
+          cacheStats: getCacheStats(),
+        });
+      } catch (err: unknown) {
+        const dupErr = err as Error & {
+          isDuplicate?: boolean;
+          existingRegistration?: unknown;
+        };
+        if (dupErr?.isDuplicate) {
+          return NextResponse.json(
+            {
+              ok: false,
+              duplicate: true,
+              existingRegistration: dupErr.existingRegistration,
+              error: dupErr.message,
+            },
+            { status: 409 }
+          );
+        }
+        throw err;
+      }
     }
 
     if (action === 'lookup_participant') {

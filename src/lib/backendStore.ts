@@ -192,10 +192,16 @@ function ensureLocalDb(): BackendDatabasePayload {
     }
     const raw = fs.readFileSync(LOCAL_DB_FILE, 'utf8');
     const parsed = JSON.parse(raw) as BackendDatabasePayload;
+    const rawRegs = Array.isArray(parsed.registrations) ? parsed.registrations : [];
+    const dedupedRegs = deduplicateRegistrations(rawRegs);
+    if (dedupedRegs.length !== rawRegs.length) {
+      parsed.registrations = dedupedRegs;
+      fs.writeFileSync(LOCAL_DB_FILE, JSON.stringify(parsed, null, 2), 'utf8');
+    }
     return {
       events: parsed.events?.length ? parsed.events : ALL_CHAPTER_EVENTS,
       galleryPhotos: parsed.galleryPhotos?.length ? parsed.galleryPhotos : GALLERY_PHOTOS,
-      registrations: Array.isArray(parsed.registrations) ? parsed.registrations : [],
+      registrations: dedupedRegs,
       enquiries: Array.isArray(parsed.enquiries) ? parsed.enquiries : [],
       updatedAt: parsed.updatedAt || new Date().toISOString(),
     };
@@ -209,6 +215,80 @@ function ensureLocalDb(): BackendDatabasePayload {
       updatedAt: new Date().toISOString(),
     };
   }
+}
+
+export function deduplicateRegistrations(
+  regs: EventRegistration[]
+): EventRegistration[] {
+  const seenKeys = new Set<string>();
+  // Process oldest to newest so we keep the original registration pass per event
+  const chronological = [...regs].reverse();
+  const keptChronological: EventRegistration[] = [];
+
+  for (const r of chronological) {
+    if (r.status === 'Cancelled') {
+      keptChronological.push(r);
+      continue;
+    }
+    const slug = (r.eventSlug || '').trim().toLowerCase();
+    const emailKey = `${slug}::email::${(r.email || '').trim().toLowerCase()}`;
+    const phoneDigits = (r.phone || '').replace(/[^0-9]/g, '').slice(-10);
+    const phoneKey = phoneDigits.length >= 10 ? `${slug}::phone::${phoneDigits}` : '';
+    const pid = (r.participantCode || '').trim().toUpperCase();
+    const pidKey = pid ? `${slug}::pid::${pid}` : '';
+
+    if (
+      seenKeys.has(emailKey) ||
+      (phoneKey && seenKeys.has(phoneKey)) ||
+      (pidKey && seenKeys.has(pidKey))
+    ) {
+      continue;
+    }
+
+    seenKeys.add(emailKey);
+    if (phoneKey) seenKeys.add(phoneKey);
+    if (pidKey) seenKeys.add(pidKey);
+    keptChronological.push(r);
+  }
+
+  return keptChronological.reverse();
+}
+
+export function findExistingEventRegistration(
+  regs: EventRegistration[],
+  eventSlug: string,
+  email?: string,
+  phone?: string,
+  participantCode?: string
+): EventRegistration | null {
+  const targetSlug = (eventSlug || '').trim().toLowerCase();
+  if (!targetSlug) return null;
+
+  const normEmail = (email || '').trim().toLowerCase();
+  const normPhone = (phone || '').replace(/[^0-9]/g, '').slice(-10);
+  const normPid = (participantCode || '').trim().toUpperCase();
+
+  const found = regs.find((r) => {
+    if ((r.eventSlug || '').trim().toLowerCase() !== targetSlug) return false;
+    if (r.status === 'Cancelled') return false;
+
+    if (normPid && (r.participantCode || '').trim().toUpperCase() === normPid) {
+      return true;
+    }
+    if (normEmail && (r.email || '').trim().toLowerCase() === normEmail) {
+      return true;
+    }
+    if (normPhone.length >= 10) {
+      const rPhone = (r.phone || '').replace(/[^0-9]/g, '').slice(-10);
+      const rWa = (r.whatsapp || '').replace(/[^0-9]/g, '').slice(-10);
+      if (rPhone === normPhone || rWa === normPhone) {
+        return true;
+      }
+    }
+    return false;
+  });
+
+  return found || null;
 }
 
 function saveLocalDb(data: BackendDatabasePayload): void {
@@ -310,6 +390,23 @@ export async function createEventRegistration(
 ): Promise<EventRegistration> {
   const randomSuffix = Math.floor(1000 + Math.random() * 9000);
   const local = ensureLocalDb();
+
+  // Enforce 1 registration per event per Email / Mobile / Unique Participant ID
+  const duplicateForThisEvent = findExistingEventRegistration(
+    local.registrations,
+    input.eventSlug,
+    input.email,
+    input.phone,
+    input.participantCode
+  );
+  if (duplicateForThisEvent) {
+    const dupErr = new Error(
+      `Only 1 registration per Email / Participant ID is allowed per event. You are already registered for "${input.eventTitle}" (Event Pass: ${duplicateForThisEvent.registrationCode}).`
+    ) as Error & { isDuplicate?: boolean; existingRegistration?: EventRegistration };
+    dupErr.isDuplicate = true;
+    dupErr.existingRegistration = duplicateForThisEvent;
+    throw dupErr;
+  }
 
   // Check if this participant already has a permanent Unique Participant ID (by email, phone, whatsapp, or passed participantCode)
   const normEmail = input.email.trim().toLowerCase();

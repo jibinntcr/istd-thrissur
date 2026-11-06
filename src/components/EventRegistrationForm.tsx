@@ -7,6 +7,8 @@ import {
   submitParticipantRegistration,
   lookupParticipantProfile,
   getSavedBrowserParticipantProfile,
+  findExistingRegistrationForEvent,
+  DuplicateEventRegistrationError,
 } from '@/lib/clientBackendCache';
 import { CaptchaChallenge } from './CaptchaChallenge';
 
@@ -76,6 +78,8 @@ export function EventRegistrationForm({ event }: EventRegistrationFormProps) {
   const [submitting, setSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   const [confirmedReg, setConfirmedReg] = useState<EventRegistration | null>(null);
+  const [duplicateEventReg, setDuplicateEventReg] =
+    useState<EventRegistration | null>(null);
 
   useEffect(() => {
     const saved = getSavedBrowserParticipantProfile();
@@ -83,6 +87,16 @@ export function EventRegistrationForm({ event }: EventRegistrationFormProps) {
       setSavedBrowserProfile(saved);
     }
   }, []);
+
+  // Live check: if entered Email, Mobile Number, or Unique Participant ID is already registered for THIS event
+  useEffect(() => {
+    const foundDup = findExistingRegistrationForEvent(event.slug, {
+      email: email.trim(),
+      phone: phone.trim(),
+      participantCode: activeParticipantCode || undefined,
+    });
+    setDuplicateEventReg(foundDup);
+  }, [email, phone, activeParticipantCode, event.slug]);
 
   useEffect(() => {
     if (confirmedReg) {
@@ -129,10 +143,30 @@ export function EventRegistrationForm({ event }: EventRegistrationFormProps) {
     const pid = profile.participantCode || 'ISTD-PID-2026-1001';
     setActiveParticipantCode(pid);
     setLookupInput(pid);
-    setLookupBanner({
-      type: 'success',
-      message: `✓ Auto-filled details for ${profile.salutation} ${profile.fullName} (Unique ID: ${pid}). Please verify the security code at the bottom and click Complete Registration.`,
-    });
+
+    const existingForThisEvent =
+      findExistingRegistrationForEvent(event.slug, {
+        email: profile.email,
+        phone: profile.phone,
+        participantCode: pid,
+      }) ||
+      (profile.eventSlug === event.slug && profile.status !== 'Cancelled'
+        ? profile
+        : null);
+
+    if (existingForThisEvent) {
+      setDuplicateEventReg(existingForThisEvent);
+      setLookupBanner({
+        type: 'error',
+        message: `⚠️ ${profile.salutation} ${profile.fullName} (Unique ID: ${pid} • ${profile.email}) is already registered for "${event.title}" (Pass No: ${existingForThisEvent.registrationCode}). Only 1 registration per Email ID / Participant ID is allowed for each event.`,
+      });
+    } else {
+      setDuplicateEventReg(null);
+      setLookupBanner({
+        type: 'success',
+        message: `✓ Auto-filled details for ${profile.salutation} ${profile.fullName} (Unique ID: ${pid}). Please verify the security code at the bottom and click Complete Registration.`,
+      });
+    }
   };
 
   const handleLookupAutoFill = async (queryOverride?: string) => {
@@ -165,6 +199,7 @@ export function EventRegistrationForm({ event }: EventRegistrationFormProps) {
 
   const handlePhoneChange = (val: string) => {
     setPhone(val);
+    setActiveParticipantCode('');
     if (sameWhatsapp) {
       setWhatsapp(val);
     }
@@ -180,6 +215,19 @@ export function EventRegistrationForm({ event }: EventRegistrationFormProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMsg('');
+
+    const existingDup = findExistingRegistrationForEvent(event.slug, {
+      email: email.trim(),
+      phone: phone.trim(),
+      participantCode: activeParticipantCode || undefined,
+    });
+    if (existingDup) {
+      setDuplicateEventReg(existingDup);
+      setErrorMsg(
+        `Only 1 registration per Email ID / Mobile Number / Participant ID is allowed for each event. "${existingDup.salutation} ${existingDup.fullName}" (${existingDup.email}) is already registered for this programme with Event Pass ${existingDup.registrationCode}.`
+      );
+      return;
+    }
 
     if (!captchaVerified) {
       setErrorMsg(
@@ -236,8 +284,13 @@ export function EventRegistrationForm({ event }: EventRegistrationFormProps) {
 
       setConfirmedReg(created);
       setSavedBrowserProfile(created);
-    } catch {
-      setErrorMsg('Could not complete registration. Please try again.');
+    } catch (err) {
+      if (err instanceof DuplicateEventRegistrationError) {
+        setDuplicateEventReg(err.existingRegistration);
+        setErrorMsg(err.message);
+      } else {
+        setErrorMsg('Could not complete registration. Please try again.');
+      }
     } finally {
       setSubmitting(false);
     }
@@ -253,6 +306,8 @@ export function EventRegistrationForm({ event }: EventRegistrationFormProps) {
     setActiveParticipantCode('');
     setLookupInput('');
     setLookupBanner(null);
+    setDuplicateEventReg(null);
+    setErrorMsg('');
     setConfirmedReg(null);
     setCaptchaVerified(false);
     setCaptchaReset((c) => c + 1);
@@ -798,6 +853,78 @@ export function EventRegistrationForm({ event }: EventRegistrationFormProps) {
           )}
         </div>
 
+        {duplicateEventReg && (
+          <div
+            role="alert"
+            style={{
+              background: '#FFFBEB',
+              border: '2px solid #F59E0B',
+              borderRadius: '14px',
+              padding: '1.15rem 1.35rem',
+              marginBottom: '1.35rem',
+              display: 'flex',
+              flexWrap: 'wrap',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              gap: '1rem',
+            }}
+          >
+            <div style={{ flex: '1 1 320px' }}>
+              <div
+                style={{
+                  fontSize: '0.76rem',
+                  fontWeight: 800,
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.07em',
+                  color: '#B45309',
+                  marginBottom: '0.25rem',
+                }}
+              >
+                ⚠️ Duplicate Registration Restricted (1 Registration Per Event)
+              </div>
+              <div
+                style={{
+                  fontSize: '0.95rem',
+                  fontWeight: 800,
+                  color: '#78350F',
+                  marginBottom: '0.25rem',
+                }}
+              >
+                {duplicateEventReg.salutation} {duplicateEventReg.fullName} ({duplicateEventReg.email}
+                ) is already registered for this event!
+              </div>
+              <div style={{ fontSize: '0.84rem', color: '#92400E', lineHeight: 1.45 }}>
+                Your seat is already confirmed under Event Pass{' '}
+                <strong>{duplicateEventReg.registrationCode}</strong>
+                {duplicateEventReg.participantCode
+                  ? ` (Unique ID: ${duplicateEventReg.participantCode})`
+                  : ''}
+                . Only one registration per Email ID / Mobile Number / Participant ID is permitted
+                for each event.
+              </div>
+            </div>
+
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.6rem' }}>
+              <button
+                type="button"
+                onClick={() => setConfirmedReg(duplicateEventReg)}
+                className="btn btn-primary btn-sm"
+                style={{ fontWeight: 800 }}
+              >
+                🎟️ View / Print Existing Pass ({duplicateEventReg.registrationCode})
+              </button>
+              <button
+                type="button"
+                onClick={resetFormForAnother}
+                className="btn btn-outline-navy btn-sm"
+                style={{ fontWeight: 700, background: '#FFFFFF' }}
+              >
+                Clear &amp; Register Another Person
+              </button>
+            </div>
+          </div>
+        )}
+
         {errorMsg && (
           <div
             style={{
@@ -932,7 +1059,10 @@ export function EventRegistrationForm({ event }: EventRegistrationFormProps) {
                   className="form-control"
                   placeholder="name@organisation.com"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    setActiveParticipantCode('');
+                  }}
                   required
                 />
               </div>
@@ -1358,19 +1488,26 @@ export function EventRegistrationForm({ event }: EventRegistrationFormProps) {
           >
             <button
               type="submit"
-              disabled={submitting}
+              disabled={submitting || Boolean(duplicateEventReg)}
               className="btn btn-red"
               style={{
                 minWidth: 'min(100%, 280px)',
                 padding: '0.95rem 1.75rem',
                 fontSize: '1rem',
                 fontWeight: 800,
+                opacity: duplicateEventReg ? 0.55 : 1,
+                cursor: duplicateEventReg ? 'not-allowed' : 'pointer',
               }}
             >
-              {submitting ? 'Completing Registration...' : 'Complete Event Registration →'}
+              {submitting
+                ? 'Completing Registration...'
+                : duplicateEventReg
+                ? `Already Registered (${duplicateEventReg.registrationCode})`
+                : 'Complete Event Registration →'}
             </button>
             <div style={{ fontSize: '0.82rem', color: '#475569', fontWeight: 600 }}>
-              🔒 Instant confirmation pass + Permanent Unique Participant ID generated on submit.
+              🔒 1 registration per Email / Participant ID per event • Instant confirmation pass on
+              submit.
             </div>
           </div>
         </form>
