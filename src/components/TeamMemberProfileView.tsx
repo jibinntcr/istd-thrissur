@@ -174,7 +174,7 @@ export function TeamMemberProfileView({ member }: TeamMemberProfileViewProps) {
       {/* Two-Column Executive Profile Body Grid (7.2fr / 4.8fr) */}
       <section
         className={styles.bodySection}
-        aria-label={`${member.name} Leadership Overview and Responsibilities`}
+        aria-label={`${member.name} Leadership Overview and Key Focus Areas`}
       >
         <div className="container">
           <div className={styles.bodyGrid}>
@@ -203,21 +203,29 @@ export function TeamMemberProfileView({ member }: TeamMemberProfileViewProps) {
                 </article>
               )}
 
-              {/* 2. Role & Responsibilities at ISTD Trichur Chapter */}
+              {/* 2. Founding Vision / Leadership Mandate & Key Focus Areas */}
               {(member.responsibilities || member.chapterRoleSection) && (
                 <article
                   className={styles.contentCard}
-                  aria-labelledby="responsibilities-heading"
+                  aria-labelledby="leadership-focus-heading"
                 >
                   <div className={styles.cardHeader}>
                     <p className={styles.eyebrow}>
-                      ROLE AT ISTD TRICHUR CHAPTER
+                      {member.slug === 'prof-dr-zakkariya-k-a'
+                        ? 'VISIONARY STEWARDSHIP & MENTORSHIP'
+                        : member.slug === 'tony-chacko'
+                          ? 'CHAPTER GOVERNANCE & STRATEGY'
+                          : 'CHAPTER STEWARDSHIP & INITIATIVES'}
                     </p>
                     <h2
-                      id="responsibilities-heading"
+                      id="leadership-focus-heading"
                       className={styles.cardTitle}
                     >
-                      Responsibilities at ISTD Trichur Chapter
+                      {member.slug === 'prof-dr-zakkariya-k-a'
+                        ? 'Founding Vision & Institutional Mentorship'
+                        : member.slug === 'tony-chacko'
+                          ? 'Leadership Mandate & Strategic Focus Areas'
+                          : 'Chapter Role & Key Focus Areas'}
                     </h2>
                   </div>
 

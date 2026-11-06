@@ -851,7 +851,7 @@ export const OFFICE_BEARERS: CommitteeMember[] = [
     responsibilities: [
       {
         num: '01',
-        title: 'Founding Vision & Institutional Mentorship',
+        title: 'Strategic Vision & Chapter Mentorship',
         description:
           'Guiding the strategic roadmap, governance standards, and long-term institutional development of the ISTD Trichur Diamond Chapter.',
       },
