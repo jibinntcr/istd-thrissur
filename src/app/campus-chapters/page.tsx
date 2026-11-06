@@ -8,12 +8,12 @@ import { buildPageMetadata } from '@/lib/seoConfig';
 export const metadata: Metadata = buildPageMetadata({
   title: 'Campus & Student Chapters — Academia–Industry Bridge & EOI',
   description:
-    'Explore ISTD Campus and Student Chapters under the ISTD Thrissur (Trichur) Chapter, including our First Student Chapter at Christ College of Engineering (Autonomous), and submit an Expression of Interest (EOI) to establish a chapter at your institution.',
+    'Explore ISTD Campus and Student Chapters under the ISTD Trichur Chapter, including our First Student Chapter at Christ College of Engineering (Autonomous), and submit an Expression of Interest (EOI) to establish a chapter at your institution.',
   path: '/campus-chapters',
   image: '/images/campus-chapter-cce.jpg',
   keywords: [
     'ISTD Campus Chapters Kerala',
-    'ISTD Student Chapter Thrissur',
+    'ISTD Student Chapter Trichur',
     'Christ College of Engineering Autonomous ISTD Student Chapter',
     'Establish ISTD Student Chapter EOI',
   ],
@@ -105,7 +105,7 @@ export default function CampusChaptersPage() {
                   marginBottom: '0.9rem',
                 }}
               >
-                Academia–Industry Bridge • ISTD Thrissur Chapter
+                Academia–Industry Bridge • ISTD Trichur Chapter
               </span>
 
               <h1
@@ -564,8 +564,8 @@ export default function CampusChaptersPage() {
                   marginBottom: '1.35rem',
                 }}
               >
-                Higher education institutions in Thrissur and Central Kerala can
-                partner with the ISTD Thrissur Chapter to establish an official
+                Higher education institutions in Trichur and Central Kerala can
+                partner with the ISTD Trichur Chapter to establish an official
                 Student Chapter on their campus.
               </p>
 

@@ -7,13 +7,13 @@ import { buildPageMetadata } from '@/lib/seoConfig';
 export const metadata: Metadata = buildPageMetadata({
   title: 'Photo Gallery — Inauguration & Chapter Events',
   description:
-    'Official photo gallery of the ISTD Thrissur Diamond Chapter inauguration on 30 March 2026 at Hotel Pearl Regency, Thrissur, and chapter learning sessions.',
+    'Official photo gallery of the ISTD Trichur Diamond Chapter inauguration on 30 March 2026 at Hotel Pearl Regency, Trichur, and chapter learning sessions.',
   path: '/gallery',
   image: '/photos/istd-22.jpeg',
   keywords: [
-    'ISTD Thrissur Photo Gallery',
+    'ISTD Trichur Photo Gallery',
     'ISTD Diamond Chapter Inauguration Photos',
-    'Hotel Pearl Regency Thrissur ISTD',
+    'Hotel Pearl Regency Trichur ISTD',
   ],
 });
 
@@ -30,8 +30,8 @@ export default function GalleryPage() {
           </div>
           <h1 className="page-hero-title">Gallery</h1>
           <p className="page-hero-subtitle">
-            Photographs from the ISTD Thrissur Chapter inauguration on 30 March 2026 at Hotel Pearl
-            Regency, Thrissur, with factual captions identifying the occasion and participants.
+            Photographs from the ISTD Trichur Chapter inauguration on 30 March 2026 at Hotel Pearl
+            Regency, Trichur, with factual captions identifying the occasion and participants.
           </p>
         </div>
       </section>
@@ -46,9 +46,9 @@ export default function GalleryPage() {
             <div className="cta-banner-inner">
               <div>
                 <span className="section-tag tag-yellow">Join Our Chapter</span>
-                <h2>Participate in Upcoming ISTD Thrissur Chapter Programmes</h2>
+                <h2>Participate in Upcoming ISTD Trichur Chapter Programmes</h2>
                 <p>
-                  Explore our upcoming events or enquire about membership with the ISTD Thrissur
+                  Explore our upcoming events or enquire about membership with the ISTD Trichur
                   Chapter.
                 </p>
               </div>

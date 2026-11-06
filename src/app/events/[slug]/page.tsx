@@ -39,8 +39,8 @@ export async function generateMetadata({
     keywords: [
       event.title,
       event.programmeType,
-      event.speaker || 'ISTD Thrissur Session',
-      'ISTD Thrissur Events',
+      event.speaker || 'ISTD Trichur Session',
+      'ISTD Trichur Events',
     ],
   });
 }
@@ -441,7 +441,7 @@ export default async function EventDetailPage({
                       🏛️ Organised By
                     </div>
                     <div style={{ fontWeight: 800, color: '#0F172A', marginTop: '0.15rem' }}>
-                      ISTD Thrissur Chapter
+                      ISTD Trichur Chapter
                     </div>
                   </div>
                 </div>

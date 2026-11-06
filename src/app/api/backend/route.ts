@@ -67,7 +67,7 @@ export async function POST(request: Request) {
                 ? 'Shri. Tony Chacko (Chairman)'
                 : normalizedEmail === 'jibintcr@gmail.com'
                 ? 'Mr. Jibin N (Treasurer)'
-                : 'ISTD Thrissur Chapter Admin',
+                : 'ISTD Trichur Chapter Admin',
             role: 'Chapter Administrator',
             loggedInAt: new Date().toISOString(),
           },

@@ -7,7 +7,7 @@ import { buildPageMetadata } from '@/lib/seoConfig';
 export const metadata: Metadata = buildPageMetadata({
   title: 'Privacy Policy',
   description:
-    'Privacy Policy of the ISTD Thrissur Chapter website explaining how membership, event registrations, and contact enquiries are handled.',
+    'Privacy Policy of the ISTD Trichur Chapter website explaining how membership, event registrations, and contact enquiries are handled.',
   path: '/privacy',
 });
 
@@ -23,7 +23,7 @@ export default function PrivacyPolicyPage() {
           </div>
           <h1 className="page-hero-title">Privacy Policy</h1>
           <p className="page-hero-subtitle">
-            How the ISTD Thrissur Chapter handles information submitted through our website.
+            How the ISTD Trichur Chapter handles information submitted through our website.
           </p>
         </div>
       </section>
@@ -39,7 +39,7 @@ export default function PrivacyPolicyPage() {
               1. Overview
             </h2>
             <p className="report-paragraph">
-              This website is operated by the <strong>ISTD Thrissur Chapter</strong> of the Indian
+              This website is operated by the <strong>ISTD Trichur Chapter</strong> of the Indian
               Society for Training &amp; Development (ISTD) to provide information about chapter
               events, programmes, governance, photographs, and membership enquiries. We respect the
               privacy of our members, event participants, and website visitors.
@@ -63,7 +63,7 @@ export default function PrivacyPolicyPage() {
             </p>
             <p className="report-paragraph">
               If an automated backend webhook is configured, your enquiry details are transmitted
-              to the ISTD Thrissur Chapter office bearers. When the site is served as a static web
+              to the ISTD Trichur Chapter office bearers. When the site is served as a static web
               application (such as on GitHub Pages) without a backend mail server configured, the
               website does not store your form input on any external database; instead, your input
               remains in your browser and can be sent directly via your email client to our chapter
@@ -82,7 +82,7 @@ export default function PrivacyPolicyPage() {
               3. How We Use Your Information
             </h2>
             <p className="report-paragraph">
-              Contact details submitted to the ISTD Thrissur Chapter are used solely to:
+              Contact details submitted to the ISTD Trichur Chapter are used solely to:
             </p>
             <ul
               style={{
@@ -95,7 +95,7 @@ export default function PrivacyPolicyPage() {
               <li>Respond to your membership, programme, or collaboration enquiry;</li>
               <li>
                 Share relevant details regarding ISTD National membership registration or upcoming
-                Thrissur Chapter events you enquired about.
+                Trichur Chapter events you enquired about.
               </li>
             </ul>
             <p className="report-paragraph">
@@ -114,7 +114,7 @@ export default function PrivacyPolicyPage() {
             </h2>
             <p className="report-paragraph">
               Photographs published in the Gallery and event reports document official proceedings
-              and activities of the ISTD Thrissur Chapter. If you appear in a chapter photograph
+              and activities of the ISTD Trichur Chapter. If you appear in a chapter photograph
               and wish to request a caption correction or removal, please contact our chapter
               office bearers.
             </p>
@@ -147,7 +147,7 @@ export default function PrivacyPolicyPage() {
             </h2>
             <p className="report-paragraph" style={{ marginBottom: 0 }}>
               For any questions regarding this Privacy Policy or your personal data, please contact
-              the ISTD Thrissur Chapter at{' '}
+              the ISTD Trichur Chapter at{' '}
               <a
                 href={`mailto:${CHAPTER_CONTACTS.treasurer.email}`}
                 style={{ color: 'var(--brand-blue)', fontWeight: 700 }}

@@ -74,14 +74,14 @@ export function GalleryClient() {
           <div className="gallery-spotlight-banner">
             <div>
               <div className="gallery-spotlight-pill">
-                <span>30 March 2026 • Hotel Pearl Regency, Thrissur</span>
+                <span>30 March 2026 • Hotel Pearl Regency, Trichur</span>
               </div>
               <h2 className="gallery-spotlight-title">
-                ISTD Thrissur Chapter Inauguration Photographs
+                ISTD Trichur Chapter Inauguration Photographs
               </h2>
               <p className="gallery-spotlight-desc">
                 Held on <strong style={{ color: '#FFFFFF' }}>30 March 2026</strong> at{' '}
-                <strong style={{ color: '#FFFFFF' }}>Hotel Pearl Regency, Thrissur</strong>, the
+                <strong style={{ color: '#FFFFFF' }}>Hotel Pearl Regency, Trichur</strong>, the
                 inauguration was attended by National President{' '}
                 <strong style={{ color: '#FFFFFF' }}>Shri. Atul Shah</strong>, Past National
                 President{' '}
@@ -120,7 +120,7 @@ export function GalleryClient() {
                     <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
                     <circle cx="12" cy="10" r="3" />
                   </svg>
-                  Pearl Regency, Thrissur
+                  Pearl Regency, Trichur
                 </span>
                 <span>
                   <svg
@@ -180,7 +180,7 @@ export function GalleryClient() {
               <div className="photo-feature-inner">
                 <img
                   src={assetUrl('/photos/team-istd.jpeg')}
-                  alt="ISTD Thrissur Diamond Chapter Inauguration Group Photo"
+                  alt="ISTD Trichur Diamond Chapter Inauguration Group Photo"
                 />
                 <div className="photo-feature-caption">
                   <div className="photo-feature-caption-text">

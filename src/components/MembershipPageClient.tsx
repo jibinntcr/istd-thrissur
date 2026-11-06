@@ -452,7 +452,7 @@ export function MembershipPageClient() {
               </h3>
               <p style={{ fontSize: '0.92rem', color: 'var(--color-body)', lineHeight: 1.65, marginBottom: 0 }}>
                 Connect with corporate trainers, HR professionals, academicians, and organisational
-                leaders in Thrissur and across ISTD chapters nationwide.
+                leaders in Trichur and across ISTD chapters nationwide.
               </p>
             </div>
           </div>
@@ -531,7 +531,7 @@ export function MembershipPageClient() {
               <p style={{ fontSize: '0.93rem', color: 'var(--color-body)', lineHeight: 1.68 }}>
                 Because national fee schedules are administered centrally by ISTD New Delhi, please
                 refer to the official ISTD National website for the current fee tariff or submit a
-                Membership Enquiry below so our Thrissur Chapter Treasurer can share the latest
+                Membership Enquiry below so our Trichur Chapter Treasurer can share the latest
                 verified national fee schedule and payment instructions.
               </p>
               <div className="btn-group" style={{ marginTop: '1.25rem' }}>
@@ -544,7 +544,7 @@ export function MembershipPageClient() {
                   Check Official Tariff on istd.in ↗
                 </a>
                 <a href="#membershipEnquiry" className="btn btn-primary btn-sm">
-                  Enquire With Thrissur Chapter
+                  Enquire With Trichur Chapter
                 </a>
               </div>
             </div>
@@ -559,7 +559,7 @@ export function MembershipPageClient() {
             <span className="section-tag tag-blue">05 • Application Process</span>
             <h2 className="section-title">How to Apply</h2>
             <p className="section-subtitle">
-              Follow these steps to enquire about membership with the ISTD Thrissur Chapter or
+              Follow these steps to enquire about membership with the ISTD Trichur Chapter or
               complete your formal national registration.
             </p>
           </div>
@@ -582,9 +582,9 @@ export function MembershipPageClient() {
                 Submit a Chapter Enquiry
               </h3>
               <p style={{ fontSize: '0.92rem', color: 'var(--color-body)', lineHeight: 1.65, marginBottom: 0 }}>
-                Use the Membership Enquiry form below or contact the Thrissur Chapter office
+                Use the Membership Enquiry form below or contact the Trichur Chapter office
                 bearers (+91 9846101034 / +91 9496839168) for guidance on affiliating with the
-                Thrissur Chapter.
+                Trichur Chapter.
               </p>
             </div>
 
@@ -604,7 +604,7 @@ export function MembershipPageClient() {
                 >
                   ISTD National Portal (istd.in)
                 </a>
-                , selecting the Thrissur (Trichur) Chapter.
+                , selecting the Trichur Chapter.
               </p>
             </div>
           </div>

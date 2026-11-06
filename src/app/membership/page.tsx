@@ -7,12 +7,12 @@ import { buildPageMetadata } from '@/lib/seoConfig';
 export const metadata: Metadata = buildPageMetadata({
   title: 'Membership Categories, Benefits, Fees & Application',
   description:
-    'Explore ISTD Individual, Institutional, and Student Membership categories, benefits, eligibility, fee structure, and apply through the ISTD Thrissur Chapter.',
+    'Explore ISTD Individual, Institutional, and Student Membership categories, benefits, eligibility, fee structure, and apply through the ISTD Trichur Chapter.',
   path: '/membership',
   image: '/photos/istd-audience.jpeg',
   keywords: [
     'ISTD Membership Kerala',
-    'Join ISTD Thrissur Chapter',
+    'Join ISTD Trichur Chapter',
     'ISTD Life Membership Fees',
     'ISTD Institutional Membership',
   ],

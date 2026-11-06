@@ -38,11 +38,11 @@ export function MembershipForm({
 
   const buildMailtoHref = () => {
     const subject = encodeURIComponent(
-      `ISTD Thrissur Chapter Membership Enquiry - ${category} Membership (${name || 'Prospective Member'})`
+      `ISTD Trichur Chapter Membership Enquiry - ${category} Membership (${name || 'Prospective Member'})`
     );
     const body = encodeURIComponent(
       [
-        `ISTD Thrissur Chapter — Membership Enquiry`,
+        `ISTD Trichur Chapter — Membership Enquiry`,
         `-------------------------------------------`,
         `Full Name: ${name}`,
         `Email Address: ${email}`,
@@ -51,7 +51,7 @@ export function MembershipForm({
         `Organisation & Designation: ${organization || 'Not specified'}`,
         ``,
         `Professional Background / Questions:`,
-        `${notes || 'Please share membership application guidance for the ISTD Thrissur Chapter.'}`,
+        `${notes || 'Please share membership application guidance for the ISTD Trichur Chapter.'}`,
       ].join('\n')
     );
     return `mailto:tonychacko67@gmail.com,jibintcr@gmail.com?subject=${subject}&body=${body}`;
@@ -59,7 +59,7 @@ export function MembershipForm({
 
   const handleCopyDetails = async () => {
     const text = [
-      `ISTD Thrissur Chapter — Membership Enquiry`,
+      `ISTD Trichur Chapter — Membership Enquiry`,
       `Full Name: ${name}`,
       `Email Address: ${email}`,
       `Phone / Mobile: ${phone}`,
@@ -119,7 +119,7 @@ export function MembershipForm({
       const contentType = res.headers.get('content-type') || '';
       if (!contentType.includes('application/json')) {
         setError(
-          'Automated server delivery is not configured on this static host. Your entered details have been preserved in the form—please click "Send via Email Client" below to send your pre-filled enquiry directly to the Thrissur Chapter office bearers.'
+          'Automated server delivery is not configured on this static host. Your entered details have been preserved in the form—please click "Send via Email Client" below to send your pre-filled enquiry directly to the Trichur Chapter office bearers.'
         );
         return;
       }
@@ -140,7 +140,7 @@ export function MembershipForm({
       }
     } catch {
       setError(
-        'Automated server delivery is not configured on this host. Your entered details have been preserved in the form—please click "Send via Email Client" below to send your pre-filled enquiry directly to the Thrissur Chapter office bearers.'
+        'Automated server delivery is not configured on this host. Your entered details have been preserved in the form—please click "Send via Email Client" below to send your pre-filled enquiry directly to the Trichur Chapter office bearers.'
       );
     } finally {
       setSubmitting(false);
@@ -153,7 +153,7 @@ export function MembershipForm({
         <span className="section-tag tag-red">Expression of Interest</span>
         <h2 className="section-title">Membership Enquiry</h2>
         <p className="section-subtitle">
-          This form collects expressions of interest for the ISTD Thrissur Chapter. Formal ISTD
+          This form collects expressions of interest for the ISTD Trichur Chapter. Formal ISTD
           membership registration and fee remittance are completed through the ISTD National
           Office, New Delhi.
         </p>
@@ -305,7 +305,7 @@ export function MembershipForm({
           }}
         >
           <strong>Privacy Notice:</strong> The contact details you enter are used solely by the
-          ISTD Thrissur Chapter office bearers to respond to your membership enquiry and are not
+          ISTD Trichur Chapter office bearers to respond to your membership enquiry and are not
           shared with third-party marketers. Read our{' '}
           <Link href="/privacy" style={{ color: 'var(--brand-blue)', fontWeight: 600 }}>
             Privacy Policy

@@ -32,13 +32,13 @@ export function Footer() {
                 <div className="brand-seal-ring footer-seal">
                   <img
                     src={assetUrl('/images/logo-circle.png')}
-                    alt="ISTD Thrissur Chapter Official Seal"
+                    alt="ISTD Trichur Chapter Official Seal"
                     width={46}
                     height={46}
                   />
                 </div>
                 <div>
-                  <h3>ISTD Thrissur Chapter</h3>
+                  <h3>ISTD Trichur Chapter</h3>
                   <p
                     style={{
                       fontSize: '0.75rem',
@@ -55,7 +55,7 @@ export function Footer() {
                 Inaugurated on 30 March 2026 as the Diamond Chapter of the Indian Society for
                 Training &amp; Development (ISTD New Delhi, established April 1970). Fostering
                 professional learning, knowledge exchange, and human resource development in
-                Thrissur, Kerala.
+                Trichur, Kerala.
               </p>
               <div
                 style={{
@@ -70,8 +70,8 @@ export function Footer() {
                   href={OFFICIAL_LINKS.istdTrichurLinkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label="Follow ISTD Thrissur Chapter on LinkedIn"
-                  title="Follow ISTD Thrissur Chapter on LinkedIn"
+                  aria-label="Follow ISTD Trichur Chapter on LinkedIn"
+                  title="Follow ISTD Trichur Chapter on LinkedIn"
                   style={{
                     display: 'inline-flex',
                     alignItems: 'center',
@@ -191,9 +191,9 @@ export function Footer() {
                   </svg>
                   <div>
                     <strong style={{ color: '#fff', display: 'block', fontSize: '0.84rem' }}>
-                      ISTD Thrissur Chapter
+                      ISTD Trichur Chapter
                     </strong>
-                    <span>Thrissur (Trichur), Kerala, India</span>
+                    <span>Trichur, Kerala, India</span>
                   </div>
                 </li>
                 <li>
@@ -210,7 +210,7 @@ export function Footer() {
                   </svg>
                   <div>
                     <strong style={{ color: '#fff', display: 'block', fontSize: '0.82rem' }}>
-                      Thrissur Chapter Contacts
+                      Trichur Chapter Contacts
                     </strong>
                     <a href="tel:+919846101034">+91 9846101034</a> (Tony Chacko, Chairman)
                     <br />
@@ -248,7 +248,7 @@ export function Footer() {
           {/* Footer Bottom */}
           <div className="footer-bottom">
             <div className="footer-bottom-inner">
-              <p>© 2026 ISTD Thrissur Chapter. Affiliated with ISTD New Delhi (Est. 1970).</p>
+              <p>© 2026 ISTD Trichur Chapter. Affiliated with ISTD New Delhi (Est. 1970).</p>
               <div className="footer-bottom-links">
                 <Link href="/about">About Us</Link>
                 <Link href="/committee">Managing Committee</Link>

@@ -4470,52 +4470,59 @@ textarea:focus-visible,
   }
 }
 
-/* Scrolling Upcoming Events Ticker Bar */
+/* High-Visibility Live News & Announcements Command Bar */
 .upcoming-ticker-bar {
-  background: linear-gradient(90deg, #0B2239 0%, #163E66 100%);
+  background: linear-gradient(90deg, #0f172a 0%, #1e3a8a 50%, #172554 100%);
   color: #FFFFFF;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-  padding: 0.48rem 0;
+  border-top: 1px solid rgba(251, 191, 36, 0.35);
+  border-bottom: 2px solid #f59e0b;
+  padding: 0.72rem 0;
   overflow: hidden;
+  box-shadow: 0 8px 24px -6px rgba(15, 23, 42, 0.35);
+  position: relative;
+  z-index: 25;
 }
 
 .upcoming-ticker-inner {
   display: flex;
   align-items: center;
-  gap: 0.9rem;
+  gap: 1.15rem;
 }
 
 .upcoming-ticker-label {
   display: inline-flex;
   align-items: center;
-  gap: 0.45rem;
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  color: #FACC15;
-  font-size: 0.72rem;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, #e11d48 0%, #be123c 100%);
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
+  color: #FFFFFF;
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
   font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
-  padding: 0.22rem 0.65rem;
+  letter-spacing: 0.08em;
+  padding: 0.38rem 0.95rem;
   border-radius: 999px;
   flex-shrink: 0;
   white-space: nowrap;
+  box-shadow: 0 4px 14px rgba(225, 29, 72, 0.45);
 }
 
 .upcoming-ticker-viewport {
   flex: 1;
   overflow: hidden;
   position: relative;
-  mask-image: linear-gradient(to right, transparent 0%, black 3%, black 97%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 3%, black 97%, transparent 100%);
+  padding: 0.15rem 0;
+  mask-image: linear-gradient(to right, transparent 0%, black 2%, black 98%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 2%, black 98%, transparent 100%);
 }
 
 .upcoming-ticker-track {
   display: inline-flex;
   align-items: center;
-  gap: 1.5rem;
+  gap: 1.75rem;
   white-space: nowrap;
-  animation: istdTickerScroll 34s linear infinite;
+  animation: istdTickerScroll 36s linear infinite;
 }
 
 .upcoming-ticker-bar:hover .upcoming-ticker-track,
@@ -4524,26 +4531,73 @@ textarea:focus-visible,
 }
 
 .upcoming-ticker-item {
-  font-size: 0.84rem;
-  color: #F1F5F9;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #F8FAFC;
   text-decoration: none;
   transition: color 0.15s ease;
 }
 
+.ticker-date-pill {
+  display: inline-block;
+  padding: 0.16rem 0.58rem;
+  border-radius: 6px;
+  background: rgba(56, 189, 248, 0.2);
+  border: 1px solid rgba(56, 189, 248, 0.45);
+  color: #7DD3FC;
+  font-family: var(--font-heading);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+}
+
+.ticker-date-pill.gold {
+  background: rgba(251, 191, 36, 0.2);
+  border-color: rgba(251, 191, 36, 0.5);
+  color: #FDE047;
+}
+
 .upcoming-ticker-item strong {
-  color: #FACC15;
-  font-weight: 700;
+  color: #FDE047;
+  font-weight: 800;
 }
 
 .upcoming-ticker-item:hover {
   color: #FFFFFF;
   text-decoration: underline;
-  text-underline-offset: 3px;
+  text-underline-offset: 4px;
 }
 
 .upcoming-ticker-sep {
-  color: rgba(255, 255, 255, 0.35);
+  color: #F59E0B;
   font-size: 0.85rem;
+}
+
+.upcoming-ticker-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.38rem 0.95rem;
+  border-radius: 999px;
+  background: #FACC15;
+  color: #0F172A;
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(250, 204, 21, 0.35);
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.upcoming-ticker-cta:hover {
+  background: #FEF08A;
+  transform: translateY(-1px);
 }
 
 @keyframes istdTickerScroll {
@@ -5195,4 +5249,736 @@ main#mainContent {
   text-align: justify;
   text-justify: inter-word;
 }
+
+/* ==========================================================================
+   3D-Animated Executive Hero & Interactive 3D Ecosystem Styles
+   ========================================================================== */
+@keyframes float3dSlow {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) rotateX(12deg) rotateZ(0deg);
+  }
+  50% {
+    transform: translate3d(0, -10px, 14px) rotateX(18deg) rotateZ(4deg);
+  }
+}
+
+@keyframes orbitSpin3D {
+  0% {
+    transform: rotateX(62deg) rotateY(-12deg) rotateZ(0deg);
+  }
+  100% {
+    transform: rotateX(62deg) rotateY(-12deg) rotateZ(360deg);
+  }
+}
+
+@keyframes orbitSpinReverse3D {
+  0% {
+    transform: rotateX(55deg) rotateY(18deg) rotateZ(360deg);
+  }
+  100% {
+    transform: rotateX(55deg) rotateY(18deg) rotateZ(0deg);
+  }
+}
+
+.hero-3d-master-section {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(2.75rem, 5vw, 4.75rem) 0 clamp(2.75rem, 5vw, 4.25rem);
+  background:
+    radial-gradient(circle at 14% 20%, rgba(37, 99, 235, 0.34) 0%, transparent 44%),
+    radial-gradient(circle at 86% 24%, rgba(245, 158, 11, 0.2) 0%, transparent 40%),
+    radial-gradient(circle at 60% 88%, rgba(225, 29, 72, 0.18) 0%, transparent 45%),
+    linear-gradient(145deg, #050c1a 0%, #0b1933 48%, #10254c 100%);
+  color: #ffffff;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.22);
+}
+
+.hero-3d-perspective-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(56, 189, 248, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(56, 189, 248, 0.08) 1px, transparent 1px);
+  background-size: 48px 48px;
+  transform: perspective(650px) rotateX(56deg) scale(1.8) translateY(15%);
+  transform-origin: center bottom;
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.hero-3d-aurora-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(75px);
+  pointer-events: none;
+}
+
+.hero-3d-aurora-glow.glow-1 {
+  width: 380px;
+  height: 380px;
+  top: -90px;
+  left: -80px;
+  background: rgba(56, 189, 248, 0.22);
+}
+
+.hero-3d-aurora-glow.glow-2 {
+  width: 360px;
+  height: 360px;
+  bottom: -100px;
+  right: -60px;
+  background: rgba(251, 191, 36, 0.18);
+}
+
+.hero-3d-main-grid {
+  display: grid;
+  grid-template-columns: 1.12fr 0.88fr;
+  gap: clamp(2rem, 4vw, 3.25rem);
+  align-items: center;
+}
+
+.hero-3d-pill-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.65rem;
+  margin-bottom: 1.15rem;
+}
+
+.hero-3d-badge-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.36rem 0.9rem;
+  border-radius: 999px;
+  background: rgba(37, 99, 235, 0.28);
+  border: 1px solid rgba(96, 165, 250, 0.5);
+  color: #e0f2fe;
+  font-family: var(--font-heading);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  box-shadow: 0 4px 16px rgba(37, 99, 235, 0.25);
+}
+
+.hero-3d-live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #38bdf8;
+  box-shadow: 0 0 10px #38bdf8;
+}
+
+.hero-3d-badge-gold {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.36rem 0.9rem;
+  border-radius: 999px;
+  background: rgba(245, 158, 11, 0.2);
+  border: 1px solid rgba(251, 191, 36, 0.55);
+  color: #fde68a;
+  font-family: var(--font-heading);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.hero-3d-headline {
+  font-family: var(--font-heading);
+  font-size: clamp(2.1rem, 3.7vw, 3.1rem);
+  font-weight: 800;
+  line-height: 1.13;
+  color: #ffffff;
+  margin: 0 0 1.15rem;
+  letter-spacing: -0.02em;
+}
+
+.hero-3d-gradient-text {
+  background: linear-gradient(95deg, #60a5fa 0%, #38bdf8 45%, #fbbf24 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.hero-3d-lead {
+  font-size: 1.03rem;
+  line-height: 1.76;
+  color: #cbd5e1;
+  margin: 0 0 1.65rem;
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+.hero-3d-lead strong {
+  color: #ffffff;
+}
+
+.hero-3d-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.85rem;
+  margin-bottom: 1.6rem;
+}
+
+.hero-3d-btn-glow {
+  box-shadow: 0 10px 28px -4px rgba(225, 29, 72, 0.55);
+}
+
+/* Embedded Next Live Event Glassmorphic Strip inside Hero */
+.hero-3d-next-event-glass {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.85rem;
+  padding: 0.9rem 1.15rem;
+  border-radius: 14px;
+  background: rgba(15, 23, 42, 0.68);
+  border: 1px solid rgba(56, 189, 248, 0.38);
+  backdrop-filter: blur(12px);
+  text-decoration: none;
+  color: #ffffff;
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.hero-3d-next-event-glass:hover {
+  transform: translateY(-3px);
+  border-color: #fbbf24;
+  box-shadow: 0 14px 30px -8px rgba(0, 0, 0, 0.45);
+}
+
+.hero-3d-next-event-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.22rem 0.65rem;
+  border-radius: 6px;
+  background: rgba(16, 185, 129, 0.2);
+  border: 1px solid rgba(52, 211, 153, 0.45);
+  color: #6ee7b7;
+  font-family: var(--font-heading);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+}
+
+.hero-3d-next-event-info {
+  flex: 1;
+  min-width: 220px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.hero-3d-next-event-info strong {
+  font-family: var(--font-heading);
+  font-size: 0.9rem;
+  color: #ffffff;
+  line-height: 1.3;
+}
+
+.hero-3d-next-event-info span {
+  font-size: 0.78rem;
+  color: #94a3b8;
+}
+
+.hero-3d-next-event-arrow {
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #fbbf24;
+  white-space: nowrap;
+}
+
+/* 3D Showcase Stage Right Column */
+.hero-3d-stage {
+  position: relative;
+  perspective: 1200px;
+}
+
+.hero-3d-orbit-ring {
+  position: absolute;
+  inset: -18px;
+  border-radius: 28px;
+  border: 1.5px dashed rgba(56, 189, 248, 0.32);
+  pointer-events: none;
+  animation: float3dSlow 7s ease-in-out infinite;
+}
+
+.hero-3d-floating-badge.top-left {
+  position: absolute;
+  top: -14px;
+  left: -14px;
+  z-index: 12;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.55rem 0.95rem;
+  border-radius: 12px;
+  background: rgba(15, 23, 42, 0.92);
+  border: 1.5px solid rgba(251, 191, 36, 0.65);
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.45);
+  color: #ffffff;
+  backdrop-filter: blur(10px);
+}
+
+.hero-3d-diamond-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  color: #0f172a;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 0.95rem;
+}
+
+.hero-3d-floating-badge strong {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: #fde68a;
+  line-height: 1.15;
+}
+
+.hero-3d-floating-badge span {
+  display: block;
+  font-size: 0.68rem;
+  color: #cbd5e1;
+}
+
+.hero-3d-card {
+  transition: transform 0.18s ease-out, box-shadow 0.25s ease;
+  will-change: transform;
+  background: rgba(15, 23, 42, 0.75) !important;
+  border: 1.5px solid rgba(148, 163, 184, 0.28) !important;
+  box-shadow: 0 24px 55px -12px rgba(0, 0, 0, 0.55) !important;
+}
+
+/* 3D Glassmorphic Milestone Metrics Bar */
+.hero-3d-metrics-bar {
+  margin-top: clamp(2.25rem, 4.5vw, 3.25rem);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.1rem;
+}
+
+.hero-3d-metric-card {
+  background: rgba(15, 23, 42, 0.68);
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  border-top: 3px solid var(--metric-accent, #38bdf8);
+  border-radius: 16px;
+  padding: 1.2rem 1.3rem;
+  backdrop-filter: blur(12px);
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.28s ease;
+}
+
+.hero-3d-metric-card:hover {
+  transform: translateY(-6px) rotateX(4deg);
+  border-color: var(--metric-accent, #38bdf8);
+}
+
+.hero-3d-metric-top {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-bottom: 0.3rem;
+}
+
+.hero-3d-metric-icon {
+  font-size: 1.25rem;
+}
+
+.hero-3d-metric-value {
+  font-family: var(--font-heading);
+  font-size: 1.22rem;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.hero-3d-metric-label {
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: #93c5fd;
+}
+
+.hero-3d-metric-sub {
+  font-size: 0.76rem;
+  color: #94a3b8;
+  margin-top: 0.15rem;
+}
+
+/* Pure-CSS 3D Orbital Ecosystem Card */
+.ecosystem-3d-card {
+  background: linear-gradient(145deg, #071124 0%, #0f2347 55%, #173469 100%);
+  border: 1.5px solid rgba(56, 189, 248, 0.32);
+  border-radius: 22px;
+  padding: 1.85rem 1.75rem;
+  color: #ffffff;
+  box-shadow: 0 22px 48px -12px rgba(15, 23, 42, 0.25);
+  position: relative;
+  overflow: hidden;
+}
+
+.ecosystem-3d-header {
+  text-align: center;
+  margin-bottom: 1.25rem;
+}
+
+.ecosystem-3d-tag {
+  display: inline-block;
+  font-family: var(--font-heading);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #fbbf24;
+  background: rgba(251, 191, 36, 0.14);
+  border: 1px solid rgba(251, 191, 36, 0.4);
+  padding: 0.24rem 0.72rem;
+  border-radius: 999px;
+  margin-bottom: 0.45rem;
+}
+
+.ecosystem-3d-header h3 {
+  font-family: var(--font-heading);
+  font-size: 1.22rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0;
+}
+
+.ecosystem-3d-stage {
+  position: relative;
+  height: 270px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 900px;
+}
+
+.ecosystem-3d-ring {
+  position: absolute;
+  border-radius: 50%;
+  transform-style: preserve-3d;
+}
+
+.ecosystem-3d-ring.ring-outer {
+  width: 260px;
+  height: 260px;
+  border: 2px dashed rgba(56, 189, 248, 0.45);
+  animation: orbitSpin3D 18s linear infinite;
+}
+
+.ecosystem-3d-ring.ring-middle {
+  width: 200px;
+  height: 200px;
+  border: 2px solid rgba(251, 191, 36, 0.42);
+  animation: orbitSpinReverse3D 14s linear infinite;
+}
+
+.ecosystem-3d-ring.ring-inner {
+  width: 140px;
+  height: 140px;
+  border: 1.5px solid rgba(244, 63, 94, 0.45);
+  animation: orbitSpin3D 10s linear infinite;
+}
+
+.ecosystem-3d-core {
+  position: relative;
+  z-index: 4;
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #2563eb 0%, #1e3a8a 70%, #0f172a 100%);
+  border: 2.5px solid #fbbf24;
+  box-shadow: 0 0 32px rgba(56, 189, 248, 0.55);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.ecosystem-3d-core strong {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 900;
+  color: #ffffff;
+  line-height: 1;
+}
+
+.ecosystem-3d-core span {
+  font-family: var(--font-heading);
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #fde68a;
+  margin-top: 2px;
+}
+
+.ecosystem-3d-node {
+  position: absolute;
+  z-index: 5;
+  padding: 0.38rem 0.78rem;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid rgba(148, 163, 184, 0.4);
+  font-family: var(--font-heading);
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: #f8fafc;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+  white-space: nowrap;
+}
+
+.ecosystem-3d-node.node-top {
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-color: #38bdf8;
+}
+
+.ecosystem-3d-node.node-bottom {
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-color: #fb7185;
+}
+
+.ecosystem-3d-node.node-left {
+  left: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-color: #34d399;
+}
+
+.ecosystem-3d-node.node-right {
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-color: #fbbf24;
+}
+
+.ecosystem-3d-caption {
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: #cbd5e1;
+  text-align: justify;
+  margin: 1rem 0 0;
+}
+
+/* 3D Strategic Pillar Cards */
+.pillar-3d-card {
+  background: #ffffff;
+  border: 1px solid #dbe4f0;
+  border-top: 4px solid var(--pillar-accent, #2563eb);
+  border-radius: 18px;
+  padding: 1.75rem 1.65rem;
+  box-shadow: 0 10px 28px -10px rgba(15, 23, 42, 0.06);
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease;
+}
+
+.pillar-3d-card:hover {
+  transform: perspective(900px) translateY(-7px) rotateX(3deg);
+  box-shadow: 0 20px 38px -12px rgba(15, 23, 42, 0.14);
+}
+
+.pillar-3d-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.85rem;
+}
+
+.pillar-3d-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: #0f172a;
+  color: #fbbf24;
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 800;
+}
+
+.pillar-3d-tag {
+  font-family: var(--font-heading);
+  font-size: 0.74rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: #2563eb;
+  background: #eff6ff;
+  padding: 0.25rem 0.7rem;
+  border-radius: 999px;
+}
+
+.pillar-3d-title {
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 0.6rem;
+}
+
+.pillar-3d-desc {
+  font-size: 0.93rem;
+  line-height: 1.7;
+  color: #334155;
+  margin: 0;
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+/* Upcoming Flagship 3D Card */
+.upcoming-flagship-3d-card {
+  background: #ffffff;
+  border: 1.5px solid #cbd5e1;
+  border-top: 5px solid #2563eb;
+  border-radius: 22px;
+  padding: clamp(1.35rem, 3vw, 2.25rem);
+  box-shadow: 0 20px 46px -14px rgba(15, 23, 42, 0.1);
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 2.25rem;
+  align-items: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.upcoming-flagship-3d-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 26px 56px -14px rgba(37, 99, 235, 0.16);
+}
+
+.upcoming-flagship-poster-img {
+  width: 100%;
+  border-radius: 14px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.12);
+  display: block;
+}
+
+.upcoming-live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.3rem 0.78rem;
+  border-radius: 999px;
+  background: #dcfce7;
+  border: 1px solid #86efac;
+  color: #166534;
+  font-family: var(--font-heading);
+  font-size: 0.73rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+}
+
+.upcoming-date-chip,
+.upcoming-venue-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3rem 0.78rem;
+  border-radius: 999px;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  color: #1e40af;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.upcoming-flagship-title {
+  font-family: var(--font-heading);
+  font-size: clamp(1.35rem, 2.2vw, 1.75rem);
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1.25;
+  margin: 0 0 0.55rem;
+}
+
+.upcoming-flagship-question {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1d4ed8;
+  margin: 0 0 0.65rem;
+}
+
+.upcoming-flagship-desc {
+  font-size: 0.96rem;
+  line-height: 1.72;
+  color: #334155;
+  margin: 0 0 1.15rem;
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+.upcoming-speaker-box {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-left: 4px solid #2563eb;
+  border-radius: 12px;
+  padding: 0.85rem 1.1rem;
+}
+
+.upcoming-speaker-label {
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #64748b;
+}
+
+.upcoming-speaker-name {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.upcoming-speaker-role {
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: #1e40af;
+}
+
+@media (max-width: 992px) {
+  .hero-3d-main-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-3d-metrics-bar {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .upcoming-flagship-3d-card {
+    grid-template-columns: 1fr;
+  }
+
+  .upcoming-flagship-poster-col {
+    max-width: 340px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-3d-metrics-bar {
+    grid-template-columns: 1fr;
+  }
+
+  .upcoming-ticker-cta {
+    display: none;
+  }
+
+  .hero-3d-floating-badge.top-left {
+    position: static;
+    margin-bottom: 0.75rem;
+  }
+}
+
 

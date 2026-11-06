@@ -8,11 +8,11 @@ import { buildPageMetadata } from '@/lib/seoConfig';
 export const metadata: Metadata = buildPageMetadata({
   title: 'Contact Us — Chapter Office Bearers & Enquiries',
   description:
-    'Contact the ISTD Thrissur Chapter office bearers (Chairman Tony Chacko, Secretary Sneha Rose George, Treasurer Jibin N) and the ISTD National Office, New Delhi.',
+    'Contact the ISTD Trichur Chapter office bearers (Chairman Tony Chacko, Secretary Sneha Rose George, Treasurer Jibin N) and the ISTD National Office, New Delhi.',
   path: '/contact',
   keywords: [
-    'Contact ISTD Thrissur Chapter',
-    'ISTD Thrissur Phone Number',
+    'Contact ISTD Trichur Chapter',
+    'ISTD Trichur Phone Number',
     'ISTD Trichur Email',
   ],
 });
@@ -30,7 +30,7 @@ export default function ContactPage() {
           </div>
           <h1 className="page-hero-title">Contact Us</h1>
           <p className="page-hero-subtitle">
-            Get in touch with the ISTD Thrissur Chapter office bearers for local chapter programmes,
+            Get in touch with the ISTD Trichur Chapter office bearers for local chapter programmes,
             membership guidance, and academic–industry collaborations.
           </p>
         </div>
@@ -43,9 +43,9 @@ export default function ContactPage() {
             {/* Left Column: Enquiry Form */}
             <ContactForm />
 
-            {/* Right Column: Clearly Separated Thrissur Chapter Contacts & ISTD National Office Contacts */}
+            {/* Right Column: Clearly Separated Trichur Chapter Contacts & ISTD National Office Contacts */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-              {/* Card 1: Thrissur Chapter Contacts */}
+              {/* Card 1: Trichur Chapter Contacts */}
               <div
                 style={{
                   background: '#FFFFFF',
@@ -65,7 +65,7 @@ export default function ContactPage() {
                     fontWeight: 800,
                   }}
                 >
-                  ISTD Thrissur Chapter Contacts
+                  ISTD Trichur Chapter Contacts
                 </h2>
                 <p
                   style={{

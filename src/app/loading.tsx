@@ -5,7 +5,7 @@ export default function Loading() {
     <div className="page-loading-wrap" role="status" aria-live="polite">
       <div className="page-loading-card">
         <div className="page-loading-spinner" />
-        <p className="page-loading-text">Loading ISTD Thrissur Chapter...</p>
+        <p className="page-loading-text">Loading ISTD Trichur Chapter...</p>
       </div>
     </div>
   );

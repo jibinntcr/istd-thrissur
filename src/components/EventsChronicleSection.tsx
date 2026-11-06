@@ -193,7 +193,7 @@ export function EventsChronicleSection({
                 textAlign: 'justify',
               }}
             >
-              Browse and search ISTD Thrissur Chapter programmes by year,
+              Browse and search ISTD Trichur Chapter programmes by year,
               category, speaker, or session status. Select any programme card to
               view its complete report, resource person details, and photographs.
             </p>
@@ -989,7 +989,7 @@ export function UpcomingEventCard({ event }: { event: ChapterEvent }) {
                       color: 'var(--color-body)',
                     }}
                   >
-                    Organised by ISTD Thrissur Chapter
+                    Organised by ISTD Trichur Chapter
                   </span>
                 </dd>
               </div>

@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 
 const KERALA_DISTRICTS = [
-  'Thrissur',
+  'Trichur',
   'Ernakulam',
   'Palakkad',
   'Malappuram',
@@ -50,7 +50,7 @@ export function CampusChapterEoiForm() {
   const [affiliationStatus, setAffiliationStatus] = useState(
     'Autonomous Institution'
   );
-  const [district, setDistrict] = useState('Thrissur');
+  const [district, setDistrict] = useState('Trichur');
   const [cityLocation, setCityLocation] = useState('');
   const [headOfInstitution, setHeadOfInstitution] = useState('');
   const [coordinatorName, setCoordinatorName] = useState('');
@@ -156,7 +156,7 @@ export function CampusChapterEoiForm() {
 
   if (submittedRecord) {
     const whatsappSummary = encodeURIComponent(
-      `Hello ISTD Thrissur Chapter,\n\nWe have submitted an Expression of Interest (EOI) to establish an ISTD Campus / Student Chapter.\n\n• EOI Ref: ${submittedRecord.eoiRefNo}\n• Institution: ${submittedRecord.institutionName} (${submittedRecord.affiliationStatus})\n• Location: ${submittedRecord.cityLocation ? `${submittedRecord.cityLocation}, ` : ''}${submittedRecord.district}\n• Faculty Coordinator: ${submittedRecord.coordinatorName} (${submittedRecord.coordinatorDesignation})\n• Email: ${submittedRecord.officialEmail}\n• Phone: ${submittedRecord.phoneNumber}\n• Est. Student Cohort: ${submittedRecord.estimatedStudentCount}`
+      `Hello ISTD Trichur Chapter,\n\nWe have submitted an Expression of Interest (EOI) to establish an ISTD Campus / Student Chapter.\n\n• EOI Ref: ${submittedRecord.eoiRefNo}\n• Institution: ${submittedRecord.institutionName} (${submittedRecord.affiliationStatus})\n• Location: ${submittedRecord.cityLocation ? `${submittedRecord.cityLocation}, ` : ''}${submittedRecord.district}\n• Faculty Coordinator: ${submittedRecord.coordinatorName} (${submittedRecord.coordinatorDesignation})\n• Email: ${submittedRecord.officialEmail}\n• Phone: ${submittedRecord.phoneNumber}\n• Est. Student Cohort: ${submittedRecord.estimatedStudentCount}`
     );
 
     const mailtoHref = `mailto:jibintcr@gmail.com,tonychacko67@gmail.com?subject=${encodeURIComponent(
@@ -213,7 +213,7 @@ export function CampusChapterEoiForm() {
               margin: 0,
             }}
           >
-            The Managing Committee of the ISTD Thrissur Chapter will review your
+            The Managing Committee of the ISTD Trichur Chapter will review your
             institutional details and connect with your Faculty Coordinator.
           </p>
         </div>
@@ -384,7 +384,7 @@ export function CampusChapterEoiForm() {
           }}
         >
           Colleges, universities, autonomous engineering institutes, and
-          management schools in Thrissur and Central Kerala are invited to
+          management schools in Trichur and Central Kerala are invited to
           submit an Expression of Interest.
         </p>
       </div>
@@ -510,7 +510,7 @@ export function CampusChapterEoiForm() {
             <label style={labelStyle}>Town / Campus Location</label>
             <input
               type="text"
-              placeholder="e.g., Irinjalakuda, Thrissur"
+              placeholder="e.g., Irinjalakuda, Trichur"
               value={cityLocation}
               onChange={(e) => setCityLocation(e.target.value)}
               style={inputStyle}

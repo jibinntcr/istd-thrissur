@@ -33,7 +33,7 @@ export async function POST(request: Request) {
           ok: false,
           unconfigured: true,
           error:
-            'Automated form submission is not yet connected to a backend mail server. Your entered information is preserved below—please use the "Send via Email Client" button to send your pre-filled enquiry directly to the ISTD Thrissur Chapter (tonychacko67@gmail.com, jibintcr@gmail.com).',
+            'Automated form submission is not yet connected to a backend mail server. Your entered information is preserved below—please use the "Send via Email Client" button to send your pre-filled enquiry directly to the ISTD Trichur Chapter (tonychacko67@gmail.com, jibintcr@gmail.com).',
         },
         { status: 503 }
       );
@@ -70,8 +70,8 @@ export async function POST(request: Request) {
       ok: true,
       message:
         type === 'membership'
-          ? 'Thank you. Your membership enquiry has been sent to the ISTD Thrissur Chapter.'
-          : 'Thank you. Your enquiry has been sent to the ISTD Thrissur Chapter.',
+          ? 'Thank you. Your membership enquiry has been sent to the ISTD Trichur Chapter.'
+          : 'Thank you. Your enquiry has been sent to the ISTD Trichur Chapter.',
     });
   } catch {
     return NextResponse.json(

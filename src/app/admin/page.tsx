@@ -6,7 +6,7 @@ import { buildPageMetadata } from '@/lib/seoConfig';
 export const metadata: Metadata = buildPageMetadata({
   title: 'Admin Console',
   description:
-    'ISTD Thrissur Chapter administration console for managing events, photographs, participant registrations, and cache.',
+    'ISTD Trichur Chapter administration console for managing events, photographs, participant registrations, and cache.',
   path: '/admin',
   noIndex: true,
 });

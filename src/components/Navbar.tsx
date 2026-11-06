@@ -105,7 +105,7 @@ export function Navbar() {
             <Link
               href="/campus-chapters"
               className="top-bar-portal-pill"
-              title="ISTD Thrissur Campus & Student Chapters"
+              title="ISTD Trichur Campus & Student Chapters"
               style={{
                 background: pathname?.startsWith('/campus-chapters')
                   ? 'rgba(245, 158, 11, 0.28)'
@@ -143,8 +143,8 @@ export function Navbar() {
               target="_blank"
               rel="noopener noreferrer"
               className="top-bar-linkedin-icon"
-              aria-label="ISTD Thrissur Chapter on LinkedIn"
-              title="Follow ISTD Thrissur Chapter on LinkedIn"
+              aria-label="ISTD Trichur Chapter on LinkedIn"
+              title="Follow ISTD Trichur Chapter on LinkedIn"
             >
               <svg
                 width="15"
@@ -169,7 +169,7 @@ export function Navbar() {
               <div className="brand-seal-ring">
                 <img
                   src={assetUrl('/images/logo-circle.png')}
-                  alt="ISTD Thrissur Chapter Official Emblem"
+                  alt="ISTD Trichur Chapter Official Emblem"
                   width={46}
                   height={46}
                 />
@@ -179,7 +179,7 @@ export function Navbar() {
                   <span className="brand-name">ISTD</span>
                   <span className="brand-diamond-tag">Diamond Chapter</span>
                 </div>
-                <span className="brand-chapter">Thrissur Chapter</span>
+                <span className="brand-chapter">Trichur Chapter</span>
                 <span className="brand-sub">Indian Society for Training &amp; Development</span>
               </div>
             </Link>
@@ -249,7 +249,7 @@ export function Navbar() {
               <div className="brand-seal-ring sm">
                 <img
                   src={assetUrl('/images/logo-circle.png')}
-                  alt="ISTD Thrissur Chapter Emblem"
+                  alt="ISTD Trichur Chapter Emblem"
                   width={40}
                   height={40}
                 />
@@ -259,7 +259,7 @@ export function Navbar() {
                   <span className="brand-name">ISTD</span>
                   <span className="brand-diamond-tag">Diamond</span>
                 </div>
-                <span className="brand-chapter">Thrissur Chapter</span>
+                <span className="brand-chapter">Trichur Chapter</span>
               </div>
             </Link>
             <button

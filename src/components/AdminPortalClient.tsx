@@ -83,7 +83,7 @@ export function AdminPortalClient() {
   const [photoCaption, setPhotoCaption] = useState('');
   const [photoCategory, setPhotoCategory] =
     useState<GalleryPhoto['category']>('ceremony');
-  const [photoMetaTag, setPhotoMetaTag] = useState('2026 • Thrissur');
+  const [photoMetaTag, setPhotoMetaTag] = useState('2026 • Trichur');
   const [photoSrc, setPhotoSrc] = useState('');
   const [photoEventSlug, setPhotoEventSlug] = useState('');
 
@@ -166,7 +166,7 @@ export function AdminPortalClient() {
                 ? 'Shri. Tony Chacko (Chairman)'
                 : normalized === 'jibintcr@gmail.com'
                 ? 'Mr. Jibin N (Treasurer)'
-                : 'ISTD Thrissur Chapter Admin',
+                : 'ISTD Trichur Chapter Admin',
             role: 'Chapter Administrator',
             loggedInAt: new Date().toISOString(),
           };
@@ -369,7 +369,7 @@ export function AdminPortalClient() {
       caption: photoCaption.trim() || photoTitle.trim(),
       category: photoCategory,
       categoryLabel: categoryLabels[photoCategory] || 'Event Photograph',
-      metaTag: photoMetaTag.trim() || '2026 • Thrissur',
+      metaTag: photoMetaTag.trim() || '2026 • Trichur',
       keywords: `${photoTitle} ${photoCaption} ${photoMetaTag}`.toLowerCase(),
     };
 
@@ -459,7 +459,7 @@ export function AdminPortalClient() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `ISTD-Thrissur-Registrations-${new Date().toISOString().slice(0, 10)}.csv`;
+    a.download = `ISTD-Trichur-Registrations-${new Date().toISOString().slice(0, 10)}.csv`;
     a.click();
     URL.revokeObjectURL(url);
   };
@@ -550,7 +550,7 @@ export function AdminPortalClient() {
                     Official Backend Console
                   </span>
                   <div style={{ fontSize: '1.15rem', fontWeight: 800, color: '#FFFFFF', lineHeight: 1.2 }}>
-                    ISTD Thrissur Chapter
+                    ISTD Trichur Chapter
                   </div>
                 </div>
               </div>
@@ -878,7 +878,7 @@ export function AdminPortalClient() {
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
                 <span style={{ fontWeight: 800, fontSize: '0.98rem', color: '#FFFFFF' }}>
-                  ISTD Thrissur
+                  ISTD Trichur
                 </span>
                 <span
                   style={{
@@ -2589,7 +2589,7 @@ export function AdminPortalClient() {
                         <input
                           type="text"
                           className="form-control"
-                          placeholder="e.g., 10 November 2026 • Thrissur"
+                          placeholder="e.g., 10 November 2026 • Trichur"
                           value={photoMetaTag}
                           onChange={(e) => setPhotoMetaTag(e.target.value)}
                         />
@@ -3071,7 +3071,7 @@ export function AdminPortalClient() {
                   /[^0-9]/g,
                   ''
                 )}?text=${encodeURIComponent(
-                  `Hello ${selectedRegistration.salutation} ${selectedRegistration.fullName}, your registration (${selectedRegistration.registrationCode}) for "${selectedRegistration.eventTitle}" (${selectedRegistration.eventDate}) with ISTD Thrissur Chapter is confirmed.`
+                  `Hello ${selectedRegistration.salutation} ${selectedRegistration.fullName}, your registration (${selectedRegistration.registrationCode}) for "${selectedRegistration.eventTitle}" (${selectedRegistration.eventDate}) with ISTD Trichur Chapter is confirmed.`
                 )}`}
                 target="_blank"
                 rel="noopener noreferrer"

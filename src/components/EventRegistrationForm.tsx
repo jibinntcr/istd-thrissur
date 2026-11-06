@@ -11,7 +11,7 @@ import {
 import { CaptchaChallenge } from './CaptchaChallenge';
 
 const KERALA_DISTRICTS = [
-  'Thrissur',
+  'Trichur',
   'Ernakulam',
   'Palakkad',
   'Malappuram',
@@ -54,10 +54,10 @@ export function EventRegistrationForm({ event }: EventRegistrationFormProps) {
   const [phone, setPhone] = useState('');
   const [sameWhatsapp, setSameWhatsapp] = useState(true);
   const [whatsapp, setWhatsapp] = useState('');
-  const [district, setDistrict] = useState('Thrissur');
+  const [district, setDistrict] = useState('Trichur');
   const [customDistrict, setCustomDistrict] = useState('');
   const [stateName, setStateName] = useState('Kerala');
-  const [city, setCity] = useState('Thrissur');
+  const [city, setCity] = useState('Trichur');
   const [participantCategory, setParticipantCategory] = useState(
     'Corporate / Industry Professional'
   );
@@ -66,7 +66,7 @@ export function EventRegistrationForm({ event }: EventRegistrationFormProps) {
   const [experienceYears, setExperienceYears] = useState('3–7 Years');
   const [isIstdMember, setIsIstdMember] = useState('No');
   const [istdMembershipNo, setIstdMembershipNo] = useState('');
-  const [istdChapterName, setIstdChapterName] = useState('Thrissur');
+  const [istdChapterName, setIstdChapterName] = useState('Trichur');
   const [requireCertificate, setRequireCertificate] = useState(true);
   const [expectations, setExpectations] = useState('');
   const [referralSource, setReferralSource] = useState('LinkedIn');
@@ -103,7 +103,7 @@ export function EventRegistrationForm({ event }: EventRegistrationFormProps) {
       setCustomDistrict(profile.district || '');
     }
 
-    setCity(profile.city || profile.district || 'Thrissur');
+    setCity(profile.city || profile.district || 'Trichur');
     setStateName(profile.state || 'Kerala');
     setParticipantCategory(
       profile.participantCategory || 'Corporate / Industry Professional'
@@ -113,7 +113,7 @@ export function EventRegistrationForm({ event }: EventRegistrationFormProps) {
     setExperienceYears(profile.experienceYears || '3–7 Years');
     setIsIstdMember(profile.isIstdMember || 'No');
     setIstdMembershipNo(profile.istdMembershipNo || '');
-    setIstdChapterName(profile.istdChapterName || 'Thrissur');
+    setIstdChapterName(profile.istdChapterName || 'Trichur');
     setRequireCertificate(profile.requireCertificate ?? true);
     setReferralSource(profile.referralSource || 'LinkedIn');
 
@@ -257,7 +257,7 @@ export function EventRegistrationForm({ event }: EventRegistrationFormProps) {
       confirmedReg.participantCode || confirmedReg.registrationCode.replace('TCR', 'PID');
 
     const whatsappShareText = encodeURIComponent(
-      `Hello ISTD Thrissur Chapter,\n\nI have registered for "${confirmedReg.eventTitle}" (${confirmedReg.eventDate}, ${confirmedReg.eventTime}).\n\n• Unique Participant ID: ${permanentId}\n• Event Registration Pass: ${confirmedReg.registrationCode}\n• Name: ${confirmedReg.salutation} ${confirmedReg.fullName}\n• Email: ${confirmedReg.email}\n• WhatsApp: ${confirmedReg.whatsapp}\n• District: ${confirmedReg.district}\n• Organisation: ${confirmedReg.organization} (${confirmedReg.designation})`
+      `Hello ISTD Trichur Chapter,\n\nI have registered for "${confirmedReg.eventTitle}" (${confirmedReg.eventDate}, ${confirmedReg.eventTime}).\n\n• Unique Participant ID: ${permanentId}\n• Event Registration Pass: ${confirmedReg.registrationCode}\n• Name: ${confirmedReg.salutation} ${confirmedReg.fullName}\n• Email: ${confirmedReg.email}\n• WhatsApp: ${confirmedReg.whatsapp}\n• District: ${confirmedReg.district}\n• Organisation: ${confirmedReg.organization} (${confirmedReg.designation})`
     );
 
     const handleCopyUniqueId = () => {
@@ -314,7 +314,7 @@ export function EventRegistrationForm({ event }: EventRegistrationFormProps) {
             </h3>
             <p style={{ fontSize: '0.94rem', color: '#D1FAE5', margin: '0.3rem 0 0' }}>
               Your seat for this session is confirmed. Save your Unique Participant ID below for
-              1-click registration in all future ISTD Thrissur events.
+              1-click registration in all future ISTD Trichur events.
             </p>
           </div>
 
@@ -399,7 +399,7 @@ export function EventRegistrationForm({ event }: EventRegistrationFormProps) {
               >
                 Use this Unique ID (or your registered mobile number{' '}
                 <strong>{confirmedReg.phone}</strong>) to auto-fill all your details in one click
-                whenever you register for future ISTD Thrissur Chapter programmes!
+                whenever you register for future ISTD Trichur Chapter programmes!
               </p>
             </div>
 
@@ -1129,7 +1129,7 @@ export function EventRegistrationForm({ event }: EventRegistrationFormProps) {
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="e.g., Thrissur"
+                  placeholder="e.g., Trichur"
                   value={city}
                   onChange={(e) => setCity(e.target.value)}
                   required
@@ -1196,7 +1196,7 @@ export function EventRegistrationForm({ event }: EventRegistrationFormProps) {
                   <option value="LinkedIn">LinkedIn</option>
                   <option value="WhatsApp Group">WhatsApp Group / Status</option>
                   <option value="ISTD Member Referral">ISTD Chapter Member Referral</option>
-                  <option value="ISTD Website">ISTD Thrissur Website</option>
+                  <option value="ISTD Website">ISTD Trichur Website</option>
                   <option value="College / Institution">College / Academic Institution</option>
                   <option value="Other">Other</option>
                 </select>
@@ -1229,7 +1229,7 @@ export function EventRegistrationForm({ event }: EventRegistrationFormProps) {
                   <input
                     type="text"
                     className="form-control"
-                    placeholder="e.g., Thrissur / Kochi / Trivandrum"
+                    placeholder="e.g., Trichur / Kochi / Trivandrum"
                     value={istdChapterName}
                     onChange={(e) => setIstdChapterName(e.target.value)}
                   />

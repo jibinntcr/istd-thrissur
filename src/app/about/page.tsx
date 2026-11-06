@@ -8,13 +8,13 @@ import { buildPageMetadata } from '@/lib/seoConfig';
 export const metadata: Metadata = buildPageMetadata({
   title: 'About Us — History, Vision & Mission',
   description:
-    'Learn about the Indian Society for Training & Development (ISTD, established April 1970 in New Delhi) and the ISTD Thrissur Diamond Chapter (inaugurated 30 March 2026 in Thrissur, Kerala).',
+    'Learn about the Indian Society for Training & Development (ISTD, established April 1970 in New Delhi) and the ISTD Trichur Diamond Chapter (inaugurated 30 March 2026 in Trichur, Kerala).',
   path: '/about',
   image: '/photos/istd-national-president.jpeg',
   keywords: [
-    'About ISTD Thrissur Chapter',
+    'About ISTD Trichur Chapter',
     'ISTD History April 1970',
-    'ISTD Diamond Chapter Thrissur Inauguration',
+    'ISTD Diamond Chapter Trichur Inauguration',
     'ISTD Vision and Mission',
   ],
 });
@@ -33,12 +33,12 @@ export default function AboutPage() {
           <h1 className="page-hero-title">About Us</h1>
           <p className="page-hero-subtitle">
             Learn about the Indian Society for Training &amp; Development (ISTD) and the mission,
-            vision, and activities of the ISTD Thrissur Chapter.
+            vision, and activities of the ISTD Trichur Chapter.
           </p>
         </div>
       </section>
 
-      {/* Distinction: ISTD National Establishment vs. Thrissur Chapter Establishment */}
+      {/* Distinction: ISTD National Establishment vs. Trichur Chapter Establishment */}
       <section className="section-padding bg-white">
         <div className="container">
           <div className="split-grid" style={{ alignItems: 'start', gap: '2.5rem' }}>
@@ -49,7 +49,7 @@ export default function AboutPage() {
                 title="Presentation of the Diamond Chapter Charter"
                 caption="National President Shri. Atul Shah presenting the Diamond Chapter Charter to National Vice President Prof. (Dr.) Zakkariya K. A. as National Treasurer Shri. Nabaghana Pany looks on (30 March 2026)."
                 category="Charter Presentation"
-                badgeText="30 March 2026 • Thrissur"
+                badgeText="30 March 2026 • Trichur"
                 headingText="Presentation of the Diamond Chapter Charter"
                 aspectRatio="16/10"
               />
@@ -63,7 +63,7 @@ export default function AboutPage() {
                   src="/photos/istd-in.jpeg"
                   alt="Oath of office administered by National President Shri. Atul Shah"
                   title="Installation of Office Bearers"
-                  caption="National President Shri. Atul Shah administering the oath of office to the Thrissur Chapter Managing Committee on 30 March 2026."
+                  caption="National President Shri. Atul Shah administering the oath of office to the Trichur Chapter Managing Committee on 30 March 2026."
                   category="Installation"
                   badgeText="30 March 2026"
                   headingText="Installation of Office Bearers"
@@ -72,7 +72,7 @@ export default function AboutPage() {
                 />
                 <PhotoCard
                   src="/photos/istd-calicut.jpeg"
-                  alt="Dignitaries seated on the dais at the Thrissur Chapter inauguration"
+                  alt="Dignitaries seated on the dais at the Trichur Chapter inauguration"
                   title="Dignitaries on the Dais"
                   caption="Past National President Dr. Yogesh Kumar Upadhyay, National Treasurer Shri. Nabaghana Pany, National President Shri. Atul Shah, National Vice President Prof. (Dr.) Zakkariya K. A., and Chapter Chairman Tony Chacko."
                   category="Inauguration"
@@ -134,7 +134,7 @@ export default function AboutPage() {
                   marginBottom: '0.45rem',
                 }}
               >
-                ISTD Thrissur Chapter (Inaugurated 30 March 2026)
+                ISTD Trichur Chapter (Inaugurated 30 March 2026)
               </h3>
               <p
                 style={{
@@ -144,12 +144,12 @@ export default function AboutPage() {
                   marginBottom: '1.2rem',
                 }}
               >
-                The <strong>ISTD Thrissur Chapter</strong> (also known as the{' '}
+                The <strong>ISTD Trichur Chapter</strong> (also known as the{' '}
                 <em>ISTD Trichur Chapter</em>) was inaugurated on <strong>30 March 2026</strong> at
-                Hotel Pearl Regency, Thrissur, marking the establishment of the{' '}
+                Hotel Pearl Regency, Trichur, marking the establishment of the{' '}
                 <strong>Diamond Chapter</strong> of ISTD in its 55th year. The chapter brings
                 together trainers, educators, HR professionals, academicians, and industry
-                practitioners across the Thrissur region for continuous learning, knowledge
+                practitioners across the Trichur region for continuous learning, knowledge
                 exchange, and collaborative human resource development.
               </p>
 
@@ -212,11 +212,11 @@ export default function AboutPage() {
             <div className="CleanCard" style={{ borderTop: '4px solid var(--accent-red)' }}>
               <span className="section-tag tag-red">Chapter Objectives</span>
               <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '0.75rem' }}>
-                Thrissur Chapter Mission &amp; Focus
+                Trichur Chapter Mission &amp; Focus
               </h3>
               <p style={{ fontSize: '0.95rem', lineHeight: 1.7, color: 'var(--color-body)' }}>
                 To foster a culture of continuous learning and professional development among
-                trainers, educators, HR practitioners, and organisational leaders in the Thrissur
+                trainers, educators, HR practitioners, and organisational leaders in the Trichur
                 region.
               </p>
               <p
@@ -242,7 +242,7 @@ export default function AboutPage() {
             <span className="section-tag tag-blue">Chapter Activities</span>
             <h2 className="section-title">What We Do</h2>
             <p className="section-subtitle">
-              Key activities organised by the ISTD Thrissur Chapter for members and the wider
+              Key activities organised by the ISTD Trichur Chapter for members and the wider
               professional community.
             </p>
           </div>
@@ -278,7 +278,7 @@ export default function AboutPage() {
               </h3>
               <p style={{ fontSize: '0.92rem', color: 'var(--color-body)', lineHeight: 1.65, marginBottom: 0 }}>
                 Connecting management institutions, universities, and business organisations in
-                Thrissur to encourage dialogue on skill development and workplace readiness.
+                Trichur to encourage dialogue on skill development and workplace readiness.
               </p>
             </div>
           </div>
@@ -296,7 +296,7 @@ export default function AboutPage() {
                 <p>
                   Visit the official ISTD national portal (istd.in) to learn more about national
                   programmes, publications (IJTD), and institutional initiatives, or join the
-                  Thrissur Chapter.
+                  Trichur Chapter.
                 </p>
               </div>
               <div className="btn-group">

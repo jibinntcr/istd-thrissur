@@ -11,15 +11,15 @@ import {
 export const metadata: Metadata = buildPageMetadata({
   title: 'Managing Committee & Office Bearers',
   description:
-    'Meet the managing committee and office bearers of ISTD Thrissur Chapter: Founder & Mentor Prof. (Dr.) Zakkariya K. A., Chairman Tony Chacko, Secretary Jibin N, and Treasurer Sneha Rose George.',
+    'Meet the managing committee and office bearers of ISTD Trichur Chapter: Founder & Mentor Prof. (Dr.) Zakkariya K. A., Chairman Tony Chacko, Secretary Jibin N, and Treasurer Sneha Rose George.',
   path: '/committee',
   image: '/images/ISTDTeamTCR/zakkariya-ka.jpg',
   keywords: [
-    'ISTD Thrissur Managing Committee',
+    'ISTD Trichur Managing Committee',
     'Prof. Dr. Zakkariya K.A Founder Mentor ISTD',
-    'Tony Chacko Chairman ISTD Thrissur',
-    'Jibin N Secretary ISTD Thrissur',
-    'Sneha Rose George Treasurer ISTD Thrissur',
+    'Tony Chacko Chairman ISTD Trichur',
+    'Jibin N Secretary ISTD Trichur',
+    'Sneha Rose George Treasurer ISTD Trichur',
   ],
 });
 
@@ -45,7 +45,7 @@ export default function CommitteePage() {
           <p className="page-hero-subtitle">
             Founder &amp; Mentor, Chairman, Secretary, and Treasurer guiding the
             governance, academic–industry initiatives, and operations of ISTD
-            Thrissur Chapter.
+            Trichur Chapter.
           </p>
         </div>
       </section>
@@ -67,7 +67,7 @@ export default function CommitteePage() {
                   fontWeight: 800,
                 }}
               >
-                ISTD Thrissur Chapter Executive Leadership
+                ISTD Trichur Chapter Executive Leadership
               </h2>
               <p
                 style={{
@@ -82,7 +82,7 @@ export default function CommitteePage() {
                 March 2026 in the presence of ISTD National and Regional
                 dignitaries, the executive leadership team coordinates chapter
                 programmes, campus student chapters, and professional networking
-                across Thrissur and Central Kerala. Select any office bearer
+                across Trichur and Central Kerala. Select any office bearer
                 below to view their dedicated profile page.
               </p>
               <div
@@ -105,8 +105,8 @@ export default function CommitteePage() {
 
             <PhotoCard
               src="/photos/team.jpeg"
-              alt="ISTD Thrissur Chapter Leadership with National Dignitaries"
-              title="ISTD Thrissur Chapter Leadership with National Dignitaries"
+              alt="ISTD Trichur Chapter Leadership with National Dignitaries"
+              title="ISTD Trichur Chapter Leadership with National Dignitaries"
               caption="Founder & Mentor Prof. (Dr.) Zakkariya K. A., Chairman Tony Chacko, Secretary Jibin N, and Treasurer Sneha Rose George with National President Shri. Atul Shah (30 March 2026)."
               category="Managing Committee"
               badgeText="30 March 2026"
@@ -164,7 +164,7 @@ export default function CommitteePage() {
                         )}
                         alt={
                           member.avatarAlt ||
-                          `${member.name}, ${member.role} of ISTD Thrissur Chapter`
+                          `${member.name}, ${member.role} of ISTD Trichur Chapter`
                         }
                         width={148}
                         height={148}
@@ -206,8 +206,8 @@ export default function CommitteePage() {
                       }}
                     >
                       {member.slug === 'prof-dr-zakkariya-k-a'
-                        ? 'National Vice President, ISTD • ISTD Thrissur Chapter'
-                        : member.organisation || 'ISTD Thrissur Chapter'}
+                        ? 'National Vice President, ISTD • ISTD Trichur Chapter'
+                        : member.organisation || 'ISTD Trichur Chapter'}
                     </p>
                     {member.shortBio && (
                       <p
@@ -315,7 +315,7 @@ export default function CommitteePage() {
                 <span className="section-tag tag-yellow">
                   Connect With the Committee
                 </span>
-                <h2>Collaborate With the ISTD Thrissur Chapter</h2>
+                <h2>Collaborate With the ISTD Trichur Chapter</h2>
                 <p>
                   To discuss upcoming training programmes, academic
                   collaborations, or membership enquiries, please contact our

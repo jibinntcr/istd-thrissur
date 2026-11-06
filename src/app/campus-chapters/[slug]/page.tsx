@@ -21,7 +21,7 @@ export async function generateMetadata({
   const chapter = CAMPUS_CHAPTERS.find((c) => c.slug === slug);
   if (!chapter) {
     return {
-      title: 'Campus Chapter | ISTD Thrissur Chapter',
+      title: 'Campus Chapter | ISTD Trichur Chapter',
     };
   }
   return buildPageMetadata({
@@ -528,9 +528,9 @@ export default async function CampusChapterDetailPage({
                 </span>
                 <h2>Interested in Starting an ISTD Campus Chapter?</h2>
                 <p>
-                  Colleges and universities across Thrissur and Central Kerala
+                  Colleges and universities across Trichur and Central Kerala
                   can submit an Expression of Interest (EOI) to partner with the
-                  ISTD Thrissur Chapter.
+                  ISTD Trichur Chapter.
                 </p>
               </div>
               <div className="btn-group">
@@ -545,7 +545,7 @@ export default async function CampusChapterDetailPage({
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn btn-outline-white"
-                  aria-label="Follow ISTD Thrissur Chapter on LinkedIn"
+                  aria-label="Follow ISTD Trichur Chapter on LinkedIn"
                   style={{ display: 'inline-flex', alignItems: 'center', gap: '0.45rem' }}
                 >
                   <svg

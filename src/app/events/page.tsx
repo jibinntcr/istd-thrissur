@@ -7,15 +7,15 @@ import { buildPageMetadata } from '@/lib/seoConfig';
 export const metadata: Metadata = buildPageMetadata({
   title: 'Events, Webinars & Programmes',
   description:
-    'Explore year-wise categorized webinars, learning sessions, workshops, campus milestones, and completed event reports organised by the ISTD Thrissur (Trichur) Chapter.',
+    'Explore year-wise categorized webinars, learning sessions, workshops, campus milestones, and completed event reports organised by the ISTD Trichur Chapter.',
   path: '/events',
   image: '/images/event-aiot-boopathy.jpg',
   keywords: [
-    'ISTD Thrissur Events',
+    'ISTD Trichur Events',
     'ISTD Trichur Webinars',
     'HR and L&D Workshops Kerala',
     'Advancing AIoT Research Boopathy ISTD',
-    'Chapter Connect 2026 ISTD Thrissur',
+    'Chapter Connect 2026 ISTD Trichur',
   ],
 });
 
@@ -34,7 +34,7 @@ export default function EventsPage() {
           <p className="page-hero-subtitle">
             Explore year-wise categorized learning sessions, workshops, campus
             chapter milestones, and official event reports organised by the ISTD
-            Thrissur Chapter.
+            Trichur Chapter.
           </p>
         </div>
       </section>
@@ -54,7 +54,7 @@ export default function EventsPage() {
                 <h2>Propose a Workshop, Seminar, or Learning Session</h2>
                 <p style={{ textAlign: 'justify' }}>
                   HR leaders, corporate trainers, academicians, and institutions
-                  interested in collaborating on upcoming ISTD Thrissur Chapter
+                  interested in collaborating on upcoming ISTD Trichur Chapter
                   programmes are invited to get in touch with our chapter office
                   bearers.
                 </p>

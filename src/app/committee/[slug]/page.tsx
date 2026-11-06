@@ -21,17 +21,17 @@ export async function generateMetadata({
 
   if (!member) {
     return {
-      title: 'Leadership Profile | ISTD Thrissur Chapter',
+      title: 'Leadership Profile | ISTD Trichur Chapter',
     };
   }
 
   const exactTitle =
     member.metaTitle ||
-    `${member.name} | ${member.role} | ISTD Thrissur Chapter`;
+    `${member.name} | ${member.role} | ISTD Trichur Chapter`;
   const description =
     member.metaDescription ||
     member.shortBio ||
-    `Meet ${member.name}, ${member.role} of ISTD Thrissur Chapter.`;
+    `Meet ${member.name}, ${member.role} of ISTD Trichur Chapter.`;
 
   return buildPageMetadata({
     title: exactTitle,
@@ -42,7 +42,7 @@ export async function generateMetadata({
     image: member.avatar || '/images/logo-circle.png',
     imageAlt:
       member.avatarAlt ||
-      `${member.name}, ${member.role} of ISTD Thrissur Chapter`,
+      `${member.name}, ${member.role} of ISTD Trichur Chapter`,
     imageWidth: member.avatarWidth || 400,
     imageHeight: member.avatarHeight || 400,
     type: 'profile',
@@ -50,9 +50,9 @@ export async function generateMetadata({
     keywords: [
       member.name,
       `${member.name} ISTD`,
-      `${member.name} ISTD Thrissur`,
-      `${member.name} ${member.role} ISTD Thrissur Chapter`,
-      `${member.role} ISTD Thrissur Chapter`,
+      `${member.name} ISTD Trichur`,
+      `${member.name} ${member.role} ISTD Trichur Chapter`,
+      `${member.role} ISTD Trichur Chapter`,
     ],
   });
 }

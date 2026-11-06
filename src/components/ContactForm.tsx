@@ -37,12 +37,12 @@ export function ContactForm() {
   const buildMailtoHref = () => {
     const subjectLine =
       category === 'Events & Programmes Enquiry' && eventTitle
-        ? `ISTD Thrissur Chapter Event Enquiry: ${eventTitle}`
-        : `ISTD Thrissur Chapter Enquiry: ${category} (${name || 'Visitor'})`;
+        ? `ISTD Trichur Chapter Event Enquiry: ${eventTitle}`
+        : `ISTD Trichur Chapter Enquiry: ${category} (${name || 'Visitor'})`;
     const subject = encodeURIComponent(subjectLine);
     const body = encodeURIComponent(
       [
-        `ISTD Thrissur Chapter — Contact / Event Enquiry`,
+        `ISTD Trichur Chapter — Contact / Event Enquiry`,
         `------------------------------------------------`,
         `Full Name: ${name}`,
         `Email Address: ${email}`,
@@ -61,7 +61,7 @@ export function ContactForm() {
 
   const handleCopyDetails = async () => {
     const text = [
-      `ISTD Thrissur Chapter — Enquiry`,
+      `ISTD Trichur Chapter — Enquiry`,
       `Full Name: ${name}`,
       `Email Address: ${email}`,
       `Phone / Mobile: ${phone}`,
@@ -128,7 +128,7 @@ export function ContactForm() {
       const contentType = res.headers.get('content-type') || '';
       if (!contentType.includes('application/json')) {
         setError(
-          'Automated server delivery is not configured on this static host. Your entered details have been preserved in the form—please click "Send via Email Client" below to send your pre-filled enquiry directly to the Thrissur Chapter office bearers.'
+          'Automated server delivery is not configured on this static host. Your entered details have been preserved in the form—please click "Send via Email Client" below to send your pre-filled enquiry directly to the Trichur Chapter office bearers.'
         );
         return;
       }
@@ -148,7 +148,7 @@ export function ContactForm() {
       }
     } catch {
       setError(
-        'Automated server delivery is not configured on this host. Your entered details have been preserved in the form—please click "Send via Email Client" below to send your pre-filled enquiry directly to the Thrissur Chapter office bearers.'
+        'Automated server delivery is not configured on this host. Your entered details have been preserved in the form—please click "Send via Email Client" below to send your pre-filled enquiry directly to the Trichur Chapter office bearers.'
       );
     } finally {
       setSubmitting(false);
@@ -166,7 +166,7 @@ export function ContactForm() {
           fontWeight: 800,
         }}
       >
-        Send an Enquiry to the Thrissur Chapter
+        Send an Enquiry to the Trichur Chapter
       </h2>
       <p style={{ fontSize: '0.92rem', color: 'var(--color-muted)', marginBottom: '1.75rem' }}>
         Use this form for event enquiries, speaker proposals, institutional collaboration, or
@@ -331,7 +331,7 @@ export function ContactForm() {
           }}
         >
           <strong>Privacy Notice:</strong> Your contact information and message are used solely by
-          the ISTD Thrissur Chapter office bearers to respond to your enquiry. See our{' '}
+          the ISTD Trichur Chapter office bearers to respond to your enquiry. See our{' '}
           <Link href="/privacy" style={{ color: 'var(--brand-blue)', fontWeight: 600 }}>
             Privacy Policy
           </Link>
