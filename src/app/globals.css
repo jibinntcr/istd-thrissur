@@ -5960,36 +5960,7 @@ main p,
   text-overflow: ellipsis;
 }
 
-/* Pure-CSS 3D Orbital Ecosystem Card (ISTD Vision & Mission in Motion) */
-@keyframes corePulseHalo {
-  0%, 100% {
-    transform: scale(0.92);
-    opacity: 0.45;
-  }
-  50% {
-    transform: scale(1.18);
-    opacity: 0.85;
-  }
-}
-
-@keyframes nodeFloatVertical {
-  0%, 100% {
-    transform: translate(-50%, 0);
-  }
-  50% {
-    transform: translate(-50%, -5px);
-  }
-}
-
-@keyframes nodeFloatHorizontal {
-  0%, 100% {
-    transform: translate(0, -50%);
-  }
-  50% {
-    transform: translate(0, calc(-50% - 5px));
-  }
-}
-
+/* Pure-CSS Ecosystem Card (ISTD Vision & Mission in Motion) */
 @keyframes missionArrowPulse {
   0%, 100% {
     opacity: 0.45;
@@ -6045,162 +6016,6 @@ main p,
   color: #93c5fd;
   margin: 0;
   font-weight: 600;
-}
-
-.ecosystem-3d-stage {
-  position: relative;
-  height: 290px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  perspective: 900px;
-}
-
-.ecosystem-3d-ring {
-  position: absolute;
-  border-radius: 50%;
-  transform-style: preserve-3d;
-}
-
-.ecosystem-3d-ring.ring-outer {
-  width: 270px;
-  height: 270px;
-  border: 2px dashed rgba(56, 189, 248, 0.5);
-  box-shadow: 0 0 24px rgba(56, 189, 248, 0.12);
-  animation: orbitSpin3D 18s linear infinite;
-}
-
-.ecosystem-3d-ring.ring-middle {
-  width: 206px;
-  height: 206px;
-  border: 2px solid rgba(251, 191, 36, 0.48);
-  box-shadow: 0 0 20px rgba(251, 191, 36, 0.12);
-  animation: orbitSpinReverse3D 14s linear infinite;
-}
-
-.ecosystem-3d-ring.ring-inner {
-  width: 144px;
-  height: 144px;
-  border: 1.5px solid rgba(244, 63, 94, 0.52);
-  animation: orbitSpin3D 10s linear infinite;
-}
-
-.ecosystem-3d-pulse-halo {
-  position: absolute;
-  width: 112px;
-  height: 112px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(56, 189, 248, 0.32) 0%, rgba(251, 191, 36, 0.12) 60%, transparent 75%);
-  animation: corePulseHalo 3.4s ease-in-out infinite;
-  pointer-events: none;
-}
-
-.ecosystem-3d-core {
-  position: relative;
-  z-index: 4;
-  width: 94px;
-  height: 94px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 30% 30%, #2563eb 0%, #1e3a8a 68%, #0f172a 100%);
-  border: 2.5px solid #fbbf24;
-  box-shadow:
-    0 0 32px rgba(56, 189, 248, 0.6),
-    inset 0 0 14px rgba(255, 255, 255, 0.22);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-}
-
-.ecosystem-3d-core .core-kicker {
-  font-family: var(--font-heading);
-  font-size: 0.52rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  color: #93c5fd;
-  margin-bottom: 1px;
-}
-
-.ecosystem-3d-core strong {
-  font-family: var(--font-heading);
-  font-size: 1.05rem;
-  font-weight: 900;
-  color: #ffffff;
-  line-height: 1;
-}
-
-.ecosystem-3d-core span {
-  font-family: var(--font-heading);
-  font-size: 0.6rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  color: #fde68a;
-  margin-top: 2px;
-}
-
-.ecosystem-3d-node {
-  position: absolute;
-  z-index: 5;
-  padding: 0.42rem 0.85rem;
-  border-radius: 14px;
-  background: rgba(11, 25, 48, 0.92);
-  backdrop-filter: blur(8px);
-  border: 1.5px solid rgba(148, 163, 184, 0.45);
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  white-space: nowrap;
-}
-
-.ecosystem-3d-node .node-title {
-  font-family: var(--font-heading);
-  font-size: 0.76rem;
-  font-weight: 800;
-  color: #ffffff;
-  line-height: 1.2;
-}
-
-.ecosystem-3d-node .node-sub {
-  font-size: 0.64rem;
-  font-weight: 600;
-  color: #cbd5e1;
-  margin-top: 1px;
-  line-height: 1.15;
-}
-
-.ecosystem-3d-node.node-top {
-  top: 4px;
-  left: 50%;
-  transform: translateX(-50%);
-  border-color: #38bdf8;
-  animation: nodeFloatVertical 4s ease-in-out infinite;
-}
-
-.ecosystem-3d-node.node-bottom {
-  bottom: 4px;
-  left: 50%;
-  transform: translateX(-50%);
-  border-color: #fb7185;
-  animation: nodeFloatVertical 4.4s ease-in-out infinite 0.8s;
-}
-
-.ecosystem-3d-node.node-left {
-  left: 4px;
-  top: 50%;
-  transform: translateY(-50%);
-  border-color: #34d399;
-  animation: nodeFloatHorizontal 4.2s ease-in-out infinite 0.4s;
-}
-
-.ecosystem-3d-node.node-right {
-  right: 4px;
-  top: 50%;
-  transform: translateY(-50%);
-  border-color: #fbbf24;
-  animation: nodeFloatHorizontal 4.6s ease-in-out infinite 1.2s;
 }
 
 .ecosystem-mission-flow {
@@ -7417,64 +7232,12 @@ table {
   white-space: nowrap;
 }
 
-.india-map-pillars-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 0.6rem;
-  margin-bottom: 0.9rem;
-}
-
-.india-map-pillar-chip {
-  background: rgba(15, 23, 42, 0.72);
-  border: 1px solid rgba(148, 163, 184, 0.24);
-  border-left: 3.5px solid var(--chip-accent, #38bdf8);
-  border-radius: 11px;
-  padding: 0.55rem 0.7rem;
-  display: flex;
-  align-items: center;
-  gap: 0.55rem;
-  text-align: left;
-  transition: transform 0.2s ease, border-color 0.2s ease;
-}
-
-.india-map-pillar-chip:hover {
-  transform: translateY(-2px);
-  border-color: var(--chip-accent, #38bdf8);
-}
-
-.pillar-chip-icon {
-  font-size: 1.15rem;
-  flex-shrink: 0;
-}
-
-.pillar-chip-text {
-  display: flex;
-  flex-direction: column;
-  gap: 0.08rem;
-  min-width: 0;
-}
-
-.pillar-chip-text strong {
-  font-family: var(--font-heading);
-  font-size: 0.78rem;
-  font-weight: 800;
-  color: #ffffff;
-  line-height: 1.2;
-}
-
-.pillar-chip-text small {
-  font-size: 0.67rem;
-  color: #cbd5e1;
-  line-height: 1.25;
-}
-
 @media (max-width: 540px) {
   .india-map-showcase-card,
   .institutional-identity-card {
     padding: 1.25rem 1rem 1.2rem;
   }
 
-  .india-map-pillars-grid,
   .identity-pillars-2x2 {
     grid-template-columns: 1fr;
   }

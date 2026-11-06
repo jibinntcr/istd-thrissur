@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { memo, useMemo, useState } from 'react';
 import {
   INDIA_OUTER_PATH,
   INDIA_STATE_PATHS,
@@ -165,10 +165,91 @@ const STATE_PALETTE: Record<number, string> = {
   4: 'rgba(15, 41, 82, 0.74)',
 };
 
+const IndiaMapLandmass = memo(function IndiaMapLandmass() {
+  return (
+    <g className="india-map-landmass">
+      {/* Outer Coastal Bathymetry Ripple Halo of India */}
+      <path
+        d={INDIA_OUTER_PATH}
+        fill="none"
+        stroke="rgba(56, 189, 248, 0.22)"
+        strokeWidth="16"
+        strokeLinejoin="round"
+        className="coastal-ripple-outer"
+      />
+      <path
+        d={INDIA_OUTER_PATH}
+        fill="rgba(37, 99, 235, 0.25)"
+        stroke="rgba(56, 189, 248, 0.45)"
+        strokeWidth="6"
+        strokeLinejoin="round"
+        filter="url(#mapGlow)"
+      />
+
+      {/* Individual Indian State Polygons */}
+      {INDIA_STATE_PATHS.map((st) => (
+        <path
+          key={st.id}
+          d={st.d}
+          fill={
+            st.isKerala
+              ? 'rgba(250, 204, 21, 0.52)'
+              : STATE_PALETTE[st.colorClass] || 'rgba(30, 64, 175, 0.6)'
+          }
+          stroke={
+            st.isKerala
+              ? '#FACC15'
+              : 'rgba(147, 197, 253, 0.55)'
+          }
+          strokeWidth={st.isKerala ? '2.8' : '1.5'}
+          strokeLinejoin="round"
+          className={
+            st.isKerala
+              ? 'india-state-path kerala-state-highlight'
+              : 'india-state-path'
+          }
+        />
+      ))}
+
+      {/* Outer Crisp Border of Mainland India */}
+      <path
+        d={INDIA_OUTER_PATH}
+        fill="none"
+        stroke="url(#indiaStrokeGrad)"
+        strokeWidth="2.8"
+        strokeLinejoin="round"
+        className="india-map-outline-path"
+      />
+
+      {/* Lakshadweep & Andaman & Nicobar Islands with Pulsing Atoll Rings */}
+      <g fill="#60A5FA" stroke="#BAE6FD" strokeWidth="0.9" opacity="0.9">
+        {/* Lakshadweep */}
+        <circle cx="122" cy="708" r="3.5" />
+        <circle cx="136" cy="722" r="3.2" />
+        <circle cx="128" cy="738" r="3.8" />
+        <circle cx="144" cy="748" r="3" />
+        <circle cx="132" cy="762" r="3" />
+        <circle cx="142" cy="785" r="2.8" />
+        {/* Andaman & Nicobar Islands */}
+        <circle cx="672" cy="642" r="3.8" />
+        <circle cx="668" cy="665" r="4.5" />
+        <circle cx="666" cy="688" r="4.5" />
+        <circle cx="664" cy="712" r="3.8" />
+        <circle cx="662" cy="732" r="3.6" />
+        <circle cx="676" cy="774" r="3.5" />
+        <circle cx="692" cy="802" r="3.8" />
+        <circle cx="705" cy="818" r="4.2" />
+      </g>
+    </g>
+  );
+});
+
 export function IstdIndiaMapShowcase() {
   const [activeHubId, setActiveHubId] = useState<string>('trichur');
-  const activeHub =
-    ISTD_INDIA_HUBS.find((h) => h.id === activeHubId) || ISTD_INDIA_HUBS[1];
+  const activeHub = useMemo(
+    () => ISTD_INDIA_HUBS.find((h) => h.id === activeHubId) || ISTD_INDIA_HUBS[1],
+    [activeHubId]
+  );
 
   return (
     <div className="ecosystem-3d-card india-map-showcase-card">
@@ -610,80 +691,7 @@ export function IstdIndiaMapShowcase() {
             </g>
 
             {/* High-Precision Official Map of India with All State Boundaries */}
-            <g className="india-map-landmass">
-              {/* Outer Coastal Bathymetry Ripple Halo of India */}
-              <path
-                d={INDIA_OUTER_PATH}
-                fill="none"
-                stroke="rgba(56, 189, 248, 0.22)"
-                strokeWidth="16"
-                strokeLinejoin="round"
-                className="coastal-ripple-outer"
-              />
-              <path
-                d={INDIA_OUTER_PATH}
-                fill="rgba(37, 99, 235, 0.25)"
-                stroke="rgba(56, 189, 248, 0.45)"
-                strokeWidth="6"
-                strokeLinejoin="round"
-                filter="url(#mapGlow)"
-              />
-
-              {/* Individual Indian State Polygons */}
-              {INDIA_STATE_PATHS.map((st) => (
-                <path
-                  key={st.id}
-                  d={st.d}
-                  fill={
-                    st.isKerala
-                      ? 'rgba(250, 204, 21, 0.52)'
-                      : STATE_PALETTE[st.colorClass] || 'rgba(30, 64, 175, 0.6)'
-                  }
-                  stroke={
-                    st.isKerala
-                      ? '#FACC15'
-                      : 'rgba(147, 197, 253, 0.55)'
-                  }
-                  strokeWidth={st.isKerala ? '2.8' : '1.5'}
-                  strokeLinejoin="round"
-                  className={
-                    st.isKerala
-                      ? 'india-state-path kerala-state-highlight'
-                      : 'india-state-path'
-                  }
-                />
-              ))}
-
-              {/* Outer Crisp Border of Mainland India */}
-              <path
-                d={INDIA_OUTER_PATH}
-                fill="none"
-                stroke="url(#indiaStrokeGrad)"
-                strokeWidth="2.8"
-                strokeLinejoin="round"
-                className="india-map-outline-path"
-              />
-
-              {/* Lakshadweep & Andaman & Nicobar Islands with Pulsing Atoll Rings */}
-              <g fill="#60A5FA" stroke="#BAE6FD" strokeWidth="0.9" opacity="0.9">
-                {/* Lakshadweep */}
-                <circle cx="122" cy="708" r="3.5" />
-                <circle cx="136" cy="722" r="3.2" />
-                <circle cx="128" cy="738" r="3.8" />
-                <circle cx="144" cy="748" r="3" />
-                <circle cx="132" cy="762" r="3" />
-                <circle cx="142" cy="785" r="2.8" />
-                {/* Andaman & Nicobar Islands */}
-                <circle cx="672" cy="642" r="3.8" />
-                <circle cx="668" cy="665" r="4.5" />
-                <circle cx="666" cy="688" r="4.5" />
-                <circle cx="664" cy="712" r="3.8" />
-                <circle cx="662" cy="732" r="3.6" />
-                <circle cx="676" cy="774" r="3.5" />
-                <circle cx="692" cy="802" r="3.8" />
-                <circle cx="705" cy="818" r="4.2" />
-              </g>
-            </g>
+            <IndiaMapLandmass />
 
             {/* Animated Knowledge & Training Network Arcs Across India */}
             <g className="india-network-arcs" fill="none">
