@@ -147,33 +147,43 @@ export default function ContactPage() {
                         marginBottom: '0.2rem',
                       }}
                     >
-                      Chapter Secretary &amp; Chapter Contact
+                      Chapter Secretary
                     </div>
                     <div
                       style={{
                         fontSize: '1rem',
                         fontWeight: 800,
                         color: 'var(--color-ink)',
-                        marginBottom: '0.35rem',
+                        marginBottom: '0.25rem',
                       }}
                     >
                       {CHAPTER_CONTACTS.secretary.name} ({CHAPTER_CONTACTS.secretary.designation})
                     </div>
-                    <div style={{ fontSize: '0.9rem', color: 'var(--color-body)' }}>
-                      Phone:{' '}
+                    <div style={{ fontSize: '0.88rem' }}>
                       <a
-                        href={`tel:${CHAPTER_CONTACTS.secretary.phoneHref}`}
-                        style={{ fontWeight: 700, color: 'var(--brand-navy)' }}
+                        href={CHAPTER_CONTACTS.secretary.linkedin}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`${CHAPTER_CONTACTS.secretary.name} on LinkedIn`}
+                        title={`${CHAPTER_CONTACTS.secretary.name} on LinkedIn`}
+                        style={{
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '0.4rem',
+                          fontWeight: 700,
+                          color: '#0A66C2',
+                        }}
                       >
-                        {CHAPTER_CONTACTS.secretary.phoneDisplay}
-                      </a>
-                      <br />
-                      Email:{' '}
-                      <a
-                        href={`mailto:${CHAPTER_CONTACTS.secretary.email}`}
-                        style={{ fontWeight: 600, color: 'var(--brand-blue)' }}
-                      >
-                        {CHAPTER_CONTACTS.secretary.email}
+                        <svg
+                          width="16"
+                          height="16"
+                          viewBox="0 0 24 24"
+                          fill="currentColor"
+                          aria-hidden="true"
+                        >
+                          <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z" />
+                        </svg>
+                        <span>LinkedIn</span>
                       </a>
                     </div>
                   </div>
@@ -197,43 +207,33 @@ export default function ContactPage() {
                         marginBottom: '0.2rem',
                       }}
                     >
-                      Chapter Treasurer
+                      Chapter Treasurer &amp; Chapter Contact
                     </div>
                     <div
                       style={{
                         fontSize: '1rem',
                         fontWeight: 800,
                         color: 'var(--color-ink)',
-                        marginBottom: '0.25rem',
+                        marginBottom: '0.35rem',
                       }}
                     >
                       {CHAPTER_CONTACTS.treasurer.name} ({CHAPTER_CONTACTS.treasurer.designation})
                     </div>
-                    <div style={{ fontSize: '0.88rem' }}>
+                    <div style={{ fontSize: '0.9rem', color: 'var(--color-body)' }}>
+                      Phone:{' '}
                       <a
-                        href={CHAPTER_CONTACTS.treasurer.linkedin}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={`${CHAPTER_CONTACTS.treasurer.name} on LinkedIn`}
-                        title={`${CHAPTER_CONTACTS.treasurer.name} on LinkedIn`}
-                        style={{
-                          display: 'inline-flex',
-                          alignItems: 'center',
-                          gap: '0.4rem',
-                          fontWeight: 700,
-                          color: '#0A66C2',
-                        }}
+                        href={`tel:${CHAPTER_CONTACTS.treasurer.phoneHref}`}
+                        style={{ fontWeight: 700, color: 'var(--brand-navy)' }}
                       >
-                        <svg
-                          width="16"
-                          height="16"
-                          viewBox="0 0 24 24"
-                          fill="currentColor"
-                          aria-hidden="true"
-                        >
-                          <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z" />
-                        </svg>
-                        <span>LinkedIn</span>
+                        {CHAPTER_CONTACTS.treasurer.phoneDisplay}
+                      </a>
+                      <br />
+                      Email:{' '}
+                      <a
+                        href={`mailto:${CHAPTER_CONTACTS.treasurer.email}`}
+                        style={{ fontWeight: 600, color: 'var(--brand-blue)' }}
+                      >
+                        {CHAPTER_CONTACTS.treasurer.email}
                       </a>
                     </div>
                   </div>

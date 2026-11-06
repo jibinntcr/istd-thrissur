@@ -11,15 +11,15 @@ import {
 export const metadata: Metadata = buildPageMetadata({
   title: 'Managing Committee & Office Bearers',
   description:
-    'Meet the managing committee and office bearers of ISTD Trichur Chapter: Founder & Mentor Prof. (Dr.) Zakkariya K. A., Chairman Tony Chacko, Secretary Jibin N, and Treasurer Sneha Rose George.',
+    'Meet the managing committee and office bearers of ISTD Trichur Chapter: Founder & Mentor Prof. (Dr.) Zakkariya K. A., Chairman Tony Chacko, Secretary Sneha Rose George, and Treasurer Jibin N.',
   path: '/committee',
   image: '/images/ISTDTeamTCR/zakkariya-ka.jpg',
   keywords: [
     'ISTD Trichur Managing Committee',
     'Prof. Dr. Zakkariya K.A Founder Mentor ISTD',
     'Tony Chacko Chairman ISTD Trichur',
-    'Jibin N Secretary ISTD Trichur',
-    'Sneha Rose George Treasurer ISTD Trichur',
+    'Sneha Rose George Secretary ISTD Trichur',
+    'Jibin N Treasurer ISTD Trichur',
   ],
 });
 
@@ -107,7 +107,7 @@ export default function CommitteePage() {
               src="/photos/team.jpeg"
               alt="ISTD Trichur Chapter Leadership with National Dignitaries"
               title="ISTD Trichur Chapter Leadership with National Dignitaries"
-              caption="Founder & Mentor Prof. (Dr.) Zakkariya K. A., Chairman Tony Chacko, Secretary Jibin N, and Treasurer Sneha Rose George with National President Shri. Atul Shah (30 March 2026)."
+              caption="Founder & Mentor Prof. (Dr.) Zakkariya K. A., Chairman Tony Chacko, Secretary Sneha Rose George, and Treasurer Jibin N with National President Shri. Atul Shah (30 March 2026)."
               category="Managing Committee"
               badgeText="30 March 2026"
               headingText="Chapter Leadership & National Dignitaries"

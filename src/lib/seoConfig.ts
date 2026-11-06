@@ -32,11 +32,12 @@ export const GLOBAL_SEO_KEYWORDS = [
   'Prof. Dr. Zakkariya K.A ISTD',
   'Tony Chacko ISTD Trichur',
   'Jibin N ISTD Trichur',
-  'Jibin N Secretary ISTD Trichur Chapter',
+  'Jibin N Treasurer ISTD Trichur Chapter',
   'Jibin N Managing Director NEOM Panels',
   'Jibin N Infinio Technology Solutions',
   'Jibin N Flexon Sports Foundation',
   'Sneha Rose George ISTD Trichur',
+  'Sneha Rose George Secretary ISTD Trichur Chapter',
   'ISTD Membership Kerala',
   'Training and Development Workshops Trichur',
 ];
@@ -204,7 +205,7 @@ export function getOrganizationJsonLd() {
           {
             '@type': 'ContactPoint',
             telephone: '+91-9496839168',
-            contactType: 'Secretary & Membership Desk',
+            contactType: 'Treasurer & Membership Desk',
             email: 'jibintcr@gmail.com',
             areaServed: 'IN-KL',
             availableLanguage: ['English', 'Malayalam'],
@@ -254,7 +255,7 @@ export function getCommitteeCollectionJsonLd() {
         url: pageUrl,
         name: 'Managing Committee | ISTD Trichur Chapter',
         description:
-          'Office bearers and managing committee of ISTD Trichur Chapter: Founder & Mentor Prof. (Dr.) Zakkariya K. A., Chairman Tony Chacko, Secretary Jibin N, and Treasurer Sneha Rose George.',
+          'Office bearers and managing committee of ISTD Trichur Chapter: Founder & Mentor Prof. (Dr.) Zakkariya K. A., Chairman Tony Chacko, Secretary Sneha Rose George, and Treasurer Jibin N.',
         isPartOf: {
           '@id': `${SITE_URL}/#website`,
         },

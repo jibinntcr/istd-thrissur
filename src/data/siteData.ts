@@ -156,22 +156,22 @@ export const CHAPTER_CONTACTS = {
     linkedin: 'https://www.linkedin.com/in/tony-chacko-965622240/',
   },
   secretary: {
-    name: 'Jibin N',
-    role: 'Secretary',
-    designation: 'IT Professional & Entrepreneur',
-    phoneDisplay: '+91 9496839168',
-    phoneHref: '+919496839168',
-    email: 'jibintcr@gmail.com',
-    linkedin: 'https://www.linkedin.com/in/jibintcr/',
-  },
-  treasurer: {
     name: 'Sneha Rose George',
-    role: 'Treasurer',
+    role: 'Secretary',
     designation: 'Research Scholar, CUSAT',
     phoneDisplay: '+91 9496839168',
     phoneHref: '+919496839168',
     email: 'jibintcr@gmail.com',
     linkedin: 'https://www.linkedin.com/in/sneha-rose-george-4176a325/',
+  },
+  treasurer: {
+    name: 'Jibin N',
+    role: 'Treasurer',
+    designation: 'IT Professional & Entrepreneur',
+    phoneDisplay: '+91 9496839168',
+    phoneHref: '+919496839168',
+    email: 'jibintcr@gmail.com',
+    linkedin: 'https://www.linkedin.com/in/jibintcr/',
   },
   location: 'Trichur, Kerala, India',
   nationalOffice: {
@@ -276,40 +276,40 @@ export const GALLERY_PHOTOS: GalleryPhoto[] = [
   {
     id: 'photo-new-jibin-address',
     src: '/images/ISTDTeamTCR/jibin-n-addressing-inauguration.jpg',
-    title: 'Address by Chapter Secretary Jibin N at the Diamond Chapter Inauguration',
+    title: 'Address by Chapter Treasurer Jibin N at the Diamond Chapter Inauguration',
     shortDesc:
-      'Secretary Jibin N addressing the gathering on stage alongside National and Chapter dignitaries.',
+      'Treasurer Jibin N addressing the gathering on stage alongside National and Chapter dignitaries.',
     caption:
-      'Jibin N, Secretary of ISTD Trichur Chapter, addressing the gathering during the Diamond Chapter Inauguration on 30 March 2026, flanked by National Treasurer Shri. Nabaghana Pany, Chairman Shri. Tony Chacko, and Cochin Chapter President Shri. Suresh Babu M.',
+      'Jibin N, Treasurer of ISTD Trichur Chapter, addressing the gathering during the Diamond Chapter Inauguration on 30 March 2026, flanked by National Treasurer Shri. Nabaghana Pany, Chairman Shri. Tony Chacko, and Cochin Chapter President Shri. Suresh Babu M.',
     category: 'addresses',
     categoryLabel: 'Addresses & Dais',
     metaTag: '30 March 2026 • Hotel Pearl Regency, Trichur',
     keywords:
-      'jibin n secretary speech address inauguration trichur tony chacko nabaghana pany',
+      'jibin n treasurer speech address inauguration trichur tony chacko nabaghana pany',
     featured: true,
   },
   {
     id: 'photo-new-jibin-national',
     src: '/images/ISTDTeamTCR/jibin-n-national-president-felicitation.jpg',
-    title: 'Secretary Jibin N Greeted by National President Shri. Atul Shah & National Treasurer Shri. Nabaghana Pany',
+    title: 'Treasurer Jibin N Greeted by National President Shri. Atul Shah & National Treasurer Shri. Nabaghana Pany',
     shortDesc:
-      'Jibin N (Secretary, ISTD Trichur Chapter) greeted on stage by ISTD National Leaders.',
+      'Jibin N (Treasurer, ISTD Trichur Chapter) greeted on stage by ISTD National Leaders.',
     caption:
-      'Jibin N, Secretary of ISTD Trichur Chapter, shaking hands with National Treasurer Shri. Nabaghana Pany as National President Shri. Atul Shah looks on during the Diamond Chapter Inauguration on 30 March 2026.',
+      'Jibin N, Treasurer of ISTD Trichur Chapter, shaking hands with National Treasurer Shri. Nabaghana Pany as National President Shri. Atul Shah looks on during the Diamond Chapter Inauguration on 30 March 2026.',
     category: 'felicitations',
     categoryLabel: 'Felicitations',
     metaTag: '30 March 2026 • Hotel Pearl Regency, Trichur',
     keywords:
-      'jibin n secretary atul shah nabaghana pany handshake felicitation trichur',
+      'jibin n treasurer atul shah nabaghana pany handshake felicitation trichur',
   },
   {
     id: 'photo-new-jibin-zakkariya',
     src: '/images/ISTDTeamTCR/jibin-n-prof-zakkariya-felicitation.jpg',
-    title: 'Founder & Mentor Prof. (Dr.) Zakkariya K. A. and Secretary Jibin N on the Inaugural Dais',
+    title: 'Founder & Mentor Prof. (Dr.) Zakkariya K. A. and Treasurer Jibin N on the Inaugural Dais',
     shortDesc:
-      'Prof. (Dr.) Zakkariya K. A. and Secretary Jibin N shaking hands as National President Shri. Atul Shah applauds.',
+      'Prof. (Dr.) Zakkariya K. A. and Treasurer Jibin N shaking hands as National President Shri. Atul Shah applauds.',
     caption:
-      'Founder & Mentor Prof. (Dr.) Zakkariya K. A. and Secretary Jibin N shaking hands on the dais while National President Shri. Atul Shah applauds during the ISTD Trichur Diamond Chapter Inauguration (30 March 2026).',
+      'Founder & Mentor Prof. (Dr.) Zakkariya K. A. and Treasurer Jibin N shaking hands on the dais while National President Shri. Atul Shah applauds during the ISTD Trichur Diamond Chapter Inauguration (30 March 2026).',
     category: 'felicitations',
     categoryLabel: 'Felicitations',
     metaTag: '30 March 2026 • Hotel Pearl Regency, Trichur',
@@ -319,11 +319,11 @@ export const GALLERY_PHOTOS: GalleryPhoto[] = [
   {
     id: 'photo-new-jibin-dignitaries',
     src: '/images/ISTDTeamTCR/jibin-n-dignitaries-meet.jpg',
-    title: 'Secretary Jibin N with Academic & Chapter Dignitaries',
+    title: 'Treasurer Jibin N with Academic & Chapter Dignitaries',
     shortDesc:
       'Jibin N with senior academicians and chapter members during the inaugural fellowship.',
     caption:
-      'Secretary Jibin N with senior academic leaders and ISTD Trichur Chapter members during the inaugural fellowship gathering at Trichur.',
+      'Treasurer Jibin N with senior academic leaders and ISTD Trichur Chapter members during the inaugural fellowship gathering at Trichur.',
     category: 'portraits',
     categoryLabel: 'Group Photographs',
     metaTag: '30 March 2026 • Trichur',
@@ -444,13 +444,13 @@ export const GALLERY_PHOTOS: GalleryPhoto[] = [
     src: '/photos/istd-kozhikkod.jpeg',
     title: 'Installation of Office Bearers and Managing Committee Members',
     shortDesc:
-      'Secretary Mr. Jibin N and fellow office bearers taking the oath of office.',
+      'Treasurer Mr. Jibin N and fellow office bearers taking the oath of office.',
     caption:
-      'Secretary Mr. Jibin N and fellow office bearers and committee members taking the oath of office during the chapter inauguration on 30 March 2026.',
+      'Treasurer Mr. Jibin N and fellow office bearers and committee members taking the oath of office during the chapter inauguration on 30 March 2026.',
     category: 'oath',
     categoryLabel: 'Oath of Office',
     metaTag: '30 March 2026',
-    keywords: 'jibin secretary oath swearing in members',
+    keywords: 'jibin treasurer oath swearing in members',
   },
   {
     id: 'photo-11',
@@ -468,29 +468,29 @@ export const GALLERY_PHOTOS: GalleryPhoto[] = [
   {
     id: 'photo-12',
     src: '/photos/istd-sneha.jpeg',
-    title: 'Felicitation of Chapter Treasurer Ms. Sneha Rose George',
+    title: 'Felicitation of Chapter Secretary Ms. Sneha Rose George',
     shortDesc:
-      'Prof. (Dr.) Zakkariya K. A. presenting a memento to Treasurer Ms. Sneha Rose George.',
+      'Prof. (Dr.) Zakkariya K. A. presenting a memento to Secretary Ms. Sneha Rose George.',
     caption:
-      'Prof. (Dr.) Zakkariya K. A. presenting a token of appreciation to ISTD Trichur Chapter Treasurer Ms. Sneha Rose George.',
+      'Prof. (Dr.) Zakkariya K. A. presenting a token of appreciation to ISTD Trichur Chapter Secretary Ms. Sneha Rose George.',
     category: 'felicitations',
     categoryLabel: 'Felicitations',
     metaTag: '30 March 2026',
-    keywords: 'sneha rose george treasurer zakkariya tony chacko felicitation',
+    keywords: 'sneha rose george secretary zakkariya tony chacko felicitation',
   },
   {
     id: 'photo-13',
     src: '/photos/istd-participants.jpeg',
     title: 'Felicitation of Past National President Dr. Yogesh Kumar Upadhyay',
     shortDesc:
-      'Chapter Secretary Mr. Jibin N honouring Past National President Dr. Yogesh Kumar Upadhyay with a ponnada.',
+      'Chapter Treasurer Mr. Jibin N honouring Past National President Dr. Yogesh Kumar Upadhyay with a ponnada.',
     caption:
-      'Chapter Secretary Mr. Jibin N draping a traditional ponnada (shawl) to honour Past National President Dr. Yogesh Kumar Upadhyay during the inauguration ceremony on 30 March 2026.',
+      'Chapter Treasurer Mr. Jibin N draping a traditional ponnada (shawl) to honour Past National President Dr. Yogesh Kumar Upadhyay during the inauguration ceremony on 30 March 2026.',
     category: 'felicitations',
     categoryLabel: 'Felicitations',
     metaTag: '30 March 2026',
     keywords:
-      'jibin secretary yogesh kumar upadhyay ponnada shawl felicitation',
+      'jibin treasurer yogesh kumar upadhyay ponnada shawl felicitation',
   },
   {
     id: 'photo-14',
@@ -580,7 +580,7 @@ export const GALLERY_PHOTOS: GalleryPhoto[] = [
     shortDesc:
       'Office bearers and committee members of the Trichur Chapter alongside ISTD National leadership.',
     caption:
-      'Treasurer Ms. Sneha Rose George, Secretary Mr. Jibin N, Managing Committee members, National President Shri. Atul Shah, Chairman Shri. Tony Chacko, and Founder-Mentor Prof. (Dr.) Zakkariya K. A.',
+      'Secretary Ms. Sneha Rose George, Treasurer Mr. Jibin N, Managing Committee members, National President Shri. Atul Shah, Chairman Shri. Tony Chacko, and Founder-Mentor Prof. (Dr.) Zakkariya K. A.',
     category: 'portraits',
     categoryLabel: 'Group Photographs',
     metaTag: '30 March 2026',
@@ -594,7 +594,7 @@ export const GALLERY_PHOTOS: GalleryPhoto[] = [
     shortDesc:
       'Chapter members and office bearers posing with ISTD National and Regional leaders.',
     caption:
-      'Secretary Mr. Jibin N, Managing Committee members, National President Shri. Atul Shah, Chairman Shri. Tony Chacko, Prof. (Dr.) Zakkariya K. A., and Shri. Nabaghana Pany with chapter members.',
+      'Treasurer Mr. Jibin N, Managing Committee members, National President Shri. Atul Shah, Chairman Shri. Tony Chacko, Prof. (Dr.) Zakkariya K. A., and Shri. Nabaghana Pany with chapter members.',
     category: 'portraits',
     categoryLabel: 'Group Photographs',
     metaTag: '30 March 2026',
@@ -606,9 +606,9 @@ export const GALLERY_PHOTOS: GalleryPhoto[] = [
     src: '/photos/istd-participants-group.jpeg',
     title: 'Chapter Office Bearers and Members with National President Shri. Atul Shah',
     shortDesc:
-      'Treasurer Ms. Sneha Rose George, Secretary Mr. Jibin N, and chapter members with National President Shri. Atul Shah.',
+      'Secretary Ms. Sneha Rose George, Treasurer Mr. Jibin N, and chapter members with National President Shri. Atul Shah.',
     caption:
-      'Treasurer Ms. Sneha Rose George, Secretary Mr. Jibin N, and Trichur Chapter members with ISTD National President Shri. Atul Shah on 30 March 2026.',
+      'Secretary Ms. Sneha Rose George, Treasurer Mr. Jibin N, and Trichur Chapter members with ISTD National President Shri. Atul Shah on 30 March 2026.',
     category: 'portraits',
     categoryLabel: 'Group Photographs',
     metaTag: '30 March 2026',
@@ -675,7 +675,7 @@ export const GALLERY_PHOTOS: GalleryPhoto[] = [
     shortDesc:
       'Chairman Shri. Tony Chacko addressing members at Chapter Connect 2026 with Prof. (Dr.) Zakkariya K. A. and office bearers on the dais.',
     caption:
-      'Chairman Shri. Tony Chacko addressing members during Chapter Connect 2026 (Members’ Orientation & Professional Networking Programme) at Hotel Elite International, Trichur on 27 June 2026, with Founder & Mentor Prof. (Dr.) Zakkariya K. A., Secretary Jibin N, Treasurer Sneha Rose George, and committee leaders on the dais.',
+      'Chairman Shri. Tony Chacko addressing members during Chapter Connect 2026 (Members’ Orientation & Professional Networking Programme) at Hotel Elite International, Trichur on 27 June 2026, with Founder & Mentor Prof. (Dr.) Zakkariya K. A., Secretary Sneha Rose George, Treasurer Jibin N, and committee leaders on the dais.',
     category: 'addresses',
     categoryLabel: 'Addresses',
     metaTag: '27 June 2026 • Chapter Connect',
@@ -800,8 +800,8 @@ export const GALLERY_PHOTOS: GalleryPhoto[] = [
  * Strict order requested by user:
  * 1. Founder & Mentor (Prof. (Dr.) Zakkariya K. A.)
  * 2. Chairman (Tony Chacko)
- * 3. Secretary (Jibin N)
- * 4. Treasurer (Sneha Rose George)
+ * 3. Secretary (Sneha Rose George)
+ * 4. Treasurer (Jibin N)
  */
 export const OFFICE_BEARERS: CommitteeMember[] = [
   {
@@ -962,9 +962,9 @@ export const OFFICE_BEARERS: CommitteeMember[] = [
       },
       {
         src: '/images/ISTDTeamTCR/jibin-n-prof-zakkariya-felicitation.jpg',
-        title: 'With Secretary Jibin N and National President Shri. Atul Shah on the Dais',
+        title: 'With Treasurer Jibin N and National President Shri. Atul Shah on the Dais',
         caption:
-          'Founder & Mentor Prof. (Dr.) Zakkariya K. A. shaking hands with Secretary Jibin N as National President Shri. Atul Shah applauds.',
+          'Founder & Mentor Prof. (Dr.) Zakkariya K. A. shaking hands with Treasurer Jibin N as National President Shri. Atul Shah applauds.',
         category: 'Leadership Fellowship',
       },
       {
@@ -1112,24 +1112,138 @@ export const OFFICE_BEARERS: CommitteeMember[] = [
     ],
   },
   {
+    id: 'member-sneha',
+    slug: 'sneha-rose-george',
+    name: 'Sneha Rose George',
+    role: 'Secretary',
+    organisation: 'ISTD Trichur Chapter',
+    title: 'Research Scholar, School of Management Studies, CUSAT',
+    headline: 'Secretary, ISTD Trichur Chapter',
+    supportingLine:
+      'Chapter Administration, Management Research & Academic Programme Coordination',
+    shortBio:
+      'Management researcher at the School of Management Studies, Cochin University of Science and Technology (CUSAT), serving as Secretary of ISTD Trichur Chapter.',
+    metaTitle: 'Sneha Rose George | Secretary | ISTD Trichur Chapter',
+    metaDescription:
+      'Meet Sneha Rose George, Secretary of ISTD Trichur Chapter and Research Scholar at the School of Management Studies, Cochin University of Science and Technology (CUSAT).',
+    avatar: '/images/ISTDTeamTCR/sneha-rose.jpg',
+    avatarWidth: 600,
+    avatarHeight: 600,
+    avatarAlt: 'Sneha Rose George, Secretary of ISTD Trichur Chapter',
+    linkedin: 'https://www.linkedin.com/in/sneha-rose-george-4176a325/',
+    sameAs: ['https://www.linkedin.com/in/sneha-rose-george-4176a325/'],
+    confirmedProfiles: [
+      {
+        label: 'LinkedIn',
+        url: 'https://www.linkedin.com/in/sneha-rose-george-4176a325/',
+        context: 'Official Professional Profile',
+      },
+    ],
+    isOfficeBearer: true,
+    biography: [
+      'Sneha Rose George serves on the executive committee of ISTD Trichur Chapter as Secretary, supporting chapter administration, member engagement, and academic–practitioner programmes.',
+      'She is a doctoral Research Scholar at the School of Management Studies (SMS), Cochin University of Science and Technology (CUSAT), Kochi. Her academic research focuses on customer engagement, digital consumer behavior, mobile application adoption, and the role of artificial intelligence in modern services.',
+      'Within ISTD Trichur Chapter, she contributes to curating knowledge-sharing sessions, academic dialogues, and student chapter coordination across Trichur and Central Kerala.',
+    ],
+    chapterRoleSection:
+      'As Secretary on the executive committee of ISTD Trichur Chapter, Sneha Rose George supports chapter administration, member coordination, statutory communication, and the organisation of academic and professional learning programmes.',
+    responsibilities: [
+      {
+        num: '01',
+        title: 'Chapter Administration & Coordination',
+        description:
+          'Coordinating executive committee operations, statutory documentation, and member communications for ISTD Trichur Chapter.',
+      },
+      {
+        num: '02',
+        title: 'Academic & Research Forum Curation',
+        description:
+          'Coordinating management dialogues, Foundation Day sessions, and research-oriented webinars for chapter members.',
+      },
+      {
+        num: '03',
+        title: 'Student Chapter & Youth Engagement',
+        description:
+          'Supporting campus outreach and academic–industry bridging programmes across higher education institutions.',
+      },
+      {
+        num: '04',
+        title: 'Member Onboarding & Documentation',
+        description:
+          'Assisting with membership records, event documentation, and collaborative member orientation sessions.',
+      },
+    ],
+    professionalBackground: [
+      {
+        organisation: 'ISTD Trichur Chapter',
+        role: 'Secretary',
+        category: 'Chapter Governance & Administration',
+        description:
+          'Supports chapter operations, statutory administration, member onboarding, and academic–industry learning sessions.',
+      },
+      {
+        organisation: 'School of Management Studies (SMS), CUSAT',
+        role: 'Research Scholar',
+        category: 'Academic Research',
+        description:
+          'Conducts doctoral research in management, focusing on digital consumer behavior, customer engagement, and AI in services.',
+      },
+    ],
+    schemaAffiliations: [
+      {
+        name: 'Cochin University of Science and Technology (CUSAT)',
+      },
+    ],
+    istdRoles: [
+      'Secretary & Executive Office Bearer, ISTD Trichur Diamond Chapter (Installed 30 March 2026)',
+      'Programme Coordinator for ISTD Trichur Knowledge Webinars, Foundation Day Sessions & Research Forums',
+      'Committee Lead for Member Onboarding, Chapter Connect 2026 & Student Chapter Coordination',
+    ],
+    careerHighlights: [
+      'Doctoral Research Scholar, School of Management Studies (SMS), Cochin University of Science and Technology (CUSAT)',
+      'Published and presented management research on Customer Engagement, AI in Consumer Services, and Digital Behavior in reputed academic forums and journals',
+      'Active contributor to university-level faculty development, academic conferences, and research methodology workshops',
+    ],
+    educationAndCredentials: [
+      'Doctoral Research Scholar (Ph.D. Programme in Management) — School of Management Studies, CUSAT',
+      'Postgraduate Degree in Management / Commerce',
+    ],
+    expertiseDomains: [
+      'Management & Consumer Behavior Research',
+      'AI in Services & Digital Engagement',
+      'Academic Programme Curation & Coordination',
+      'Higher Education & Student Chapter Engagement',
+      'Training Documentation & Chapter Governance',
+    ],
+    featuredPhotos: [
+      {
+        src: '/photos/istd-sneha.jpeg',
+        title: 'Felicitation at the Diamond Chapter Inauguration',
+        caption:
+          'Prof. (Dr.) Zakkariya K. A. presenting a token of appreciation to Chapter Secretary Sneha Rose George during the inauguration on 30 March 2026.',
+        category: 'Chapter Inauguration',
+      },
+    ],
+  },
+  {
     id: 'member-jibin',
     slug: 'jibin-n',
     name: 'Jibin N',
-    role: 'Secretary',
+    role: 'Treasurer',
     organisation: 'ISTD Trichur Chapter',
     title: 'Managing Director, NEOM Panels & Founder, Infinio Technology Solutions',
-    headline: 'Secretary, ISTD Trichur Chapter',
+    headline: 'Treasurer, ISTD Trichur Chapter',
     supportingLine:
-      'Chapter Coordination, Technology & Business Leadership, Work Integrated Learning & Community Initiatives',
+      'Chapter Resource Stewardship, Technology & Business Leadership, Work Integrated Learning & Community Initiatives',
     shortBio:
-      'Jibin N serves as Secretary of ISTD Trichur Chapter. An IT professional and entrepreneur, his background includes technology, teaching, professional development and community initiatives.',
-    metaTitle: 'Jibin N | Secretary | ISTD Trichur Chapter',
+      'Jibin N serves as Treasurer of ISTD Trichur Chapter. An IT professional and entrepreneur, his background includes technology, teaching, professional development and community initiatives.',
+    metaTitle: 'Jibin N | Treasurer | ISTD Trichur Chapter',
     metaDescription:
-      'Meet Jibin N, Secretary of ISTD Trichur Chapter, an IT professional and entrepreneur involved in professional learning, teaching and community initiatives.',
+      'Meet Jibin N, Treasurer of ISTD Trichur Chapter, an IT professional and entrepreneur involved in professional learning, teaching and community initiatives.',
     avatar: '/images/team/jibin-n-istd-thrissur-secretary.jpg',
     avatarWidth: 400,
     avatarHeight: 400,
-    avatarAlt: 'Jibin N, Secretary of ISTD Trichur Chapter',
+    avatarAlt: 'Jibin N, Treasurer of ISTD Trichur Chapter',
     email: 'jibintcr@gmail.com',
     phone: '+919496839168',
     linkedin: 'https://www.linkedin.com/in/jibintcr/',
@@ -1151,18 +1265,18 @@ export const OFFICE_BEARERS: CommitteeMember[] = [
     ],
     isOfficeBearer: true,
     biography: [
-      'Jibin N serves as Secretary of ISTD Trichur Chapter. An IT professional and entrepreneur, he brings a background spanning information technology, business leadership, teaching and community initiatives.',
+      'Jibin N serves as Treasurer of ISTD Trichur Chapter. An IT professional and entrepreneur, he brings a background spanning information technology, business leadership, teaching and community initiatives.',
       'He is the Founder of Infinio Technology Solutions and Flexon Sports Foundation, and the Managing Director of NEOM Panels, where he guides strategic direction, brand development (Starwoods and NEOM Packing Plywood) and long-term business growth. His academic activities include teaching and evaluation through BITS Pilani’s Work Integrated Learning Programmes.',
       'His involvement with ISTD Trichur Chapter reflects his interest in professional learning, knowledge exchange and connecting people across industry and academia.',
     ],
     chapterRoleSection:
-      'As Secretary, Jibin supports the coordination of chapter activities, communication with members and the organisation of professional learning programmes, working with the chapter’s office bearers and committee.',
+      'As Treasurer, Jibin supports chapter resource stewardship, the coordination of chapter activities, communication with members and the organisation of professional learning programmes, working with the chapter’s office bearers and committee.',
     responsibilities: [
       {
         num: '01',
-        title: 'Chapter Coordination & Governance',
+        title: 'Financial & Resource Stewardship',
         description:
-          'Coordinating executive committee operations, statutory documentation, and chapter activities in alignment with ISTD Trichur Chapter objectives.',
+          'Overseeing chapter financial governance, membership administration, and resource planning in alignment with ISTD Trichur Chapter objectives.',
       },
       {
         num: '02',
@@ -1186,10 +1300,10 @@ export const OFFICE_BEARERS: CommitteeMember[] = [
     professionalBackground: [
       {
         organisation: 'ISTD Trichur Chapter',
-        role: 'Secretary',
+        role: 'Treasurer',
         category: 'Professional Association & Chapter Role',
         description:
-          'Supports the coordination of chapter activities, communication with members, and the organisation of professional learning programmes alongside the chapter’s office bearers and committee.',
+          'Supports chapter resource stewardship, coordination of chapter activities, communication with members, and the organisation of professional learning programmes alongside the chapter’s office bearers and committee.',
       },
       {
         organisation: 'NEOM Panels',
@@ -1245,143 +1359,29 @@ export const OFFICE_BEARERS: CommitteeMember[] = [
         src: '/images/ISTDTeamTCR/jibin-n-addressing-inauguration.jpg',
         title: 'Addressing the ISTD Trichur Diamond Chapter Inauguration',
         caption:
-          'Jibin N, Secretary of ISTD Trichur Chapter, addressing the gathering at Hotel Pearl Regency, Trichur alongside National Treasurer Shri. Nabaghana Pany and Chairman Shri. Tony Chacko (30 March 2026).',
-        category: 'Secretary’s Address',
+          'Jibin N, Treasurer of ISTD Trichur Chapter, addressing the gathering at Hotel Pearl Regency, Trichur alongside National Treasurer Shri. Nabaghana Pany and Chairman Shri. Tony Chacko (30 March 2026).',
+        category: 'Treasurer’s Address',
       },
       {
         src: '/images/ISTDTeamTCR/jibin-n-national-president-felicitation.jpg',
         title: 'With ISTD National President Shri. Atul Shah & National Treasurer Shri. Nabaghana Pany',
         caption:
-          'Secretary Jibin N greeted on stage by National Treasurer Shri. Nabaghana Pany and National President Shri. Atul Shah during the Diamond Chapter Inauguration (30 March 2026).',
+          'Treasurer Jibin N greeted on stage by National Treasurer Shri. Nabaghana Pany and National President Shri. Atul Shah during the Diamond Chapter Inauguration (30 March 2026).',
         category: 'National Leadership',
       },
       {
         src: '/images/ISTDTeamTCR/jibin-n-prof-zakkariya-felicitation.jpg',
         title: 'With Founder & Mentor Prof. (Dr.) Zakkariya K. A. on the Inaugural Dais',
         caption:
-          'Founder & Mentor Prof. (Dr.) Zakkariya K. A. and Secretary Jibin N shaking hands on stage as National President Shri. Atul Shah applauds (30 March 2026).',
+          'Founder & Mentor Prof. (Dr.) Zakkariya K. A. and Treasurer Jibin N shaking hands on stage as National President Shri. Atul Shah applauds (30 March 2026).',
         category: 'Chapter Milestone',
       },
       {
         src: '/images/ISTDTeamTCR/jibin-n-dignitaries-meet.jpg',
         title: 'Fellowship with Academic & Chapter Dignitaries',
         caption:
-          'Secretary Jibin N with senior academic leaders and ISTD Trichur Chapter members during the inaugural fellowship gathering.',
+          'Treasurer Jibin N with senior academic leaders and ISTD Trichur Chapter members during the inaugural fellowship gathering.',
         category: 'Leadership Fellowship',
-      },
-    ],
-  },
-  {
-    id: 'member-sneha',
-    slug: 'sneha-rose-george',
-    name: 'Sneha Rose George',
-    role: 'Treasurer',
-    organisation: 'ISTD Trichur Chapter',
-    title: 'Research Scholar, School of Management Studies, CUSAT',
-    headline: 'Treasurer, ISTD Trichur Chapter',
-    supportingLine:
-      'Resource Stewardship, Management Research & Academic Programme Coordination',
-    shortBio:
-      'Management researcher at the School of Management Studies, Cochin University of Science and Technology (CUSAT), serving on the executive leadership of ISTD Trichur Chapter.',
-    metaTitle: 'Sneha Rose George | Treasurer | ISTD Trichur Chapter',
-    metaDescription:
-      'Meet Sneha Rose George, Treasurer of ISTD Trichur Chapter and Research Scholar at the School of Management Studies, Cochin University of Science and Technology (CUSAT).',
-    avatar: '/images/ISTDTeamTCR/sneha-rose.jpg',
-    avatarWidth: 600,
-    avatarHeight: 600,
-    avatarAlt: 'Sneha Rose George, Treasurer of ISTD Trichur Chapter',
-    linkedin: 'https://www.linkedin.com/in/sneha-rose-george-4176a325/',
-    sameAs: ['https://www.linkedin.com/in/sneha-rose-george-4176a325/'],
-    confirmedProfiles: [
-      {
-        label: 'LinkedIn',
-        url: 'https://www.linkedin.com/in/sneha-rose-george-4176a325/',
-        context: 'Official Professional Profile',
-      },
-    ],
-    isOfficeBearer: true,
-    biography: [
-      'Sneha Rose George serves on the executive committee of ISTD Trichur Chapter as Treasurer, supporting chapter administration, member engagement, and academic–practitioner programmes.',
-      'She is a doctoral Research Scholar at the School of Management Studies (SMS), Cochin University of Science and Technology (CUSAT), Kochi. Her academic research focuses on customer engagement, digital consumer behavior, mobile application adoption, and the role of artificial intelligence in modern services.',
-      'Within ISTD Trichur Chapter, she contributes to curating knowledge-sharing sessions, academic dialogues, and student chapter coordination across Trichur and Central Kerala.',
-    ],
-    chapterRoleSection:
-      'As Treasurer on the executive committee of ISTD Trichur Chapter, Sneha Rose George supports chapter administration, resource stewardship, member coordination, and the organisation of academic and professional learning programmes.',
-    responsibilities: [
-      {
-        num: '01',
-        title: 'Financial & Resource Stewardship',
-        description:
-          'Overseeing chapter accounts, budgeting for learning programmes, and maintaining transparent financial governance.',
-      },
-      {
-        num: '02',
-        title: 'Academic & Research Forum Curation',
-        description:
-          'Coordinating management dialogues, Foundation Day sessions, and research-oriented webinars for chapter members.',
-      },
-      {
-        num: '03',
-        title: 'Student Chapter & Youth Engagement',
-        description:
-          'Supporting campus outreach and academic–industry bridging programmes across higher education institutions.',
-      },
-      {
-        num: '04',
-        title: 'Member Onboarding & Documentation',
-        description:
-          'Assisting with membership records, event documentation, and collaborative member orientation sessions.',
-      },
-    ],
-    professionalBackground: [
-      {
-        organisation: 'ISTD Trichur Chapter',
-        role: 'Treasurer',
-        category: 'Chapter Governance & Administration',
-        description:
-          'Supports chapter operations, resource stewardship, member onboarding, and academic–industry learning sessions.',
-      },
-      {
-        organisation: 'School of Management Studies (SMS), CUSAT',
-        role: 'Research Scholar',
-        category: 'Academic Research',
-        description:
-          'Conducts doctoral research in management, focusing on digital consumer behavior, customer engagement, and AI in services.',
-      },
-    ],
-    schemaAffiliations: [
-      {
-        name: 'Cochin University of Science and Technology (CUSAT)',
-      },
-    ],
-    istdRoles: [
-      'Treasurer & Executive Office Bearer, ISTD Trichur Diamond Chapter (Installed 30 March 2026)',
-      'Programme Coordinator for ISTD Trichur Knowledge Webinars, Foundation Day Sessions & Research Forums',
-      'Committee Lead for Member Onboarding, Chapter Connect 2026 & Student Chapter Coordination',
-    ],
-    careerHighlights: [
-      'Doctoral Research Scholar, School of Management Studies (SMS), Cochin University of Science and Technology (CUSAT)',
-      'Published and presented management research on Customer Engagement, AI in Consumer Services, and Digital Behavior in reputed academic forums and journals',
-      'Active contributor to university-level faculty development, academic conferences, and research methodology workshops',
-    ],
-    educationAndCredentials: [
-      'Doctoral Research Scholar (Ph.D. Programme in Management) — School of Management Studies, CUSAT',
-      'Postgraduate Degree in Management / Commerce',
-    ],
-    expertiseDomains: [
-      'Management & Consumer Behavior Research',
-      'AI in Services & Digital Engagement',
-      'Academic Programme Curation & Coordination',
-      'Higher Education & Student Chapter Engagement',
-      'Training Documentation & Chapter Governance',
-    ],
-    featuredPhotos: [
-      {
-        src: '/photos/istd-sneha.jpeg',
-        title: 'Felicitation at the Diamond Chapter Inauguration',
-        caption:
-          'Prof. (Dr.) Zakkariya K. A. presenting a token of appreciation to Sneha Rose George during the inauguration on 30 March 2026.',
-        category: 'Chapter Inauguration',
       },
     ],
   },
@@ -1435,14 +1435,14 @@ export const CHAPTER_CORE_CONTRIBUTORS = [
     linkedin: 'https://www.linkedin.com/in/tony-chacko-965622240/',
   },
   {
-    name: 'Jibin N',
+    name: 'Sneha Rose George',
     role: 'Secretary',
-    linkedin: 'https://www.linkedin.com/in/jibintcr/',
+    linkedin: 'https://www.linkedin.com/in/sneha-rose-george-4176a325/',
   },
   {
-    name: 'Sneha Rose George',
+    name: 'Jibin N',
     role: 'Treasurer',
-    linkedin: 'https://www.linkedin.com/in/sneha-rose-george-4176a325/',
+    linkedin: 'https://www.linkedin.com/in/jibintcr/',
   },
   { name: 'Mr. Nisam', role: 'Chapter Member & Contributor' },
   { name: 'Dr. Minu Gopal', role: 'Chapter Member & Contributor' },
@@ -1763,7 +1763,7 @@ export const ALL_CHAPTER_EVENTS: ChapterEvent[] = [
         src: '/photos/chapter-connect-2026-1.jpg',
         title: 'Chairman Tony Chacko Addressing Chapter Connect 2026',
         caption:
-          'Chairman Tony Chacko addressing members from the podium at Hotel Elite International during Chapter Connect 2026 (27 June 2026), with Founder-Mentor Prof. (Dr.) Zakkariya K. A., Secretary Jibin N, Treasurer Sneha Rose George, and committee leaders on the dais.',
+          'Chairman Tony Chacko addressing members from the podium at Hotel Elite International during Chapter Connect 2026 (27 June 2026), with Founder-Mentor Prof. (Dr.) Zakkariya K. A., Secretary Sneha Rose George, Treasurer Jibin N, and committee leaders on the dais.',
         category: 'Leadership Address',
       },
       {
