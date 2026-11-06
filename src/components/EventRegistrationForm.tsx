@@ -84,6 +84,15 @@ export function EventRegistrationForm({ event }: EventRegistrationFormProps) {
     }
   }, []);
 
+  useEffect(() => {
+    if (confirmedReg) {
+      const el = document.getElementById('registrationConfirmationCard');
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+  }, [confirmedReg]);
+
   const applyParticipantProfile = (profile: EventRegistration) => {
     setSalutation(profile.salutation || 'Mr.');
     setFullName(profile.fullName || '');
@@ -186,9 +195,9 @@ export function EventRegistrationForm({ event }: EventRegistrationFormProps) {
 
     const finalWhatsapp = sameWhatsapp ? phone.trim() : whatsapp.trim();
 
-    if (!fullName.trim() || !dob || !email.trim() || !phone.trim() || !finalWhatsapp) {
+    if (!fullName.trim() || !email.trim() || !phone.trim() || !finalWhatsapp) {
       setErrorMsg(
-        'Please fill in all required personal and contact details (Full Name, DOB, Email, Mobile, and WhatsApp).'
+        'Please fill in all required personal and contact details (Full Name, Email, Mobile, and WhatsApp).'
       );
       return;
     }
@@ -887,13 +896,12 @@ export function EventRegistrationForm({ event }: EventRegistrationFormProps) {
               </div>
 
               <div className="form-group" style={{ marginBottom: 0 }}>
-                <label className="form-label">Date of Birth *</label>
+                <label className="form-label">Date of Birth (Optional)</label>
                 <input
                   type="date"
                   className="form-control"
                   value={dob}
                   onChange={(e) => setDob(e.target.value)}
-                  required
                 />
               </div>
 
@@ -1322,6 +1330,24 @@ export function EventRegistrationForm({ event }: EventRegistrationFormProps) {
               label="Security Verification Code *"
             />
           </div>
+
+          {errorMsg && (
+            <div
+              role="alert"
+              style={{
+                background: '#FEF2F2',
+                border: '1.5px solid #EF4444',
+                color: '#B91C1C',
+                padding: '0.9rem 1.15rem',
+                borderRadius: '10px',
+                fontSize: '0.9rem',
+                fontWeight: 700,
+                marginBottom: '1.25rem',
+              }}
+            >
+              ⚠️ {errorMsg}
+            </div>
+          )}
 
           <div
             style={{

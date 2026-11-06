@@ -30,11 +30,19 @@ export async function generateMetadata({
   if (!event) {
     return { title: 'Event Not Found' };
   }
+  const isAiot = event.slug === 'advancing-aiot-research';
+  const posterImage = isAiot ? '/images/advancing-aiot-research-poster.jpg' : event.image;
+  const imgW = isAiot || event.slug === 'christ-college-student-chapter-inauguration' ? 819 : event.isPosterImage ? 1024 : 1200;
+  const imgH = isAiot || event.slug === 'christ-college-student-chapter-inauguration' ? 1024 : event.isPosterImage ? 1024 : 630;
+
   return buildPageMetadata({
     title: `${event.title} — ${event.programmeType}`,
-    description: event.shortDescription,
+    description: `${event.date} (${event.timeIST}) • ${event.venue} • Speaker: ${event.speaker || 'ISTD Trichur'} (${event.speakerDesignation || 'Resource Person'}). ${event.shortDescription}`,
     path: `/events/${event.slug}`,
-    image: event.image,
+    image: posterImage,
+    imageAlt: event.imageCaption || `${event.title} — Official Event Poster`,
+    imageWidth: imgW,
+    imageHeight: imgH,
     type: 'article',
     keywords: [
       event.title,

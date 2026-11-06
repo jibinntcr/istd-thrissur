@@ -134,6 +134,8 @@ export function buildPageMetadata({
       images: [
         {
           url: fullImageUrl,
+          secureUrl: fullImageUrl,
+          type: 'image/jpeg',
           width: imageWidth,
           height: imageHeight,
           alt: resolvedImageAlt,
