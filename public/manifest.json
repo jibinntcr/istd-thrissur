@@ -2,18 +2,18 @@
   "name": "ISTD Trichur Chapter | Indian Society for Training & Development",
   "short_name": "ISTD Trichur",
   "description": "Official Diamond Chapter of the Indian Society for Training & Development (ISTD) in Trichur, Kerala.",
-  "start_url": "/istd-thrissur/",
+  "start_url": ".",
   "display": "standalone",
   "background_color": "#0B2239",
   "theme_color": "#0B2239",
   "icons": [
     {
-      "src": "/istd-thrissur/images/logo-circle.png",
+      "src": "images/logo-circle.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/istd-thrissur/images/logo-circle.png",
+      "src": "images/logo-circle.png",
       "sizes": "512x512",
       "type": "image/png"
     }

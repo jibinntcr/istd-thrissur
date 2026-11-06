@@ -92,7 +92,7 @@ export default function RootLayout({
   const organizationJsonLd = getOrganizationJsonLd();
 
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
@@ -111,7 +111,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body>
+      <body suppressHydrationWarning>
         <NetworkingParticlesBackground />
         <ScrollEnhancer />
         <a href="#mainContent" className="skip-to-content">
