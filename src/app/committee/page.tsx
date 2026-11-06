@@ -147,7 +147,7 @@ export default function CommitteePage() {
                 <div style={{ width: '100%' }}>
                   <Link
                     href={`/team/${member.slug}`}
-                    style={{ textDecoration: 'none', display: 'inline-block' }}
+                    style={{ textDecoration: 'none', display: 'block', textAlign: 'center' }}
                   >
                     <div
                       className="committee-avatar-wrap"
@@ -172,7 +172,7 @@ export default function CommitteePage() {
                           width: '100%',
                           height: '100%',
                           objectFit: 'cover',
-                          objectPosition: 'top center',
+                          objectPosition: 'center center',
                         }}
                       />
                     </div>

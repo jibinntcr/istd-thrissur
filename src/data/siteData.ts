@@ -824,7 +824,7 @@ export const OFFICE_BEARERS: CommitteeMember[] = [
       'Meet Prof. (Dr.) Zakkariya K. A., Founder & Mentor of ISTD Trichur Chapter, National Vice President of ISTD, and Senior Professor at the School of Management Studies, CUSAT.',
     avatar: '/images/ISTDTeamTCR/zakkariya-ka.jpg',
     avatarWidth: 682,
-    avatarHeight: 1024,
+    avatarHeight: 850,
     avatarAlt:
       'Prof. (Dr.) Zakkariya K. A., Founder & Mentor of ISTD Trichur Chapter and National Vice President of ISTD',
     secondaryAvatar: '/images/ISTDTeamTCR/zakkariya-ka-2.jpg',

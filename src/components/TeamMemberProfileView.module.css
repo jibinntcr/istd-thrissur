@@ -109,11 +109,12 @@
 
 .portraitCol {
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
+  align-items: center;
 }
 
 .portraitFrame {
-  margin: 0;
+  margin: 0 auto;
   width: 15rem;
   height: 15rem;
   border-radius: 14px;
@@ -133,7 +134,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center top;
+  object-position: center center;
   display: block;
 }
 
@@ -509,24 +510,31 @@
   overflow: hidden;
   border: 1px solid #cbd5e1;
   background: #f8fafc;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .secondaryPortraitImg {
   width: 100%;
+  aspect-ratio: 4 / 5;
   height: auto;
-  max-height: 320px;
   object-fit: cover;
-  object-position: top center;
+  object-position: center center;
   display: block;
+  margin: 0 auto;
 }
 
 .secondaryPortraitCaption {
-  padding: 0.85rem 1rem;
-  font-size: 0.84rem;
+  width: 100%;
+  padding: 0.9rem 1.05rem;
+  font-size: 0.85rem;
   line-height: 1.55;
   color: #475569;
   margin: 0;
-  text-align: justify;
+  text-align: center;
+  border-top: 1px solid #e2e8f0;
+  background: #ffffff;
 }
 
 /* Domain Chips */
