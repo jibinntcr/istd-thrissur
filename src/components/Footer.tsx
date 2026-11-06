@@ -21,12 +21,9 @@ export function Footer() {
     <>
       <footer className="site-footer">
         <div className="container">
-          <div
-            className="footer-grid"
-            style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))' }}
-          >
+          <div className="footer-grid">
             {/* Section 1: About the Chapter */}
-            <div>
+            <div className="footer-col footer-col-about">
               <h4 className="footer-heading">About the Chapter</h4>
               <div className="footer-brand-wrap">
                 <div className="brand-seal-ring footer-seal">
@@ -45,6 +42,7 @@ export function Footer() {
                       color: 'var(--accent-yellow-bright)',
                       fontWeight: 700,
                       marginBottom: 0,
+                      textAlign: 'left',
                     }}
                   >
                     Indian Society for Training &amp; Development
@@ -57,44 +55,25 @@ export function Footer() {
                 professional learning, knowledge exchange, and human resource development in
                 Trichur, Kerala.
               </p>
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.65rem',
-                  flexWrap: 'wrap',
-                  marginTop: '0.25rem',
-                }}
-              >
+              <div className="footer-social-row">
                 <a
                   href={OFFICIAL_LINKS.istdTrichurLinkedin}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Follow ISTD Trichur Chapter on LinkedIn"
                   title="Follow ISTD Trichur Chapter on LinkedIn"
-                  style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    width: '38px',
-                    height: '38px',
-                    borderRadius: '10px',
-                    background: '#0A66C2',
-                    color: '#FFFFFF',
-                    border: '1px solid rgba(255, 255, 255, 0.22)',
-                    boxShadow: '0 4px 12px rgba(10, 102, 194, 0.35)',
-                    transition: 'transform 0.2s ease, background 0.2s ease',
-                  }}
+                  className="footer-social-btn linkedin"
                 >
                   <svg
-                    width="18"
-                    height="18"
+                    width="17"
+                    height="17"
                     viewBox="0 0 24 24"
                     fill="currentColor"
                     aria-hidden="true"
                   >
                     <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z" />
                   </svg>
+                  <span>LinkedIn</span>
                 </a>
                 <a
                   href={OFFICIAL_LINKS.istdNationalWeb}
@@ -102,20 +81,7 @@ export function Footer() {
                   rel="noopener noreferrer"
                   aria-label="ISTD National Official Website (istd.in)"
                   title="ISTD National Official Website (istd.in)"
-                  style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '0.4rem',
-                    height: '38px',
-                    padding: '0 0.85rem',
-                    borderRadius: '10px',
-                    background: 'rgba(255, 255, 255, 0.08)',
-                    color: '#E2E8F0',
-                    border: '1px solid rgba(255, 255, 255, 0.18)',
-                    fontSize: '0.78rem',
-                    fontWeight: 700,
-                    textDecoration: 'none',
-                  }}
+                  className="footer-social-btn national"
                 >
                   <svg
                     width="15"
@@ -130,13 +96,13 @@ export function Footer() {
                     <line x1="2" y1="12" x2="22" y2="12" />
                     <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
                   </svg>
-                  <span>istd.in</span>
+                  <span>National Portal (istd.in)</span>
                 </a>
               </div>
             </div>
 
-            {/* Section 2: Quick Links */}
-            <div>
+            {/* Section 2: Quick Links (Balanced 2-Column Grid on Mobile & Desktop) */}
+            <div className="footer-col footer-col-links">
               <h4 className="footer-heading">Quick Links</h4>
               <ul className="footer-links">
                 <li>
@@ -155,7 +121,7 @@ export function Footer() {
                   <Link href="/campus-chapters">Campus Chapters</Link>
                 </li>
                 <li>
-                  <Link href="/gallery">Gallery</Link>
+                  <Link href="/gallery">Photo Gallery</Link>
                 </li>
                 <li>
                   <Link href="/membership">Membership</Link>
@@ -173,72 +139,77 @@ export function Footer() {
             </div>
 
             {/* Section 3: Contact Us */}
-            <div>
+            <div className="footer-col footer-col-contact">
               <h4 className="footer-heading">Contact Us</h4>
               <ul className="footer-contact-list">
                 <li>
-                  <svg
-                    width="18"
-                    height="18"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    aria-hidden="true"
-                  >
-                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-                    <circle cx="12" cy="10" r="3" />
-                  </svg>
-                  <div>
-                    <strong style={{ color: '#fff', display: 'block', fontSize: '0.84rem' }}>
-                      ISTD Trichur Chapter
-                    </strong>
-                    <span>Trichur, Kerala, India</span>
+                  <span className="footer-contact-icon" aria-hidden="true">
+                    <svg
+                      width="17"
+                      height="17"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                    >
+                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                      <circle cx="12" cy="10" r="3" />
+                    </svg>
+                  </span>
+                  <div className="footer-contact-body">
+                    <strong>ISTD Trichur Chapter</strong>
+                    <span>Trichur, Kerala, India (Diamond Chapter)</span>
                   </div>
                 </li>
                 <li>
-                  <svg
-                    width="18"
-                    height="18"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    aria-hidden="true"
-                  >
-                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-                  </svg>
-                  <div>
-                    <strong style={{ color: '#fff', display: 'block', fontSize: '0.82rem' }}>
-                      Trichur Chapter Contacts
-                    </strong>
-                    <a href="tel:+919846101034">+91 9846101034</a> (Tony Chacko, Chairman)
-                    <br />
-                    <a href="mailto:tonychacko67@gmail.com">tonychacko67@gmail.com</a>
-                    <br />
-                    <a href="tel:+919496839168">+91 9496839168</a> (Jibin N, Treasurer)
-                    <br />
-                    <a href="mailto:jibintcr@gmail.com">jibintcr@gmail.com</a>
+                  <span className="footer-contact-icon" aria-hidden="true">
+                    <svg
+                      width="17"
+                      height="17"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                    >
+                      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                    </svg>
+                  </span>
+                  <div className="footer-contact-body">
+                    <strong>Trichur Chapter Contacts</strong>
+                    <div className="footer-contact-person">
+                      <span>Tony Chacko (Chairman): </span>
+                      <a href="tel:+919846101034">+91 98461 01034</a>
+                      {' • '}
+                      <a href="mailto:tonychacko67@gmail.com">tonychacko67@gmail.com</a>
+                    </div>
+                    <div className="footer-contact-person">
+                      <span>Jibin N (Treasurer): </span>
+                      <a href="tel:+919496839168">+91 94968 39168</a>
+                      {' • '}
+                      <a href="mailto:jibintcr@gmail.com">jibintcr@gmail.com</a>
+                    </div>
                   </div>
                 </li>
                 <li>
-                  <svg
-                    width="18"
-                    height="18"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    aria-hidden="true"
-                  >
-                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                    <polyline points="22,6 12,13 2,6" />
-                  </svg>
-                  <div>
-                    <strong style={{ color: '#fff', display: 'block', fontSize: '0.82rem' }}>
-                      ISTD National Office (New Delhi)
-                    </strong>
-                    <a href="mailto:info@istd.in">info@istd.in</a>
+                  <span className="footer-contact-icon" aria-hidden="true">
+                    <svg
+                      width="17"
+                      height="17"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                    >
+                      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                      <polyline points="22,6 12,13 2,6" />
+                    </svg>
+                  </span>
+                  <div className="footer-contact-body">
+                    <strong>ISTD National Office (New Delhi)</strong>
+                    <span>
+                      Training House, Institutional Area, New Delhi •{' '}
+                      <a href="mailto:info@istd.in">info@istd.in</a>
+                    </span>
                   </div>
                 </li>
               </ul>
@@ -248,16 +219,14 @@ export function Footer() {
           {/* Footer Bottom */}
           <div className="footer-bottom">
             <div className="footer-bottom-inner">
-              <p>© 2026 ISTD Trichur Chapter. Affiliated with ISTD New Delhi (Est. 1970).</p>
+              <p style={{ margin: 0, textAlign: 'center' }}>
+                © 2026 ISTD Trichur Chapter (Diamond Chapter). Affiliated with the Indian Society
+                for Training &amp; Development (ISTD), New Delhi (Est. April 1970).
+              </p>
               <div className="footer-bottom-links">
-                <Link href="/about">About Us</Link>
-                <Link href="/committee">Managing Committee</Link>
-                <Link href="/events">Events &amp; Programmes</Link>
-                <Link href="/campus-chapters">Campus Chapters</Link>
-                <Link href="/gallery">Gallery</Link>
-                <Link href="/membership">Membership</Link>
-                <Link href="/contact">Contact Us</Link>
                 <Link href="/privacy">Privacy Policy</Link>
+                <Link href="/membership">Membership</Link>
+                <Link href="/contact">Contact</Link>
                 <Link href="/admin">Admin Portal</Link>
               </div>
             </div>
