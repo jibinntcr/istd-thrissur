@@ -2,8 +2,9 @@ import React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { HeroShowcase } from '@/components/HeroShowcase';
-import { EventsChronicleSection } from '@/components/EventsChronicleSection';
+import { HomePhotoMarquee } from '@/components/HomePhotoMarquee';
 import {
+  ALL_CHAPTER_EVENTS,
   OFFICIAL_LINKS,
   assetUrl,
 } from '@/data/siteData';
@@ -46,6 +47,10 @@ const STRATEGIC_PILLARS = [
 ];
 
 export default function HomePage() {
+  const upcomingEvents = ALL_CHAPTER_EVENTS.filter(
+    (ev) => ev.status === 'upcoming'
+  );
+
   return (
     <>
       {/* 1. Executive First-Impression Hero Section with Widescreen Showcase Slider */}
@@ -95,14 +100,6 @@ export default function HomePage() {
                 organisational excellence.
               </p>
 
-              {/* Official Vision Highlight Strip inside Hero */}
-              <div className="hero-vision-callout">
-                <span className="hero-vision-kicker">OFFICIAL ISTD VISION</span>
-                <p className="hero-vision-quote">
-                  “Leading Transformation through Training &amp; Development.”
-                </p>
-              </div>
-
               {/* Hero Action Buttons (Strictly 2 Primary Buttons) */}
               <div className="hero-3d-actions">
                 <Link
@@ -113,14 +110,14 @@ export default function HomePage() {
                   <span aria-hidden="true">→</span>
                 </Link>
                 <Link
-                  href="#eventsProgrammesSection"
+                  href="#upcomingProgrammes"
                   className="btn btn-primary btn-lg"
                 >
-                  <span>2026 Events &amp; Archives</span>
+                  <span>Upcoming Programmes</span>
                 </Link>
               </div>
 
-              {/* Clean Institutional Credentials Strip */}
+              {/* Clean Single-Line Institutional Credentials Strip */}
               <div className="hero-3d-credentials-row">
                 <div className="hero-3d-cred-item">
                   <span className="cred-check">✓</span>
@@ -445,13 +442,10 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 4. Upcoming Events, Current Year (2026) Programmes & Year-Wise Archive */}
-      <EventsChronicleSection compactHomeView />
-
-      {/* 5. Campus & Student Chapters Spotlight */}
+      {/* 4. Latest & Upcoming Programme Spotlight ONLY (Completed Archive Lives on /events) */}
       <section
         className="section-padding bg-pale-blue"
-        id="campusChaptersSpotlight"
+        id="upcomingProgrammes"
       >
         <div className="container">
           <div
@@ -461,200 +455,135 @@ export default function HomePage() {
               alignItems: 'flex-end',
               justifyContent: 'space-between',
               gap: '1rem',
-              marginBottom: '1.85rem',
+              marginBottom: '2rem',
             }}
           >
             <div>
-              <span className="section-tag tag-yellow">
-                Campus &amp; Student Chapters
+              <span className="section-tag tag-red">
+                Latest &amp; Upcoming Programme
               </span>
               <h2 className="section-title" style={{ marginBottom: '0.35rem' }}>
-                Connecting Academic Learning with Professional Practice
+                Upcoming Learning Session
               </h2>
               <p
                 style={{
                   color: 'var(--color-muted)',
                   marginBottom: 0,
-                  maxWidth: '680px',
+                  maxWidth: '720px',
                   textAlign: 'justify',
                 }}
               >
-                ISTD Trichur Chapter partners with higher education institutions
-                to establish student chapters that bridge classroom learning
-                with industry mentorship and professional development.
+                Register for our upcoming online session organised by the ISTD
+                Trichur Chapter. To browse completed 2026 programmes and
+                year-wise archives, visit the Events &amp; Programmes page.
               </p>
             </div>
-            <div style={{ display: 'flex', gap: '0.65rem', flexWrap: 'wrap' }}>
-              <Link
-                href="/campus-chapters"
-                className="btn btn-outline-navy btn-sm"
-              >
-                Campus Chapters Hub &amp; Institutional EOI &rarr;
-              </Link>
-            </div>
-          </div>
-
-          <div
-            style={{
-              background:
-                'linear-gradient(135deg, #071226 0%, #0F2347 60%, #16336B 100%)',
-              borderRadius: '22px',
-              border: '2px solid rgba(245, 158, 11, 0.35)',
-              boxShadow: '0 20px 50px rgba(15, 29, 58, 0.14)',
-              overflow: 'hidden',
-              display: 'grid',
-              gridTemplateColumns:
-                'repeat(auto-fit, minmax(min(100%, 280px), 1fr))',
-              alignItems: 'center',
-            }}
-          >
-            <Link
-              href="/campus-chapters/christ-college-of-engineering"
-              style={{
-                padding: 'clamp(1.15rem, 3vw, 1.75rem)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                background: 'rgba(0, 0, 0, 0.22)',
-                textDecoration: 'none',
-              }}
-            >
-              <img
-                src={assetUrl('/images/campus-chapter-cce.jpg')}
-                alt="ISTD Trichur First Student Chapter — Christ College of Engineering (Autonomous)"
-                style={{
-                  width: '100%',
-                  maxWidth: '340px',
-                  maxHeight: '400px',
-                  objectFit: 'contain',
-                  borderRadius: '14px',
-                  boxShadow: '0 14px 36px rgba(0, 0, 0, 0.45)',
-                  border: '2px solid rgba(255, 255, 255, 0.2)',
-                }}
-              />
+            <Link href="/events" className="btn btn-outline-navy btn-sm">
+              View All Events &amp; Year-Wise Archive &rarr;
             </Link>
+          </div>
 
-            <div
-              style={{
-                padding: 'clamp(1.25rem, 3.5vw, 2.25rem)',
-                color: '#FFFFFF',
-              }}
-            >
-              <div
-                style={{
-                  display: 'flex',
-                  flexWrap: 'wrap',
-                  gap: '0.5rem',
-                  marginBottom: '0.85rem',
-                }}
-              >
-                <span
-                  style={{
-                    padding: '0.28rem 0.78rem',
-                    borderRadius: '999px',
-                    background: '#FEF3C7',
-                    color: '#92400E',
-                    fontSize: '0.72rem',
-                    fontWeight: 800,
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.07em',
-                  }}
-                >
-                  First Student Chapter • ISTD Trichur
-                </span>
-                <span
-                  style={{
-                    padding: '0.28rem 0.78rem',
-                    borderRadius: '999px',
-                    background: 'rgba(255,255,255,0.12)',
-                    color: '#E2E8F0',
-                    fontSize: '0.72rem',
-                    fontWeight: 700,
-                  }}
-                >
-                  📍 Irinjalakuda, Trichur
-                </span>
+          {upcomingEvents.map((event) => (
+            <div key={event.id} className="upcoming-flagship-3d-card">
+              <div className="upcoming-flagship-poster-col">
+                <Link href={`/events/${event.slug}`}>
+                  <img
+                    src={assetUrl(event.image)}
+                    alt={event.title}
+                    className="upcoming-flagship-poster-img"
+                  />
+                </Link>
               </div>
 
-              <h3
-                style={{
-                  color: '#FFFFFF',
-                  fontSize: 'clamp(1.35rem, 2.3vw, 1.75rem)',
-                  fontWeight: 900,
-                  lineHeight: 1.25,
-                  marginBottom: '0.75rem',
-                }}
-              >
-                Inauguration of First Student Chapter at Christ College of
-                Engineering (Autonomous)
-              </h3>
-
-              <p
-                style={{
-                  color: '#E2E8F0',
-                  fontSize: '0.94rem',
-                  lineHeight: 1.72,
-                  marginBottom: '0.9rem',
-                  textAlign: 'justify',
-                }}
-              >
-                ISTD Trichur Chapter successfully inaugurated its first student
-                chapter at{' '}
-                <strong style={{ color: '#FFFFFF' }}>
-                  Christ College of Engineering (Autonomous)
-                </strong>
-                , creating a dedicated forum for students to connect academic
-                learning with professional practice, engage with experienced
-                practitioners, and develop as future professionals.
-              </p>
-
-              <p
-                style={{
-                  color: '#CBD5E1',
-                  fontSize: '0.9rem',
-                  lineHeight: 1.7,
-                  marginBottom: '1.35rem',
-                  textAlign: 'justify',
-                }}
-              >
-                The inaugural ceremony featured the keynote address and official
-                inauguration by{' '}
-                <strong style={{ color: '#FDE68A' }}>
-                  Prof. (Dr.) Zakkariya K. A.
-                </strong>{' '}
-                (National Vice President, ISTD &amp; Founder-Mentor, ISTD
-                Trichur Chapter), alongside an address by{' '}
-                <strong style={{ color: '#FDE68A' }}>Tony Chacko</strong>{' '}
-                (Chairman, ISTD Trichur Chapter).
-              </p>
-
-              <div
-                style={{
-                  display: 'flex',
-                  flexWrap: 'wrap',
-                  gap: '0.75rem',
-                }}
-              >
-                <Link
-                  href="/campus-chapters/christ-college-of-engineering"
-                  className="btn btn-red btn-sm"
+              <div className="upcoming-flagship-content-col">
+                <div
+                  style={{
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    gap: '0.55rem',
+                    alignItems: 'center',
+                    marginBottom: '0.9rem',
+                  }}
                 >
-                  View Student Chapter Page &rarr;
-                </Link>
-                <Link
-                  href="/campus-chapters#establishChapter"
-                  className="btn btn-outline-white btn-sm"
+                  <span className="upcoming-live-badge">
+                    <span className="pulse-dot-green" />
+                    <span>UPCOMING {event.programmeType.toUpperCase()}</span>
+                  </span>
+                  <span className="upcoming-date-chip">
+                    📅 {event.date} • {event.timeIST}
+                  </span>
+                  <span className="upcoming-venue-chip">
+                    📍 {event.venue}
+                  </span>
+                </div>
+
+                <h3 className="upcoming-flagship-title">
+                  <Link
+                    href={`/events/${event.slug}`}
+                    style={{ color: 'inherit', textDecoration: 'none' }}
+                  >
+                    {event.title}
+                  </Link>
+                </h3>
+
+                {event.subtitleQuestion && (
+                  <p className="upcoming-flagship-question">
+                    “{event.subtitleQuestion}”
+                  </p>
+                )}
+
+                <p className="upcoming-flagship-desc">
+                  {event.shortDescription}
+                </p>
+
+                {event.speaker && (
+                  <div className="upcoming-speaker-box">
+                    <div className="upcoming-speaker-label">
+                      Resource Person
+                    </div>
+                    <div className="upcoming-speaker-name">
+                      {event.speaker}
+                    </div>
+                    {event.speakerDesignation && (
+                      <div className="upcoming-speaker-role">
+                        {event.speakerDesignation}
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                <div
+                  style={{
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    gap: '0.85rem',
+                    marginTop: '1.5rem',
+                  }}
                 >
-                  Establish a Student Chapter at Your College
-                </Link>
+                  <Link
+                    href={`/events/${event.slug}#eventRegistrationFormBox`}
+                    className="btn btn-red"
+                  >
+                    Register Now &rarr;
+                  </Link>
+                  <Link
+                    href={`/events/${event.slug}`}
+                    className="btn btn-outline-navy"
+                  >
+                    View Session Details
+                  </Link>
+                </div>
               </div>
             </div>
-          </div>
+          ))}
         </div>
       </section>
 
+      {/* 5. Animated Scrolling Photo Marquee Ribbon */}
+      <HomePhotoMarquee />
+
       {/* 6. Membership CTA Banner */}
-      <section className="section-padding-sm bg-white">
+      <section className="section-padding-sm bg-pale-blue">
         <div className="container">
           <div className="cta-banner">
             <div className="cta-banner-inner">

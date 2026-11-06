@@ -220,15 +220,16 @@ export function EventsChronicleSection({
           {/* Top Row: Search Input + Year Filter Pills */}
           <div
             style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))',
-              gap: '1rem',
+              display: 'flex',
+              flexWrap: 'wrap',
+              gap: '0.85rem 1.25rem',
               alignItems: 'center',
+              justifyContent: 'space-between',
               marginBottom: '1.1rem',
             }}
           >
             {/* Search Box */}
-            <div style={{ position: 'relative' }}>
+            <div style={{ position: 'relative', flex: '1 1 340px', minWidth: 0 }}>
               <label
                 htmlFor="events-search-input"
                 className="sr-only"
@@ -266,7 +267,7 @@ export function EventsChronicleSection({
                 type="search"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search by event title, speaker (e.g., Zakkariya, Boopathy), topic, or venue..."
+                placeholder="Search by event title, speaker, topic, or venue..."
                 style={{
                   width: '100%',
                   padding: '0.78rem 2.6rem 0.78rem 2.75rem',

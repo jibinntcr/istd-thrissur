@@ -5,10 +5,10 @@ import { HERO_SLIDES, assetUrl } from '@/data/siteData';
 import { useLightbox } from './LightboxProvider';
 
 const SLIDE_SHORT_LABELS = [
-  'Lamp Lighting',
-  'Keynote Address',
-  'Chairman’s Address',
-  'Chapter Connect',
+  'Inauguration',
+  'Keynote',
+  'Chairman',
+  'Connect 2026',
 ];
 
 export function HeroShowcase() {

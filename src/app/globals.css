@@ -5504,8 +5504,8 @@ main p,
   display: inline-flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.65rem 0.85rem;
-  padding: 0.68rem 1.1rem;
+  gap: 0.45rem 0.65rem;
+  padding: 0.6rem 0.95rem;
   border-radius: 12px;
   background: #ffffff;
   border: 1.5px solid #bfdbfe;
@@ -5515,10 +5515,11 @@ main p,
 .hero-3d-cred-item {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-  font-size: 0.82rem;
+  gap: 0.35rem;
+  font-size: 0.78rem;
   font-weight: 700;
   color: #0f172a;
+  white-space: nowrap;
 }
 
 .cred-check {
@@ -5742,8 +5743,8 @@ main p,
 .hero-grand-selector-item {
   display: flex;
   align-items: center;
-  gap: 0.55rem;
-  padding: 0.45rem 0.6rem;
+  gap: 0.45rem;
+  padding: 0.42rem 0.52rem;
   border-radius: 12px;
   border: 1.5px solid rgba(148, 163, 184, 0.35);
   background: rgba(15, 23, 42, 0.72);
@@ -5765,9 +5766,9 @@ main p,
 }
 
 .hero-grand-selector-thumb {
-  width: 44px;
-  height: 34px;
-  border-radius: 7px;
+  width: 36px;
+  height: 28px;
+  border-radius: 6px;
   overflow: hidden;
   flex-shrink: 0;
   background: #0b2239;
@@ -5788,14 +5789,14 @@ main p,
 
 .selector-num {
   font-family: var(--font-heading);
-  font-size: 0.64rem;
+  font-size: 0.62rem;
   font-weight: 800;
   color: #fde047;
   line-height: 1.1;
 }
 
 .selector-label {
-  font-size: 0.73rem;
+  font-size: 0.71rem;
   font-weight: 700;
   color: #f8fafc;
   white-space: nowrap;
@@ -6330,5 +6331,153 @@ main p,
     height: 36px;
   }
 }
+
+/* ==========================================================================
+   Animated Scrolling Photo Marquee Ribbon (Home Page Bottom Section)
+   ========================================================================== */
+@keyframes homePhotoMarqueeScroll {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.photo-marquee-section {
+  padding: clamp(3rem, 5vw, 4.25rem) 0;
+  background: #ffffff;
+  border-top: 1px solid #e2e8f0;
+  border-bottom: 1px solid #e2e8f0;
+  overflow: hidden;
+}
+
+.photo-marquee-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.85rem;
+}
+
+.photo-marquee-viewport {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  padding: 0.5rem 0;
+  mask-image: linear-gradient(to right, transparent 0%, black 4%, black 96%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 4%, black 96%, transparent 100%);
+}
+
+.photo-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: homePhotoMarqueeScroll 48s linear infinite;
+  will-change: transform;
+}
+
+.photo-marquee-viewport:hover .photo-marquee-track,
+.photo-marquee-viewport:focus-within .photo-marquee-track {
+  animation-play-state: paused;
+}
+
+.photo-marquee-group {
+  display: flex;
+  align-items: stretch;
+  gap: 1.25rem;
+  padding-right: 1.25rem;
+}
+
+.photo-marquee-card {
+  width: 310px;
+  flex-shrink: 0;
+  background: #f8fafc;
+  border: 1.5px solid #dbe4f0;
+  border-radius: 16px;
+  padding: 0.6rem;
+  text-align: left;
+  cursor: pointer;
+  box-shadow: 0 10px 24px -10px rgba(15, 23, 42, 0.08);
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.25s ease, box-shadow 0.25s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.photo-marquee-card:hover {
+  transform: translateY(-6px);
+  border-color: #2563eb;
+  background: #ffffff;
+  box-shadow: 0 18px 34px -10px rgba(37, 99, 235, 0.18);
+}
+
+.photo-marquee-img-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border-radius: 11px;
+  overflow: hidden;
+  background: #0b2239;
+}
+
+.photo-marquee-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.photo-marquee-card:hover .photo-marquee-img-wrap img {
+  transform: scale(1.05);
+}
+
+.photo-marquee-badge {
+  position: absolute;
+  top: 0.55rem;
+  left: 0.55rem;
+  padding: 0.22rem 0.62rem;
+  border-radius: 999px;
+  background: rgba(11, 34, 57, 0.85);
+  border: 1px solid rgba(250, 204, 21, 0.45);
+  color: #fde047;
+  font-family: var(--font-heading);
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  backdrop-filter: blur(6px);
+}
+
+.photo-marquee-caption {
+  padding: 0.65rem 0.35rem 0.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.photo-marquee-caption strong {
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.photo-marquee-caption span {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #64748b;
+}
+
+@media (max-width: 640px) {
+  .photo-marquee-card {
+    width: 260px;
+  }
+}
+
 
 
