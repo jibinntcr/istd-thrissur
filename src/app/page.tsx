@@ -321,17 +321,18 @@ export default function HomePage() {
 
               <div className="vision-mission-mini-grid">
                 <div className="vm-mini-card vm-blue">
-                  <span className="vm-kicker">ISTD Vision</span>
-                  <p style={{ textAlign: 'justify' }}>
+                  <span className="vm-kicker">Our Vision (ISTD)</span>
+                  <p style={{ textAlign: 'justify', fontWeight: 700, color: '#0f172a' }}>
                     “Leading Transformation through Training &amp; Development.”
                   </p>
                 </div>
                 <div className="vm-mini-card vm-red">
-                  <span className="vm-kicker">Chapter Mission</span>
+                  <span className="vm-kicker">Our Mission (ISTD)</span>
                   <p style={{ textAlign: 'justify' }}>
-                    To advance training and development practices by connecting
-                    professionals, organisations, and educators through
-                    continuous learning.
+                    “To Facilitate Individuals and Organizations. To excel in
+                    Training &amp; Development Activities Serve As Reservoir of
+                    Universal Knowledge of Human Interface through Innovative
+                    Practices and Original Exploratory Research.”
                   </p>
                 </div>
               </div>

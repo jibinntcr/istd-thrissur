@@ -171,10 +171,19 @@ export default function AboutPage() {
         <div className="container">
           <div className="section-header text-center">
             <span className="section-tag tag-blue">Purpose &amp; Direction</span>
-            <h2 className="section-title">Vision &amp; Mission</h2>
+            <h2 className="section-title">Our Vision &amp; Our Mission</h2>
             <p className="section-subtitle">
-              Guided by the national mandate of ISTD and our commitment to regional professional
-              development.
+              Official Vision, Mission, and Key Objectives of the Indian Society for Training &amp;
+              Development (
+              <a
+                href="https://www.istd.in/about-istd/"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: 'var(--brand-blue)', fontWeight: 700 }}
+              >
+                istd.in/about-istd
+              </a>
+              ).
             </p>
           </div>
 
@@ -184,53 +193,129 @@ export default function AboutPage() {
               gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
               gap: '1.75rem',
               maxWidth: '960px',
-              margin: '0 auto',
+              margin: '0 auto 2rem auto',
             }}
           >
             <div className="CleanCard" style={{ borderTop: '4px solid var(--brand-blue)' }}>
-              <span className="section-tag tag-blue">Official ISTD Vision</span>
+              <span className="section-tag tag-blue">Our Vision</span>
               <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '0.75rem' }}>
-                ISTD National Vision &amp; Mission
+                Official ISTD Vision
               </h3>
-              <p style={{ fontSize: '0.95rem', lineHeight: 1.7, color: 'var(--color-body)' }}>
-                <strong>Vision:</strong> “Leading Transformation through Training &amp;
-                Development.”
+              <p
+                style={{
+                  fontSize: '1.08rem',
+                  fontWeight: 700,
+                  lineHeight: 1.65,
+                  color: 'var(--color-ink)',
+                  marginBottom: '0.65rem',
+                }}
+              >
+                “Leading Transformation through Training &amp; Development”
               </p>
               <p
                 style={{
-                  fontSize: '0.95rem',
-                  lineHeight: 1.7,
+                  fontSize: '0.92rem',
+                  lineHeight: 1.68,
                   color: 'var(--color-body)',
                   marginBottom: 0,
+                  textAlign: 'justify',
                 }}
               >
-                <strong>Mission:</strong> To facilitate individuals and organisations to excel in
-                Training &amp; Development and serve as a reservoir of universal HRD knowledge.
+                ISTD seeks to bring together individuals from Government, industry, education, and
+                other institutions to evolve and develop improved and effective HRD and training
+                practices, tools, and technologies across the country.
               </p>
             </div>
 
             <div className="CleanCard" style={{ borderTop: '4px solid var(--accent-red)' }}>
-              <span className="section-tag tag-red">Chapter Objectives</span>
+              <span className="section-tag tag-red">Our Mission</span>
               <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '0.75rem' }}>
-                Trichur Chapter Mission &amp; Focus
+                Official ISTD Mission
               </h3>
-              <p style={{ fontSize: '0.95rem', lineHeight: 1.7, color: 'var(--color-body)' }}>
-                To foster a culture of continuous learning and professional development among
-                trainers, educators, HR practitioners, and organisational leaders in the Trichur
-                region.
-              </p>
               <p
                 style={{
-                  fontSize: '0.95rem',
-                  lineHeight: 1.7,
-                  color: 'var(--color-body)',
+                  fontSize: '0.98rem',
+                  fontWeight: 700,
+                  lineHeight: 1.72,
+                  color: 'var(--color-ink)',
                   marginBottom: 0,
+                  textAlign: 'justify',
                 }}
               >
-                To serve as a collaborative professional body in Central Kerala connecting industry
-                and academia through practical workshops, seminars, and peer knowledge sharing.
+                “To Facilitate Individuals and Organizations. To excel in Training &amp;
+                Development Activities Serve As Reservoir of Universal Knowledge of Human Interface
+                through Innovative Practices and Original Exploratory Research”
               </p>
             </div>
+          </div>
+
+          {/* Official Key Objectives from istd.in/about-istd */}
+          <div
+            className="CleanCard"
+            style={{
+              maxWidth: '960px',
+              margin: '0 auto',
+              borderTop: '4px solid #f59e0b',
+            }}
+          >
+            <span className="section-tag tag-yellow">Constitutional Mandate</span>
+            <h3 style={{ fontSize: '1.25rem', fontWeight: 800, marginBottom: '0.75rem' }}>
+              Key Objectives of ISTD
+            </h3>
+            <p
+              style={{
+                fontSize: '0.93rem',
+                lineHeight: 1.68,
+                color: 'var(--color-body)',
+                marginBottom: '1rem',
+                textAlign: 'justify',
+              }}
+            >
+              As enshrined by the Indian Society for Training &amp; Development (New Delhi), the
+              objectives of the Society and its Chapters are to:
+            </p>
+            <ul
+              style={{
+                margin: 0,
+                paddingLeft: '1.25rem',
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+                gap: '0.75rem 1.75rem',
+                fontSize: '0.9rem',
+                color: 'var(--color-body)',
+                lineHeight: 1.62,
+              }}
+            >
+              <li>
+                Promote a better and more effective utilization of human resources through
+                education, training and development in all spheres of Government, agriculture,
+                industry, commerce, education infrastructure, services, and other sectors.
+              </li>
+              <li>
+                Provide leadership and promote study and application of professional principles and
+                practices in the field of training and development to assist management and
+                administrations to develop and maintain an effective organization.
+              </li>
+              <li>
+                Promote an understanding of training and development as a basic responsibility of
+                management and administration and assist organizations in planning and implementing
+                programmes for manpower development.
+              </li>
+              <li>
+                Stimulate thought and efforts for the dissemination, exchange, and furtherance of
+                information, knowledge, research, techniques, materials, aids, skills, and
+                attitudes in the field of training &amp; development.
+              </li>
+              <li>
+                Conduct and assist in conducting conferences, meetings, lectures, seminars,
+                workshops, research, and publications (journals, newsletters, books, and reports).
+              </li>
+              <li>
+                Constitute, support, and assist Chapters of the Society in various parts of India to
+                spearhead the training &amp; development movement and foster fellowship,
+                understanding, and goodwill among all professionals in the field.
+              </li>
+            </ul>
           </div>
         </div>
       </section>
