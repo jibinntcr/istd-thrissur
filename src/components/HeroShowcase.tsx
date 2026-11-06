@@ -1,46 +1,30 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
-import Link from 'next/link';
+import React, { useState, useEffect } from 'react';
 import { HERO_SLIDES, assetUrl } from '@/data/siteData';
 import { useLightbox } from './LightboxProvider';
+
+const SLIDE_SHORT_LABELS = [
+  'Lamp Lighting',
+  'Keynote Address',
+  'Chairman’s Address',
+  'Chapter Connect',
+];
 
 export function HeroShowcase() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
-  const [tilt, setTilt] = useState({ rx: 0, ry: 0, gx: 50, gy: 50 });
-  const stageRef = useRef<HTMLDivElement>(null);
   const { openLightbox } = useLightbox();
 
   useEffect(() => {
     if (isPaused) return;
     const timer = setInterval(() => {
       setActiveIndex((prev) => (prev + 1) % HERO_SLIDES.length);
-    }, 5200);
+    }, 4500);
     return () => clearInterval(timer);
   }, [isPaused]);
 
   const activeSlide = HERO_SLIDES[activeIndex];
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!stageRef.current) return;
-    const rect = stageRef.current.getBoundingClientRect();
-    const px = (e.clientX - rect.left) / rect.width;
-    const py = (e.clientY - rect.top) / rect.height;
-    const x = px - 0.5;
-    const y = py - 0.5;
-    setTilt({
-      rx: Number((-y * 8).toFixed(2)),
-      ry: Number((x * 8).toFixed(2)),
-      gx: Math.round(px * 100),
-      gy: Math.round(py * 100),
-    });
-  };
-
-  const handleMouseLeave = () => {
-    setIsPaused(false);
-    setTilt({ rx: 0, ry: 0, gx: 50, gy: 50 });
-  };
 
   const handleOpenFullscreen = () => {
     const heroLightboxItems = HERO_SLIDES.map((s) => ({
@@ -66,47 +50,14 @@ export function HeroShowcase() {
 
   return (
     <div
-      ref={stageRef}
-      className="hero-cinema-stage"
+      className="hero-grand-slider"
       onMouseEnter={() => setIsPaused(true)}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
+      onMouseLeave={() => setIsPaused(false)}
     >
-      {/* Ambient 3D Halo & Layered Glass Depth Planes */}
-      <div className="hero-cinema-halo" aria-hidden="true" />
-      <div className="hero-depth-plane plane-back" aria-hidden="true" />
-      <div className="hero-depth-plane plane-mid" aria-hidden="true" />
-
-      {/* Floating 3D Official Seal Badge (Top-Left) */}
-      <div className="hero-floating-crest-card" aria-hidden="true">
-        <div className="hero-floating-crest-seal">
-          <img
-            src={assetUrl('/images/logo-circle.png')}
-            alt="ISTD Seal"
-            width={38}
-            height={38}
-          />
-        </div>
-        <div className="hero-floating-crest-text">
-          <span className="crest-kicker">◆ DIAMOND CHAPTER</span>
-          <strong>ISTD Trichur Chapter</strong>
-          <span className="crest-sub">Inaugurated 30 March 2026</span>
-        </div>
-      </div>
-
-      {/* Main 3D Tilt Cinema Frame */}
-      <div
-        className="hero-cinema-card"
-        style={
-          {
-            transform: `perspective(1200px) rotateX(${tilt.rx}deg) rotateY(${tilt.ry}deg)`,
-            '--glare-x': `${tilt.gx}%`,
-            '--glare-y': `${tilt.gy}%`,
-          } as React.CSSProperties
-        }
-      >
+      {/* Main Widescreen Slider Frame */}
+      <div className="hero-grand-slider-card">
         <div
-          className="hero-cinema-viewport"
+          className="hero-grand-viewport"
           onClick={handleOpenFullscreen}
           role="button"
           tabIndex={0}
@@ -118,127 +69,128 @@ export function HeroShowcase() {
             }
           }}
         >
-          {/* Crossfading High-Resolution Slides (No Thumbnail Clutter) */}
-          {HERO_SLIDES.map((slide, idx) => (
-            <img
-              key={slide.src}
-              src={assetUrl(slide.src)}
-              alt={slide.title}
-              className={`hero-cinema-slide-img ${
-                idx === activeIndex ? 'is-active' : ''
+          {/* Live Auto-Slide Progress Bar */}
+          <div className="hero-slider-progress-track" aria-hidden="true">
+            <div
+              key={`${activeIndex}-${isPaused ? 'paused' : 'play'}`}
+              className={`hero-slider-progress-fill ${
+                isPaused ? 'paused' : ''
               }`}
-              width={720}
-              height={480}
             />
-          ))}
+          </div>
 
-          {/* Interactive Specular Glare Overlay */}
-          <div className="hero-cinema-glare" aria-hidden="true" />
-
-          {/* Cinema Overlay UI */}
-          <div className="hero-cinema-overlay">
-            <div className="hero-cinema-topbar">
-              <span className="hero-cinema-badge">
-                <span className="hero-cinema-dot" />
-                <span>{activeSlide.badge}</span>
-              </span>
-
-              <span
-                className="hero-cinema-expand"
-                title="View full resolution"
-              >
-                <svg
-                  width="15"
-                  height="15"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.2"
-                >
-                  <polyline points="15 3 21 3 21 9" />
-                  <polyline points="9 21 3 21 3 15" />
-                  <line x1="21" y1="3" x2="14" y2="10" />
-                  <line x1="3" y1="21" x2="10" y2="14" />
-                </svg>
-              </span>
-            </div>
-
-            {/* Bottom Glass Caption & Minimalist Control Dock */}
-            <div className="hero-cinema-dock">
-              <div className="hero-cinema-progress-row">
-                <div
-                  className="hero-cinema-dots"
-                  role="tablist"
-                  aria-label="Featured chapter highlights"
-                >
-                  {HERO_SLIDES.map((slide, idx) => (
-                    <button
-                      key={slide.src}
-                      type="button"
-                      role="tab"
-                      aria-selected={idx === activeIndex}
-                      aria-label={`Highlight ${idx + 1}: ${slide.title}`}
-                      className={`hero-cinema-dot-btn ${
-                        idx === activeIndex ? 'active' : ''
-                      }`}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setActiveIndex(idx);
-                      }}
-                    />
-                  ))}
-                </div>
-                <span className="hero-cinema-counter">
-                  0{activeIndex + 1} / 0{HERO_SLIDES.length}
-                </span>
+          {/* Horizontal Sliding Image Track */}
+          <div
+            className="hero-grand-track"
+            style={{
+              transform: `translate3d(-${activeIndex * 100}%, 0, 0)`,
+            }}
+          >
+            {HERO_SLIDES.map((slide, idx) => (
+              <div key={slide.src} className="hero-grand-slide">
+                <img
+                  src={assetUrl(slide.src)}
+                  alt={slide.title}
+                  width={860}
+                  height={540}
+                  className={idx === activeIndex ? 'is-active' : ''}
+                />
               </div>
+            ))}
+          </div>
 
-              <div className="hero-cinema-caption-row">
-                <div className="hero-cinema-caption-copy">
-                  <h4>{activeSlide.title}</h4>
-                  <p>{activeSlide.desc}</p>
-                </div>
+          {/* Left & Right Slider Navigation Arrows */}
+          <button
+            type="button"
+            className="hero-slider-side-arrow prev"
+            onClick={handlePrev}
+            aria-label="Previous slide"
+          >
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <polyline points="15 18 9 12 15 6" />
+            </svg>
+          </button>
 
-                <div className="hero-cinema-nav-btns">
-                  <button
-                    type="button"
-                    className="hero-cinema-arrow-btn"
-                    onClick={handlePrev}
-                    aria-label="Previous highlight"
-                  >
-                    ‹
-                  </button>
-                  <button
-                    type="button"
-                    className="hero-cinema-arrow-btn"
-                    onClick={handleNext}
-                    aria-label="Next highlight"
-                  >
-                    ›
-                  </button>
-                </div>
-              </div>
+          <button
+            type="button"
+            className="hero-slider-side-arrow next"
+            onClick={handleNext}
+            aria-label="Next slide"
+          >
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <polyline points="9 18 15 12 9 6" />
+            </svg>
+          </button>
+
+          {/* Top Badge & Expand Icon */}
+          <div className="hero-grand-top-overlay">
+            <span className="hero-grand-badge">
+              <span className="hero-cinema-dot" />
+              <span>{activeSlide.badge}</span>
+            </span>
+
+            <span className="hero-grand-counter-pill">
+              0{activeIndex + 1} / 0{HERO_SLIDES.length}
+            </span>
+          </div>
+
+          {/* Bottom Caption Overlay */}
+          <div className="hero-grand-bottom-overlay">
+            <div className="hero-grand-caption">
+              <h4>{activeSlide.title}</h4>
+              <p>{activeSlide.desc}</p>
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Floating 3D Bottom-Right Live Programme Pill */}
-      <Link
-        href="/events/advancing-aiot-research"
-        className="hero-floating-live-card"
-      >
-        <div className="hero-floating-live-indicator">
-          <span className="pulse-dot-green" />
-          <span>NEXT LIVE WEBINAR • 10 NOV 2026</span>
+        {/* Interactive 4-Slide Selector Bar */}
+        <div
+          className="hero-grand-selector-bar"
+          role="tablist"
+          aria-label="Select slide"
+        >
+          {HERO_SLIDES.map((slide, idx) => (
+            <button
+              key={slide.src}
+              type="button"
+              role="tab"
+              aria-selected={idx === activeIndex}
+              className={`hero-grand-selector-item ${
+                idx === activeIndex ? 'active' : ''
+              }`}
+              onClick={() => setActiveIndex(idx)}
+            >
+              <div className="hero-grand-selector-thumb">
+                <img src={assetUrl(slide.src)} alt={slide.title} />
+              </div>
+              <div className="hero-grand-selector-info">
+                <span className="selector-num">0{idx + 1}</span>
+                <span className="selector-label">
+                  {SLIDE_SHORT_LABELS[idx] || `Slide ${idx + 1}`}
+                </span>
+              </div>
+            </button>
+          ))}
         </div>
-        <div className="hero-floating-live-title">
-          Advancing AIoT Research &rarr;
-        </div>
-        <div className="hero-floating-live-sub">
-          Boopathy (CTO, Monzha Research Labs) • 7:00 PM IST
-        </div>
-      </Link>
+      </div>
     </div>
   );
 }

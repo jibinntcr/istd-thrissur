@@ -52,15 +52,17 @@ export default function HomePage() {
 
   return (
     <>
-      {/* 1. Visual-Treat 3D Executive Hero Section */}
+      {/* 1. Luminous Executive Hero Section with Large-Format Image Slider */}
       <section className="hero-3d-master-section">
-        {/* Lightweight GPU-Accelerated 3D Architectural Atmosphere */}
+        {/* Subtle Architectural Mesh & Glow Elements */}
         <div className="hero-3d-perspective-grid" aria-hidden="true" />
         <div className="hero-3d-aurora-glow glow-1" aria-hidden="true" />
         <div className="hero-3d-aurora-glow glow-2" aria-hidden="true" />
-        <div className="hero-3d-light-beam" aria-hidden="true" />
 
-        <div className="container" style={{ position: 'relative', zIndex: 2 }}>
+        <div
+          className="container hero-wide-container"
+          style={{ position: 'relative', zIndex: 2 }}
+        >
           <div className="hero-3d-main-grid">
             {/* Hero Left Column */}
             <div className="hero-3d-copy-col fade-up-anim">
@@ -95,7 +97,7 @@ export default function HomePage() {
                 organisational transformation.
               </p>
 
-              {/* Hero Action Buttons */}
+              {/* Hero Action Buttons (Strictly 2 Primary Buttons) */}
               <div className="hero-3d-actions">
                 <Link
                   href="/membership"
@@ -109,12 +111,6 @@ export default function HomePage() {
                   className="btn btn-primary btn-lg"
                 >
                   <span>Upcoming Programmes</span>
-                </Link>
-                <Link
-                  href="/committee"
-                  className="btn btn-outline-white btn-lg"
-                >
-                  <span>Managing Committee</span>
                 </Link>
               </div>
 
@@ -141,57 +137,10 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Hero Right Column: Interactive 3D Layered Cinema Stage */}
+            {/* Hero Right Column: Large-Format Widescreen Image Slider */}
             <div className="fade-up-anim">
               <HeroShowcase />
             </div>
-          </div>
-
-          {/* Unified Glassmorphic Architectural Milestone Ribbon */}
-          <div className="hero-3d-metrics-bar">
-            {[
-              {
-                kicker: 'NATIONAL HERITAGE',
-                value: 'April 1970',
-                label: 'ISTD National Established',
-                sub: '55+ Years • New Delhi Headquarters',
-                accent: '#38BDF8',
-              },
-              {
-                kicker: 'CHAPTER RECOGNITION',
-                value: 'Diamond Chapter',
-                label: 'ISTD Trichur Chapter',
-                sub: 'Inaugurated 30 March 2026',
-                accent: '#FBBF24',
-              },
-              {
-                kicker: 'ACADEMIC BRIDGE',
-                value: '1st Student Chapter',
-                label: 'Christ College of Engineering',
-                sub: 'Autonomous • Irinjalakuda, Trichur',
-                accent: '#34D399',
-              },
-              {
-                kicker: 'KNOWLEDGE ECOSYSTEM',
-                value: 'Active L&D Hub',
-                label: 'Industry–Academia Forum',
-                sub: 'Webinars, Workshops & Chapter Connect',
-                accent: '#FB7185',
-              },
-            ].map((stat) => (
-              <div
-                key={stat.label}
-                className="hero-3d-metric-card"
-                style={
-                  { '--metric-accent': stat.accent } as React.CSSProperties
-                }
-              >
-                <span className="hero-3d-metric-kicker">{stat.kicker}</span>
-                <div className="hero-3d-metric-value">{stat.value}</div>
-                <div className="hero-3d-metric-label">{stat.label}</div>
-                <div className="hero-3d-metric-sub">{stat.sub}</div>
-              </div>
-            ))}
           </div>
         </div>
       </section>

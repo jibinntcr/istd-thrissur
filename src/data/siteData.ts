@@ -201,6 +201,14 @@ export const HERO_SLIDES: HeroSlide[] = [
       'Prof. (Dr.) Zakkariya K. A. (Founder & Mentor, ISTD Trichur Chapter & National Vice President, ISTD) addressing the gathering at Hotel Pearl Regency, Trichur.',
   },
   {
+    src: '/photos/hero-slide-2.jpg',
+    badge: 'Chairman’s Address • ISTD Trichur Chapter',
+    title: 'Welcome Address by Chapter Chairman Tony Chacko',
+    desc: 'Outlining the strategic vision, corporate partnerships, and L&D roadmap of ISTD Trichur Diamond Chapter',
+    caption:
+      'Tony Chacko, Chairman of the ISTD Trichur Chapter, delivering the welcome address at Hotel Pearl Regency, Trichur.',
+  },
+  {
     src: '/photos/chapter-connect-2026-2.jpg',
     badge: 'Chapter Connect 2026 • Hotel Elite International',
     title: 'ISTD Trichur Chapter Leadership & Members Fellowship',
