@@ -1,6 +1,10 @@
 'use client';
 
 import React, { useState } from 'react';
+import {
+  INDIA_OUTER_PATH,
+  INDIA_STATE_PATHS,
+} from '@/data/indiaMapPaths';
 
 interface ChapterHub {
   id: string;
@@ -20,8 +24,8 @@ const ISTD_INDIA_HUBS: ChapterHub[] = [
     name: 'New Delhi (National HQ)',
     role: 'ISTD National Office • Est. April 1970',
     region: 'Northern Region Headquarters',
-    x: 192,
-    y: 148,
+    x: 274,
+    y: 265,
     isHQ: true,
     labelPos: 'right',
   },
@@ -30,54 +34,90 @@ const ISTD_INDIA_HUBS: ChapterHub[] = [
     name: 'ISTD Trichur Chapter',
     role: 'Diamond Chapter • Inaugurated 30 March 2026',
     region: 'Central Kerala L&D & Campus Hub',
-    x: 178,
-    y: 392,
+    x: 238,
+    y: 748,
     isTrichur: true,
     labelPos: 'left',
   },
   {
+    id: 'chandigarh',
+    name: 'Chandigarh / Punjab',
+    role: 'Northern Chapter Network',
+    region: 'Northern Region',
+    x: 248,
+    y: 205,
+    labelPos: 'left',
+  },
+  {
+    id: 'jaipur',
+    name: 'Jaipur / Udaipur',
+    role: 'Rajasthan Chapter Network',
+    region: 'Northern Region',
+    x: 215,
+    y: 318,
+    labelPos: 'left',
+  },
+  {
+    id: 'lucknow',
+    name: 'Lucknow / Kanpur',
+    role: 'Uttar Pradesh Chapter Network',
+    region: 'Northern Region',
+    x: 362,
+    y: 322,
+    labelPos: 'right',
+  },
+  {
     id: 'ahmedabad',
     name: 'Ahmedabad / Vadodara',
-    role: 'Western Chapter Network',
+    role: 'Gujarat Chapter Network',
     region: 'Western Region',
-    x: 132,
-    y: 234,
+    x: 146,
+    y: 432,
     labelPos: 'left',
+  },
+  {
+    id: 'bhopal',
+    name: 'Bhopal / Indore',
+    role: 'Central India Chapter Hub',
+    region: 'Central Region',
+    x: 298,
+    y: 412,
+    labelPos: 'right',
   },
   {
     id: 'mumbai',
     name: 'Mumbai / Pune',
     role: 'Western Corporate L&D Hub',
     region: 'Western Region',
-    x: 142,
-    y: 288,
+    x: 174,
+    y: 528,
     labelPos: 'left',
   },
   {
     id: 'hyderabad',
     name: 'Hyderabad',
-    role: 'Deccan Chapter Hub',
+    role: 'Telangana & Deccan Hub',
     region: 'Southern Region',
-    x: 204,
-    y: 306,
+    x: 314,
+    y: 565,
     labelPos: 'right',
   },
   {
     id: 'bengaluru',
     name: 'Bengaluru',
-    role: 'Southern Tech & HRD Hub',
+    role: 'Karnataka Tech & HRD Hub',
     region: 'Southern Region',
-    x: 188,
-    y: 356,
-    labelPos: 'right',
+    x: 266,
+    y: 682,
+    labelPos: 'left',
   },
   {
     id: 'chennai',
-    name: 'Chennai',
+    name: 'Chennai / Puducherry',
     role: 'Southern Regional Hub',
     region: 'Southern Region',
-    x: 218,
-    y: 362,
+    x: 338,
+    y: 684,
     labelPos: 'right',
   },
   {
@@ -85,8 +125,17 @@ const ISTD_INDIA_HUBS: ChapterHub[] = [
     name: 'Kochi / Trivandrum',
     role: 'Kerala Chapter Network',
     region: 'Southern Region',
-    x: 182,
-    y: 412,
+    x: 252,
+    y: 786,
+    labelPos: 'right',
+  },
+  {
+    id: 'bhubaneswar',
+    name: 'Bhubaneswar / Visakhapatnam',
+    role: 'East Coast Chapter Hub',
+    region: 'Eastern Region',
+    x: 458,
+    y: 492,
     labelPos: 'right',
   },
   {
@@ -94,35 +143,17 @@ const ISTD_INDIA_HUBS: ChapterHub[] = [
     name: 'Kolkata / Jamshedpur',
     role: 'Eastern Regional Hub',
     region: 'Eastern Region',
-    x: 298,
-    y: 244,
+    x: 526,
+    y: 424,
     labelPos: 'right',
   },
   {
     id: 'guwahati',
-    name: 'Guwahati',
+    name: 'Guwahati / North-East',
     role: 'North-East Chapter Hub',
     region: 'Eastern Region',
-    x: 348,
-    y: 194,
-    labelPos: 'right',
-  },
-  {
-    id: 'jaipur',
-    name: 'Jaipur / Chandigarh',
-    role: 'Northern Chapter Network',
-    region: 'Northern Region',
-    x: 164,
-    y: 176,
-    labelPos: 'left',
-  },
-  {
-    id: 'bhopal',
-    name: 'Bhopal / Indore',
-    role: 'Central India Chapter Network',
-    region: 'Central Region',
-    x: 196,
-    y: 236,
+    x: 626,
+    y: 318,
     labelPos: 'right',
   },
 ];
@@ -158,6 +189,13 @@ const MISSION_PILLARS = [
   },
 ];
 
+const STATE_PALETTE: Record<number, string> = {
+  1: 'rgba(30, 64, 175, 0.58)',
+  2: 'rgba(29, 78, 216, 0.46)',
+  3: 'rgba(37, 99, 235, 0.52)',
+  4: 'rgba(15, 41, 82, 0.68)',
+};
+
 export function IstdIndiaMapShowcase() {
   const [activeHubId, setActiveHubId] = useState<string>('trichur');
   const activeHub =
@@ -179,11 +217,11 @@ export function IstdIndiaMapShowcase() {
           <strong style={{ color: '#60A5FA' }}>
             ISTD Trichur Diamond Chapter
           </strong>{' '}
-          &amp; 55+ Chapters Nationwide
+          &amp; 55+ Chapters Across India
         </p>
       </div>
 
-      {/* Animated SVG India Map Stage */}
+      {/* Animated Official State-Boundary India Map Stage */}
       <div className="india-map-stage">
         {/* Top Live Status Pills */}
         <div className="india-map-top-badges">
@@ -205,32 +243,19 @@ export function IstdIndiaMapShowcase() {
             }`}
           >
             <span className="legend-dot trichur-dot" />
-            <span>★ Trichur Diamond Chapter</span>
+            <span>★ Trichur Diamond Chapter (Kerala)</span>
           </button>
         </div>
 
         <div className="india-map-svg-wrapper">
           <svg
-            viewBox="0 0 440 470"
+            viewBox="15 20 755 815"
             className="india-map-svg"
             role="img"
-            aria-label="Animated Map of India showing ISTD National Headquarters in New Delhi connected to ISTD Trichur Diamond Chapter in Kerala and chapters across India"
+            aria-label="Official Map of India with state boundaries showing ISTD National Headquarters in New Delhi connected to ISTD Trichur Diamond Chapter in Kerala and chapters across India"
           >
             <defs>
-              {/* Glowing Map Fill Gradient */}
-              <linearGradient
-                id="indiaBodyGrad"
-                x1="0%"
-                y1="0%"
-                x2="100%"
-                y2="100%"
-              >
-                <stop offset="0%" stopColor="#1E3A8A" stopOpacity="0.62" />
-                <stop offset="50%" stopColor="#0F2952" stopOpacity="0.78" />
-                <stop offset="100%" stopColor="#1D4ED8" stopOpacity="0.52" />
-              </linearGradient>
-
-              {/* Glowing Map Stroke Gradient */}
+              {/* Glowing Map Outer Stroke Gradient */}
               <linearGradient
                 id="indiaStrokeGrad"
                 x1="0%"
@@ -240,7 +265,7 @@ export function IstdIndiaMapShowcase() {
               >
                 <stop offset="0%" stopColor="#60A5FA" />
                 <stop offset="55%" stopColor="#38BDF8" />
-                <stop offset="100%" stopColor="#FBBF24" />
+                <stop offset="100%" stopColor="#FACC15" />
               </linearGradient>
 
               {/* Golden National Corridor Gradient (Delhi <-> Trichur) */}
@@ -264,214 +289,265 @@ export function IstdIndiaMapShowcase() {
                 width="140%"
                 height="140%"
               >
-                <feGaussianBlur stdDeviation="4" result="blur" />
+                <feGaussianBlur stdDeviation="5" result="blur" />
                 <feComposite in="SourceGraphic" in2="blur" operator="over" />
               </filter>
 
-              {/* Radar Sweep Radial Gradient */}
-              <radialGradient id="trichurSpotlight" cx="40%" cy="83%" r="48%">
-                <stop offset="0%" stopColor="#F59E0B" stopOpacity="0.28" />
-                <stop offset="45%" stopColor="#3B82F6" stopOpacity="0.12" />
+              {/* Ambient Spotlight Around India */}
+              <radialGradient id="trichurSpotlight" cx="36%" cy="86%" r="55%">
+                <stop offset="0%" stopColor="#F59E0B" stopOpacity="0.32" />
+                <stop offset="45%" stopColor="#3B82F6" stopOpacity="0.14" />
                 <stop offset="100%" stopColor="#0B2239" stopOpacity="0" />
               </radialGradient>
             </defs>
 
             {/* Subtle Topographical Latitude/Longitude Grid */}
-            <g className="india-map-grid-lines" stroke="rgba(148, 163, 184, 0.1)" strokeWidth="0.7" strokeDasharray="3 5">
-              <line x1="40" y1="90" x2="400" y2="90" />
-              <line x1="40" y1="165" x2="400" y2="165" />
-              <line x1="40" y1="240" x2="400" y2="240" />
-              <line x1="40" y1="315" x2="400" y2="315" />
-              <line x1="40" y1="390" x2="400" y2="390" />
-              <line x1="115" y1="30" x2="115" y2="440" />
-              <line x1="190" y1="30" x2="190" y2="440" />
-              <line x1="265" y1="30" x2="265" y2="440" />
-              <line x1="340" y1="30" x2="340" y2="440" />
+            <g
+              className="india-map-grid-lines"
+              stroke="rgba(148, 163, 184, 0.1)"
+              strokeWidth="1.1"
+              strokeDasharray="5 8"
+            >
+              <line x1="30" y1="150" x2="750" y2="150" />
+              <line x1="30" y1="290" x2="750" y2="290" />
+              <line x1="30" y1="430" x2="750" y2="430" />
+              <line x1="30" y1="570" x2="750" y2="570" />
+              <line x1="30" y1="710" x2="750" y2="710" />
+              <line x1="160" y1="30" x2="160" y2="825" />
+              <line x1="310" y1="30" x2="310" y2="825" />
+              <line x1="460" y1="30" x2="460" y2="825" />
+              <line x1="610" y1="30" x2="610" y2="825" />
             </g>
 
-            {/* Ambient Spotlight Halo Around Trichur & Peninsula */}
+            {/* Ambient Spotlight Halo */}
             <circle
-              cx="190"
-              cy="280"
-              r="195"
+              cx="320"
+              cy="460"
+              r="360"
               fill="url(#trichurSpotlight)"
               className="india-map-ambient-circle"
             />
 
             {/* Outer Concentric Network Rings Centered on India */}
             <circle
-              cx="210"
-              cy="255"
-              r="175"
+              cx="350"
+              cy="435"
+              r="335"
               fill="none"
-              stroke="rgba(56, 189, 248, 0.14)"
-              strokeWidth="1"
-              strokeDasharray="6 8"
+              stroke="rgba(56, 189, 248, 0.15)"
+              strokeWidth="1.5"
+              strokeDasharray="10 14"
               className="india-orbit-ring-slow"
             />
             <circle
-              cx="210"
-              cy="255"
-              r="130"
+              cx="350"
+              cy="435"
+              r="245"
               fill="none"
-              stroke="rgba(251, 191, 36, 0.14)"
-              strokeWidth="1"
-              strokeDasharray="4 7"
+              stroke="rgba(251, 191, 36, 0.15)"
+              strokeWidth="1.5"
+              strokeDasharray="8 12"
               className="india-orbit-ring-reverse"
             />
 
-            {/* Detailed Polygon Silhouette of India */}
+            {/* High-Precision Official Map of India with All State Boundaries */}
             <g className="india-map-landmass">
-              {/* Outer Shadow/Halo of India */}
+              {/* Outer Glow Shadow of India */}
               <path
-                d="M 168 32
-                   L 196 28 L 218 40 L 236 52 L 232 72 L 214 86 L 222 106 L 236 124
-                   L 256 144 L 284 156 L 304 154 L 314 138 L 326 142 L 332 158
-                   L 356 156 L 382 142 L 404 152 L 396 174 L 382 192 L 378 216
-                   L 364 234 L 352 214 L 340 206 L 324 208 L 318 228 L 312 252
-                   L 292 266 L 274 288 L 254 308 L 236 330 L 228 358 L 222 384
-                   L 208 412 L 194 432 L 182 426 L 172 402 L 162 374 L 152 342
-                   L 140 306 L 132 272 L 122 256 L 102 258 L 86 244 L 94 226
-                   L 80 214 L 92 198 L 114 196 L 122 178 L 114 158 L 128 136
-                   L 148 118 L 160 96 L 154 74 L 148 54 Z"
-                fill="rgba(37, 99, 235, 0.18)"
-                transform="translate(0, 5)"
+                d={INDIA_OUTER_PATH}
+                fill="rgba(37, 99, 235, 0.22)"
+                stroke="rgba(56, 189, 248, 0.45)"
+                strokeWidth="5"
+                strokeLinejoin="round"
                 filter="url(#mapGlow)"
               />
 
-              {/* Main India Silhouette */}
+              {/* Individual Indian State Polygons */}
+              {INDIA_STATE_PATHS.map((st) => (
+                <path
+                  key={st.id}
+                  d={st.d}
+                  fill={
+                    st.isKerala
+                      ? 'rgba(250, 204, 21, 0.48)'
+                      : STATE_PALETTE[st.colorClass] || 'rgba(30, 64, 175, 0.55)'
+                  }
+                  stroke={
+                    st.isKerala
+                      ? '#FACC15'
+                      : 'rgba(147, 197, 253, 0.52)'
+                  }
+                  strokeWidth={st.isKerala ? '2.8' : '1.45'}
+                  strokeLinejoin="round"
+                  className={
+                    st.isKerala
+                      ? 'india-state-path kerala-state-highlight'
+                      : 'india-state-path'
+                  }
+                />
+              ))}
+
+              {/* Outer Crisp Border of Mainland India */}
               <path
-                d="M 168 32
-                   L 196 28 L 218 40 L 236 52 L 232 72 L 214 86 L 222 106 L 236 124
-                   L 256 144 L 284 156 L 304 154 L 314 138 L 326 142 L 332 158
-                   L 356 156 L 382 142 L 404 152 L 396 174 L 382 192 L 378 216
-                   L 364 234 L 352 214 L 340 206 L 324 208 L 318 228 L 312 252
-                   L 292 266 L 274 288 L 254 308 L 236 330 L 228 358 L 222 384
-                   L 208 412 L 194 432 L 182 426 L 172 402 L 162 374 L 152 342
-                   L 140 306 L 132 272 L 122 256 L 102 258 L 86 244 L 94 226
-                   L 80 214 L 92 198 L 114 196 L 122 178 L 114 158 L 128 136
-                   L 148 118 L 160 96 L 154 74 L 148 54 Z"
-                fill="url(#indiaBodyGrad)"
+                d={INDIA_OUTER_PATH}
+                fill="none"
                 stroke="url(#indiaStrokeGrad)"
-                strokeWidth="2.2"
+                strokeWidth="2.6"
                 strokeLinejoin="round"
                 className="india-map-outline-path"
               />
 
-              {/* Highlighted Kerala State Region on Southwest Coast */}
-              <path
-                d="M 165 372 L 178 370 L 190 404 L 194 430 L 182 426 L 172 402 Z"
-                fill="rgba(250, 204, 21, 0.35)"
-                stroke="#FACC15"
-                strokeWidth="1.5"
-              />
-
-              {/* Andaman & Nicobar Islands & Lakshadweep Dots */}
-              <g fill="#60A5FA" opacity="0.65">
-                <circle cx="132" cy="396" r="2" />
-                <circle cx="136" cy="406" r="1.8" />
-                <circle cx="130" cy="414" r="1.6" />
-                <circle cx="344" cy="348" r="2.2" />
-                <circle cx="346" cy="360" r="2.4" />
-                <circle cx="348" cy="372" r="2" />
-                <circle cx="352" cy="388" r="1.8" />
+              {/* Lakshadweep & Andaman & Nicobar Islands */}
+              <g fill="#60A5FA" stroke="#BAE6FD" strokeWidth="0.8" opacity="0.85">
+                {/* Lakshadweep */}
+                <circle cx="122" cy="708" r="3.2" />
+                <circle cx="136" cy="722" r="3" />
+                <circle cx="128" cy="738" r="3.4" />
+                <circle cx="144" cy="748" r="2.8" />
+                <circle cx="132" cy="762" r="2.8" />
+                <circle cx="142" cy="790" r="2.6" />
+                {/* Andaman & Nicobar Islands */}
+                <circle cx="672" cy="642" r="3.5" />
+                <circle cx="668" cy="665" r="4.2" />
+                <circle cx="666" cy="688" r="4.2" />
+                <circle cx="664" cy="712" r="3.6" />
+                <circle cx="662" cy="732" r="3.4" />
+                <circle cx="676" cy="774" r="3.2" />
+                <circle cx="692" cy="802" r="3.5" />
+                <circle cx="705" cy="821" r="4" />
               </g>
             </g>
 
             {/* Animated Knowledge & Training Network Arcs Across India */}
             <g className="india-network-arcs" fill="none">
-              {/* Regional Network Mesh Lines from New Delhi HQ */}
+              {/* Regional Network Mesh Lines from New Delhi HQ (274, 265) */}
               <path
-                d="M 192 148 Q 145 185 132 234"
-                stroke="rgba(96, 165, 250, 0.45)"
-                strokeWidth="1.3"
-                strokeDasharray="4 4"
+                d="M 274 265 Q 256 232 248 205"
+                stroke="rgba(96, 165, 250, 0.55)"
+                strokeWidth="2"
+                strokeDasharray="6 6"
                 className="network-arc-flow"
               />
               <path
-                d="M 192 148 Q 148 215 142 288"
-                stroke="rgba(96, 165, 250, 0.5)"
-                strokeWidth="1.4"
-                strokeDasharray="4 4"
+                d="M 274 265 Q 235 288 215 318"
+                stroke="rgba(96, 165, 250, 0.55)"
+                strokeWidth="2"
+                strokeDasharray="6 6"
                 className="network-arc-flow"
               />
               <path
-                d="M 192 148 Q 250 185 298 244"
-                stroke="rgba(96, 165, 250, 0.5)"
-                strokeWidth="1.4"
-                strokeDasharray="4 4"
+                d="M 274 265 Q 190 340 146 432"
+                stroke="rgba(96, 165, 250, 0.55)"
+                strokeWidth="2.1"
+                strokeDasharray="7 6"
                 className="network-arc-flow"
               />
               <path
-                d="M 298 244 Q 325 215 348 194"
-                stroke="rgba(96, 165, 250, 0.45)"
-                strokeWidth="1.2"
-                strokeDasharray="4 4"
+                d="M 274 265 Q 210 395 174 528"
+                stroke="rgba(96, 165, 250, 0.6)"
+                strokeWidth="2.2"
+                strokeDasharray="7 6"
                 className="network-arc-flow"
               />
               <path
-                d="M 192 148 Q 212 225 204 306"
-                stroke="rgba(96, 165, 250, 0.48)"
-                strokeWidth="1.3"
-                strokeDasharray="4 4"
+                d="M 274 265 Q 322 290 362 322"
+                stroke="rgba(96, 165, 250, 0.55)"
+                strokeWidth="2"
+                strokeDasharray="6 6"
                 className="network-arc-flow"
               />
-
-              {/* Southern Chapter Connections into Trichur Diamond Chapter */}
               <path
-                d="M 142 288 Q 148 342 178 392"
-                stroke="rgba(251, 191, 36, 0.65)"
-                strokeWidth="1.6"
-                strokeDasharray="5 4"
-                className="network-arc-flow-fast"
+                d="M 274 265 Q 410 330 526 424"
+                stroke="rgba(96, 165, 250, 0.6)"
+                strokeWidth="2.2"
+                strokeDasharray="7 6"
+                className="network-arc-flow"
               />
               <path
-                d="M 188 356 Q 182 374 178 392"
-                stroke="rgba(52, 211, 153, 0.75)"
-                strokeWidth="1.8"
-                strokeDasharray="4 3"
-                className="network-arc-flow-fast"
+                d="M 526 424 Q 575 365 626 318"
+                stroke="rgba(96, 165, 250, 0.55)"
+                strokeWidth="2"
+                strokeDasharray="6 6"
+                className="network-arc-flow"
               />
               <path
-                d="M 218 362 Q 198 380 178 392"
-                stroke="rgba(52, 211, 153, 0.7)"
-                strokeWidth="1.6"
-                strokeDasharray="4 3"
-                className="network-arc-flow-fast"
-              />
-              <path
-                d="M 204 306 Q 190 350 178 392"
-                stroke="rgba(251, 191, 36, 0.55)"
-                strokeWidth="1.4"
-                strokeDasharray="4 4"
+                d="M 274 265 Q 305 415 314 565"
+                stroke="rgba(96, 165, 250, 0.55)"
+                strokeWidth="2.1"
+                strokeDasharray="7 6"
                 className="network-arc-flow"
               />
 
-              {/* PRIMARY FLAGSHIP CORRIDOR: New Delhi National HQ -> ISTD Trichur Diamond Chapter */}
+              {/* Southern & Coastal Connections into Trichur Diamond Chapter (238, 748) */}
               <path
-                id="delhiToTrichurArc"
-                d="M 192 148 Q 145 270 178 392"
-                stroke="url(#delhiTrichurGrad)"
+                d="M 174 528 Q 188 645 238 748"
+                stroke="rgba(251, 191, 36, 0.72)"
+                strokeWidth="2.5"
+                strokeDasharray="8 6"
+                className="network-arc-flow-fast"
+              />
+              <path
+                d="M 266 682 Q 250 715 238 748"
+                stroke="rgba(52, 211, 153, 0.85)"
                 strokeWidth="2.8"
+                strokeDasharray="6 5"
+                className="network-arc-flow-fast"
+              />
+              <path
+                d="M 338 684 Q 290 722 238 748"
+                stroke="rgba(52, 211, 153, 0.8)"
+                strokeWidth="2.5"
+                strokeDasharray="6 5"
+                className="network-arc-flow-fast"
+              />
+              <path
+                d="M 314 565 Q 272 658 238 748"
+                stroke="rgba(251, 191, 36, 0.65)"
+                strokeWidth="2.2"
+                strokeDasharray="7 6"
+                className="network-arc-flow"
+              />
+              <path
+                d="M 526 424 Q 445 555 338 684"
+                stroke="rgba(96, 165, 250, 0.48)"
+                strokeWidth="1.9"
+                strokeDasharray="6 6"
+                className="network-arc-flow"
+              />
+
+              {/* PRIMARY FLAGSHIP CORRIDOR: New Delhi National HQ (274, 265) -> ISTD Trichur Diamond Chapter (238, 748) */}
+              <path
+                id="delhiToTrichurMainArc"
+                d="M 274 265 Q 205 510 238 748"
+                stroke="url(#delhiTrichurGrad)"
+                strokeWidth="4.4"
                 strokeLinecap="round"
                 filter="url(#mapGlow)"
               />
               <path
-                d="M 192 148 Q 145 270 178 392"
+                d="M 274 265 Q 205 510 238 748"
                 stroke="#FEF08A"
-                strokeWidth="2"
-                strokeDasharray="6 10"
+                strokeWidth="3"
+                strokeDasharray="10 14"
                 className="flagship-corridor-flow"
               />
 
-              {/* Secondary Eastern-Southern Corridor: Kolkata -> Chennai -> Trichur */}
-              <path
-                d="M 298 244 Q 260 310 218 362"
-                stroke="rgba(96, 165, 250, 0.42)"
-                strokeWidth="1.2"
-                strokeDasharray="4 4"
-                className="network-arc-flow"
-              />
+              {/* Animated Traveling Knowledge Pulses Along Flagship Corridor */}
+              <circle r="5.5" fill="#FEF08A" filter="url(#mapGlow)">
+                <animateMotion
+                  dur="3.4s"
+                  repeatCount="indefinite"
+                  path="M 274 265 Q 205 510 238 748"
+                />
+              </circle>
+              <circle r="4.5" fill="#38BDF8" filter="url(#mapGlow)">
+                <animateMotion
+                  dur="3.4s"
+                  begin="1.7s"
+                  repeatCount="indefinite"
+                  path="M 238 748 Q 205 510 274 265"
+                />
+              </circle>
             </g>
 
             {/* Chapter Hub Nodes Across India */}
@@ -490,64 +566,64 @@ export function IstdIndiaMapShowcase() {
                     <circle
                       cx={hub.x}
                       cy={hub.y}
-                      r="22"
+                      r="36"
                       fill="none"
-                      stroke="rgba(250, 204, 21, 0.55)"
-                      strokeWidth="1.5"
+                      stroke="rgba(250, 204, 21, 0.6)"
+                      strokeWidth="2.4"
                       className="trichur-sonar-ring ring-1"
                     />
                     <circle
                       cx={hub.x}
                       cy={hub.y}
-                      r="14"
+                      r="23"
                       fill="none"
-                      stroke="rgba(245, 158, 11, 0.8)"
-                      strokeWidth="1.8"
+                      stroke="rgba(245, 158, 11, 0.85)"
+                      strokeWidth="2.8"
                       className="trichur-sonar-ring ring-2"
                     />
                     <circle
                       cx={hub.x}
                       cy={hub.y}
-                      r="8"
+                      r="13"
                       fill="#F59E0B"
                       stroke="#FEF08A"
-                      strokeWidth="2.2"
+                      strokeWidth="3.5"
                       filter="url(#mapGlow)"
                     />
-                    <circle cx={hub.x} cy={hub.y} r="3.2" fill="#FFFFFF" />
+                    <circle cx={hub.x} cy={hub.y} r="5" fill="#FFFFFF" />
 
                     {/* Callout Badge for ISTD Trichur Chapter */}
-                    <g transform={`translate(${hub.x - 148}, ${hub.y - 16})`}>
+                    <g transform={`translate(${hub.x - 216}, ${hub.y - 26})`}>
                       <rect
                         x="0"
                         y="0"
-                        width="134"
-                        height="34"
-                        rx="8"
-                        fill="rgba(11, 34, 57, 0.94)"
+                        width="198"
+                        height="52"
+                        rx="12"
+                        fill="rgba(11, 34, 57, 0.95)"
                         stroke="#FACC15"
-                        strokeWidth="1.5"
+                        strokeWidth="2.4"
                       />
                       <text
-                        x="67"
-                        y="14"
+                        x="99"
+                        y="22"
                         textAnchor="middle"
                         fill="#FDE047"
-                        fontSize="8.5"
+                        fontSize="13.5"
                         fontWeight="800"
                         letterSpacing="0.04em"
                       >
                         ★ ISTD TRICHUR
                       </text>
                       <text
-                        x="67"
-                        y="26"
+                        x="99"
+                        y="40"
                         textAnchor="middle"
                         fill="#FFFFFF"
-                        fontSize="7.5"
+                        fontSize="11.5"
                         fontWeight="700"
                       >
-                        DIAMOND CHAPTER
+                        DIAMOND CHAPTER (KERALA)
                       </text>
                     </g>
                   </g>
@@ -566,52 +642,52 @@ export function IstdIndiaMapShowcase() {
                     <circle
                       cx={hub.x}
                       cy={hub.y}
-                      r="16"
+                      r="26"
                       fill="none"
-                      stroke="rgba(56, 189, 248, 0.65)"
-                      strokeWidth="1.5"
+                      stroke="rgba(56, 189, 248, 0.7)"
+                      strokeWidth="2.4"
                       className="trichur-sonar-ring ring-1"
                     />
                     <circle
                       cx={hub.x}
                       cy={hub.y}
-                      r="7"
+                      r="11.5"
                       fill="#0284C7"
                       stroke="#BAE6FD"
-                      strokeWidth="2.2"
+                      strokeWidth="3.2"
                       filter="url(#mapGlow)"
                     />
-                    <circle cx={hub.x} cy={hub.y} r="2.8" fill="#FFFFFF" />
+                    <circle cx={hub.x} cy={hub.y} r="4.5" fill="#FFFFFF" />
 
                     {/* Callout Badge for New Delhi National HQ */}
-                    <g transform={`translate(${hub.x + 12}, ${hub.y - 18})`}>
+                    <g transform={`translate(${hub.x + 18}, ${hub.y - 28})`}>
                       <rect
                         x="0"
                         y="0"
-                        width="136"
-                        height="32"
-                        rx="8"
-                        fill="rgba(15, 23, 42, 0.92)"
+                        width="206"
+                        height="50"
+                        rx="12"
+                        fill="rgba(15, 23, 42, 0.94)"
                         stroke="#38BDF8"
-                        strokeWidth="1.3"
+                        strokeWidth="2.2"
                       />
                       <text
-                        x="68"
-                        y="13.5"
+                        x="103"
+                        y="21"
                         textAnchor="middle"
                         fill="#7DD3FC"
-                        fontSize="8"
+                        fontSize="13"
                         fontWeight="800"
                         letterSpacing="0.04em"
                       >
                         ISTD NATIONAL HQ
                       </text>
                       <text
-                        x="68"
-                        y="24.5"
+                        x="103"
+                        y="39"
                         textAnchor="middle"
                         fill="#F8FAFC"
-                        fontSize="7.2"
+                        fontSize="11.5"
                         fontWeight="600"
                       >
                         New Delhi • Est. April 1970
@@ -633,31 +709,27 @@ export function IstdIndiaMapShowcase() {
                     <circle
                       cx={hub.x}
                       cy={hub.y}
-                      r="10"
+                      r="16"
                       fill="none"
                       stroke="#38BDF8"
-                      strokeWidth="1.4"
+                      strokeWidth="2.2"
                       className="trichur-sonar-ring ring-2"
                     />
                   )}
                   <circle
                     cx={hub.x}
                     cy={hub.y}
-                    r={isSelected ? 5 : 3.8}
+                    r={isSelected ? 8.5 : 6.5}
                     fill={isSelected ? '#38BDF8' : '#93C5FD'}
                     stroke="#0B2239"
-                    strokeWidth="1.2"
+                    strokeWidth="2"
                   />
                   <text
-                    x={
-                      hub.labelPos === 'left'
-                        ? hub.x - 7
-                        : hub.x + 7
-                    }
-                    y={hub.y + 3}
+                    x={hub.labelPos === 'left' ? hub.x - 12 : hub.x + 12}
+                    y={hub.y + 4.5}
                     textAnchor={hub.labelPos === 'left' ? 'end' : 'start'}
-                    fill={isSelected ? '#FDE047' : 'rgba(226, 232, 240, 0.85)'}
-                    fontSize="8"
+                    fill={isSelected ? '#FDE047' : 'rgba(241, 245, 249, 0.9)'}
+                    fontSize="13"
                     fontWeight={isSelected ? '800' : '600'}
                   >
                     {hub.name.split(' / ')[0]}
@@ -669,7 +741,7 @@ export function IstdIndiaMapShowcase() {
         </div>
 
         {/* Interactive Active Chapter Info Strip */}
-        <div className="india-map-active- readout">
+        <div className="india-map-active-readout">
           <div className="india-map-readout-box">
             <div className="readout-left">
               <span className="readout-badge">
@@ -701,14 +773,15 @@ export function IstdIndiaMapShowcase() {
       </div>
 
       {/* 4 Core ISTD Mission Pillars Grid Under the Map */}
-      <div className="india-map-pillars-grid" aria-label="4 Core Mission Pillars of ISTD">
+      <div
+        className="india-map-pillars-grid"
+        aria-label="4 Core Mission Pillars of ISTD"
+      >
         {MISSION_PILLARS.map((pillar) => (
           <div
             key={pillar.id}
             className="india-map-pillar-chip"
-            style={
-              { '--chip-accent': pillar.color } as React.CSSProperties
-            }
+            style={{ '--chip-accent': pillar.color } as React.CSSProperties}
           >
             <span className="pillar-chip-icon" aria-hidden="true">
               {pillar.icon}
@@ -722,10 +795,7 @@ export function IstdIndiaMapShowcase() {
       </div>
 
       {/* Animated Mission Flow Strip */}
-      <div
-        className="ecosystem-mission-flow"
-        aria-label="ISTD Mission Flow"
-      >
+      <div className="ecosystem-mission-flow" aria-label="ISTD Mission Flow">
         <div className="mission-flow-step">
           <span className="flow-dot blue" />
           <span>Facilitate Individuals &amp; Orgs</span>

@@ -6806,7 +6806,7 @@ table {
 
 .india-map-svg-wrapper {
   width: 100%;
-  max-width: 410px;
+  max-width: 445px;
   margin: 0 auto;
   position: relative;
 }
@@ -6816,6 +6816,30 @@ table {
   height: auto;
   display: block;
   filter: drop-shadow(0 12px 24px rgba(3, 10, 24, 0.55));
+}
+
+.india-state-path {
+  transition: fill 0.25s ease, stroke 0.25s ease;
+}
+
+.india-state-path:hover {
+  fill: rgba(56, 189, 248, 0.42);
+  stroke: #bae6fd;
+}
+
+.india-state-path.kerala-state-highlight {
+  animation: keralaStatePulse 2.8s ease-in-out infinite alternate;
+}
+
+@keyframes keralaStatePulse {
+  0% {
+    fill: rgba(250, 204, 21, 0.42);
+    filter: drop-shadow(0 0 4px rgba(250, 204, 21, 0.45));
+  }
+  100% {
+    fill: rgba(245, 158, 11, 0.68);
+    filter: drop-shadow(0 0 12px rgba(250, 204, 21, 0.78));
+  }
 }
 
 .india-map-outline-path {
@@ -6832,12 +6856,12 @@ table {
 }
 
 .india-orbit-ring-slow {
-  transform-origin: 210px 255px;
+  transform-origin: 350px 435px;
   animation: indiaOrbitSpin 38s linear infinite;
 }
 
 .india-orbit-ring-reverse {
-  transform-origin: 210px 255px;
+  transform-origin: 350px 435px;
   animation: indiaOrbitSpinReverse 28s linear infinite;
 }
 
