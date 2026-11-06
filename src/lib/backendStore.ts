@@ -42,10 +42,34 @@ export interface EventRegistration {
   createdAt: string;
 }
 
+export interface ChapterEnquiry {
+  id: string;
+  enquiryCode: string;
+  source: 'Contact Enquiry' | 'Membership Enquiry' | 'Campus Chapter EOI';
+  fullName: string;
+  email: string;
+  phone: string;
+  whatsapp?: string;
+  category: string;
+  eventTitle?: string;
+  organization?: string;
+  designation?: string;
+  district?: string;
+  cityLocation?: string;
+  headOfInstitution?: string;
+  affiliationStatus?: string;
+  estimatedStudentCount?: string;
+  proposedStreams?: string;
+  message: string;
+  status: 'New' | 'In Review' | 'Responded' | 'Closed';
+  createdAt: string;
+}
+
 export interface BackendDatabasePayload {
   events: ChapterEvent[];
   galleryPhotos: GalleryPhoto[];
   registrations: EventRegistration[];
+  enquiries?: ChapterEnquiry[];
   updatedAt: string;
 }
 
@@ -172,6 +196,7 @@ function ensureLocalDb(): BackendDatabasePayload {
       events: parsed.events?.length ? parsed.events : ALL_CHAPTER_EVENTS,
       galleryPhotos: parsed.galleryPhotos?.length ? parsed.galleryPhotos : GALLERY_PHOTOS,
       registrations: Array.isArray(parsed.registrations) ? parsed.registrations : [],
+      enquiries: Array.isArray(parsed.enquiries) ? parsed.enquiries : [],
       updatedAt: parsed.updatedAt || new Date().toISOString(),
     };
   } catch (err) {
@@ -180,6 +205,7 @@ function ensureLocalDb(): BackendDatabasePayload {
       events: ALL_CHAPTER_EVENTS,
       galleryPhotos: GALLERY_PHOTOS,
       registrations: [],
+      enquiries: [],
       updatedAt: new Date().toISOString(),
     };
   }
@@ -217,6 +243,7 @@ export async function getBackendData(bypassCache = false): Promise<{
       const eventsCol = db.collection<ChapterEvent>('events');
       const photosCol = db.collection<GalleryPhoto>('gallery_photos');
       const regsCol = db.collection<EventRegistration>('registrations');
+      const enqsCol = db.collection<ChapterEnquiry>('enquiries');
 
       let events = (await eventsCol
         .find({}, { projection: { _id: 0 } })
@@ -228,6 +255,10 @@ export async function getBackendData(bypassCache = false): Promise<{
         .find({}, { projection: { _id: 0 } })
         .sort({ createdAt: -1 })
         .toArray()) as unknown as EventRegistration[];
+      const enquiries = (await enqsCol
+        .find({}, { projection: { _id: 0 } })
+        .sort({ createdAt: -1 })
+        .toArray()) as unknown as ChapterEnquiry[];
 
       if (events.length === 0) {
         await eventsCol.insertMany(ALL_CHAPTER_EVENTS.map((e) => ({ ...e })));
@@ -242,6 +273,7 @@ export async function getBackendData(bypassCache = false): Promise<{
         events,
         galleryPhotos,
         registrations,
+        enquiries,
         updatedAt: new Date().toISOString(),
       };
       serverCache.set('istd_full_payload', payload);
@@ -453,5 +485,69 @@ export async function updateRegistrationStatus(
     reg.status = status;
     saveLocalDb(local);
   }
+  serverCache.invalidateAll();
+}
+
+export async function createChapterEnquiry(
+  input: Omit<ChapterEnquiry, 'id' | 'enquiryCode' | 'status' | 'createdAt'> & {
+    enquiryCode?: string;
+  }
+): Promise<ChapterEnquiry> {
+  const randomSuffix = Math.floor(1000 + Math.random() * 9000);
+  const prefix =
+    input.source === 'Membership Enquiry'
+      ? 'ISTD-MEM'
+      : input.source === 'Campus Chapter EOI'
+      ? 'ISTD-EOI'
+      : 'ISTD-ENQ';
+
+  const newEnq: ChapterEnquiry = {
+    ...input,
+    id: `enq-${Date.now()}-${randomSuffix}`,
+    enquiryCode: input.enquiryCode || `${prefix}-2026-${randomSuffix}`,
+    status: 'New',
+    createdAt: new Date().toISOString(),
+  };
+
+  const db = await getMongoDatabase();
+  if (db) {
+    await db.collection('enquiries').insertOne({ ...newEnq });
+  }
+
+  const local = ensureLocalDb();
+  local.enquiries = [newEnq, ...(local.enquiries || [])];
+  saveLocalDb(local);
+  serverCache.invalidateAll();
+
+  return newEnq;
+}
+
+export async function updateEnquiryStatus(
+  id: string,
+  status: ChapterEnquiry['status']
+): Promise<void> {
+  const db = await getMongoDatabase();
+  if (db) {
+    await db.collection('enquiries').updateOne({ id }, { $set: { status } });
+  }
+
+  const local = ensureLocalDb();
+  const enq = (local.enquiries || []).find((item) => item.id === id);
+  if (enq) {
+    enq.status = status;
+    saveLocalDb(local);
+  }
+  serverCache.invalidateAll();
+}
+
+export async function deleteChapterEnquiry(id: string): Promise<void> {
+  const db = await getMongoDatabase();
+  if (db) {
+    await db.collection('enquiries').deleteOne({ id });
+  }
+
+  const local = ensureLocalDb();
+  local.enquiries = (local.enquiries || []).filter((item) => item.id !== id);
+  saveLocalDb(local);
   serverCache.invalidateAll();
 }

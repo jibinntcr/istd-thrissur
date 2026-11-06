@@ -184,8 +184,6 @@ export function Footer() {
                     </div>
                     <div className="footer-contact-person">
                       <span>Jibin N (Treasurer): </span>
-                      <a href="tel:+919496839168">+91 94968 39168</a>
-                      {' • '}
                       <a href="mailto:jibintcr@gmail.com">jibintcr@gmail.com</a>
                     </div>
                   </div>

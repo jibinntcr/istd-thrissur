@@ -9,6 +9,9 @@ import {
   deleteGalleryPhoto,
   updateRegistrationStatus,
   lookupParticipantByQuery,
+  createChapterEnquiry,
+  updateEnquiryStatus,
+  deleteChapterEnquiry,
   serverCache,
 } from '@/lib/backendStore';
 
@@ -175,6 +178,49 @@ export async function POST(request: Request) {
         );
       }
       await updateRegistrationStatus(payload.id, payload.status);
+      return NextResponse.json({
+        ok: true,
+        cacheStats: getCacheStats(),
+      });
+    }
+
+    if (action === 'submit_enquiry') {
+      if (!payload?.fullName || !payload?.email || !payload?.phone) {
+        return NextResponse.json(
+          { ok: false, error: 'Full name, email, and phone are required.' },
+          { status: 400 }
+        );
+      }
+      const enquiry = await createChapterEnquiry(payload);
+      return NextResponse.json({
+        ok: true,
+        enquiry,
+        cacheStats: getCacheStats(),
+      });
+    }
+
+    if (action === 'update_enquiry_status') {
+      if (!payload?.id || !payload?.status) {
+        return NextResponse.json(
+          { ok: false, error: 'Enquiry ID and status are required.' },
+          { status: 400 }
+        );
+      }
+      await updateEnquiryStatus(payload.id, payload.status);
+      return NextResponse.json({
+        ok: true,
+        cacheStats: getCacheStats(),
+      });
+    }
+
+    if (action === 'delete_enquiry') {
+      if (!payload?.id) {
+        return NextResponse.json(
+          { ok: false, error: 'Enquiry ID is required.' },
+          { status: 400 }
+        );
+      }
+      await deleteChapterEnquiry(payload.id);
       return NextResponse.json({
         ok: true,
         cacheStats: getCacheStats(),

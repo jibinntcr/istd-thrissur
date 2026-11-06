@@ -226,14 +226,6 @@ export default function ContactPage() {
                       {CHAPTER_CONTACTS.treasurer.name} ({CHAPTER_CONTACTS.treasurer.designation})
                     </div>
                     <div style={{ fontSize: '0.9rem', color: 'var(--color-body)' }}>
-                      Phone:{' '}
-                      <a
-                        href={`tel:${CHAPTER_CONTACTS.treasurer.phoneHref}`}
-                        style={{ fontWeight: 700, color: 'var(--brand-navy)' }}
-                      >
-                        {CHAPTER_CONTACTS.treasurer.phoneDisplay}
-                      </a>
-                      <br />
                       Email:{' '}
                       <a
                         href={`mailto:${CHAPTER_CONTACTS.treasurer.email}`}

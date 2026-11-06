@@ -2,6 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import type { ChapterEnquiry } from '@/lib/backendStore';
+import { submitEnquiryToBackend } from '@/lib/clientBackendCache';
 
 interface MembershipFormProps {
   selectedCategory?: string;
@@ -20,8 +22,7 @@ export function MembershipForm({
   const [notes, setNotes] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [resultMessage, setResultMessage] = useState<string | null>(null);
-  const [copied, setCopied] = useState(false);
+  const [confirmedEnquiry, setConfirmedEnquiry] = useState<ChapterEnquiry | null>(null);
 
   useEffect(() => {
     if (selectedCategory) {
@@ -33,46 +34,6 @@ export function MembershipForm({
     setCategory(value);
     if (onCategoryChange) {
       onCategoryChange(value);
-    }
-  };
-
-  const buildMailtoHref = () => {
-    const subject = encodeURIComponent(
-      `ISTD Trichur Chapter Membership Enquiry - ${category} Membership (${name || 'Prospective Member'})`
-    );
-    const body = encodeURIComponent(
-      [
-        `ISTD Trichur Chapter — Membership Enquiry`,
-        `-------------------------------------------`,
-        `Full Name: ${name}`,
-        `Email Address: ${email}`,
-        `Phone / Mobile: ${phone}`,
-        `Membership Category: ${category} Membership`,
-        `Organisation & Designation: ${organization || 'Not specified'}`,
-        ``,
-        `Professional Background / Questions:`,
-        `${notes || 'Please share membership application guidance for the ISTD Trichur Chapter.'}`,
-      ].join('\n')
-    );
-    return `mailto:tonychacko67@gmail.com,jibintcr@gmail.com?subject=${subject}&body=${body}`;
-  };
-
-  const handleCopyDetails = async () => {
-    const text = [
-      `ISTD Trichur Chapter — Membership Enquiry`,
-      `Full Name: ${name}`,
-      `Email Address: ${email}`,
-      `Phone / Mobile: ${phone}`,
-      `Membership Category: ${category} Membership`,
-      `Organisation & Designation: ${organization || 'Not specified'}`,
-      `Notes: ${notes || 'N/A'}`,
-    ].join('\n');
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 3000);
-    } catch {
-      // Ignore clipboard failure
     }
   };
 
@@ -99,49 +60,28 @@ export function MembershipForm({
 
     setSubmitting(true);
     setError(null);
-    setResultMessage(null);
 
     try {
-      const res = await fetch('/api/enquiry', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          type: 'membership',
-          name: trimmedName,
-          email: trimmedEmail,
-          phone: trimmedPhone,
-          category,
-          organization: organization.trim(),
-          message: notes.trim(),
-        }),
+      const saved = await submitEnquiryToBackend({
+        source: 'Membership Enquiry',
+        fullName: trimmedName,
+        email: trimmedEmail,
+        phone: trimmedPhone,
+        category: `${category} Membership`,
+        organization: organization.trim(),
+        message:
+          notes.trim() ||
+          `Membership application & chapter affiliation enquiry for ${category} Membership.`,
       });
 
-      const contentType = res.headers.get('content-type') || '';
-      if (!contentType.includes('application/json')) {
-        setError(
-          'Automated server delivery is not configured on this static host. Your entered details have been preserved in the form—please click "Send via Email Client" below to send your pre-filled enquiry directly to the Trichur Chapter office bearers.'
-        );
-        return;
-      }
-
-      const data = await res.json();
-      if (!res.ok || !data.ok) {
-        setError(
-          data.error ||
-            'Automated form delivery is currently unavailable. Your entered details remain in the form—please use the "Send via Email Client" button below.'
-        );
-      } else {
-        setResultMessage(data.message);
-        setName('');
-        setEmail('');
-        setPhone('');
-        setOrganization('');
-        setNotes('');
-      }
+      setConfirmedEnquiry(saved);
+      setName('');
+      setEmail('');
+      setPhone('');
+      setOrganization('');
+      setNotes('');
     } catch {
-      setError(
-        'Automated server delivery is not configured on this host. Your entered details have been preserved in the form—please click "Send via Email Client" below to send your pre-filled enquiry directly to the Trichur Chapter office bearers.'
-      );
+      setError('Unable to save your membership enquiry right now. Please try again.');
     } finally {
       setSubmitting(false);
     }
@@ -167,15 +107,78 @@ export function MembershipForm({
         </p>
       </div>
 
-      {resultMessage && (
-        <div className="form-success-alert" role="status">
-          <div className="form-success-title">Enquiry Submitted</div>
-          <p>{resultMessage}</p>
+      {confirmedEnquiry && (
+        <div
+          className="form-success-alert"
+          role="status"
+          style={{
+            marginBottom: '1.75rem',
+            padding: '1.35rem 1.45rem',
+            borderRadius: '14px',
+            background: '#ECFDF5',
+            border: '1.5px solid #6EE7B7',
+          }}
+        >
+          <div
+            className="form-success-title"
+            style={{
+              fontSize: '1.08rem',
+              fontWeight: 800,
+              color: '#065F46',
+              marginBottom: '0.35rem',
+            }}
+          >
+            ✓ Membership Enquiry Recorded in Backend System
+          </div>
+          <p style={{ margin: '0 0 0.75rem', fontSize: '0.9rem', color: '#047857' }}>
+            Thank you, <strong>{confirmedEnquiry.fullName}</strong>. Your membership enquiry has
+            been saved directly to the ISTD Trichur Chapter backend system.
+          </p>
+          <div
+            style={{
+              background: '#FFFFFF',
+              border: '1px dashed #34D399',
+              borderRadius: '10px',
+              padding: '0.75rem 1rem',
+              display: 'flex',
+              flexWrap: 'wrap',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              gap: '0.6rem',
+              marginBottom: '0.85rem',
+            }}
+          >
+            <div>
+              <div
+                style={{
+                  fontSize: '0.7rem',
+                  fontWeight: 800,
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.06em',
+                  color: '#64748B',
+                }}
+              >
+                Enquiry Reference ID
+              </div>
+              <div
+                style={{
+                  fontSize: '1.05rem',
+                  fontWeight: 900,
+                  color: '#0F172A',
+                  fontFamily: 'monospace',
+                }}
+              >
+                {confirmedEnquiry.enquiryCode}
+              </div>
+            </div>
+            <div style={{ fontSize: '0.82rem', color: '#334155', fontWeight: 700 }}>
+              {confirmedEnquiry.category}
+            </div>
+          </div>
           <button
             type="button"
             className="btn btn-outline-navy btn-sm"
-            style={{ marginTop: '0.75rem' }}
-            onClick={() => setResultMessage(null)}
+            onClick={() => setConfirmedEnquiry(null)}
           >
             Submit Another Enquiry
           </button>
@@ -184,19 +187,7 @@ export function MembershipForm({
 
       {error && (
         <div className="form-error-alert" role="alert" style={{ marginBottom: '1.5rem' }}>
-          <p style={{ margin: '0 0 0.85rem 0', fontWeight: 600 }}>{error}</p>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.65rem' }}>
-            <a href={buildMailtoHref()} className="btn btn-primary btn-sm">
-              Send via Email Client (Pre-filled)
-            </a>
-            <button
-              type="button"
-              className="btn btn-outline-navy btn-sm"
-              onClick={handleCopyDetails}
-            >
-              {copied ? 'Copied to Clipboard ✓' : 'Copy Enquiry Details'}
-            </button>
-          </div>
+          <p style={{ margin: 0, fontWeight: 600 }}>{error}</p>
         </div>
       )}
 
@@ -335,7 +326,7 @@ export function MembershipForm({
           style={{ width: '100%' }}
           disabled={submitting}
         >
-          <span>{submitting ? 'Checking Enquiry Service...' : 'Submit Enquiry'}</span>
+          <span>{submitting ? 'Saving Enquiry to Backend...' : 'Submit Enquiry'}</span>
         </button>
       </form>
     </div>

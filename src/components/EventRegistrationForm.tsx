@@ -570,7 +570,7 @@ export function EventRegistrationForm({ event }: EventRegistrationFormProps) {
               🖨️ Print / Save Confirmation Pass (PDF)
             </button>
             <a
-              href={`https://wa.me/919496839168?text=${whatsappShareText}`}
+              href={`https://wa.me/919846101034?text=${whatsappShareText}`}
               target="_blank"
               rel="noopener noreferrer"
               className="btn btn-outline-navy btn-sm"

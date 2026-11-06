@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { ChapterEvent, GalleryPhoto, assetUrl } from '@/data/siteData';
-import type { CacheStats, EventRegistration } from '@/lib/backendStore';
+import type { CacheStats, ChapterEnquiry, EventRegistration } from '@/lib/backendStore';
 import {
   fetchBackendStore,
   saveEventToBackend,
@@ -11,6 +11,8 @@ import {
   savePhotoToBackend,
   removePhotoFromBackend,
   updateParticipantStatusInBackend,
+  updateEnquiryStatusInBackend,
+  removeEnquiryFromBackend,
   clearBackendCache,
   getAdminSession,
   setAdminSession,
@@ -23,6 +25,7 @@ type AdminModule =
   | 'upcoming'
   | 'reports'
   | 'registrations'
+  | 'enquiries'
   | 'photos'
   | 'system';
 
@@ -45,6 +48,7 @@ export function AdminPortalClient() {
   const [events, setEvents] = useState<ChapterEvent[]>([]);
   const [photos, setPhotos] = useState<GalleryPhoto[]>([]);
   const [registrations, setRegistrations] = useState<EventRegistration[]>([]);
+  const [enquiries, setEnquiries] = useState<ChapterEnquiry[]>([]);
   const [cacheStats, setCacheStats] = useState<CacheStats | null>(null);
   const [statusBanner, setStatusBanner] = useState<string>('');
 
@@ -54,6 +58,12 @@ export function AdminPortalClient() {
   const [regSearch, setRegSearch] = useState<string>('');
   const [selectedRegistration, setSelectedRegistration] =
     useState<EventRegistration | null>(null);
+
+  // Enquiries & Submissions Filters
+  const [enqSourceFilter, setEnqSourceFilter] = useState<string>('all');
+  const [enqStatusFilter, setEnqStatusFilter] = useState<string>('all');
+  const [enqSearch, setEnqSearch] = useState<string>('');
+  const [selectedEnquiry, setSelectedEnquiry] = useState<ChapterEnquiry | null>(null);
 
   // Event / Report Editor Panel State
   const [showEventEditor, setShowEventEditor] = useState(false);
@@ -101,6 +111,7 @@ export function AdminPortalClient() {
     setEvents(data.events || []);
     setPhotos(data.galleryPhotos || []);
     setRegistrations(data.registrations || []);
+    setEnquiries(data.enquiries || []);
     setCacheStats(stats);
   };
 
@@ -469,6 +480,7 @@ export function AdminPortalClient() {
       events,
       galleryPhotos: photos,
       registrations,
+      enquiries,
       exportedAt: new Date().toISOString(),
     };
     const blob = new Blob([JSON.stringify(payload, null, 2)], {
@@ -482,8 +494,88 @@ export function AdminPortalClient() {
     URL.revokeObjectURL(url);
   };
 
+  const handleUpdateEnquiryStatus = async (
+    id: string,
+    status: ChapterEnquiry['status']
+  ) => {
+    await updateEnquiryStatusInBackend(id, status);
+    await loadPortalData(true);
+    showToast(`✓ Enquiry status updated to "${status}".`);
+  };
+
+  const handleDeleteEnquiry = async (id: string, code: string) => {
+    if (!window.confirm(`Delete enquiry "${code}" from backend database?`)) return;
+    await removeEnquiryFromBackend(id);
+    if (selectedEnquiry?.id === id) setSelectedEnquiry(null);
+    await loadPortalData(true);
+    showToast(`✓ Enquiry "${code}" removed.`);
+  };
+
+  const handleExportEnquiriesCsv = () => {
+    if (filteredEnquiries.length === 0) {
+      alert('No enquiries match the current filter.');
+      return;
+    }
+    const headers = [
+      'Enquiry Code',
+      'Source',
+      'Status',
+      'Full Name',
+      'Email',
+      'Phone',
+      'WhatsApp',
+      'Category',
+      'Selected Event',
+      'Organisation / Institution',
+      'Designation',
+      'District',
+      'Location',
+      'Message / Notes',
+      'Submitted At',
+    ];
+    const rows = filteredEnquiries.map((item) => [
+      item.enquiryCode,
+      item.source,
+      item.status,
+      item.fullName,
+      item.email,
+      item.phone,
+      item.whatsapp || '',
+      item.category,
+      item.eventTitle || '',
+      item.organization || '',
+      item.designation || '',
+      item.district || '',
+      item.cityLocation || '',
+      item.message,
+      item.createdAt,
+    ]);
+    const csvContent = [headers, ...rows]
+      .map((row) =>
+        row.map((cell) => `"${String(cell ?? '').replace(/"/g, '""')}"`).join(',')
+      )
+      .join('\n');
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `ISTD-Trichur-Enquiries-${new Date().toISOString().slice(0, 10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
   const upcomingEvents = events.filter((e) => e.status === 'upcoming');
   const pastEvents = events.filter((e) => e.status === 'past');
+
+  const filteredEnquiries = enquiries.filter((item) => {
+    if (enqSourceFilter !== 'all' && item.source !== enqSourceFilter) return false;
+    if (enqStatusFilter !== 'all' && item.status !== enqStatusFilter) return false;
+    if (!enqSearch.trim()) return true;
+    const q = enqSearch.toLowerCase();
+    return `${item.enquiryCode} ${item.fullName} ${item.email} ${item.phone} ${item.category} ${item.organization || ''} ${item.message}`
+      .toLowerCase()
+      .includes(q);
+  });
 
   const filteredRegistrations = registrations.filter((r) => {
     if (regEventFilter !== 'all' && r.eventSlug !== regEventFilter) return false;
@@ -834,6 +926,10 @@ export function AdminPortalClient() {
       title: 'Participant Registrations Directory',
       subtitle: 'Search, filter, update attendance/certificate status, and export participant data to CSV/Excel.',
     },
+    enquiries: {
+      title: 'Contact, Membership & Campus EOI Submissions',
+      subtitle: 'Review all website enquiries, membership applications, and campus chapter EOIs stored in the backend.',
+    },
     photos: {
       title: 'Event Photographs & Gallery Manager',
       subtitle: 'Upload event photographs, link them to specific event pages, and curate the chapter gallery.',
@@ -938,6 +1034,14 @@ export function AdminPortalClient() {
           >
             <span>👥 Registrations</span>
             <span className="admin-nav-badge">{registrations.length}</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => switchModule('enquiries')}
+            className={`admin-nav-btn ${activeModule === 'enquiries' ? 'active' : ''}`}
+          >
+            <span>✉️ Enquiries &amp; EOIs</span>
+            <span className="admin-nav-badge">{enquiries.length}</span>
           </button>
           <button
             type="button"
@@ -2490,6 +2594,272 @@ export function AdminPortalClient() {
           )}
 
           {/* =================================================================
+              MODULE 4B: ENQUIRIES, MEMBERSHIP APPLICATIONS & CAMPUS EOIs
+             ================================================================= */}
+          {activeModule === 'enquiries' && (
+            <div className="admin-panel-card">
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  flexWrap: 'wrap',
+                  gap: '1rem',
+                  marginBottom: '1.25rem',
+                }}
+              >
+                <div>
+                  <h2 style={{ fontSize: '1.2rem', fontWeight: 800, marginBottom: '0.2rem' }}>
+                    Contact, Membership &amp; Campus EOI Submissions ({filteredEnquiries.length} of{' '}
+                    {enquiries.length})
+                  </h2>
+                  <p style={{ fontSize: '0.86rem', color: '#64748B', margin: 0 }}>
+                    All enquiries submitted via Contact Us, Membership Enquiry, and Campus Chapter
+                    EOI forms are stored directly in the backend database.
+                  </p>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={handleExportEnquiriesCsv}
+                  className="btn btn-primary btn-sm"
+                  style={{ background: '#047857', borderColor: '#047857' }}
+                >
+                  ⬇ Export Enquiries (CSV)
+                </button>
+              </div>
+
+              <div
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))',
+                  gap: '0.85rem',
+                  marginBottom: '1.25rem',
+                }}
+              >
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="🔍 Search by name, email, phone, code, message..."
+                  value={enqSearch}
+                  onChange={(e) => setEnqSearch(e.target.value)}
+                />
+
+                <select
+                  className="form-control"
+                  value={enqSourceFilter}
+                  onChange={(e) => setEnqSourceFilter(e.target.value)}
+                >
+                  <option value="all">All Submission Types</option>
+                  <option value="Contact Enquiry">Contact Enquiry</option>
+                  <option value="Membership Enquiry">Membership Enquiry</option>
+                  <option value="Campus Chapter EOI">Campus Chapter EOI</option>
+                </select>
+
+                <select
+                  className="form-control"
+                  value={enqStatusFilter}
+                  onChange={(e) => setEnqStatusFilter(e.target.value)}
+                >
+                  <option value="all">All Statuses</option>
+                  <option value="New">New</option>
+                  <option value="In Review">In Review</option>
+                  <option value="Responded">Responded</option>
+                  <option value="Closed">Closed</option>
+                </select>
+              </div>
+
+              {filteredEnquiries.length === 0 ? (
+                <div
+                  style={{
+                    padding: '2.5rem',
+                    textAlign: 'center',
+                    background: '#F8FAFC',
+                    borderRadius: '12px',
+                    color: '#64748B',
+                  }}
+                >
+                  No enquiries found matching the selected filters. Submit a test enquiry on the{' '}
+                  <Link href="/contact" style={{ color: '#1D4ED8', fontWeight: 700 }}>
+                    Contact Us
+                  </Link>{' '}
+                  or{' '}
+                  <Link href="/membership" style={{ color: '#1D4ED8', fontWeight: 700 }}>
+                    Membership
+                  </Link>{' '}
+                  page to see it appear here immediately.
+                </div>
+              ) : (
+                <div style={{ overflowX: 'auto' }}>
+                  <table
+                    style={{
+                      width: '100%',
+                      borderCollapse: 'collapse',
+                      fontSize: '0.83rem',
+                    }}
+                  >
+                    <thead>
+                      <tr
+                        style={{
+                          background: '#071524',
+                          color: '#FFFFFF',
+                          textAlign: 'left',
+                        }}
+                      >
+                        <th style={{ padding: '0.85rem 0.75rem' }}>Ref Code &amp; Source</th>
+                        <th style={{ padding: '0.85rem 0.75rem' }}>Sender Details</th>
+                        <th style={{ padding: '0.85rem 0.75rem' }}>Category &amp; Organisation</th>
+                        <th style={{ padding: '0.85rem 0.75rem' }}>Message / Notes</th>
+                        <th style={{ padding: '0.85rem 0.75rem' }}>Status</th>
+                        <th style={{ padding: '0.85rem 0.75rem' }}>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {filteredEnquiries.map((item) => (
+                        <tr
+                          key={item.id}
+                          style={{
+                            borderBottom: '1px solid #E2E8F0',
+                            background: '#FFFFFF',
+                          }}
+                        >
+                          <td style={{ padding: '0.85rem 0.75rem', verticalAlign: 'top' }}>
+                            <strong style={{ color: '#0F172A', display: 'block' }}>
+                              {item.enquiryCode}
+                            </strong>
+                            <span
+                              style={{
+                                display: 'inline-block',
+                                fontSize: '0.68rem',
+                                fontWeight: 800,
+                                color:
+                                  item.source === 'Membership Enquiry'
+                                    ? '#047857'
+                                    : item.source === 'Campus Chapter EOI'
+                                    ? '#B45309'
+                                    : '#1D4ED8',
+                                background:
+                                  item.source === 'Membership Enquiry'
+                                    ? '#ECFDF5'
+                                    : item.source === 'Campus Chapter EOI'
+                                    ? '#FEF3C7'
+                                    : '#EFF6FF',
+                                padding: '0.12rem 0.5rem',
+                                borderRadius: '6px',
+                                marginTop: '0.2rem',
+                              }}
+                            >
+                              {item.source}
+                            </span>
+                            <span
+                              style={{
+                                fontSize: '0.72rem',
+                                color: '#64748B',
+                                display: 'block',
+                                marginTop: '0.2rem',
+                              }}
+                            >
+                              {new Date(item.createdAt).toLocaleString('en-IN')}
+                            </span>
+                          </td>
+                          <td style={{ padding: '0.85rem 0.75rem', verticalAlign: 'top' }}>
+                            <strong style={{ color: '#0F172A', display: 'block' }}>
+                              {item.fullName}
+                            </strong>
+                            <div>📧 {item.email}</div>
+                            <div>📞 {item.phone}</div>
+                          </td>
+                          <td style={{ padding: '0.85rem 0.75rem', verticalAlign: 'top' }}>
+                            <strong style={{ color: '#1E3A8A', display: 'block' }}>
+                              {item.category}
+                            </strong>
+                            {item.eventTitle && (
+                              <div style={{ fontSize: '0.75rem', color: '#475569' }}>
+                                Event: {item.eventTitle}
+                              </div>
+                            )}
+                            {item.organization && (
+                              <div style={{ fontSize: '0.75rem', color: '#334155', fontWeight: 600 }}>
+                                🏢 {item.organization}
+                              </div>
+                            )}
+                          </td>
+                          <td
+                            style={{
+                              padding: '0.85rem 0.75rem',
+                              verticalAlign: 'top',
+                              maxWidth: '280px',
+                              color: '#334155',
+                            }}
+                          >
+                            <div
+                              style={{
+                                display: '-webkit-box',
+                                WebkitLineClamp: 3,
+                                WebkitBoxOrient: 'vertical',
+                                overflow: 'hidden',
+                              }}
+                            >
+                              {item.message}
+                            </div>
+                          </td>
+                          <td style={{ padding: '0.85rem 0.75rem', verticalAlign: 'top' }}>
+                            <select
+                              className="form-control"
+                              style={{
+                                padding: '0.32rem 0.5rem',
+                                fontSize: '0.76rem',
+                                minWidth: '124px',
+                              }}
+                              value={item.status}
+                              onChange={(e) =>
+                                handleUpdateEnquiryStatus(
+                                  item.id,
+                                  e.target.value as ChapterEnquiry['status']
+                                )
+                              }
+                            >
+                              <option value="New">New</option>
+                              <option value="In Review">In Review</option>
+                              <option value="Responded">Responded</option>
+                              <option value="Closed">Closed</option>
+                            </select>
+                          </td>
+                          <td style={{ padding: '0.85rem 0.75rem', verticalAlign: 'top' }}>
+                            <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap' }}>
+                              <button
+                                type="button"
+                                onClick={() => setSelectedEnquiry(item)}
+                                className="btn btn-outline-navy btn-sm"
+                                style={{ fontSize: '0.74rem', padding: '0.28rem 0.6rem' }}
+                              >
+                                View
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => handleDeleteEnquiry(item.id, item.enquiryCode)}
+                                className="btn btn-outline-navy btn-sm"
+                                style={{
+                                  fontSize: '0.74rem',
+                                  padding: '0.28rem 0.6rem',
+                                  color: '#B91C1C',
+                                  borderColor: '#FECACA',
+                                }}
+                              >
+                                Delete
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* =================================================================
               MODULE 5: EVENT PHOTOS & CHAPTER GALLERY MANAGER
              ================================================================= */}
           {activeModule === 'photos' && (
@@ -2826,6 +3196,7 @@ export function AdminPortalClient() {
                     <div>
                       <strong>Collections:</strong> <code>events</code> ({events.length}),{' '}
                       <code>registrations</code> ({registrations.length}),{' '}
+                      <code>enquiries</code> ({enquiries.length}),{' '}
                       <code>gallery_photos</code> ({photos.length})
                     </div>
                   </div>
@@ -3083,6 +3454,208 @@ export function AdminPortalClient() {
               <button
                 type="button"
                 onClick={() => setSelectedRegistration(null)}
+                className="btn btn-outline-navy btn-sm"
+              >
+                Done
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* =====================================================================
+          ENQUIRY / EOI DETAIL MODAL
+         ===================================================================== */}
+      {selectedEnquiry && (
+        <div
+          style={{
+            position: 'fixed',
+            inset: 0,
+            background: 'rgba(7, 21, 36, 0.65)',
+            zIndex: 100,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '1.25rem',
+          }}
+          onClick={() => setSelectedEnquiry(null)}
+        >
+          <div
+            style={{
+              background: '#FFFFFF',
+              borderRadius: '16px',
+              maxWidth: '620px',
+              width: '100%',
+              maxHeight: '90vh',
+              overflowY: 'auto',
+              padding: '1.75rem',
+              boxShadow: '0 24px 60px rgba(0, 0, 0, 0.35)',
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'flex-start',
+                borderBottom: '1px solid #E2E8F0',
+                paddingBottom: '1rem',
+                marginBottom: '1.25rem',
+              }}
+            >
+              <div>
+                <span
+                  style={{
+                    fontSize: '0.7rem',
+                    fontWeight: 800,
+                    textTransform: 'uppercase',
+                    padding: '0.2rem 0.6rem',
+                    borderRadius: '999px',
+                    background: '#EFF6FF',
+                    color: '#1D4ED8',
+                  }}
+                >
+                  {selectedEnquiry.enquiryCode} • {selectedEnquiry.source}
+                </span>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 800, margin: '0.35rem 0 0' }}>
+                  {selectedEnquiry.fullName}
+                </h3>
+                <div style={{ fontSize: '0.82rem', color: '#64748B' }}>
+                  Submitted on {new Date(selectedEnquiry.createdAt).toLocaleString('en-IN')}
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => setSelectedEnquiry(null)}
+                className="btn btn-outline-navy btn-sm"
+              >
+                ✕ Close
+              </button>
+            </div>
+
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))',
+                gap: '0.9rem',
+                fontSize: '0.85rem',
+                marginBottom: '1.25rem',
+              }}
+            >
+              <div>
+                <strong style={{ color: '#64748B', display: 'block', fontSize: '0.73rem' }}>
+                  EMAIL ADDRESS
+                </strong>
+                {selectedEnquiry.email}
+              </div>
+              <div>
+                <strong style={{ color: '#64748B', display: 'block', fontSize: '0.73rem' }}>
+                  PHONE / WHATSAPP
+                </strong>
+                {selectedEnquiry.phone}
+                {selectedEnquiry.whatsapp ? ` | WA: ${selectedEnquiry.whatsapp}` : ''}
+              </div>
+              <div>
+                <strong style={{ color: '#64748B', display: 'block', fontSize: '0.73rem' }}>
+                  CATEGORY
+                </strong>
+                {selectedEnquiry.category}
+              </div>
+              {selectedEnquiry.eventTitle && (
+                <div>
+                  <strong style={{ color: '#64748B', display: 'block', fontSize: '0.73rem' }}>
+                    SELECTED EVENT
+                  </strong>
+                  {selectedEnquiry.eventTitle}
+                </div>
+              )}
+              {selectedEnquiry.organization && (
+                <div>
+                  <strong style={{ color: '#64748B', display: 'block', fontSize: '0.73rem' }}>
+                    ORGANISATION / INSTITUTION
+                  </strong>
+                  {selectedEnquiry.organization}
+                </div>
+              )}
+              {selectedEnquiry.designation && (
+                <div>
+                  <strong style={{ color: '#64748B', display: 'block', fontSize: '0.73rem' }}>
+                    DESIGNATION / ROLE
+                  </strong>
+                  {selectedEnquiry.designation}
+                </div>
+              )}
+              {selectedEnquiry.district && (
+                <div>
+                  <strong style={{ color: '#64748B', display: 'block', fontSize: '0.73rem' }}>
+                    LOCATION
+                  </strong>
+                  {selectedEnquiry.cityLocation ? `${selectedEnquiry.cityLocation}, ` : ''}
+                  {selectedEnquiry.district}
+                </div>
+              )}
+              {selectedEnquiry.estimatedStudentCount && (
+                <div>
+                  <strong style={{ color: '#64748B', display: 'block', fontSize: '0.73rem' }}>
+                    ESTIMATED STUDENT COHORT
+                  </strong>
+                  {selectedEnquiry.estimatedStudentCount} ({selectedEnquiry.proposedStreams || ''})
+                </div>
+              )}
+            </div>
+
+            <div
+              style={{
+                padding: '1rem',
+                background: '#F8FAFC',
+                borderRadius: '10px',
+                border: '1px solid #E2E8F0',
+                fontSize: '0.88rem',
+                lineHeight: 1.6,
+                marginBottom: '1.25rem',
+                whiteSpace: 'pre-wrap',
+              }}
+            >
+              <strong style={{ display: 'block', fontSize: '0.74rem', color: '#64748B', marginBottom: '0.25rem' }}>
+                MESSAGE / ENQUIRY DETAILS:
+              </strong>
+              {selectedEnquiry.message}
+            </div>
+
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                gap: '0.75rem',
+                flexWrap: 'wrap',
+                paddingTop: '1rem',
+                borderTop: '1px solid #E2E8F0',
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <span style={{ fontSize: '0.8rem', fontWeight: 700, color: '#475569' }}>
+                  Status:
+                </span>
+                <select
+                  className="form-control"
+                  style={{ padding: '0.32rem 0.6rem', fontSize: '0.8rem', width: 'auto' }}
+                  value={selectedEnquiry.status}
+                  onChange={async (e) => {
+                    const nextStatus = e.target.value as ChapterEnquiry['status'];
+                    await handleUpdateEnquiryStatus(selectedEnquiry.id, nextStatus);
+                    setSelectedEnquiry({ ...selectedEnquiry, status: nextStatus });
+                  }}
+                >
+                  <option value="New">New</option>
+                  <option value="In Review">In Review</option>
+                  <option value="Responded">Responded</option>
+                  <option value="Closed">Closed</option>
+                </select>
+              </div>
+              <button
+                type="button"
+                onClick={() => setSelectedEnquiry(null)}
                 className="btn btn-outline-navy btn-sm"
               >
                 Done

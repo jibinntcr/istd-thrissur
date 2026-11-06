@@ -3,6 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { ALL_CHAPTER_EVENTS } from '@/data/siteData';
+import type { ChapterEnquiry } from '@/lib/backendStore';
+import { submitEnquiryToBackend } from '@/lib/clientBackendCache';
 
 export function ContactForm() {
   const [name, setName] = useState('');
@@ -15,8 +17,7 @@ export function ContactForm() {
   const [message, setMessage] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [resultMessage, setResultMessage] = useState<string | null>(null);
-  const [copied, setCopied] = useState(false);
+  const [confirmedEnquiry, setConfirmedEnquiry] = useState<ChapterEnquiry | null>(null);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -33,52 +34,6 @@ export function ContactForm() {
       setCategory(qCategory);
     }
   }, []);
-
-  const buildMailtoHref = () => {
-    const subjectLine =
-      category === 'Events & Programmes Enquiry' && eventTitle
-        ? `ISTD Trichur Chapter Event Enquiry: ${eventTitle}`
-        : `ISTD Trichur Chapter Enquiry: ${category} (${name || 'Visitor'})`;
-    const subject = encodeURIComponent(subjectLine);
-    const body = encodeURIComponent(
-      [
-        `ISTD Trichur Chapter — Contact / Event Enquiry`,
-        `------------------------------------------------`,
-        `Full Name: ${name}`,
-        `Email Address: ${email}`,
-        `Phone / Mobile: ${phone}`,
-        `Enquiry Category: ${category}`,
-        category === 'Events & Programmes Enquiry' ? `Selected Event: ${eventTitle}` : null,
-        ``,
-        `Message:`,
-        `${message}`,
-      ]
-        .filter((line) => line !== null)
-        .join('\n')
-    );
-    return `mailto:tonychacko67@gmail.com,jibintcr@gmail.com?subject=${subject}&body=${body}`;
-  };
-
-  const handleCopyDetails = async () => {
-    const text = [
-      `ISTD Trichur Chapter — Enquiry`,
-      `Full Name: ${name}`,
-      `Email Address: ${email}`,
-      `Phone / Mobile: ${phone}`,
-      `Enquiry Category: ${category}`,
-      category === 'Events & Programmes Enquiry' ? `Selected Event: ${eventTitle}` : null,
-      `Message: ${message}`,
-    ]
-      .filter((line) => line !== null)
-      .join('\n');
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 3000);
-    } catch {
-      // Ignore clipboard failure
-    }
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -108,48 +63,25 @@ export function ContactForm() {
 
     setSubmitting(true);
     setError(null);
-    setResultMessage(null);
 
     try {
-      const res = await fetch('/api/enquiry', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          type: 'contact',
-          name: trimmedName,
-          email: trimmedEmail,
-          phone: trimmedPhone,
-          category,
-          eventTitle: category === 'Events & Programmes Enquiry' ? eventTitle : '',
-          message: trimmedMessage,
-        }),
+      const saved = await submitEnquiryToBackend({
+        source: 'Contact Enquiry',
+        fullName: trimmedName,
+        email: trimmedEmail,
+        phone: trimmedPhone,
+        category,
+        eventTitle: category === 'Events & Programmes Enquiry' ? eventTitle : '',
+        message: trimmedMessage,
       });
 
-      const contentType = res.headers.get('content-type') || '';
-      if (!contentType.includes('application/json')) {
-        setError(
-          'Automated server delivery is not configured on this static host. Your entered details have been preserved in the form—please click "Send via Email Client" below to send your pre-filled enquiry directly to the Trichur Chapter office bearers.'
-        );
-        return;
-      }
-
-      const data = await res.json();
-      if (!res.ok || !data.ok) {
-        setError(
-          data.error ||
-            'Automated form delivery is currently unavailable. Your entered details remain in the form—please use the "Send via Email Client" button below.'
-        );
-      } else {
-        setResultMessage(data.message);
-        setName('');
-        setEmail('');
-        setPhone('');
-        setMessage('');
-      }
+      setConfirmedEnquiry(saved);
+      setName('');
+      setEmail('');
+      setPhone('');
+      setMessage('');
     } catch {
-      setError(
-        'Automated server delivery is not configured on this host. Your entered details have been preserved in the form—please click "Send via Email Client" below to send your pre-filled enquiry directly to the Trichur Chapter office bearers.'
-      );
+      setError('Unable to save your enquiry right now. Please try again.');
     } finally {
       setSubmitting(false);
     }
@@ -173,36 +105,88 @@ export function ContactForm() {
         chapter membership questions.
       </p>
 
-      {resultMessage && (
-        <div className="form-success-alert" role="status">
-          <div className="form-success-title">Enquiry Sent</div>
-          <p>{resultMessage}</p>
+      {confirmedEnquiry && (
+        <div
+          className="form-success-alert"
+          role="status"
+          style={{
+            marginBottom: '1.75rem',
+            padding: '1.35rem 1.45rem',
+            borderRadius: '14px',
+            background: '#ECFDF5',
+            border: '1.5px solid #6EE7B7',
+          }}
+        >
+          <div
+            className="form-success-title"
+            style={{
+              fontSize: '1.08rem',
+              fontWeight: 800,
+              color: '#065F46',
+              marginBottom: '0.35rem',
+            }}
+          >
+            ✓ Enquiry Recorded in ISTD Trichur Backend System
+          </div>
+          <p style={{ margin: '0 0 0.75rem', fontSize: '0.9rem', color: '#047857' }}>
+            Thank you, <strong>{confirmedEnquiry.fullName}</strong>. Your enquiry has been saved
+            directly to the ISTD Trichur Chapter backend database for review by the chapter office
+            bearers.
+          </p>
+          <div
+            style={{
+              background: '#FFFFFF',
+              border: '1px dashed #34D399',
+              borderRadius: '10px',
+              padding: '0.75rem 1rem',
+              display: 'flex',
+              flexWrap: 'wrap',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              gap: '0.6rem',
+              marginBottom: '0.85rem',
+            }}
+          >
+            <div>
+              <div
+                style={{
+                  fontSize: '0.7rem',
+                  fontWeight: 800,
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.06em',
+                  color: '#64748B',
+                }}
+              >
+                Enquiry Reference ID
+              </div>
+              <div
+                style={{
+                  fontSize: '1.05rem',
+                  fontWeight: 900,
+                  color: '#0F172A',
+                  fontFamily: 'monospace',
+                }}
+              >
+                {confirmedEnquiry.enquiryCode}
+              </div>
+            </div>
+            <div style={{ fontSize: '0.82rem', color: '#334155', fontWeight: 700 }}>
+              Category: {confirmedEnquiry.category}
+            </div>
+          </div>
           <button
             type="button"
             className="btn btn-outline-navy btn-sm"
-            style={{ marginTop: '0.75rem' }}
-            onClick={() => setResultMessage(null)}
+            onClick={() => setConfirmedEnquiry(null)}
           >
-            Send Another Enquiry
+            Submit Another Enquiry
           </button>
         </div>
       )}
 
       {error && (
         <div className="form-error-alert" role="alert" style={{ marginBottom: '1.5rem' }}>
-          <p style={{ margin: '0 0 0.85rem 0', fontWeight: 600 }}>{error}</p>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.65rem' }}>
-            <a href={buildMailtoHref()} className="btn btn-primary btn-sm">
-              Send via Email Client (Pre-filled)
-            </a>
-            <button
-              type="button"
-              className="btn btn-outline-navy btn-sm"
-              onClick={handleCopyDetails}
-            >
-              {copied ? 'Copied to Clipboard ✓' : 'Copy Enquiry Details'}
-            </button>
-          </div>
+          <p style={{ margin: 0, fontWeight: 600 }}>{error}</p>
         </div>
       )}
 
@@ -345,7 +329,7 @@ export function ContactForm() {
           id="contactSubmitBtn"
           disabled={submitting}
         >
-          <span>{submitting ? 'Checking Enquiry Service...' : 'Submit Enquiry'}</span>
+          <span>{submitting ? 'Saving Enquiry to Backend...' : 'Submit Enquiry'}</span>
         </button>
       </form>
     </div>

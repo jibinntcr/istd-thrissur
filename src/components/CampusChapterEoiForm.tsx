@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { submitEnquiryToBackend } from '@/lib/clientBackendCache';
 
 const KERALA_DISTRICTS = [
   'Trichur',
@@ -150,19 +151,38 @@ export function CampusChapterEoiForm() {
       // ignore storage errors
     }
 
+    try {
+      await submitEnquiryToBackend({
+        enquiryCode: eoiRefNo,
+        source: 'Campus Chapter EOI',
+        fullName: record.coordinatorName,
+        email: record.officialEmail,
+        phone: record.phoneNumber,
+        whatsapp: record.whatsappNumber,
+        category: `${record.institutionType} (${record.affiliationStatus})`,
+        organization: record.institutionName,
+        designation: `${record.coordinatorDesignation}${
+          record.coordinatorDepartment ? ` — ${record.coordinatorDepartment}` : ''
+        }`,
+        district: record.district,
+        cityLocation: record.cityLocation,
+        headOfInstitution: record.headOfInstitution,
+        affiliationStatus: record.affiliationStatus,
+        estimatedStudentCount: record.estimatedStudentCount,
+        proposedStreams: record.proposedStreams,
+        message:
+          record.objectivesNotes ||
+          `Campus Chapter EOI for ${record.institutionName} (${record.estimatedStudentCount}, ${record.proposedStreams}).`,
+      });
+    } catch {
+      // already stored in local synced store
+    }
+
     setSubmitting(false);
     setSubmittedRecord(record);
   };
 
   if (submittedRecord) {
-    const whatsappSummary = encodeURIComponent(
-      `Hello ISTD Trichur Chapter,\n\nWe have submitted an Expression of Interest (EOI) to establish an ISTD Campus / Student Chapter.\n\n• EOI Ref: ${submittedRecord.eoiRefNo}\n• Institution: ${submittedRecord.institutionName} (${submittedRecord.affiliationStatus})\n• Location: ${submittedRecord.cityLocation ? `${submittedRecord.cityLocation}, ` : ''}${submittedRecord.district}\n• Faculty Coordinator: ${submittedRecord.coordinatorName} (${submittedRecord.coordinatorDesignation})\n• Email: ${submittedRecord.officialEmail}\n• Phone: ${submittedRecord.phoneNumber}\n• Est. Student Cohort: ${submittedRecord.estimatedStudentCount}`
-    );
-
-    const mailtoHref = `mailto:jibintcr@gmail.com,tonychacko67@gmail.com?subject=${encodeURIComponent(
-      `[Campus Chapter EOI ${submittedRecord.eoiRefNo}] ${submittedRecord.institutionName}`
-    )}&body=${whatsappSummary}`;
-
     return (
       <div
         style={{
@@ -194,7 +214,7 @@ export function CampusChapterEoiForm() {
               marginBottom: '0.5rem',
             }}
           >
-            ✓ Expression of Interest Recorded
+            ✓ Recorded in ISTD Trichur Backend System
           </span>
           <h3
             style={{
@@ -213,8 +233,9 @@ export function CampusChapterEoiForm() {
               margin: 0,
             }}
           >
-            The Managing Committee of the ISTD Trichur Chapter will review your
-            institutional details and connect with your Faculty Coordinator.
+            Your institutional Expression of Interest has been stored directly in
+            the ISTD Trichur Chapter backend database. The Managing Committee
+            will review your details and connect with your Faculty Coordinator.
           </p>
         </div>
 
@@ -280,26 +301,10 @@ export function CampusChapterEoiForm() {
               marginTop: '1rem',
             }}
           >
-            <a
-              href={`https://wa.me/919846101034?text=${whatsappSummary}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-primary btn-sm"
-            >
-              Share EOI with Chapter Chairman on WhatsApp &rarr;
-            </a>
-            <a href={mailtoHref} className="btn btn-outline-navy btn-sm">
-              Send Official Email Copy
-            </a>
             <button
               type="button"
               onClick={() => setSubmittedRecord(null)}
-              className="btn btn-sm"
-              style={{
-                background: '#F1F5F9',
-                color: '#334155',
-                border: '1px solid #CBD5E1',
-              }}
+              className="btn btn-primary btn-sm"
             >
               Submit Another EOI
             </button>

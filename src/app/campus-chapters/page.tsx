@@ -676,10 +676,6 @@ export default function CampusChaptersPage() {
                   </a>
                   <br />
                   <strong>Mr. Jibin N</strong> (Treasurer):{' '}
-                  <a href="tel:+919496839168" style={{ fontWeight: 700 }}>
-                    +91 9496839168
-                  </a>{' '}
-                  •{' '}
                   <a
                     href="mailto:jibintcr@gmail.com"
                     style={{ fontWeight: 700 }}

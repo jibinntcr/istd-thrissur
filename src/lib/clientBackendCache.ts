@@ -9,6 +9,7 @@ import {
 import type {
   BackendDatabasePayload,
   CacheStats,
+  ChapterEnquiry,
   EventRegistration,
 } from './backendStore';
 
@@ -58,6 +59,7 @@ function getDefaultPayload(): BackendDatabasePayload {
         createdAt: '2026-11-04T09:30:00.000Z',
       },
     ],
+    enquiries: [],
     updatedAt: new Date().toISOString(),
   };
 }
@@ -91,6 +93,7 @@ export function getLocalSyncedPayload(): BackendDatabasePayload {
       events: mergedEvents,
       galleryPhotos: mergedPhotos,
       registrations: Array.isArray(parsed.registrations) ? parsed.registrations : [],
+      enquiries: Array.isArray(parsed.enquiries) ? parsed.enquiries : [],
       updatedAt: parsed.updatedAt || new Date().toISOString(),
     };
   } catch {
@@ -443,6 +446,100 @@ export async function updateParticipantStatusInBackend(
     reg.status = status;
     saveLocalSyncedPayload(local);
   }
+}
+
+export async function submitEnquiryToBackend(
+  input: Omit<ChapterEnquiry, 'id' | 'enquiryCode' | 'status' | 'createdAt'> & {
+    enquiryCode?: string;
+  }
+): Promise<ChapterEnquiry> {
+  try {
+    const res = await fetch('/api/backend', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        action: 'submit_enquiry',
+        payload: input,
+      }),
+    });
+    if (res.ok) {
+      const json = await res.json();
+      if (json?.enquiry) {
+        const local = getLocalSyncedPayload();
+        local.enquiries = [
+          json.enquiry,
+          ...(local.enquiries || []).filter((e) => e.id !== json.enquiry.id),
+        ];
+        saveLocalSyncedPayload(local);
+        return json.enquiry as ChapterEnquiry;
+      }
+    }
+  } catch {
+    // Fallback to client-synced backend store when running on static hosting
+  }
+
+  const randomSuffix = Math.floor(1000 + Math.random() * 9000);
+  const prefix =
+    input.source === 'Membership Enquiry'
+      ? 'ISTD-MEM'
+      : input.source === 'Campus Chapter EOI'
+      ? 'ISTD-EOI'
+      : 'ISTD-ENQ';
+
+  const newEnq: ChapterEnquiry = {
+    ...input,
+    id: `enq-${Date.now()}-${randomSuffix}`,
+    enquiryCode: input.enquiryCode || `${prefix}-2026-${randomSuffix}`,
+    status: 'New',
+    createdAt: new Date().toISOString(),
+  };
+
+  const local = getLocalSyncedPayload();
+  local.enquiries = [newEnq, ...(local.enquiries || [])];
+  saveLocalSyncedPayload(local);
+  return newEnq;
+}
+
+export async function updateEnquiryStatusInBackend(
+  id: string,
+  status: ChapterEnquiry['status']
+): Promise<void> {
+  try {
+    await fetch('/api/backend', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        action: 'update_enquiry_status',
+        payload: { id, status },
+      }),
+    });
+  } catch {
+    // Fallback
+  }
+  const local = getLocalSyncedPayload();
+  const enq = (local.enquiries || []).find((e) => e.id === id);
+  if (enq) {
+    enq.status = status;
+    saveLocalSyncedPayload(local);
+  }
+}
+
+export async function removeEnquiryFromBackend(id: string): Promise<void> {
+  try {
+    await fetch('/api/backend', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        action: 'delete_enquiry',
+        payload: { id },
+      }),
+    });
+  } catch {
+    // Fallback
+  }
+  const local = getLocalSyncedPayload();
+  local.enquiries = (local.enquiries || []).filter((e) => e.id !== id);
+  saveLocalSyncedPayload(local);
 }
 
 export async function clearBackendCache(): Promise<CacheStats> {

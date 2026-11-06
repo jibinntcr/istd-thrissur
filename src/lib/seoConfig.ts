@@ -247,7 +247,6 @@ export function getOrganizationJsonLd() {
           },
           {
             '@type': 'ContactPoint',
-            telephone: '+91-9496839168',
             contactType: 'Treasurer & Membership Desk',
             email: 'jibintcr@gmail.com',
             areaServed: 'IN-KL',

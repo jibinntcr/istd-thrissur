@@ -1338,7 +1338,7 @@ export function MembershipPageClient() {
               >
                 Need assistance with your application or chapter affiliation?
                 Contact the ISTD Trichur Chapter office bearers (+91 9846101034
-                / +91 9496839168) or submit the chapter enquiry form below.
+                / jibintcr@gmail.com) or submit the chapter enquiry form below.
               </p>
             </div>
           </div>
