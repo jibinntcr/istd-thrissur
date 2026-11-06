@@ -1906,6 +1906,31 @@ textarea.form-control {
   gap: 0.85rem;
 }
 
+.footer-copyright-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.footer-developer-credit {
+  margin: 0;
+  font-size: 0.78rem;
+  color: #CBD5E1;
+}
+
+.footer-developer-link {
+  color: #FACC15;
+  font-weight: 700;
+  text-decoration: none;
+  border-bottom: 1px dashed rgba(250, 204, 21, 0.55);
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.footer-developer-link:hover {
+  color: #FEF08A;
+  border-bottom-color: #FEF08A;
+}
+
 .footer-bottom-links {
   display: flex;
   gap: 1.15rem;
@@ -1970,6 +1995,11 @@ textarea.form-control {
     flex-direction: column;
     text-align: center;
     gap: 0.65rem;
+  }
+
+  .footer-copyright-block {
+    align-items: center;
+    text-align: center;
   }
 }
 

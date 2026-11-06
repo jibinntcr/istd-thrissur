@@ -217,10 +217,23 @@ export function Footer() {
           {/* Footer Bottom */}
           <div className="footer-bottom">
             <div className="footer-bottom-inner">
-              <p style={{ margin: 0, textAlign: 'center' }}>
-                © 2026 ISTD Trichur Chapter (Diamond Chapter). Affiliated with the Indian Society
-                for Training &amp; Development (ISTD), New Delhi (Est. April 1970).
-              </p>
+              <div className="footer-copyright-block">
+                <p style={{ margin: 0 }}>
+                  © 2026 ISTD Trichur Chapter (Diamond Chapter). Affiliated with the Indian Society
+                  for Training &amp; Development (ISTD), New Delhi (Est. April 1970).
+                </p>
+                <p className="footer-developer-credit">
+                  Designed and developed by{' '}
+                  <a
+                    href="https://infinio.co.in/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="footer-developer-link"
+                  >
+                    Infinio Technology Solutions
+                  </a>
+                </p>
+              </div>
               <div className="footer-bottom-links">
                 <Link href="/privacy">Privacy Policy</Link>
                 <Link href="/membership">Membership</Link>
