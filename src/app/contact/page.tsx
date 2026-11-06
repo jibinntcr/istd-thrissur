@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ContactForm } from '@/components/ContactForm';
 import { CHAPTER_CONTACTS, OFFICIAL_LINKS } from '@/data/siteData';
-import { buildPageMetadata } from '@/lib/seoConfig';
+import { buildPageMetadata, getContactPageJsonLd } from '@/lib/seoConfig';
 
 export const metadata: Metadata = buildPageMetadata({
   title: 'Contact Us — Chapter Office Bearers & Enquiries',
@@ -18,8 +18,14 @@ export const metadata: Metadata = buildPageMetadata({
 });
 
 export default function ContactPage() {
+  const contactJsonLd = getContactPageJsonLd();
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(contactJsonLd) }}
+      />
       {/* Page Hero Header */}
       <section className="page-hero">
         <div className="container">

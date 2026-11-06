@@ -2,7 +2,7 @@ import React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { EventsChronicleSection } from '@/components/EventsChronicleSection';
-import { buildPageMetadata } from '@/lib/seoConfig';
+import { buildPageMetadata, getEventsCollectionJsonLd } from '@/lib/seoConfig';
 
 export const metadata: Metadata = buildPageMetadata({
   title: 'Events, Webinars & Programmes',
@@ -20,8 +20,14 @@ export const metadata: Metadata = buildPageMetadata({
 });
 
 export default function EventsPage() {
+  const eventsJsonLd = getEventsCollectionJsonLd();
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(eventsJsonLd) }}
+      />
       {/* Page Hero Header */}
       <section className="page-hero">
         <div className="container">

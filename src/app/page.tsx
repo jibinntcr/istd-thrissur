@@ -3,12 +3,13 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { HeroShowcase } from '@/components/HeroShowcase';
 import { HomePhotoMarquee } from '@/components/HomePhotoMarquee';
+import { IstdIndiaMapShowcase } from '@/components/IstdIndiaMapShowcase';
 import {
   ALL_CHAPTER_EVENTS,
   OFFICIAL_LINKS,
   assetUrl,
 } from '@/data/siteData';
-import { buildPageMetadata } from '@/lib/seoConfig';
+import { buildPageMetadata, getHomePageJsonLd } from '@/lib/seoConfig';
 
 export const metadata: Metadata = buildPageMetadata({
   title:
@@ -50,9 +51,14 @@ export default function HomePage() {
   const upcomingEvents = ALL_CHAPTER_EVENTS.filter(
     (ev) => ev.status === 'upcoming'
   );
+  const homeJsonLd = getHomePageJsonLd();
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(homeJsonLd) }}
+      />
       {/* 1. Executive First-Impression Hero Section with Widescreen Showcase Slider */}
       <section className="hero-3d-master-section">
         {/* Subtle Architectural Mesh & Glow Elements */}
@@ -232,101 +238,9 @@ export default function HomePage() {
               gap: '3rem',
             }}
           >
-            {/* Left: Pure-CSS 3D Orbital Visualization of ISTD Vision & Mission */}
+            {/* Left: Animated India Map & Pan-India ISTD Vision/Mission Showcase */}
             <div>
-              <div className="ecosystem-3d-card">
-                <div className="ecosystem-3d-header">
-                  <span className="ecosystem-3d-tag">
-                    ◆ ISTD VISION &amp; MISSION IN MOTION
-                  </span>
-                  <h3>
-                    “Leading Transformation through Training &amp; Development”
-                  </h3>
-                  <p className="ecosystem-3d-subhead">
-                    The 4 Core Mission Pillars of the Indian Society for
-                    Training &amp; Development (ISTD)
-                  </p>
-                </div>
-
-                {/* Lightweight Pure-CSS 3D Orbital Rings & Animated Mission Nodes */}
-                <div className="ecosystem-3d-stage" aria-hidden="true">
-                  <div className="ecosystem-3d-ring ring-outer" />
-                  <div className="ecosystem-3d-ring ring-middle" />
-                  <div className="ecosystem-3d-ring ring-inner" />
-                  <div className="ecosystem-3d-pulse-halo" />
-
-                  <div className="ecosystem-3d-core">
-                    <span className="core-kicker">EST. 1970</span>
-                    <strong>ISTD</strong>
-                    <span>TRICHUR</span>
-                  </div>
-
-                  <div className="ecosystem-3d-node node-top">
-                    <span className="node-title">
-                      🎯 Training &amp; Development
-                    </span>
-                    <small className="node-sub">
-                      Individuals &amp; Organizations
-                    </small>
-                  </div>
-                  <div className="ecosystem-3d-node node-right">
-                    <span className="node-title">
-                      📚 Universal Knowledge
-                    </span>
-                    <small className="node-sub">
-                      Reservoir of Human Interface
-                    </small>
-                  </div>
-                  <div className="ecosystem-3d-node node-bottom">
-                    <span className="node-title">
-                      🔬 Exploratory Research
-                    </span>
-                    <small className="node-sub">
-                      Original Action Research
-                    </small>
-                  </div>
-                  <div className="ecosystem-3d-node node-left">
-                    <span className="node-title">
-                      💡 Innovative Practices
-                    </span>
-                    <small className="node-sub">
-                      Modern L&amp;D Methodologies
-                    </small>
-                  </div>
-                </div>
-
-                {/* Animated Mission Flow Strip */}
-                <div
-                  className="ecosystem-mission-flow"
-                  aria-label="ISTD Mission Flow"
-                >
-                  <div className="mission-flow-step">
-                    <span className="flow-dot blue" />
-                    <span>Facilitate Individuals &amp; Orgs</span>
-                  </div>
-                  <span className="mission-flow-arrow" aria-hidden="true">
-                    →
-                  </span>
-                  <div className="mission-flow-step">
-                    <span className="flow-dot gold" />
-                    <span>Excel in T&amp;D Activities</span>
-                  </div>
-                  <span className="mission-flow-arrow" aria-hidden="true">
-                    →
-                  </span>
-                  <div className="mission-flow-step">
-                    <span className="flow-dot red" />
-                    <span>Lead Transformation</span>
-                  </div>
-                </div>
-
-                <p className="ecosystem-3d-caption">
-                  Facilitating individuals and organizations to excel in
-                  Training &amp; Development activities while serving as a
-                  reservoir of universal knowledge of human interface through
-                  innovative practices and original exploratory research.
-                </p>
-              </div>
+              <IstdIndiaMapShowcase />
             </div>
 
             {/* Right: Institutional Mandate & Vision/Mission */}

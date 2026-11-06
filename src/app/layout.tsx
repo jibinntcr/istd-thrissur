@@ -4,6 +4,7 @@ import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
 import { LightboxProvider } from '@/components/LightboxProvider';
 import { NetworkingParticlesBackground } from '@/components/NetworkingParticlesBackground';
+import ScrollEnhancer from '@/components/ScrollEnhancer';
 import {
   SITE_URL,
   SITE_NAME,
@@ -100,7 +101,7 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
         <link
-          href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
           rel="stylesheet"
         />
         <script
@@ -112,6 +113,10 @@ export default function RootLayout({
       </head>
       <body>
         <NetworkingParticlesBackground />
+        <ScrollEnhancer />
+        <a href="#mainContent" className="skip-to-content">
+          Skip to main content
+        </a>
         <LightboxProvider>
           <Navbar />
           <main id="mainContent">{children}</main>

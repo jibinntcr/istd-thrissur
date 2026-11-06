@@ -2,7 +2,7 @@ import React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { MembershipPageClient } from '@/components/MembershipPageClient';
-import { buildPageMetadata } from '@/lib/seoConfig';
+import { buildPageMetadata, getMembershipPageJsonLd } from '@/lib/seoConfig';
 
 export const metadata: Metadata = buildPageMetadata({
   title: 'Membership Categories, Official Fee Schedule & Online Registration',
@@ -21,8 +21,14 @@ export const metadata: Metadata = buildPageMetadata({
 });
 
 export default function MembershipPage() {
+  const membershipJsonLd = getMembershipPageJsonLd();
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(membershipJsonLd) }}
+      />
       {/* Page Hero Header */}
       <section className="page-hero">
         <div className="container">

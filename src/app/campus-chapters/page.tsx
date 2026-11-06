@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { CAMPUS_CHAPTERS, assetUrl } from '@/data/siteData';
 import { CampusChapterEoiForm } from '@/components/CampusChapterEoiForm';
-import { buildPageMetadata } from '@/lib/seoConfig';
+import { buildPageMetadata, getCampusChaptersCollectionJsonLd } from '@/lib/seoConfig';
 
 export const metadata: Metadata = buildPageMetadata({
   title: 'Campus & Student Chapters — Academia–Industry Bridge & EOI',
@@ -47,8 +47,14 @@ const CAMPUS_CHAPTER_PILLARS = [
 ];
 
 export default function CampusChaptersPage() {
+  const campusChaptersJsonLd = getCampusChaptersCollectionJsonLd();
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(campusChaptersJsonLd) }}
+      />
       {/* 1. High-Contrast Executive Hero */}
       <section
         style={{

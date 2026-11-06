@@ -2,7 +2,7 @@ import React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { GalleryClient } from '@/components/GalleryClient';
-import { buildPageMetadata } from '@/lib/seoConfig';
+import { buildPageMetadata, getGalleryPageJsonLd } from '@/lib/seoConfig';
 
 export const metadata: Metadata = buildPageMetadata({
   title: 'Photo Gallery — Inauguration & Chapter Events',
@@ -18,8 +18,14 @@ export const metadata: Metadata = buildPageMetadata({
 });
 
 export default function GalleryPage() {
+  const galleryJsonLd = getGalleryPageJsonLd();
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(galleryJsonLd) }}
+      />
       {/* Page Hero Header */}
       <section className="page-hero">
         <div className="container">

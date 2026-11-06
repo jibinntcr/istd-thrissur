@@ -658,7 +658,7 @@ export function EventRegistrationForm({ event }: EventRegistrationFormProps) {
         </div>
       </div>
 
-      <div style={{ padding: '2rem 2.25rem' }}>
+      <div style={{ padding: 'clamp(1.15rem, 3.5vw, 2rem) clamp(1rem, 3.5vw, 2.25rem)' }}>
         {/* ===================================================================
             RETURNING PARTICIPANT 1-CLICK AUTO-FILL BAR
            =================================================================== */}
@@ -761,7 +761,7 @@ export function EventRegistrationForm({ event }: EventRegistrationFormProps) {
               }}
               style={{
                 flex: 1,
-                minWidth: '240px',
+                minWidth: 'min(100%, 240px)',
                 background: '#FFFFFF',
                 borderColor: '#93C5FD',
                 fontSize: '0.88rem',
@@ -861,8 +861,6 @@ export function EventRegistrationForm({ event }: EventRegistrationFormProps) {
 
             <div
               style={{
-                display: 'grid',
-                gridTemplateColumns: '110px 1fr 180px 170px',
                 gap: '1rem',
                 marginBottom: '1rem',
               }}
@@ -1363,7 +1361,7 @@ export function EventRegistrationForm({ event }: EventRegistrationFormProps) {
               disabled={submitting}
               className="btn btn-red"
               style={{
-                minWidth: '280px',
+                minWidth: 'min(100%, 280px)',
                 padding: '0.95rem 1.75rem',
                 fontSize: '1rem',
                 fontWeight: 800,

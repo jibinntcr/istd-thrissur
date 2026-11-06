@@ -108,20 +108,6 @@ export function NetworkingParticlesBackground() {
       mouse.y = -9999;
     };
 
-    const handleTouchMove = (e: TouchEvent) => {
-      if (e.touches.length > 0) {
-        mouse.x = e.touches[0].clientX;
-        mouse.y = e.touches[0].clientY;
-        mouse.active = true;
-      }
-    };
-
-    const handleTouchEnd = () => {
-      mouse.active = false;
-      mouse.x = -9999;
-      mouse.y = -9999;
-    };
-
     const handleClick = (e: MouseEvent) => {
       mouse.rippleX = e.clientX;
       mouse.rippleY = e.clientY;
@@ -132,8 +118,6 @@ export function NetworkingParticlesBackground() {
     window.addEventListener('resize', handleResize, { passive: true });
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
     window.addEventListener('mouseleave', handleMouseLeave, { passive: true });
-    window.addEventListener('touchmove', handleTouchMove, { passive: true });
-    window.addEventListener('touchend', handleTouchEnd, { passive: true });
     window.addEventListener('click', handleClick, { passive: true });
 
     const renderFrame = () => {
@@ -270,8 +254,6 @@ export function NetworkingParticlesBackground() {
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseleave', handleMouseLeave);
-      window.removeEventListener('touchmove', handleTouchMove);
-      window.removeEventListener('touchend', handleTouchEnd);
       window.removeEventListener('click', handleClick);
     };
   }, [isAdminRoute]);

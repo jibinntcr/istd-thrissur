@@ -90,7 +90,7 @@ export function MembershipPageClient() {
               background:
                 'linear-gradient(135deg, #0f172a 0%, #1e3a8a 60%, #1d4ed8 100%)',
               borderRadius: '18px',
-              padding: '2rem 2.25rem',
+              padding: 'clamp(1.25rem, 3.5vw, 2rem) clamp(1.15rem, 3.5vw, 2.25rem)',
               color: '#ffffff',
               display: 'flex',
               flexWrap: 'wrap',
@@ -100,7 +100,7 @@ export function MembershipPageClient() {
               boxShadow: '0 18px 40px -12px rgba(15, 23, 42, 0.25)',
             }}
           >
-            <div style={{ flex: '1 1 520px' }}>
+            <div style={{ flex: '1 1 min(100%, 520px)' }}>
               <span
                 style={{
                   display: 'inline-block',
@@ -167,7 +167,8 @@ export function MembershipPageClient() {
                 display: 'flex',
                 flexDirection: 'column',
                 gap: '0.65rem',
-                minWidth: '250px',
+                minWidth: 'min(100%, 250px)',
+                flex: '1 1 250px',
               }}
             >
               <a

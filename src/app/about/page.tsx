@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { PhotoCard } from '@/components/PhotoCard';
 import { OFFICIAL_LINKS } from '@/data/siteData';
-import { buildPageMetadata } from '@/lib/seoConfig';
+import { buildPageMetadata, getAboutPageJsonLd } from '@/lib/seoConfig';
 
 export const metadata: Metadata = buildPageMetadata({
   title: 'About Us — History, Vision & Mission',
@@ -20,8 +20,14 @@ export const metadata: Metadata = buildPageMetadata({
 });
 
 export default function AboutPage() {
+  const aboutJsonLd = getAboutPageJsonLd();
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(aboutJsonLd) }}
+      />
       {/* Page Hero Header */}
       <section className="page-hero">
         <div className="container">
