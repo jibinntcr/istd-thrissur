@@ -6721,16 +6721,137 @@ table {
 }
 
 /* ============================================================================
-   ANIMATED INDIA MAP & ISTD PAN-INDIA NETWORK SHOWCASE
+   ANIMATED INDIA MAP & ISTD PAN-INDIA NETWORK SHOWCASE (EQUAL-HEIGHT SPLIT)
    ============================================================================ */
+.about-equal-grid {
+  align-items: stretch !important;
+  gap: 2.25rem !important;
+  margin-bottom: 3rem;
+}
+
+.about-equal-col {
+  display: flex;
+  flex-direction: column;
+}
+
 .india-map-showcase-card {
   position: relative;
   overflow: hidden;
-  padding: 1.75rem 1.65rem 1.55rem;
+  padding: 1.5rem 1.45rem 1.35rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.institutional-identity-card {
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  border: 1.5px solid #dbe4f0;
+  border-top: 4px solid #1d4ed8;
+  border-radius: 24px;
+  padding: 1.75rem 1.85rem 1.5rem;
+  box-shadow: 0 18px 40px -16px rgba(15, 23, 42, 0.08);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.identity-meta-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.28rem 0.78rem;
+  border-radius: 999px;
+  background: #fef9c3;
+  border: 1px solid #fde047;
+  color: #854d0e;
+  font-family: var(--font-heading);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.vision-mission-mini-grid {
+  align-items: stretch;
+}
+
+.vm-mini-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.identity-pillars-2x2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.65rem;
+  margin-top: 0.95rem;
+}
+
+.identity-pillar-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 0.58rem 0.75rem;
+  box-shadow: 0 4px 10px -4px rgba(15, 23, 42, 0.05);
+}
+
+.identity-pillar-icon {
+  font-size: 1.15rem;
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: #eff6ff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.identity-pillar-item strong {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1.2;
+}
+
+.identity-pillar-item small {
+  display: block;
+  font-size: 0.7rem;
+  color: #64748b;
+  line-height: 1.25;
+}
+
+.identity-card-footer {
+  margin-top: 1.15rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.pillar-3d-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .india-map-stage {
   position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   background: radial-gradient(
     circle at 50% 54%,
     rgba(30, 64, 175, 0.36) 0%,
@@ -6739,8 +6860,8 @@ table {
   );
   border: 1px solid rgba(96, 165, 250, 0.26);
   border-radius: 18px;
-  padding: 0.9rem 0.9rem 0.85rem;
-  margin: 0.85rem 0 1rem;
+  padding: 0.85rem 0.85rem 0.8rem;
+  margin: 0.65rem 0 0.75rem;
   box-shadow: inset 0 0 36px rgba(15, 23, 42, 0.75);
 }
 
@@ -6806,7 +6927,7 @@ table {
 
 .india-map-svg-wrapper {
   width: 100%;
-  max-width: 445px;
+  max-width: 365px;
   margin: 0 auto;
   position: relative;
 }
@@ -7063,11 +7184,13 @@ table {
 }
 
 @media (max-width: 540px) {
-  .india-map-showcase-card {
+  .india-map-showcase-card,
+  .institutional-identity-card {
     padding: 1.25rem 1rem 1.2rem;
   }
 
-  .india-map-pillars-grid {
+  .india-map-pillars-grid,
+  .identity-pillars-2x2 {
     grid-template-columns: 1fr;
   }
 

@@ -230,106 +230,154 @@ export default function HomePage() {
       {/* 3. Interactive 3D ISTD Vision & Mission Ecosystem & Institutional Identity */}
       <section className="section-padding bg-white" id="aboutTheChapter">
         <div className="container">
-          <div
-            className="split-grid"
-            style={{
-              alignItems: 'center',
-              marginBottom: '3.5rem',
-              gap: '3rem',
-            }}
-          >
+          <div className="split-grid about-equal-grid">
             {/* Left: Animated India Map & Pan-India ISTD Vision/Mission Showcase */}
-            <div>
+            <div className="about-equal-col">
               <IstdIndiaMapShowcase />
             </div>
 
-            {/* Right: Institutional Mandate & Vision/Mission */}
-            <div>
-              <span className="section-tag tag-blue">
-                Institutional Identity
-              </span>
-              <h2 className="section-title">
-                National Legacy &amp; ISTD Trichur Diamond Chapter Mandate
-              </h2>
-              <p
-                style={{
-                  color: 'var(--color-body)',
-                  marginBottom: '1rem',
-                  fontSize: '0.98rem',
-                  lineHeight: 1.78,
-                  textAlign: 'justify',
-                }}
-              >
-                The{' '}
-                <a
-                  href={OFFICIAL_LINKS.istdNationalWeb}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{ color: 'var(--brand-blue)', fontWeight: 700 }}
-                >
-                  Indian Society for Training &amp; Development (ISTD)
-                </a>
-                , established in <strong>April 1970</strong> in New Delhi under
-                the Societies Registration Act, 1860, is India’s premier
-                national autonomous society devoted to training, learning, and
-                human resource development across industry, government, and
-                academia.
-              </p>
-              <p
-                style={{
-                  color: 'var(--color-body)',
-                  marginBottom: '1.35rem',
-                  fontSize: '0.98rem',
-                  lineHeight: 1.78,
-                  textAlign: 'justify',
-                }}
-              >
-                Inaugurated on <strong>30 March 2026</strong> as ISTD’s{' '}
-                <strong>Diamond Chapter</strong> under the mentorship of{' '}
-                <strong>Prof. (Dr.) Zakkariya K. A.</strong> (Founder &amp;
-                Mentor, ISTD Trichur Chapter &amp; National Vice President,
-                ISTD) and the chairmanship of <strong>Tony Chacko</strong>, with{' '}
-                <strong>Sneha Rose George</strong> (Secretary) and{' '}
-                <strong>Jibin N</strong> (Treasurer), the{' '}
-                <strong>ISTD Trichur Chapter</strong> serves as a dynamic hub
-                for professional learning, management research, and capability
-                building across Central Kerala.
-              </p>
-
-              <div className="vision-mission-mini-grid">
-                <div className="vm-mini-card vm-blue">
-                  <span className="vm-kicker">Our Vision (ISTD)</span>
-                  <p
+            {/* Right: Institutional Mandate, Vision/Mission & 4 Core Pillars */}
+            <div className="about-equal-col">
+              <div className="institutional-identity-card">
+                <div>
+                  <div
                     style={{
-                      textAlign: 'justify',
-                      fontWeight: 700,
-                      color: '#0f172a',
+                      display: 'flex',
+                      flexWrap: 'wrap',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      gap: '0.5rem',
+                      marginBottom: '0.5rem',
                     }}
                   >
-                    “Leading Transformation through Training &amp; Development.”
-                  </p>
-                </div>
-                <div className="vm-mini-card vm-red">
-                  <span className="vm-kicker">Our Mission (ISTD)</span>
-                  <p style={{ textAlign: 'justify' }}>
-                    “To Facilitate Individuals and Organizations. To excel in
-                    Training &amp; Development Activities Serve As Reservoir of
-                    Universal Knowledge of Human Interface through Innovative
-                    Practices and Original Exploratory Research.”
-                  </p>
-                </div>
-              </div>
+                    <span className="section-tag tag-blue" style={{ marginBottom: 0 }}>
+                      Institutional Identity
+                    </span>
+                    <span className="identity-meta-pill">
+                      ◆ 55th Milestone Year • Diamond Chapter
+                    </span>
+                  </div>
 
-              <div className="btn-group" style={{ marginTop: '1.5rem' }}>
-                <Link href="/about" className="btn btn-primary btn-sm">
-                  Explore Chapter Profile &rarr;
-                </Link>
-                <Link
-                  href="/committee"
-                  className="btn btn-outline-navy btn-sm"
-                >
-                  Managing Committee
-                </Link>
+                  <h2 className="section-title" style={{ marginBottom: '0.85rem' }}>
+                    National Legacy &amp; ISTD Trichur Diamond Chapter Mandate
+                  </h2>
+
+                  <p
+                    style={{
+                      color: 'var(--color-body)',
+                      marginBottom: '0.9rem',
+                      fontSize: '0.95rem',
+                      lineHeight: 1.72,
+                      textAlign: 'justify',
+                    }}
+                  >
+                    The{' '}
+                    <a
+                      href={OFFICIAL_LINKS.istdNationalWeb}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ color: 'var(--brand-blue)', fontWeight: 700 }}
+                    >
+                      Indian Society for Training &amp; Development (ISTD)
+                    </a>
+                    , established in <strong>April 1970</strong> in New Delhi under
+                    the Societies Registration Act, 1860, is India’s premier
+                    national autonomous society devoted to training, learning, and
+                    human resource development across industry, government, and
+                    academia.
+                  </p>
+
+                  <p
+                    style={{
+                      color: 'var(--color-body)',
+                      marginBottom: '1.15rem',
+                      fontSize: '0.95rem',
+                      lineHeight: 1.72,
+                      textAlign: 'justify',
+                    }}
+                  >
+                    Inaugurated on <strong>30 March 2026</strong> as ISTD’s{' '}
+                    <strong>Diamond Chapter</strong> under the mentorship of{' '}
+                    <strong>Prof. (Dr.) Zakkariya K. A.</strong> (Founder &amp;
+                    Mentor, ISTD Trichur Chapter &amp; National Vice President,
+                    ISTD) and the chairmanship of <strong>Tony Chacko</strong>, with{' '}
+                    <strong>Sneha Rose George</strong> (Secretary) and{' '}
+                    <strong>Jibin N</strong> (Treasurer), the{' '}
+                    <strong>ISTD Trichur Chapter</strong> serves as a dynamic hub
+                    for professional learning, management research, and capability
+                    building across Central Kerala.
+                  </p>
+
+                  <div className="vision-mission-mini-grid">
+                    <div className="vm-mini-card vm-blue">
+                      <span className="vm-kicker">Our Vision (ISTD)</span>
+                      <p
+                        style={{
+                          textAlign: 'justify',
+                          fontWeight: 700,
+                          color: '#0f172a',
+                        }}
+                      >
+                        “Leading Transformation through Training &amp; Development.”
+                      </p>
+                    </div>
+                    <div className="vm-mini-card vm-red">
+                      <span className="vm-kicker">Our Mission (ISTD)</span>
+                      <p style={{ textAlign: 'justify' }}>
+                        “To Facilitate Individuals and Organizations. To excel in
+                        Training &amp; Development Activities Serve As Reservoir of
+                        Universal Knowledge of Human Interface through Innovative
+                        Practices and Original Exploratory Research.”
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* 4 Core Mission Pillars Balanced 2x2 Grid */}
+                  <div className="identity-pillars-2x2">
+                    <div className="identity-pillar-item">
+                      <span className="identity-pillar-icon">🎯</span>
+                      <div>
+                        <strong>Training &amp; Development</strong>
+                        <small>Individuals &amp; Organizations</small>
+                      </div>
+                    </div>
+                    <div className="identity-pillar-item">
+                      <span className="identity-pillar-icon">📚</span>
+                      <div>
+                        <strong>Universal Knowledge</strong>
+                        <small>Reservoir of Human Interface</small>
+                      </div>
+                    </div>
+                    <div className="identity-pillar-item">
+                      <span className="identity-pillar-icon">💡</span>
+                      <div>
+                        <strong>Innovative Practices</strong>
+                        <small>Modern L&amp;D Methodologies</small>
+                      </div>
+                    </div>
+                    <div className="identity-pillar-item">
+                      <span className="identity-pillar-icon">🔬</span>
+                      <div>
+                        <strong>Exploratory Research</strong>
+                        <small>Original Action Research</small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="identity-card-footer">
+                  <div className="btn-group" style={{ marginTop: 0 }}>
+                    <Link href="/about" className="btn btn-primary btn-sm">
+                      Explore Chapter Profile &rarr;
+                    </Link>
+                    <Link
+                      href="/committee"
+                      className="btn btn-outline-navy btn-sm"
+                    >
+                      Managing Committee
+                    </Link>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

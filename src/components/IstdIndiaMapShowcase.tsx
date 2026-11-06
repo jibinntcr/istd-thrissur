@@ -158,37 +158,6 @@ const ISTD_INDIA_HUBS: ChapterHub[] = [
   },
 ];
 
-const MISSION_PILLARS = [
-  {
-    id: 'training',
-    icon: '🎯',
-    title: 'Training & Development',
-    sub: 'Facilitating Individuals & Organizations',
-    color: '#38BDF8',
-  },
-  {
-    id: 'knowledge',
-    icon: '📚',
-    title: 'Universal Knowledge',
-    sub: 'Reservoir of Human Interface',
-    color: '#FBBF24',
-  },
-  {
-    id: 'innovation',
-    icon: '💡',
-    title: 'Innovative Practices',
-    sub: 'Modern L&D Methodologies',
-    color: '#34D399',
-  },
-  {
-    id: 'research',
-    icon: '🔬',
-    title: 'Exploratory Research',
-    sub: 'Original Action Research',
-    color: '#FB7185',
-  },
-];
-
 const STATE_PALETTE: Record<number, string> = {
   1: 'rgba(30, 64, 175, 0.58)',
   2: 'rgba(29, 78, 216, 0.46)',
@@ -249,7 +218,7 @@ export function IstdIndiaMapShowcase() {
 
         <div className="india-map-svg-wrapper">
           <svg
-            viewBox="15 20 755 815"
+            viewBox="0 15 775 820"
             className="india-map-svg"
             role="img"
             aria-label="Official Map of India with state boundaries showing ISTD National Headquarters in New Delhi connected to ISTD Trichur Diamond Chapter in Kerala and chapters across India"
@@ -308,11 +277,11 @@ export function IstdIndiaMapShowcase() {
               strokeWidth="1.1"
               strokeDasharray="5 8"
             >
-              <line x1="30" y1="150" x2="750" y2="150" />
-              <line x1="30" y1="290" x2="750" y2="290" />
-              <line x1="30" y1="430" x2="750" y2="430" />
-              <line x1="30" y1="570" x2="750" y2="570" />
-              <line x1="30" y1="710" x2="750" y2="710" />
+              <line x1="20" y1="150" x2="755" y2="150" />
+              <line x1="20" y1="290" x2="755" y2="290" />
+              <line x1="20" y1="430" x2="755" y2="430" />
+              <line x1="20" y1="570" x2="755" y2="570" />
+              <line x1="20" y1="710" x2="755" y2="710" />
               <line x1="160" y1="30" x2="160" y2="825" />
               <line x1="310" y1="30" x2="310" y2="825" />
               <line x1="460" y1="30" x2="460" y2="825" />
@@ -420,7 +389,6 @@ export function IstdIndiaMapShowcase() {
 
             {/* Animated Knowledge & Training Network Arcs Across India */}
             <g className="india-network-arcs" fill="none">
-              {/* Regional Network Mesh Lines from New Delhi HQ (274, 265) */}
               <path
                 d="M 274 265 Q 256 232 248 205"
                 stroke="rgba(96, 165, 250, 0.55)"
@@ -566,7 +534,7 @@ export function IstdIndiaMapShowcase() {
                     <circle
                       cx={hub.x}
                       cy={hub.y}
-                      r="36"
+                      r="34"
                       fill="none"
                       stroke="rgba(250, 204, 21, 0.6)"
                       strokeWidth="2.4"
@@ -575,7 +543,7 @@ export function IstdIndiaMapShowcase() {
                     <circle
                       cx={hub.x}
                       cy={hub.y}
-                      r="23"
+                      r="22"
                       fill="none"
                       stroke="rgba(245, 158, 11, 0.85)"
                       strokeWidth="2.8"
@@ -584,28 +552,36 @@ export function IstdIndiaMapShowcase() {
                     <circle
                       cx={hub.x}
                       cy={hub.y}
-                      r="13"
+                      r="12"
                       fill="#F59E0B"
                       stroke="#FEF08A"
                       strokeWidth="3.5"
                       filter="url(#mapGlow)"
                     />
-                    <circle cx={hub.x} cy={hub.y} r="5" fill="#FFFFFF" />
+                    <circle cx={hub.x} cy={hub.y} r="4.8" fill="#FFFFFF" />
 
-                    {/* Callout Badge for ISTD Trichur Chapter */}
-                    <g transform={`translate(${hub.x - 216}, ${hub.y - 26})`}>
+                    {/* Pointer Line + Callout Badge for ISTD Trichur Chapter (Positioned cleanly in Arabian Sea to the left of Kerala) */}
+                    <line
+                      x1={hub.x - 14}
+                      y1={hub.y}
+                      x2={hub.x - 32}
+                      y2={hub.y}
+                      stroke="#FACC15"
+                      strokeWidth="2"
+                    />
+                    <g transform={`translate(10, ${hub.y - 26})`}>
                       <rect
                         x="0"
                         y="0"
-                        width="198"
+                        width="196"
                         height="52"
                         rx="12"
-                        fill="rgba(11, 34, 57, 0.95)"
+                        fill="rgba(11, 34, 57, 0.96)"
                         stroke="#FACC15"
                         strokeWidth="2.4"
                       />
                       <text
-                        x="99"
+                        x="98"
                         y="22"
                         textAnchor="middle"
                         fill="#FDE047"
@@ -616,11 +592,11 @@ export function IstdIndiaMapShowcase() {
                         ★ ISTD TRICHUR
                       </text>
                       <text
-                        x="99"
+                        x="98"
                         y="40"
                         textAnchor="middle"
                         fill="#FFFFFF"
-                        fontSize="11.5"
+                        fontSize="11"
                         fontWeight="700"
                       >
                         DIAMOND CHAPTER (KERALA)
@@ -772,28 +748,6 @@ export function IstdIndiaMapShowcase() {
         </div>
       </div>
 
-      {/* 4 Core ISTD Mission Pillars Grid Under the Map */}
-      <div
-        className="india-map-pillars-grid"
-        aria-label="4 Core Mission Pillars of ISTD"
-      >
-        {MISSION_PILLARS.map((pillar) => (
-          <div
-            key={pillar.id}
-            className="india-map-pillar-chip"
-            style={{ '--chip-accent': pillar.color } as React.CSSProperties}
-          >
-            <span className="pillar-chip-icon" aria-hidden="true">
-              {pillar.icon}
-            </span>
-            <div className="pillar-chip-text">
-              <strong>{pillar.title}</strong>
-              <small>{pillar.sub}</small>
-            </div>
-          </div>
-        ))}
-      </div>
-
       {/* Animated Mission Flow Strip */}
       <div className="ecosystem-mission-flow" aria-label="ISTD Mission Flow">
         <div className="mission-flow-step">
@@ -815,13 +769,6 @@ export function IstdIndiaMapShowcase() {
           <span>Lead Transformation</span>
         </div>
       </div>
-
-      <p className="ecosystem-3d-caption">
-        Facilitating individuals and organizations across India to excel in
-        Training &amp; Development activities while serving as a reservoir of
-        universal knowledge of human interface through innovative practices and
-        original exploratory research.
-      </p>
     </div>
   );
 }
