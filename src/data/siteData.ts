@@ -140,7 +140,12 @@ export function getZakkariyaAffiliationForEvent(isPostAug2026 = true): string {
 
 export const OFFICIAL_LINKS = {
   istdNationalWeb: 'https://www.istd.in/',
-  istdNationalMembership: 'https://www.istd.in/',
+  istdNationalMembership: 'https://www.istd.in/member-categories/',
+  istdMemberRegistrationPortal: 'https://www.istd.co.in/register/member',
+  istdStudentRegistrationPortal: 'https://www.istd.co.in/register/student',
+  istdMemberLoginPortal: 'https://www.istd.co.in/login',
+  istdFeeNewMembers: 'https://www.istd.in/membership-fees-new-members/',
+  istdFeeRenewal: 'https://www.istd.in/membership-fee-renewal/',
   istdNationalLinkedin: 'https://www.linkedin.com/school/istd-india/',
   istdTrichurLinkedin: 'https://www.linkedin.com/company/istd-trichur/',
 };

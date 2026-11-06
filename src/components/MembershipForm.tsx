@@ -150,12 +150,20 @@ export function MembershipForm({
   return (
     <div className="form-card" id="membershipEnquiry">
       <div className="text-center" style={{ marginBottom: '1.75rem' }}>
-        <span className="section-tag tag-red">Expression of Interest</span>
-        <h2 className="section-title">Membership Enquiry</h2>
+        <span className="section-tag tag-red">Chapter Assistance &amp; Enquiry</span>
+        <h2 className="section-title">ISTD Trichur Chapter Membership Enquiry</h2>
         <p className="section-subtitle">
-          This form collects expressions of interest for the ISTD Trichur Chapter. Formal ISTD
-          membership registration and fee remittance are completed through the ISTD National
-          Office, New Delhi.
+          You can register directly online at{' '}
+          <a
+            href="https://www.istd.co.in/register/member"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: 'var(--brand-blue)', fontWeight: 700, textDecoration: 'underline' }}
+          >
+            istd.co.in/register/member
+          </a>{' '}
+          or submit this enquiry form if you would like assistance from the ISTD Trichur Chapter
+          office bearers with your application and chapter affiliation.
         </p>
       </div>
 
@@ -257,10 +265,18 @@ export function MembershipForm({
               onChange={(e) => handleCategorySelect(e.target.value)}
               required
             >
-              <option value="Individual">Individual Membership</option>
-              <option value="Institutional">Institutional Membership</option>
-              <option value="Student">Student Membership</option>
-              <option value="Associate">Associate Membership</option>
+              <option value="Individual (Life)">
+                Individual — Life Membership (₹9,204 incl. GST)
+              </option>
+              <option value="Individual (Annual)">
+                Individual — Annual Membership (₹1,534 incl. GST)
+              </option>
+              <option value="Associate (Student)">
+                Associate Member — For Students / Entry-Level (₹826 incl. GST)
+              </option>
+              <option value="Institutional">
+                Institutional Membership — Annual (₹15,340) / Life (₹92,040)
+              </option>
             </select>
           </div>
         </div>

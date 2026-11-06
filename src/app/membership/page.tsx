@@ -5,9 +5,9 @@ import { MembershipPageClient } from '@/components/MembershipPageClient';
 import { buildPageMetadata } from '@/lib/seoConfig';
 
 export const metadata: Metadata = buildPageMetadata({
-  title: 'Membership Categories, Benefits, Fees & Application',
+  title: 'Membership Categories, Official Fee Schedule & Online Registration',
   description:
-    'Explore ISTD Individual, Institutional, and Student Membership categories, benefits, eligibility, fee structure, and apply through the ISTD Trichur Chapter.',
+    'Official ISTD Membership categories (Individual Life, Individual Annual, Associate/Student, Institutional), fee schedule, eligibility, benefits, and direct link to the ISTD online registration portal (istd.co.in/register/member).',
   path: '/membership',
   image: '/photos/istd-audience.jpeg',
   keywords: [
@@ -15,6 +15,8 @@ export const metadata: Metadata = buildPageMetadata({
     'Join ISTD Trichur Chapter',
     'ISTD Life Membership Fees',
     'ISTD Institutional Membership',
+    'ISTD Associate Student Membership',
+    'istd.co.in register member',
   ],
 });
 
@@ -29,10 +31,10 @@ export default function MembershipPage() {
             <span>/</span>
             <span>Membership</span>
           </div>
-          <h1 className="page-hero-title">Membership</h1>
+          <h1 className="page-hero-title">ISTD Membership</h1>
           <p className="page-hero-subtitle">
-            Information on ISTD membership categories, documented benefits, eligibility, fee
-            structure, application steps, and chapter membership enquiries.
+            Official ISTD membership categories, eligibility criteria, New &amp; Renewal fee
+            tariffs, member privileges, and direct online registration via the ISTD National Portal.
           </p>
         </div>
       </section>
