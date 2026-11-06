@@ -154,7 +154,7 @@ export const CHAPTER_CONTACTS = {
   chairman: {
     name: 'Tony Chacko',
     role: 'Chairman',
-    designation: 'CEO, Tony & Iby',
+    designation: 'CEO & Principal Consultant, Tony & Iby Global Solutions Pvt. Ltd.',
     phoneDisplay: '+91 9846101034',
     phoneHref: '+919846101034',
     email: 'tonychacko67@gmail.com',
@@ -163,7 +163,7 @@ export const CHAPTER_CONTACTS = {
   secretary: {
     name: 'Sneha Rose George',
     role: 'Secretary',
-    designation: 'Research Scholar, CUSAT',
+    designation: 'Research Scholar, School of Management Studies, CUSAT',
     phoneDisplay: '+91 9496839168',
     phoneHref: '+919496839168',
     email: 'jibintcr@gmail.com',
@@ -172,7 +172,7 @@ export const CHAPTER_CONTACTS = {
   treasurer: {
     name: 'Jibin N',
     role: 'Treasurer',
-    designation: 'IT Professional & Entrepreneur',
+    designation: 'Managing Director, NEOM Panels & Founder, Infinio Technology Solutions',
     phoneDisplay: '+91 9496839168',
     phoneHref: '+919496839168',
     email: 'jibintcr@gmail.com',

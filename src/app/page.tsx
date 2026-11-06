@@ -2,8 +2,8 @@ import React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { HeroShowcase } from '@/components/HeroShowcase';
+import { EventsChronicleSection } from '@/components/EventsChronicleSection';
 import {
-  ALL_CHAPTER_EVENTS,
   OFFICIAL_LINKS,
   assetUrl,
 } from '@/data/siteData';
@@ -46,13 +46,9 @@ const STRATEGIC_PILLARS = [
 ];
 
 export default function HomePage() {
-  const upcomingEvents = ALL_CHAPTER_EVENTS.filter(
-    (ev) => ev.status === 'upcoming'
-  );
-
   return (
     <>
-      {/* 1. Luminous Executive Hero Section with Large-Format Image Slider */}
+      {/* 1. Executive First-Impression Hero Section with Widescreen Showcase Slider */}
       <section className="hero-3d-master-section">
         {/* Subtle Architectural Mesh & Glow Elements */}
         <div className="hero-3d-perspective-grid" aria-hidden="true" />
@@ -77,7 +73,7 @@ export default function HomePage() {
               </div>
 
               <h1 className="hero-3d-headline">
-                Advancing Excellence in{' '}
+                Leading Transformation through{' '}
                 <span className="hero-3d-gradient-text">
                   Training, Leadership &amp;
                 </span>{' '}
@@ -85,17 +81,27 @@ export default function HomePage() {
               </h1>
 
               <p className="hero-3d-lead">
-                Inaugurated on <strong>30 March 2026</strong> in the 55th
-                milestone year of the{' '}
+                Inaugurated on <strong>30 March 2026</strong> as the prestigious{' '}
+                <strong>Diamond Chapter</strong> in the 55th milestone year of
+                the{' '}
                 <strong>
                   Indian Society for Training &amp; Development (ISTD, New
                   Delhi)
                 </strong>
-                , the <strong>ISTD Trichur Chapter</strong> unites trainers, HR
-                leaders, academicians, entrepreneurs, and institutions across
-                Central Kerala for continuous learning, knowledge exchange, and
-                organisational transformation.
+                , the <strong>ISTD Trichur Chapter</strong> unites corporate
+                trainers, HR leaders, academicians, researchers, entrepreneurs,
+                and higher education institutions across Central Kerala to
+                advance professional learning, innovative L&amp;D practices, and
+                organisational excellence.
               </p>
+
+              {/* Official Vision Highlight Strip inside Hero */}
+              <div className="hero-vision-callout">
+                <span className="hero-vision-kicker">OFFICIAL ISTD VISION</span>
+                <p className="hero-vision-quote">
+                  “Leading Transformation through Training &amp; Development.”
+                </p>
+              </div>
 
               {/* Hero Action Buttons (Strictly 2 Primary Buttons) */}
               <div className="hero-3d-actions">
@@ -107,10 +113,10 @@ export default function HomePage() {
                   <span aria-hidden="true">→</span>
                 </Link>
                 <Link
-                  href="#upcomingProgrammes"
+                  href="#eventsProgrammesSection"
                   className="btn btn-primary btn-lg"
                 >
-                  <span>Upcoming Programmes</span>
+                  <span>2026 Events &amp; Archives</span>
                 </Link>
               </div>
 
@@ -145,15 +151,15 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 2. High-Visibility Live News & Announcements Bar (Positioned Just Below Hero Section) */}
+      {/* 2. Widened, High-Attention Upcoming Events & Live Announcements Ribbon */}
       <div
         className="upcoming-ticker-bar"
-        aria-label="ISTD Trichur Chapter Live Announcements and Upcoming Events"
+        aria-label="ISTD Trichur Chapter Upcoming Events and Live Announcements"
       >
-        <div className="container upcoming-ticker-inner">
+        <div className="container upcoming-ticker-wide-container upcoming-ticker-inner">
           <div className="upcoming-ticker-label">
             <span className="pulse-dot-green" aria-hidden="true" />
-            <span>LIVE UPDATES</span>
+            <span>UPCOMING &amp; LIVE • 2026</span>
           </div>
 
           <div className="upcoming-ticker-viewport">
@@ -163,11 +169,14 @@ export default function HomePage() {
                 className="upcoming-ticker-item"
               >
                 <span className="ticker-date-pill">
-                  10 NOV 2026 • 7:00 PM IST
+                  NEXT WEBINAR • 10 NOV 2026 • 7:00 PM IST
                 </span>
-                <strong>Upcoming Webinar:</strong> “Advancing AIoT Research:
-                From Intelligent Algorithms to Real-World Applications” —
-                Boopathy (CTO, Monzha Research Labs) &rarr;
+                <strong>
+                  “Advancing AIoT Research: From Intelligent Algorithms to
+                  Real-World Applications”
+                </strong>{' '}
+                — Resource Person: Boopathy (CTO, Monzha Research Labs Pvt.
+                Ltd.) • Google Meet &rarr;
               </Link>
               <span className="upcoming-ticker-sep" aria-hidden="true">
                 ◆
@@ -180,7 +189,7 @@ export default function HomePage() {
                 <strong>First Student Chapter Inaugurated:</strong> Christ
                 College of Engineering (Autonomous), Irinjalakuda — Inaugurated
                 by Prof. (Dr.) Zakkariya K. A. (National Vice President, ISTD)
-                &rarr;
+                &amp; Tony Chacko (Chairman) &rarr;
               </Link>
               <span className="upcoming-ticker-sep" aria-hidden="true">
                 ◆
@@ -189,9 +198,10 @@ export default function HomePage() {
                 href="/events/chapter-connect-2026"
                 className="upcoming-ticker-item"
               >
-                <span className="ticker-date-pill">CHAPTER CONNECT 2026</span>
-                <strong>Members’ Orientation &amp; Networking Forum</strong> at
-                Hotel Elite International, Trichur — View Highlights &rarr;
+                <span className="ticker-date-pill">2026 ARCHIVE</span>
+                <strong>Chapter Connect 2026:</strong> Members’ Orientation &amp;
+                Professional Networking Forum at Hotel Elite International,
+                Trichur — View Report &amp; Photos &rarr;
               </Link>
               <span className="upcoming-ticker-sep" aria-hidden="true">
                 ◆
@@ -199,22 +209,22 @@ export default function HomePage() {
               <Link href="/membership" className="upcoming-ticker-item">
                 <span className="ticker-date-pill gold">MEMBERSHIP OPEN</span>
                 Join ISTD Trichur Diamond Chapter — Individual, Institutional
-                &amp; Student Memberships Available &rarr;
+                &amp; Student Memberships Open via Official ISTD Portal &rarr;
               </Link>
             </div>
           </div>
 
           <Link
-            href="/events/advancing-aiot-research"
+            href="/events/advancing-aiot-research#eventRegistrationFormBox"
             className="upcoming-ticker-cta"
           >
-            <span>Register Now</span>
+            <span>Register Free</span>
             <span aria-hidden="true">→</span>
           </Link>
         </div>
       </div>
 
-      {/* 3. Interactive 3D Ecosystem & Institutional Identity */}
+      {/* 3. Interactive 3D ISTD Vision & Mission Ecosystem & Institutional Identity */}
       <section className="section-padding bg-white" id="aboutTheChapter">
         <div className="container">
           <div
@@ -225,45 +235,99 @@ export default function HomePage() {
               gap: '3rem',
             }}
           >
-            {/* Left: Pure-CSS 3D Orbital Ecosystem Visualization */}
+            {/* Left: Pure-CSS 3D Orbital Visualization of ISTD Vision & Mission */}
             <div>
               <div className="ecosystem-3d-card">
                 <div className="ecosystem-3d-header">
                   <span className="ecosystem-3d-tag">
-                    ◆ INTERACTIVE 3D LEARNING ECOSYSTEM
+                    ◆ ISTD VISION &amp; MISSION IN MOTION
                   </span>
-                  <h3>Connecting Industry, Academia &amp; Future Skills</h3>
+                  <h3>
+                    “Leading Transformation through Training &amp; Development”
+                  </h3>
+                  <p className="ecosystem-3d-subhead">
+                    The 4 Core Mission Pillars of the Indian Society for
+                    Training &amp; Development (ISTD)
+                  </p>
                 </div>
 
-                {/* Lightweight Pure-CSS 3D Orbital Rings */}
+                {/* Lightweight Pure-CSS 3D Orbital Rings & Animated Mission Nodes */}
                 <div className="ecosystem-3d-stage" aria-hidden="true">
                   <div className="ecosystem-3d-ring ring-outer" />
                   <div className="ecosystem-3d-ring ring-middle" />
                   <div className="ecosystem-3d-ring ring-inner" />
+                  <div className="ecosystem-3d-pulse-halo" />
 
                   <div className="ecosystem-3d-core">
+                    <span className="core-kicker">EST. 1970</span>
                     <strong>ISTD</strong>
                     <span>TRICHUR</span>
                   </div>
 
                   <div className="ecosystem-3d-node node-top">
-                    <span>💼 Corporate L&amp;D</span>
+                    <span className="node-title">
+                      🎯 Training &amp; Development
+                    </span>
+                    <small className="node-sub">
+                      Individuals &amp; Organizations
+                    </small>
                   </div>
                   <div className="ecosystem-3d-node node-right">
-                    <span>🎓 Campus Chapters</span>
+                    <span className="node-title">
+                      📚 Universal Knowledge
+                    </span>
+                    <small className="node-sub">
+                      Reservoir of Human Interface
+                    </small>
                   </div>
                   <div className="ecosystem-3d-node node-bottom">
-                    <span>🤖 AI &amp; Future Tech</span>
+                    <span className="node-title">
+                      🔬 Exploratory Research
+                    </span>
+                    <small className="node-sub">
+                      Original Action Research
+                    </small>
                   </div>
                   <div className="ecosystem-3d-node node-left">
-                    <span>🤝 Executive Network</span>
+                    <span className="node-title">
+                      💡 Innovative Practices
+                    </span>
+                    <small className="node-sub">
+                      Modern L&amp;D Methodologies
+                    </small>
+                  </div>
+                </div>
+
+                {/* Animated Mission Flow Strip */}
+                <div
+                  className="ecosystem-mission-flow"
+                  aria-label="ISTD Mission Flow"
+                >
+                  <div className="mission-flow-step">
+                    <span className="flow-dot blue" />
+                    <span>Facilitate Individuals &amp; Orgs</span>
+                  </div>
+                  <span className="mission-flow-arrow" aria-hidden="true">
+                    →
+                  </span>
+                  <div className="mission-flow-step">
+                    <span className="flow-dot gold" />
+                    <span>Excel in T&amp;D Activities</span>
+                  </div>
+                  <span className="mission-flow-arrow" aria-hidden="true">
+                    →
+                  </span>
+                  <div className="mission-flow-step">
+                    <span className="flow-dot red" />
+                    <span>Lead Transformation</span>
                   </div>
                 </div>
 
                 <p className="ecosystem-3d-caption">
-                  A unified institutional platform in Trichur bringing together
-                  HR leaders, trainers, researchers, entrepreneurs, and higher
-                  education institutions.
+                  Facilitating individuals and organizations to excel in
+                  Training &amp; Development activities while serving as a
+                  reservoir of universal knowledge of human interface through
+                  innovative practices and original exploratory research.
                 </p>
               </div>
             </div>
@@ -313,7 +377,9 @@ export default function HomePage() {
                 <strong>Diamond Chapter</strong> under the mentorship of{' '}
                 <strong>Prof. (Dr.) Zakkariya K. A.</strong> (Founder &amp;
                 Mentor, ISTD Trichur Chapter &amp; National Vice President,
-                ISTD) and the chairmanship of <strong>Tony Chacko</strong>, the{' '}
+                ISTD) and the chairmanship of <strong>Tony Chacko</strong>, with{' '}
+                <strong>Sneha Rose George</strong> (Secretary) and{' '}
+                <strong>Jibin N</strong> (Treasurer), the{' '}
                 <strong>ISTD Trichur Chapter</strong> serves as a dynamic hub
                 for professional learning, management research, and capability
                 building across Central Kerala.
@@ -322,7 +388,13 @@ export default function HomePage() {
               <div className="vision-mission-mini-grid">
                 <div className="vm-mini-card vm-blue">
                   <span className="vm-kicker">Our Vision (ISTD)</span>
-                  <p style={{ textAlign: 'justify', fontWeight: 700, color: '#0f172a' }}>
+                  <p
+                    style={{
+                      textAlign: 'justify',
+                      fontWeight: 700,
+                      color: '#0f172a',
+                    }}
+                  >
                     “Leading Transformation through Training &amp; Development.”
                   </p>
                 </div>
@@ -373,143 +445,12 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 4. Upcoming Flagship Programmes Spotlight (Only Upcoming Sessions on Home Page) */}
-      <section
-        className="section-padding bg-pale-blue"
-        id="upcomingProgrammes"
-      >
-        <div className="container">
-          <div
-            style={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              alignItems: 'flex-end',
-              justifyContent: 'space-between',
-              gap: '1rem',
-              marginBottom: '2.25rem',
-            }}
-          >
-            <div>
-              <span className="section-tag tag-red">
-                Upcoming Programmes &amp; Live Sessions
-              </span>
-              <h2 className="section-title" style={{ marginBottom: '0.35rem' }}>
-                Join Our Next Learning Session
-              </h2>
-              <p
-                style={{
-                  color: 'var(--color-muted)',
-                  marginBottom: 0,
-                  maxWidth: '680px',
-                  textAlign: 'justify',
-                }}
-              >
-                Participate in upcoming webinars, executive workshops, and
-                knowledge sessions organised by ISTD Trichur Chapter. Looking
-                for past event reports? Browse our complete Year-Wise Archive.
-              </p>
-            </div>
-            <Link href="/events" className="btn btn-outline-navy btn-sm">
-              Full Year-Wise Events Directory &rarr;
-            </Link>
-          </div>
-
-          {upcomingEvents.map((event) => (
-            <div key={event.id} className="upcoming-flagship-3d-card">
-              <div className="upcoming-flagship-poster-col">
-                <Link href={`/events/${event.slug}`}>
-                  <img
-                    src={assetUrl(event.image)}
-                    alt={event.title}
-                    className="upcoming-flagship-poster-img"
-                  />
-                </Link>
-              </div>
-
-              <div className="upcoming-flagship-content-col">
-                <div
-                  style={{
-                    display: 'flex',
-                    flexWrap: 'wrap',
-                    gap: '0.55rem',
-                    alignItems: 'center',
-                    marginBottom: '0.9rem',
-                  }}
-                >
-                  <span className="upcoming-live-badge">
-                    <span className="pulse-dot-green" />
-                    <span>UPCOMING {event.programmeType.toUpperCase()}</span>
-                  </span>
-                  <span className="upcoming-date-chip">
-                    📅 {event.date} • {event.timeIST}
-                  </span>
-                  <span className="upcoming-venue-chip">
-                    📍 {event.venue}
-                  </span>
-                </div>
-
-                <h3 className="upcoming-flagship-title">
-                  <Link
-                    href={`/events/${event.slug}`}
-                    style={{ color: 'inherit', textDecoration: 'none' }}
-                  >
-                    {event.title}
-                  </Link>
-                </h3>
-
-                {event.subtitleQuestion && (
-                  <p className="upcoming-flagship-question">
-                    “{event.subtitleQuestion}”
-                  </p>
-                )}
-
-                <p className="upcoming-flagship-desc">
-                  {event.shortDescription}
-                </p>
-
-                {event.speaker && (
-                  <div className="upcoming-speaker-box">
-                    <div className="upcoming-speaker-label">
-                      Resource Person
-                    </div>
-                    <div className="upcoming-speaker-name">
-                      {event.speaker}
-                    </div>
-                    {event.speakerDesignation && (
-                      <div className="upcoming-speaker-role">
-                        {event.speakerDesignation}
-                      </div>
-                    )}
-                  </div>
-                )}
-
-                <div
-                  style={{
-                    display: 'flex',
-                    flexWrap: 'wrap',
-                    gap: '0.85rem',
-                    marginTop: '1.5rem',
-                  }}
-                >
-                  <Link
-                    href={`/events/${event.slug}`}
-                    className="btn btn-red"
-                  >
-                    Register / View Session Details &rarr;
-                  </Link>
-                  <Link href="/events" className="btn btn-outline-navy">
-                    Explore All 2026 Events &amp; Archives
-                  </Link>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
+      {/* 4. Upcoming Events, Current Year (2026) Programmes & Year-Wise Archive */}
+      <EventsChronicleSection compactHomeView />
 
       {/* 5. Campus & Student Chapters Spotlight */}
       <section
-        className="section-padding bg-white"
+        className="section-padding bg-pale-blue"
         id="campusChaptersSpotlight"
       >
         <div className="container">
@@ -713,7 +654,7 @@ export default function HomePage() {
       </section>
 
       {/* 6. Membership CTA Banner */}
-      <section className="section-padding-sm bg-pale-blue">
+      <section className="section-padding-sm bg-white">
         <div className="container">
           <div className="cta-banner">
             <div className="cta-banner-inner">

@@ -309,7 +309,7 @@ export function EventsChronicleSection({
               )}
             </div>
 
-            {/* Year Selector Pills */}
+            {/* Year-Wise Archive Selector Pills */}
             <div
               style={{
                 display: 'flex',
@@ -319,7 +319,7 @@ export function EventsChronicleSection({
                 justifyContent: 'flex-start',
               }}
               role="group"
-              aria-label="Filter by Year"
+              aria-label="Year-Wise Archive Filter"
             >
               <span
                 style={{
@@ -331,7 +331,7 @@ export function EventsChronicleSection({
                   marginRight: '0.25rem',
                 }}
               >
-                Year:
+                Year-Wise Archive:
               </span>
               <button
                 type="button"
@@ -377,10 +377,31 @@ export function EventsChronicleSection({
                       transition: 'all 0.15s ease',
                     }}
                   >
-                    🗓️ {yr} ({count})
+                    🗓️ {yr} • Current Year ({count})
                   </button>
                 );
               })}
+              <button
+                type="button"
+                onClick={() => setSelectedYear('pre-2026')}
+                style={{
+                  padding: '0.45rem 0.95rem',
+                  borderRadius: '999px',
+                  border:
+                    selectedYear === 'pre-2026'
+                      ? '1.5px solid #0B2239'
+                      : '1.5px solid #CBD5E1',
+                  background:
+                    selectedYear === 'pre-2026' ? '#0B2239' : '#FFFFFF',
+                  color: selectedYear === 'pre-2026' ? '#FFFFFF' : '#475569',
+                  fontSize: '0.82rem',
+                  fontWeight: 700,
+                  cursor: 'pointer',
+                  transition: 'all 0.15s ease',
+                }}
+              >
+                🗄️ 2025 &amp; Earlier Archive
+              </button>
             </div>
           </div>
 
@@ -558,44 +579,122 @@ export function EventsChronicleSection({
           </div>
         )}
 
-        {/* Empty State */}
+        {/* Empty State or Pre-2026 Archive Notice */}
         {groupedByYear.length === 0 ? (
           <div
             style={{
-              padding: '3.25rem 2rem',
-              textAlign: 'center',
-              background: '#F8FAFC',
+              padding: '3rem 2rem',
+              textAlign: 'left',
+              background: 'linear-gradient(135deg, #F8FAFC 0%, #EFF6FF 100%)',
               borderRadius: '20px',
-              border: '1.5px dashed #CBD5E1',
+              border: '1.5px solid #BFDBFE',
+              maxWidth: '820px',
+              margin: '0 auto',
             }}
           >
-            <h3
-              style={{
-                fontSize: '1.2rem',
-                fontWeight: 800,
-                color: '#0F172A',
-                marginBottom: '0.45rem',
-              }}
-            >
-              No matching programmes found
-            </h3>
-            <p
-              style={{
-                color: '#64748B',
-                fontSize: '0.94rem',
-                marginBottom: '1.15rem',
-              }}
-            >
-              Try clearing your search query or switching the year/category
-              filters above.
-            </p>
-            <button
-              type="button"
-              onClick={resetFilters}
-              className="btn btn-primary btn-sm"
-            >
-              Show All Programmes
-            </button>
+            {selectedYear === 'pre-2026' ? (
+              <>
+                <span
+                  style={{
+                    display: 'inline-block',
+                    padding: '0.28rem 0.78rem',
+                    borderRadius: '999px',
+                    background: '#FEF3C7',
+                    border: '1px solid #F59E0B',
+                    color: '#92400E',
+                    fontSize: '0.73rem',
+                    fontWeight: 800,
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.06em',
+                    marginBottom: '0.75rem',
+                  }}
+                >
+                  Year-Wise Archive Notice • Pre-2026
+                </span>
+                <h3
+                  style={{
+                    fontSize: '1.28rem',
+                    fontWeight: 800,
+                    color: '#0F172A',
+                    marginBottom: '0.6rem',
+                  }}
+                >
+                  ISTD Trichur Chapter Was Inaugurated on 30 March 2026
+                </h3>
+                <p
+                  style={{
+                    color: '#334155',
+                    fontSize: '0.96rem',
+                    lineHeight: 1.75,
+                    marginBottom: '1.25rem',
+                    textAlign: 'justify',
+                  }}
+                >
+                  While the parent body—the{' '}
+                  <strong>
+                    Indian Society for Training &amp; Development (ISTD, New
+                    Delhi)
+                  </strong>
+                  —was established in <strong>April 1970</strong>, the{' '}
+                  <strong>ISTD Trichur Chapter</strong> was officially
+                  inaugurated as a <strong>Diamond Chapter</strong> on{' '}
+                  <strong>30 March 2026</strong> at Hotel Pearl Regency,
+                  Trichur. All chapter-level webinars, orientation forums, and
+                  student chapter milestones are archived from the{' '}
+                  <strong>2026 Inaugural Year</strong> onwards.
+                </p>
+                <div
+                  style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem' }}
+                >
+                  <button
+                    type="button"
+                    onClick={() => setSelectedYear('2026')}
+                    className="btn btn-primary btn-sm"
+                  >
+                    View 2026 Current Year Programmes ({eventsList.length})
+                    &rarr;
+                  </button>
+                  <a
+                    href="https://www.istd.in/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-outline-navy btn-sm"
+                  >
+                    Visit ISTD National Portal (istd.in) &#8599;
+                  </a>
+                </div>
+              </>
+            ) : (
+              <div style={{ textAlign: 'center' }}>
+                <h3
+                  style={{
+                    fontSize: '1.2rem',
+                    fontWeight: 800,
+                    color: '#0F172A',
+                    marginBottom: '0.45rem',
+                  }}
+                >
+                  No matching programmes found
+                </h3>
+                <p
+                  style={{
+                    color: '#64748B',
+                    fontSize: '0.94rem',
+                    marginBottom: '1.15rem',
+                  }}
+                >
+                  Try clearing your search query or switching the year/category
+                  filters above.
+                </p>
+                <button
+                  type="button"
+                  onClick={resetFilters}
+                  className="btn btn-primary btn-sm"
+                >
+                  Show All Programmes
+                </button>
+              </div>
+            )}
           </div>
         ) : (
           <div style={{ display: 'grid', gap: '3rem' }}>
@@ -615,8 +714,8 @@ export function EventsChronicleSection({
                       alignItems: 'center',
                       justifyContent: 'space-between',
                       gap: '1rem',
-                      padding: '1rem 1.35rem',
-                      marginBottom: '1.65rem',
+                      padding: '1.1rem 1.45rem',
+                      marginBottom: '1.75rem',
                       background:
                         'linear-gradient(135deg, #071524 0%, #0B2239 65%, #163E66 100%)',
                       color: '#FFFFFF',
@@ -644,7 +743,7 @@ export function EventsChronicleSection({
                           letterSpacing: '0.04em',
                         }}
                       >
-                        YEAR {year}
+                        YEAR {year} • CURRENT YEAR
                       </span>
                       <div>
                         <h3
@@ -655,7 +754,8 @@ export function EventsChronicleSection({
                             margin: 0,
                           }}
                         >
-                          {year} Chapter Programmes &amp; Milestones
+                          {year} Chapter Programmes, Upcoming Sessions &amp;
+                          Year-Wise Archive
                         </h3>
                       </div>
                     </div>
@@ -703,7 +803,7 @@ export function EventsChronicleSection({
                             color: '#DBEAFE',
                           }}
                         >
-                          {yearPast.length} Completed
+                          {yearPast.length} Completed in {year}
                         </span>
                       )}
                     </div>
@@ -711,7 +811,43 @@ export function EventsChronicleSection({
 
                   {/* Upcoming Events in this Year */}
                   {yearUpcoming.length > 0 && (
-                    <div style={{ marginBottom: yearPast.length > 0 ? '2rem' : 0 }}>
+                    <div
+                      style={{
+                        marginBottom: yearPast.length > 0 ? '2.5rem' : 0,
+                      }}
+                    >
+                      <div
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'space-between',
+                          flexWrap: 'wrap',
+                          gap: '0.5rem',
+                          marginBottom: '1rem',
+                          paddingBottom: '0.55rem',
+                          borderBottom: '2px solid #D1FAE5',
+                        }}
+                      >
+                        <div
+                          style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '0.55rem',
+                            fontFamily: 'var(--font-heading)',
+                            fontSize: '0.92rem',
+                            fontWeight: 800,
+                            color: '#065F46',
+                            textTransform: 'uppercase',
+                            letterSpacing: '0.06em',
+                          }}
+                        >
+                          <span className="pulse-dot-green" />
+                          <span>
+                            Upcoming Events ({year} Current Year) — Registration
+                            Open
+                          </span>
+                        </div>
+                      </div>
                       <div
                         style={{
                           display: 'grid',
@@ -728,17 +864,50 @@ export function EventsChronicleSection({
 
                   {/* Completed Events in this Year */}
                   {yearPast.length > 0 && (
-                    <div
-                      style={{
-                        display: 'grid',
-                        gridTemplateColumns:
-                          'repeat(auto-fit, minmax(min(100%, 300px), 1fr))',
-                        gap: '1.65rem',
-                      }}
-                    >
-                      {yearPast.map((ev) => (
-                        <PastEventCard key={ev.slug} event={ev} />
-                      ))}
+                    <div>
+                      <div
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'space-between',
+                          flexWrap: 'wrap',
+                          gap: '0.5rem',
+                          marginBottom: '1.15rem',
+                          paddingBottom: '0.55rem',
+                          borderBottom: '2px solid #DBEAFE',
+                        }}
+                      >
+                        <div
+                          style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '0.55rem',
+                            fontFamily: 'var(--font-heading)',
+                            fontSize: '0.92rem',
+                            fontWeight: 800,
+                            color: '#0B2239',
+                            textTransform: 'uppercase',
+                            letterSpacing: '0.06em',
+                          }}
+                        >
+                          <span>
+                            🗂️ Events of the Current Year ({year}) — Completed
+                            Programmes &amp; Reports ({yearPast.length})
+                          </span>
+                        </div>
+                      </div>
+                      <div
+                        style={{
+                          display: 'grid',
+                          gridTemplateColumns:
+                            'repeat(auto-fit, minmax(min(100%, 300px), 1fr))',
+                          gap: '1.65rem',
+                        }}
+                      >
+                        {yearPast.map((ev) => (
+                          <PastEventCard key={ev.slug} event={ev} />
+                        ))}
+                      </div>
                     </div>
                   )}
                 </div>

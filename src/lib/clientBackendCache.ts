@@ -12,7 +12,7 @@ import type {
   EventRegistration,
 } from './backendStore';
 
-const STORAGE_KEY = 'istd_tcr_backend_db_v4';
+const STORAGE_KEY = 'istd_tcr_backend_db_v6';
 const CACHE_META_KEY = 'istd_tcr_cache_meta_v1';
 const AUTH_SESSION_KEY = 'istd_tcr_admin_session_v1';
 const SAVED_PARTICIPANT_KEY = 'istd_tcr_saved_participant_v1';
@@ -74,15 +74,22 @@ export function getLocalSyncedPayload(): BackendDatabasePayload {
       return def;
     }
     const parsed = JSON.parse(raw) as BackendDatabasePayload;
-    // Merge any new default events from siteData that aren't in local storage yet
-    const existingSlugs = new Set((parsed.events || []).map((e) => e.slug));
-    const mergedEvents = [
-      ...(parsed.events || []),
-      ...ALL_CHAPTER_EVENTS.filter((e) => !existingSlugs.has(e.slug)),
-    ];
+    // Always use canonical siteData events & galleryPhotos first, then append any custom admin-created entries
+    const canonicalSlugs = new Set(ALL_CHAPTER_EVENTS.map((e) => e.slug));
+    const customEvents = (parsed.events || []).filter(
+      (e) => !canonicalSlugs.has(e.slug)
+    );
+    const mergedEvents = [...ALL_CHAPTER_EVENTS, ...customEvents];
+
+    const canonicalPhotoIds = new Set(GALLERY_PHOTOS.map((p) => p.id));
+    const customPhotos = (parsed.galleryPhotos || []).filter(
+      (p) => !canonicalPhotoIds.has(p.id)
+    );
+    const mergedPhotos = [...GALLERY_PHOTOS, ...customPhotos];
+
     return {
-      events: mergedEvents.length ? mergedEvents : ALL_CHAPTER_EVENTS,
-      galleryPhotos: parsed.galleryPhotos?.length ? parsed.galleryPhotos : GALLERY_PHOTOS,
+      events: mergedEvents,
+      galleryPhotos: mergedPhotos,
       registrations: Array.isArray(parsed.registrations) ? parsed.registrations : [],
       updatedAt: parsed.updatedAt || new Date().toISOString(),
     };
