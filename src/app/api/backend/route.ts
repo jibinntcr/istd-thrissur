@@ -1,3 +1,4 @@
+import crypto from 'crypto';
 import { NextResponse } from 'next/server';
 import {
   getBackendData,
@@ -48,36 +49,47 @@ export async function POST(request: Request) {
 
     if (action === 'admin_login') {
       const { email, password } = payload || {};
-      const validEmail =
-        process.env.ADMIN_EMAIL || 'admin@istdthrissur.org';
-      const validPassword =
-        process.env.ADMIN_PASSWORD || 'ISTD@Thrissur2026';
-
+      const salt = 'istd-tcr-diamond-2026-salt::';
       const normalizedEmail = String(email || '').trim().toLowerCase();
-      const isAllowedEmail =
-        normalizedEmail === validEmail.toLowerCase() ||
-        normalizedEmail === 'jibintcr@gmail.com' ||
-        normalizedEmail === 'tonychacko67@gmail.com' ||
-        normalizedEmail === 'admin';
+      const emailHash = crypto
+        .createHash('sha256')
+        .update(salt + normalizedEmail)
+        .digest('hex');
+      const passwordHash = crypto
+        .createHash('sha256')
+        .update(salt + String(password || ''))
+        .digest('hex');
 
-      if (isAllowedEmail && password === validPassword) {
+      const allowedEmailHashes = new Set([
+        'd6e157131c00e8a2f0333fbd5830899b3962e9f006ffecb0678b4c12619e18fd',
+        '2673938746c9355eddd4223f7449cd29773359c2330c975c70f7f0a131da6578',
+      ]);
+
+      const envPassword = process.env.ADMIN_PASSWORD;
+      const expectedPasswordHash = envPassword
+        ? crypto
+            .createHash('sha256')
+            .update(salt + envPassword)
+            .digest('hex')
+        : '9259d3cb2c7cd679071a1534498487faa65cf332fd84b3b4aeaa30cdd38887f8';
+
+      if (allowedEmailHashes.has(emailHash) && passwordHash === expectedPasswordHash) {
         return NextResponse.json({
           ok: true,
           session: {
             email: normalizedEmail,
             name:
-              normalizedEmail === 'tonychacko67@gmail.com'
-                ? 'Shri. Tony Chacko (Chairman)'
-                : normalizedEmail === 'jibintcr@gmail.com'
-                ? 'Mr. Jibin N (Treasurer)'
-                : 'ISTD Trichur Chapter Admin',
+              emailHash ===
+              '2673938746c9355eddd4223f7449cd29773359c2330c975c70f7f0a131da6578'
+                ? 'Chapter Chairman'
+                : 'Chapter Administrator',
             role: 'Chapter Administrator',
             loggedInAt: new Date().toISOString(),
           },
         });
       }
       return NextResponse.json(
-        { ok: false, error: 'Invalid administrator credentials.' },
+        { ok: false, error: 'Invalid administrator credentials. Access denied.' },
         { status: 401 }
       );
     }

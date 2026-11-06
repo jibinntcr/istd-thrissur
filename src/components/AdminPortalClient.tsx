@@ -42,6 +42,10 @@ export function AdminPortalClient() {
   const [loginCaptchaReset, setLoginCaptchaReset] = useState(0);
   const [loginError, setLoginError] = useState('');
   const [loginLoading, setLoginLoading] = useState(false);
+  const [failedAttempts, setFailedAttempts] = useState(0);
+  const [lockoutUntil, setLockoutUntil] = useState<number>(0);
+  const [newAdminPassword, setNewAdminPassword] = useState('');
+  const [confirmAdminPassword, setConfirmAdminPassword] = useState('');
 
   // Portal Navigation & Data State
   const [activeModule, setActiveModule] = useState<AdminModule>('overview');
@@ -129,9 +133,26 @@ export function AdminPortalClient() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const computeSaltedSha256 = async (value: string): Promise<string> => {
+    const salt = 'istd-tcr-diamond-2026-salt::';
+    const encoder = new TextEncoder();
+    const data = encoder.encode(salt + value);
+    const hashBuffer = await window.crypto.subtle.digest('SHA-256', data);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    return hashArray.map((b) => b.toString(16).padStart(2, '0')).join('');
+  };
+
   const handleLoginSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoginError('');
+
+    if (lockoutUntil > Date.now()) {
+      const remainingSec = Math.ceil((lockoutUntil - Date.now()) / 1000);
+      setLoginError(
+        `Too many failed login attempts. Access temporarily locked for ${remainingSec} seconds.`
+      );
+      return;
+    }
 
     if (!loginCaptchaValid) {
       setLoginError('Please complete the security CAPTCHA verification code.');
@@ -159,25 +180,34 @@ export function AdminPortalClient() {
           }
         }
       } catch {
-        // Static hosting fallback
+        // Static hosting fallback uses cryptographic SHA-256 verification
       }
 
       if (!newSession) {
-        const allowed =
-          normalized === 'admin@istdthrissur.org' ||
-          normalized === 'jibintcr@gmail.com' ||
-          normalized === 'tonychacko67@gmail.com' ||
-          normalized === 'admin';
+        const emailHash = await computeSaltedSha256(normalized);
+        const passwordHash = await computeSaltedSha256(loginPassword);
 
-        if (allowed && loginPassword === 'ISTD@Thrissur2026') {
+        const allowedEmailHashes = new Set([
+          'd6e157131c00e8a2f0333fbd5830899b3962e9f006ffecb0678b4c12619e18fd',
+          '2673938746c9355eddd4223f7449cd29773359c2330c975c70f7f0a131da6578',
+        ]);
+
+        const customPwHash =
+          typeof window !== 'undefined'
+            ? window.localStorage.getItem('istd_tcr_custom_pw_hash_v1')
+            : null;
+        const expectedPwHash =
+          customPwHash ||
+          '9259d3cb2c7cd679071a1534498487faa65cf332fd84b3b4aeaa30cdd38887f8';
+
+        if (allowedEmailHashes.has(emailHash) && passwordHash === expectedPwHash) {
           newSession = {
             email: normalized,
             name:
-              normalized === 'tonychacko67@gmail.com'
-                ? 'Shri. Tony Chacko (Chairman)'
-                : normalized === 'jibintcr@gmail.com'
-                ? 'Mr. Jibin N (Treasurer)'
-                : 'ISTD Trichur Chapter Admin',
+              emailHash ===
+              '2673938746c9355eddd4223f7449cd29773359c2330c975c70f7f0a131da6578'
+                ? 'Chapter Chairman'
+                : 'Chapter Administrator',
             role: 'Chapter Administrator',
             loggedInAt: new Date().toISOString(),
           };
@@ -185,14 +215,25 @@ export function AdminPortalClient() {
       }
 
       if (!newSession) {
-        setLoginError(
-          'Invalid credentials. Use admin@istdthrissur.org (or jibintcr@gmail.com) and password ISTD@Thrissur2026.'
-        );
+        const nextFailed = failedAttempts + 1;
+        setFailedAttempts(nextFailed);
+        if (nextFailed >= 5) {
+          setLockoutUntil(Date.now() + 5 * 60 * 1000);
+          setLoginError(
+            'Maximum failed attempts exceeded. Console locked for 5 minutes.'
+          );
+        } else {
+          setLoginError(
+            `Invalid administrator credentials. Access denied (${5 - nextFailed} attempts remaining).`
+          );
+        }
         setLoginCaptchaReset((c) => c + 1);
         setLoginLoading(false);
         return;
       }
 
+      setFailedAttempts(0);
+      setLockoutUntil(0);
       setAdminSession(newSession);
       setSession(newSession);
       await loadPortalData(false);
@@ -794,13 +835,14 @@ export function AdminPortalClient() {
 
             <form onSubmit={handleLoginSubmit}>
               <div className="form-group" style={{ marginBottom: '1rem' }}>
-                <label className="form-label">Administrator Email / ID *</label>
+                <label className="form-label">Administrator Email *</label>
                 <input
-                  type="text"
+                  type="email"
                   className="form-control"
-                  placeholder="admin@istdthrissur.org or jibintcr@gmail.com"
+                  placeholder="Enter authorized administrator email"
                   value={loginEmail}
                   onChange={(e) => setLoginEmail(e.target.value)}
+                  autoComplete="username"
                   required
                 />
               </div>
@@ -839,6 +881,7 @@ export function AdminPortalClient() {
                   placeholder="Enter administrator password"
                   value={loginPassword}
                   onChange={(e) => setLoginPassword(e.target.value)}
+                  autoComplete="current-password"
                   required
                 />
               </div>
@@ -861,45 +904,9 @@ export function AdminPortalClient() {
                   fontSize: '0.95rem',
                 }}
               >
-                {loginLoading ? 'Signing In...' : 'Sign In to Backend Console →'}
+                {loginLoading ? 'Verifying...' : 'Sign In to Backend Console →'}
               </button>
             </form>
-
-            {/* Quick Fill Demo Helper */}
-            <div
-              style={{
-                marginTop: '1.35rem',
-                padding: '0.9rem 1rem',
-                background: '#F8FAFC',
-                border: '1px solid #E2E8F0',
-                borderRadius: '10px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                gap: '0.75rem',
-                flexWrap: 'wrap',
-              }}
-            >
-              <div style={{ fontSize: '0.78rem', color: '#475569', lineHeight: 1.45 }}>
-                <div>
-                  <strong>Admin ID:</strong> <code>admin@istdthrissur.org</code>
-                </div>
-                <div>
-                  <strong>Password:</strong> <code>ISTD@Thrissur2026</code>
-                </div>
-              </div>
-              <button
-                type="button"
-                onClick={() => {
-                  setLoginEmail('admin@istdthrissur.org');
-                  setLoginPassword('ISTD@Thrissur2026');
-                }}
-                className="btn btn-outline-navy btn-sm"
-                style={{ fontSize: '0.76rem', padding: '0.4rem 0.75rem' }}
-              >
-                ⚡ Fill Credentials
-              </button>
-            </div>
           </div>
         </div>
       </div>
@@ -3234,19 +3241,73 @@ export function AdminPortalClient() {
               <div
                 style={{
                   padding: '1.25rem',
-                  background: '#071524',
-                  color: '#F8FAFC',
+                  background: '#F8FAFC',
+                  border: '1px solid #E2E8F0',
                   borderRadius: '12px',
-                  fontSize: '0.82rem',
                   marginBottom: '1.5rem',
                 }}
               >
-                <div style={{ color: '#FACC15', fontWeight: 800, marginBottom: '0.35rem' }}>
-                  Environment Configuration (`.env.local`):
+                <h4 style={{ fontSize: '0.95rem', fontWeight: 800, marginBottom: '0.5rem' }}>
+                  🔑 Update Administrator Password (SHA-256 Hashed)
+                </h4>
+                <p style={{ fontSize: '0.82rem', color: '#64748B', marginBottom: '0.9rem' }}>
+                  Set a custom administrator password. Only its salted SHA-256 cryptographic digest is
+                  stored—never plaintext.
+                </p>
+                <div
+                  style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+                    gap: '0.75rem',
+                    alignItems: 'end',
+                  }}
+                >
+                  <div>
+                    <label className="form-label" style={{ fontSize: '0.76rem' }}>
+                      New Password (min 8 chars)
+                    </label>
+                    <input
+                      type="password"
+                      className="form-control"
+                      placeholder="New strong password"
+                      value={newAdminPassword}
+                      onChange={(e) => setNewAdminPassword(e.target.value)}
+                    />
+                  </div>
+                  <div>
+                    <label className="form-label" style={{ fontSize: '0.76rem' }}>
+                      Confirm New Password
+                    </label>
+                    <input
+                      type="password"
+                      className="form-control"
+                      placeholder="Re-enter new password"
+                      value={confirmAdminPassword}
+                      onChange={(e) => setConfirmAdminPassword(e.target.value)}
+                    />
+                  </div>
+                  <button
+                    type="button"
+                    className="btn btn-primary btn-sm"
+                    onClick={async () => {
+                      if (newAdminPassword.length < 8) {
+                        alert('Password must be at least 8 characters long.');
+                        return;
+                      }
+                      if (newAdminPassword !== confirmAdminPassword) {
+                        alert('Passwords do not match.');
+                        return;
+                      }
+                      const hash = await computeSaltedSha256(newAdminPassword);
+                      window.localStorage.setItem('istd_tcr_custom_pw_hash_v1', hash);
+                      setNewAdminPassword('');
+                      setConfirmAdminPassword('');
+                      showToast('✓ Administrator password hash updated.');
+                    }}
+                  >
+                    Save New Password Hash
+                  </button>
                 </div>
-                <code style={{ display: 'block', whiteSpace: 'pre-wrap', color: '#E2E8F0' }}>
-                  {`MONGODB_URI="mongodb+srv://<username>:<password>@cluster0.mongodb.net/istd_thrissur?retryWrites=true&w=majority"\nMONGODB_DB="istd_thrissur"\nADMIN_EMAIL="admin@istdthrissur.org"\nADMIN_PASSWORD="ISTD@Thrissur2026"`}
-                </code>
               </div>
 
               <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
