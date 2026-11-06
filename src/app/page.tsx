@@ -2,7 +2,6 @@ import React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { HeroShowcase } from '@/components/HeroShowcase';
-import { PhotoCard } from '@/components/PhotoCard';
 import {
   ALL_CHAPTER_EVENTS,
   OFFICIAL_LINKS,
@@ -18,37 +17,6 @@ export const metadata: Metadata = buildPageMetadata({
   path: '/',
   image: '/photos/istd-22.jpeg',
 });
-
-const HOMEPAGE_GALLERY_PREVIEW = [
-  {
-    src: '/photos/istd-22.jpeg',
-    title: 'Lighting of the Ceremonial Lamp at the Diamond Chapter Inauguration',
-    caption:
-      'Chairman Tony Chacko and Founder-Mentor Prof. (Dr.) Zakkariya K. A. lighting the ceremonial lamp alongside National President Shri. Atul Shah, National Treasurer Shri. Nabaghana Pany, and Past National President Dr. Yogesh Kumar Upadhyay (30 March 2026, Hotel Pearl Regency, Trichur).',
-    category: 'Inauguration',
-  },
-  {
-    src: '/images/ISTDTeamTCR/prof-zakkariya-keynote-podium.jpg',
-    title: 'Keynote Address by Founder & Mentor Prof. (Dr.) Zakkariya K. A.',
-    caption:
-      'Prof. (Dr.) Zakkariya K. A. (Founder & Mentor, ISTD Trichur Chapter & National Vice President, ISTD) delivering the keynote address at Hotel Pearl Regency, Trichur.',
-    category: 'Keynote Address',
-  },
-  {
-    src: '/images/ISTDTeamTCR/jibin-n-addressing-inauguration.jpg',
-    title: 'Secretary Jibin N Addressing the Diamond Chapter Gathering',
-    caption:
-      'Secretary Jibin N addressing the gathering alongside National Treasurer Shri. Nabaghana Pany and Chairman Tony Chacko at the ISTD Trichur Diamond Chapter Inauguration.',
-    category: 'Leadership Address',
-  },
-  {
-    src: '/photos/chapter-connect-2026-2.jpg',
-    title: 'ISTD Trichur Chapter Members at Chapter Connect 2026',
-    caption:
-      'Official group photograph of ISTD Trichur Chapter office bearers and members during Chapter Connect 2026 at Hotel Elite International, Trichur.',
-    category: 'Chapter Connect 2026',
-  },
-];
 
 const STRATEGIC_PILLARS = [
   {
@@ -84,7 +52,151 @@ export default function HomePage() {
 
   return (
     <>
-      {/* High-Visibility Live News & Announcements Command Bar */}
+      {/* 1. Visual-Treat 3D Executive Hero Section */}
+      <section className="hero-3d-master-section">
+        {/* Lightweight GPU-Accelerated 3D Architectural Atmosphere */}
+        <div className="hero-3d-perspective-grid" aria-hidden="true" />
+        <div className="hero-3d-aurora-glow glow-1" aria-hidden="true" />
+        <div className="hero-3d-aurora-glow glow-2" aria-hidden="true" />
+        <div className="hero-3d-light-beam" aria-hidden="true" />
+
+        <div className="container" style={{ position: 'relative', zIndex: 2 }}>
+          <div className="hero-3d-main-grid">
+            {/* Hero Left Column */}
+            <div className="hero-3d-copy-col fade-up-anim">
+              <div className="hero-3d-pill-row">
+                <span className="hero-3d-badge-primary">
+                  <span className="hero-3d-live-dot" />
+                  <span>ISTD Diamond Chapter • Trichur, Kerala</span>
+                </span>
+                <span className="hero-3d-badge-gold">
+                  ◆ National Body Est. April 1970
+                </span>
+              </div>
+
+              <h1 className="hero-3d-headline">
+                Advancing Excellence in{' '}
+                <span className="hero-3d-gradient-text">
+                  Training, Leadership &amp;
+                </span>{' '}
+                Human Resource Development
+              </h1>
+
+              <p className="hero-3d-lead">
+                Inaugurated on <strong>30 March 2026</strong> in the 55th
+                milestone year of the{' '}
+                <strong>
+                  Indian Society for Training &amp; Development (ISTD, New
+                  Delhi)
+                </strong>
+                , the <strong>ISTD Trichur Chapter</strong> unites trainers, HR
+                leaders, academicians, entrepreneurs, and institutions across
+                Central Kerala for continuous learning, knowledge exchange, and
+                organisational transformation.
+              </p>
+
+              {/* Hero Action Buttons */}
+              <div className="hero-3d-actions">
+                <Link
+                  href="/membership"
+                  className="btn btn-red btn-lg hero-3d-btn-glow"
+                >
+                  <span>Become a Member</span>
+                  <span aria-hidden="true">→</span>
+                </Link>
+                <Link
+                  href="#upcomingProgrammes"
+                  className="btn btn-primary btn-lg"
+                >
+                  <span>Upcoming Programmes</span>
+                </Link>
+                <Link
+                  href="/committee"
+                  className="btn btn-outline-white btn-lg"
+                >
+                  <span>Managing Committee</span>
+                </Link>
+              </div>
+
+              {/* Clean Institutional Credentials Strip */}
+              <div className="hero-3d-credentials-row">
+                <div className="hero-3d-cred-item">
+                  <span className="cred-check">✓</span>
+                  <span>Executive L&amp;D Forums</span>
+                </div>
+                <span className="cred-dot" aria-hidden="true">
+                  •
+                </span>
+                <div className="hero-3d-cred-item">
+                  <span className="cred-check">✓</span>
+                  <span>Campus Student Chapters</span>
+                </div>
+                <span className="cred-dot" aria-hidden="true">
+                  •
+                </span>
+                <div className="hero-3d-cred-item">
+                  <span className="cred-check">✓</span>
+                  <span>National ISTD Network</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Hero Right Column: Interactive 3D Layered Cinema Stage */}
+            <div className="fade-up-anim">
+              <HeroShowcase />
+            </div>
+          </div>
+
+          {/* Unified Glassmorphic Architectural Milestone Ribbon */}
+          <div className="hero-3d-metrics-bar">
+            {[
+              {
+                kicker: 'NATIONAL HERITAGE',
+                value: 'April 1970',
+                label: 'ISTD National Established',
+                sub: '55+ Years • New Delhi Headquarters',
+                accent: '#38BDF8',
+              },
+              {
+                kicker: 'CHAPTER RECOGNITION',
+                value: 'Diamond Chapter',
+                label: 'ISTD Trichur Chapter',
+                sub: 'Inaugurated 30 March 2026',
+                accent: '#FBBF24',
+              },
+              {
+                kicker: 'ACADEMIC BRIDGE',
+                value: '1st Student Chapter',
+                label: 'Christ College of Engineering',
+                sub: 'Autonomous • Irinjalakuda, Trichur',
+                accent: '#34D399',
+              },
+              {
+                kicker: 'KNOWLEDGE ECOSYSTEM',
+                value: 'Active L&D Hub',
+                label: 'Industry–Academia Forum',
+                sub: 'Webinars, Workshops & Chapter Connect',
+                accent: '#FB7185',
+              },
+            ].map((stat) => (
+              <div
+                key={stat.label}
+                className="hero-3d-metric-card"
+                style={
+                  { '--metric-accent': stat.accent } as React.CSSProperties
+                }
+              >
+                <span className="hero-3d-metric-kicker">{stat.kicker}</span>
+                <div className="hero-3d-metric-value">{stat.value}</div>
+                <div className="hero-3d-metric-label">{stat.label}</div>
+                <div className="hero-3d-metric-sub">{stat.sub}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 2. High-Visibility Live News & Announcements Bar (Positioned Just Below Hero Section) */}
       <div
         className="upcoming-ticker-bar"
         aria-label="ISTD Trichur Chapter Live Announcements and Upcoming Events"
@@ -101,7 +213,9 @@ export default function HomePage() {
                 href="/events/advancing-aiot-research"
                 className="upcoming-ticker-item"
               >
-                <span className="ticker-date-pill">10 NOV 2026 • 7:00 PM IST</span>
+                <span className="ticker-date-pill">
+                  10 NOV 2026 • 7:00 PM IST
+                </span>
                 <strong>Upcoming Webinar:</strong> “Advancing AIoT Research:
                 From Intelligent Algorithms to Real-World Applications” —
                 Boopathy (CTO, Monzha Research Labs) &rarr;
@@ -128,19 +242,15 @@ export default function HomePage() {
               >
                 <span className="ticker-date-pill">CHAPTER CONNECT 2026</span>
                 <strong>Members’ Orientation &amp; Networking Forum</strong> at
-                Hotel Elite International, Trichur — View Highlights &amp;
-                Photos &rarr;
+                Hotel Elite International, Trichur — View Highlights &rarr;
               </Link>
               <span className="upcoming-ticker-sep" aria-hidden="true">
                 ◆
               </span>
-              <Link
-                href="/membership"
-                className="upcoming-ticker-item"
-              >
+              <Link href="/membership" className="upcoming-ticker-item">
                 <span className="ticker-date-pill gold">MEMBERSHIP OPEN</span>
-                Join ISTD Trichur Diamond Chapter — Individual, Institutional &amp;
-                Student Memberships Available &rarr;
+                Join ISTD Trichur Diamond Chapter — Individual, Institutional
+                &amp; Student Memberships Available &rarr;
               </Link>
             </div>
           </div>
@@ -155,156 +265,18 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* 1. Breathtaking 3D-Animated Executive Hero Section */}
-      <section className="hero-3d-master-section">
-        {/* Lightweight GPU-Accelerated 3D Background Elements */}
-        <div className="hero-3d-perspective-grid" aria-hidden="true" />
-        <div className="hero-3d-aurora-glow glow-1" aria-hidden="true" />
-        <div className="hero-3d-aurora-glow glow-2" aria-hidden="true" />
-
-        <div className="container" style={{ position: 'relative', zIndex: 2 }}>
-          <div className="hero-3d-main-grid">
-            {/* Hero Left Column */}
-            <div className="hero-3d-copy-col fade-up-anim">
-              <div className="hero-3d-pill-row">
-                <span className="hero-3d-badge-primary">
-                  <span className="hero-3d-live-dot" />
-                  <span>ISTD Diamond Chapter • Trichur, Kerala</span>
-                </span>
-                <span className="hero-3d-badge-gold">
-                  ◆ National Body Est. April 1970
-                </span>
-              </div>
-
-              <h1 className="hero-3d-headline">
-                Advancing Excellence in{' '}
-                <span className="hero-3d-gradient-text">
-                  Training, Leadership &amp; Human Resource Development
-                </span>
-              </h1>
-
-              <p className="hero-3d-lead">
-                Inaugurated on <strong>30 March 2026</strong> in the 55th
-                milestone year of the{' '}
-                <strong>
-                  Indian Society for Training &amp; Development (ISTD, New
-                Delhi)
-                </strong>
-                , the <strong>ISTD Trichur Chapter</strong> unites trainers, HR
-                leaders, academicians, entrepreneurs, and institutions across
-                Central Kerala for continuous learning, knowledge exchange, and
-                organisational transformation.
-              </p>
-
-              {/* Hero Action Buttons */}
-              <div className="hero-3d-actions">
-                <Link href="/membership" className="btn btn-red btn-lg hero-3d-btn-glow">
-                  <span>Become a Member</span>
-                  <span aria-hidden="true">→</span>
-                </Link>
-                <Link href="#upcomingProgrammes" className="btn btn-primary btn-lg">
-                  <span>Upcoming Programmes</span>
-                </Link>
-                <Link
-                  href="/about"
-                  className="btn btn-outline-white btn-lg"
-                >
-                  <span>About ISTD Trichur</span>
-                </Link>
-              </div>
-
-              {/* Embedded Glassmorphic Live Next-Event Spotlight Strip */}
-              {upcomingEvents[0] && (
-                <Link
-                  href={`/events/${upcomingEvents[0].slug}`}
-                  className="hero-3d-next-event-glass"
-                >
-                  <div className="hero-3d-next-event-tag">
-                    <span className="pulse-dot-green" />
-                    <span>NEXT LIVE SESSION</span>
-                  </div>
-                  <div className="hero-3d-next-event-info">
-                    <strong>{upcomingEvents[0].title}</strong>
-                    <span>
-                      📅 {upcomingEvents[0].date} • 🕖 {upcomingEvents[0].timeIST}{' '}
-                      • 🎙️ {upcomingEvents[0].speaker} (
-                      {upcomingEvents[0].speakerDesignation})
-                    </span>
-                  </div>
-                  <span className="hero-3d-next-event-arrow">
-                    Join Free &rarr;
-                  </span>
-                </Link>
-              )}
-            </div>
-
-            {/* Hero Right Column: Interactive 3D Tilt Stage */}
-            <div className="fade-up-anim">
-              <HeroShowcase />
-            </div>
-          </div>
-
-          {/* Floating 3D Glassmorphic Milestone Metrics Bar */}
-          <div className="hero-3d-metrics-bar">
-            {[
-              {
-                icon: '🏛️',
-                value: 'April 1970',
-                label: 'ISTD National Established',
-                sub: '55+ Years • New Delhi Headquarters',
-                accent: '#38BDF8',
-              },
-              {
-                icon: '💎',
-                value: 'Diamond Chapter',
-                label: 'ISTD Trichur Recognition',
-                sub: 'Inaugurated 30 March 2026',
-                accent: '#FBBF24',
-              },
-              {
-                icon: '🎓',
-                value: '1st Student Chapter',
-                label: 'Christ College of Engineering',
-                sub: 'Autonomous • Irinjalakuda, Trichur',
-                accent: '#34D399',
-              },
-              {
-                icon: '🚀',
-                value: 'Active L&D Hub',
-                label: 'Industry–Academia Ecosystem',
-                sub: 'Webinars, Forums & Chapter Connect',
-                accent: '#FB7185',
-              },
-            ].map((stat) => (
-              <div
-                key={stat.label}
-                className="hero-3d-metric-card"
-                style={
-                  { '--metric-accent': stat.accent } as React.CSSProperties
-                }
-              >
-                <div className="hero-3d-metric-top">
-                  <span className="hero-3d-metric-icon" aria-hidden="true">
-                    {stat.icon}
-                  </span>
-                  <span className="hero-3d-metric-value">{stat.value}</span>
-                </div>
-                <div className="hero-3d-metric-label">{stat.label}</div>
-                <div className="hero-3d-metric-sub">{stat.sub}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 2. Interactive 3D Ecosystem & Institutional Identity */}
+      {/* 3. Interactive 3D Ecosystem & Institutional Identity */}
       <section className="section-padding bg-white" id="aboutTheChapter">
         <div className="container">
           <div
             className="split-grid"
-            style={{ alignItems: 'center', marginBottom: '3.5rem', gap: '3rem' }}
+            style={{
+              alignItems: 'center',
+              marginBottom: '3.5rem',
+              gap: '3rem',
+            }}
           >
-            {/* Left: Pure-CSS 3D Orbital Ecosystem Visualization + Inaugural Photo */}
+            {/* Left: Pure-CSS 3D Orbital Ecosystem Visualization */}
             <div>
               <div className="ecosystem-3d-card">
                 <div className="ecosystem-3d-header">
@@ -451,7 +423,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 3. Upcoming Flagship Programmes Spotlight (Only Upcoming Sessions on Home Page) */}
+      {/* 4. Upcoming Flagship Programmes Spotlight (Only Upcoming Sessions on Home Page) */}
       <section
         className="section-padding bg-pale-blue"
         id="upcomingProgrammes"
@@ -575,10 +547,7 @@ export default function HomePage() {
                   >
                     Register / View Session Details &rarr;
                   </Link>
-                  <Link
-                    href="/events"
-                    className="btn btn-outline-navy"
-                  >
+                  <Link href="/events" className="btn btn-outline-navy">
                     Explore All 2026 Events &amp; Archives
                   </Link>
                 </div>
@@ -588,8 +557,11 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 4. Campus & Student Chapters Spotlight */}
-      <section className="section-padding bg-white" id="campusChaptersSpotlight">
+      {/* 5. Campus & Student Chapters Spotlight */}
+      <section
+        className="section-padding bg-white"
+        id="campusChaptersSpotlight"
+      >
         <div className="container">
           <div
             style={{
@@ -790,61 +762,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 5. Visual Archive Highlights */}
-      <section className="section-padding bg-pale-blue" id="photoArchivePreview">
-        <div className="container">
-          <div
-            style={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              alignItems: 'flex-end',
-              justifyContent: 'space-between',
-              gap: '1rem',
-              marginBottom: '2.25rem',
-            }}
-          >
-            <div>
-              <span className="section-tag tag-blue">Visual Archive</span>
-              <h2 className="section-title" style={{ marginBottom: '0.35rem' }}>
-                Chapter Moments &amp; Milestones
-              </h2>
-              <p
-                style={{
-                  color: 'var(--color-muted)',
-                  marginBottom: 0,
-                  maxWidth: '640px',
-                  textAlign: 'justify',
-                }}
-              >
-                Highlights from the Diamond Chapter inauguration at Hotel Pearl
-                Regency and Chapter Connect 2026 at Hotel Elite International,
-                Trichur.
-              </p>
-            </div>
-            <Link href="/gallery" className="btn btn-outline-navy btn-sm">
-              Open Full Photo Gallery (41 Photos) &rarr;
-            </Link>
-          </div>
-
-          <div className="grid-4">
-            {HOMEPAGE_GALLERY_PREVIEW.map((photo) => (
-              <PhotoCard
-                key={photo.src}
-                src={photo.src}
-                alt={photo.title}
-                title={photo.title}
-                caption={photo.caption}
-                category={photo.category}
-                badgeText={photo.category}
-                headingText={photo.title}
-              />
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* 6. Membership CTA Banner */}
-      <section className="section-padding-sm bg-white">
+      <section className="section-padding-sm bg-pale-blue">
         <div className="container">
           <div className="cta-banner">
             <div className="cta-banner-inner">

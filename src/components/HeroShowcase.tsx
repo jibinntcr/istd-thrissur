@@ -1,86 +1,112 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import { HERO_SLIDES, GALLERY_PHOTOS, assetUrl } from '@/data/siteData';
+import Link from 'next/link';
+import { HERO_SLIDES, assetUrl } from '@/data/siteData';
 import { useLightbox } from './LightboxProvider';
 
 export function HeroShowcase() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
-  const [tilt, setTilt] = useState({ rx: 0, ry: 0 });
-  const cardRef = useRef<HTMLDivElement>(null);
+  const [tilt, setTilt] = useState({ rx: 0, ry: 0, gx: 50, gy: 50 });
+  const stageRef = useRef<HTMLDivElement>(null);
   const { openLightbox } = useLightbox();
 
   useEffect(() => {
     if (isPaused) return;
     const timer = setInterval(() => {
       setActiveIndex((prev) => (prev + 1) % HERO_SLIDES.length);
-    }, 4500);
+    }, 5200);
     return () => clearInterval(timer);
   }, [isPaused]);
 
   const activeSlide = HERO_SLIDES[activeIndex];
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / rect.width - 0.5;
-    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    if (!stageRef.current) return;
+    const rect = stageRef.current.getBoundingClientRect();
+    const px = (e.clientX - rect.left) / rect.width;
+    const py = (e.clientY - rect.top) / rect.height;
+    const x = px - 0.5;
+    const y = py - 0.5;
     setTilt({
-      rx: Number((-y * 7).toFixed(2)),
-      ry: Number((x * 7).toFixed(2)),
+      rx: Number((-y * 8).toFixed(2)),
+      ry: Number((x * 8).toFixed(2)),
+      gx: Math.round(px * 100),
+      gy: Math.round(py * 100),
     });
   };
 
   const handleMouseLeave = () => {
     setIsPaused(false);
-    setTilt({ rx: 0, ry: 0 });
+    setTilt({ rx: 0, ry: 0, gx: 50, gy: 50 });
   };
 
   const handleOpenFullscreen = () => {
-    const galleryItems = GALLERY_PHOTOS.map((p) => ({
-      src: p.src,
-      title: p.title,
-      caption: p.caption,
-      category: p.categoryLabel,
+    const heroLightboxItems = HERO_SLIDES.map((s) => ({
+      src: s.src,
+      title: s.title,
+      caption: s.caption,
+      category: s.badge,
     }));
-    const matchIdx = galleryItems.findIndex(
-      (item) => item.src === activeSlide.src
+    openLightbox(heroLightboxItems, activeIndex, false);
+  };
+
+  const handlePrev = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setActiveIndex(
+      (prev) => (prev - 1 + HERO_SLIDES.length) % HERO_SLIDES.length
     );
-    openLightbox(galleryItems, matchIdx >= 0 ? matchIdx : 0, false);
+  };
+
+  const handleNext = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setActiveIndex((prev) => (prev + 1) % HERO_SLIDES.length);
   };
 
   return (
     <div
-      ref={cardRef}
-      className="hero-photo-showcase hero-3d-stage"
+      ref={stageRef}
+      className="hero-cinema-stage"
       onMouseEnter={() => setIsPaused(true)}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
-      {/* Floating 3D Decorative Orbital Ring Behind Card */}
-      <div className="hero-3d-orbit-ring" aria-hidden="true" />
-      <div className="hero-3d-glow-orb" aria-hidden="true" />
+      {/* Ambient 3D Halo & Layered Glass Depth Planes */}
+      <div className="hero-cinema-halo" aria-hidden="true" />
+      <div className="hero-depth-plane plane-back" aria-hidden="true" />
+      <div className="hero-depth-plane plane-mid" aria-hidden="true" />
 
-      {/* Floating 3D Badge Top-Left */}
-      <div className="hero-3d-floating-badge top-left" aria-hidden="true">
-        <span className="hero-3d-diamond-icon">◆</span>
-        <div>
-          <strong>Diamond Chapter</strong>
-          <span>ISTD Trichur • Est. 2026</span>
+      {/* Floating 3D Official Seal Badge (Top-Left) */}
+      <div className="hero-floating-crest-card" aria-hidden="true">
+        <div className="hero-floating-crest-seal">
+          <img
+            src={assetUrl('/images/logo-circle.png')}
+            alt="ISTD Seal"
+            width={38}
+            height={38}
+          />
+        </div>
+        <div className="hero-floating-crest-text">
+          <span className="crest-kicker">◆ DIAMOND CHAPTER</span>
+          <strong>ISTD Trichur Chapter</strong>
+          <span className="crest-sub">Inaugurated 30 March 2026</span>
         </div>
       </div>
 
-      {/* Main 3D Tilt Card */}
+      {/* Main 3D Tilt Cinema Frame */}
       <div
-        className="hero-main-photo-card hero-3d-card"
-        style={{
-          transform: `perspective(1100px) rotateX(${tilt.rx}deg) rotateY(${tilt.ry}deg)`,
-        }}
+        className="hero-cinema-card"
+        style={
+          {
+            transform: `perspective(1200px) rotateX(${tilt.rx}deg) rotateY(${tilt.ry}deg)`,
+            '--glare-x': `${tilt.gx}%`,
+            '--glare-y': `${tilt.gy}%`,
+          } as React.CSSProperties
+        }
       >
         <div
-          className="hero-main-photo-frame"
-          id="heroMainPhotoFrame"
+          className="hero-cinema-viewport"
           onClick={handleOpenFullscreen}
           role="button"
           tabIndex={0}
@@ -92,26 +118,38 @@ export function HeroShowcase() {
             }
           }}
         >
-          <img
-            src={assetUrl(activeSlide.src)}
-            alt={activeSlide.title}
-            id="heroMainPhotoImg"
-            width={640}
-            height={480}
-          />
-          <div className="hero-photo-overlay">
-            <div className="hero-photo-top-badges">
-              <span className="hero-live-pill">
-                <span className="pulse-dot" />
-                <span id="heroMainPhotoBadge">{activeSlide.badge}</span>
+          {/* Crossfading High-Resolution Slides (No Thumbnail Clutter) */}
+          {HERO_SLIDES.map((slide, idx) => (
+            <img
+              key={slide.src}
+              src={assetUrl(slide.src)}
+              alt={slide.title}
+              className={`hero-cinema-slide-img ${
+                idx === activeIndex ? 'is-active' : ''
+              }`}
+              width={720}
+              height={480}
+            />
+          ))}
+
+          {/* Interactive Specular Glare Overlay */}
+          <div className="hero-cinema-glare" aria-hidden="true" />
+
+          {/* Cinema Overlay UI */}
+          <div className="hero-cinema-overlay">
+            <div className="hero-cinema-topbar">
+              <span className="hero-cinema-badge">
+                <span className="hero-cinema-dot" />
+                <span>{activeSlide.badge}</span>
               </span>
+
               <span
-                className="hero-expand-hint"
-                title="Click to view fullscreen"
+                className="hero-cinema-expand"
+                title="View full resolution"
               >
                 <svg
-                  width="16"
-                  height="16"
+                  width="15"
+                  height="15"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
@@ -124,57 +162,83 @@ export function HeroShowcase() {
                 </svg>
               </span>
             </div>
-            <div className="hero-photo-caption-box">
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  gap: '0.5rem',
-                  marginBottom: '0.25rem',
-                }}
-              >
-                <span
-                  style={{
-                    fontSize: '0.7rem',
-                    fontWeight: 800,
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.08em',
-                    color: '#FBBF24',
-                  }}
+
+            {/* Bottom Glass Caption & Minimalist Control Dock */}
+            <div className="hero-cinema-dock">
+              <div className="hero-cinema-progress-row">
+                <div
+                  className="hero-cinema-dots"
+                  role="tablist"
+                  aria-label="Featured chapter highlights"
                 >
-                  Slide 0{activeIndex + 1} / 0{HERO_SLIDES.length}
+                  {HERO_SLIDES.map((slide, idx) => (
+                    <button
+                      key={slide.src}
+                      type="button"
+                      role="tab"
+                      aria-selected={idx === activeIndex}
+                      aria-label={`Highlight ${idx + 1}: ${slide.title}`}
+                      className={`hero-cinema-dot-btn ${
+                        idx === activeIndex ? 'active' : ''
+                      }`}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setActiveIndex(idx);
+                      }}
+                    />
+                  ))}
+                </div>
+                <span className="hero-cinema-counter">
+                  0{activeIndex + 1} / 0{HERO_SLIDES.length}
                 </span>
               </div>
-              <h4 id="heroMainPhotoTitle">{activeSlide.title}</h4>
-              <p id="heroMainPhotoDesc">{activeSlide.desc}</p>
+
+              <div className="hero-cinema-caption-row">
+                <div className="hero-cinema-caption-copy">
+                  <h4>{activeSlide.title}</h4>
+                  <p>{activeSlide.desc}</p>
+                </div>
+
+                <div className="hero-cinema-nav-btns">
+                  <button
+                    type="button"
+                    className="hero-cinema-arrow-btn"
+                    onClick={handlePrev}
+                    aria-label="Previous highlight"
+                  >
+                    ‹
+                  </button>
+                  <button
+                    type="button"
+                    className="hero-cinema-arrow-btn"
+                    onClick={handleNext}
+                    aria-label="Next highlight"
+                  >
+                    ›
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-
-        {/* Interactive 5-Photo Switcher Strip */}
-        <div
-          className="hero-thumb-strip"
-          aria-label="Switch featured chapter photograph"
-          style={{
-            gridTemplateColumns: `repeat(${HERO_SLIDES.length}, 1fr)`,
-          }}
-        >
-          {HERO_SLIDES.map((slide, idx) => (
-            <button
-              key={slide.src}
-              type="button"
-              className={`hero-thumb-btn ${
-                idx === activeIndex ? 'active' : ''
-              }`}
-              onClick={() => setActiveIndex(idx)}
-              aria-label={`Select photo ${idx + 1}: ${slide.title}`}
-            >
-              <img src={assetUrl(slide.src)} alt={slide.title} />
-            </button>
-          ))}
-        </div>
       </div>
+
+      {/* Floating 3D Bottom-Right Live Programme Pill */}
+      <Link
+        href="/events/advancing-aiot-research"
+        className="hero-floating-live-card"
+      >
+        <div className="hero-floating-live-indicator">
+          <span className="pulse-dot-green" />
+          <span>NEXT LIVE WEBINAR • 10 NOV 2026</span>
+        </div>
+        <div className="hero-floating-live-title">
+          Advancing AIoT Research &rarr;
+        </div>
+        <div className="hero-floating-live-sub">
+          Boopathy (CTO, Monzha Research Labs) • 7:00 PM IST
+        </div>
+      </Link>
     </div>
   );
 }

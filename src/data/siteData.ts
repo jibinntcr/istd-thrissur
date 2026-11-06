@@ -185,44 +185,28 @@ export const CHAPTER_CONTACTS = {
 
 export const HERO_SLIDES: HeroSlide[] = [
   {
+    src: '/photos/istd-22.jpeg',
+    badge: 'Diamond Chapter Inauguration • 30 March 2026',
+    title: 'Ceremonial Lamp Lighting by National & Chapter Leaders',
+    desc: 'Chairman Tony Chacko and Founder-Mentor Prof. (Dr.) Zakkariya K. A. alongside National President Shri. Atul Shah and National Dignitaries',
+    caption:
+      'Chairman Tony Chacko and Founder-Mentor Prof. (Dr.) Zakkariya K. A. lighting the ceremonial lamp alongside National President Shri. Atul Shah, National Treasurer Shri. Nabaghana Pany, and Past National President Dr. Yogesh Kumar Upadhyay at Hotel Pearl Regency, Trichur.',
+  },
+  {
     src: '/images/ISTDTeamTCR/prof-zakkariya-keynote-podium.jpg',
     badge: 'Founder & Mentor • National Vice President, ISTD',
-    title: 'Prof. (Dr.) Zakkariya K. A. Addressing ISTD Trichur Chapter',
-    desc: 'Founder & Mentor, ISTD Trichur Chapter & National Vice President, ISTD delivering the keynote address at Hotel Pearl Regency, Trichur',
+    title: 'Keynote Address by Prof. (Dr.) Zakkariya K. A.',
+    desc: 'Founder & Mentor, ISTD Trichur Chapter & National Vice President, ISTD addressing the chapter at Hotel Pearl Regency, Trichur',
     caption:
       'Prof. (Dr.) Zakkariya K. A. (Founder & Mentor, ISTD Trichur Chapter & National Vice President, ISTD) addressing the gathering at Hotel Pearl Regency, Trichur.',
   },
   {
-    src: '/photos/hero-slide-2.jpg',
-    badge: 'Chairman’s Address • ISTD Trichur',
-    title: 'Welcome Address by Chapter Chairman Tony Chacko',
-    desc: 'Outlining the strategic roadmap and L&D programmes of the ISTD Trichur Diamond Chapter',
-    caption:
-      'Tony Chacko, Chairman of the ISTD Trichur Chapter, addressing members and delegates at Hotel Pearl Regency, Trichur.',
-  },
-  {
-    src: '/images/ISTDTeamTCR/jibin-n-addressing-inauguration.jpg',
-    badge: 'Secretary’s Address • Diamond Chapter',
-    title: 'Secretary Jibin N Addressing the Chapter Gathering',
-    desc: 'Coordinating professional learning, digital innovation, and member engagement across ISTD Trichur',
-    caption:
-      'Jibin N, Secretary of ISTD Trichur Chapter, addressing the gathering alongside National Treasurer Shri. Nabaghana Pany and Chairman Tony Chacko at the Diamond Chapter inauguration.',
-  },
-  {
     src: '/photos/chapter-connect-2026-2.jpg',
     badge: 'Chapter Connect 2026 • Hotel Elite International',
-    title: 'ISTD Trichur Chapter Members & Executive Leadership',
-    desc: 'Trainers, HR leaders, academicians, and entrepreneurs united at Chapter Connect 2026',
+    title: 'ISTD Trichur Chapter Leadership & Members Fellowship',
+    desc: 'Trainers, HR leaders, academicians, and entrepreneurs united at Chapter Connect 2026 in Trichur',
     caption:
       'Official group photograph of ISTD Trichur Chapter office bearers and members during Chapter Connect 2026 at Hotel Elite International, Trichur.',
-  },
-  {
-    src: '/photos/hero-slide-3.jpg',
-    badge: 'National Recognition • Diamond Chapter',
-    title: 'ISTD National Leaders & Trichur Chapter Office Bearers',
-    desc: 'Inaugurated in the 55th milestone year of the Indian Society for Training & Development',
-    caption:
-      'ISTD National President Shri. Atul Shah, Past National President Dr. Yogesh Kumar Upadhyay, National Treasurer Shri. Nabaghana Pany, Founder & Mentor Prof. (Dr.) Zakkariya K. A., Chairman Tony Chacko, Secretary Jibin N, Treasurer Sneha Rose George, and chapter members.',
   },
 ];
 
