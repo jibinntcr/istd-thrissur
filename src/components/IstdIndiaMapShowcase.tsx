@@ -159,10 +159,10 @@ const ISTD_INDIA_HUBS: ChapterHub[] = [
 ];
 
 const STATE_PALETTE: Record<number, string> = {
-  1: 'rgba(30, 64, 175, 0.58)',
-  2: 'rgba(29, 78, 216, 0.46)',
-  3: 'rgba(37, 99, 235, 0.52)',
-  4: 'rgba(15, 41, 82, 0.68)',
+  1: 'rgba(30, 64, 175, 0.66)',
+  2: 'rgba(29, 78, 216, 0.54)',
+  3: 'rgba(37, 99, 235, 0.6)',
+  4: 'rgba(15, 41, 82, 0.74)',
 };
 
 export function IstdIndiaMapShowcase() {
@@ -190,8 +190,15 @@ export function IstdIndiaMapShowcase() {
         </p>
       </div>
 
-      {/* Animated Official State-Boundary India Map Stage */}
+      {/* Animated Official State-Boundary India Map & Ocean Stage */}
       <div className="india-map-stage">
+        {/* Animated Ocean Shimmer & Wave Layers in Background */}
+        <div className="india-ocean-backdrop" aria-hidden="true">
+          <div className="ocean-caustics-glow" />
+          <div className="ocean-wave-layer wave-1" />
+          <div className="ocean-wave-layer wave-2" />
+        </div>
+
         {/* Top Live Status Pills */}
         <div className="india-map-top-badges">
           <button
@@ -218,12 +225,19 @@ export function IstdIndiaMapShowcase() {
 
         <div className="india-map-svg-wrapper">
           <svg
-            viewBox="0 15 775 820"
+            viewBox="15 25 745 805"
             className="india-map-svg"
             role="img"
-            aria-label="Official Map of India with state boundaries showing ISTD National Headquarters in New Delhi connected to ISTD Trichur Diamond Chapter in Kerala and chapters across India"
+            aria-label="Official Map of India with state boundaries, animated Arabian Sea, Bay of Bengal, and Indian Ocean currents, showing ISTD National Headquarters in New Delhi connected to ISTD Trichur Diamond Chapter in Kerala"
           >
             <defs>
+              {/* Deep Ocean Gradient */}
+              <radialGradient id="oceanDepthGrad" cx="46%" cy="55%" r="65%">
+                <stop offset="0%" stopColor="#0E3A75" stopOpacity="0.48" />
+                <stop offset="55%" stopColor="#082046" stopOpacity="0.32" />
+                <stop offset="100%" stopColor="#041026" stopOpacity="0" />
+              </radialGradient>
+
               {/* Glowing Map Outer Stroke Gradient */}
               <linearGradient
                 id="indiaStrokeGrad"
@@ -250,6 +264,12 @@ export function IstdIndiaMapShowcase() {
                 <stop offset="100%" stopColor="#F59E0B" />
               </linearGradient>
 
+              {/* Radar Sweep Gradient */}
+              <linearGradient id="radarBeamGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#38BDF8" stopOpacity="0.22" />
+                <stop offset="100%" stopColor="#38BDF8" stopOpacity="0" />
+              </linearGradient>
+
               {/* Soft Glow Filter */}
               <filter
                 id="mapGlow"
@@ -262,71 +282,349 @@ export function IstdIndiaMapShowcase() {
                 <feComposite in="SourceGraphic" in2="blur" operator="over" />
               </filter>
 
-              {/* Ambient Spotlight Around India */}
-              <radialGradient id="trichurSpotlight" cx="36%" cy="86%" r="55%">
-                <stop offset="0%" stopColor="#F59E0B" stopOpacity="0.32" />
-                <stop offset="45%" stopColor="#3B82F6" stopOpacity="0.14" />
+              {/* Ambient Spotlight Around Southern Peninsula */}
+              <radialGradient id="trichurSpotlight" cx="35%" cy="86%" r="55%">
+                <stop offset="0%" stopColor="#F59E0B" stopOpacity="0.34" />
+                <stop offset="45%" stopColor="#0284C7" stopOpacity="0.18" />
                 <stop offset="100%" stopColor="#0B2239" stopOpacity="0" />
               </radialGradient>
             </defs>
 
-            {/* Subtle Topographical Latitude/Longitude Grid */}
+            {/* Ocean Depth Glow */}
+            <rect x="15" y="25" width="745" height="805" fill="url(#oceanDepthGrad)" />
+
+            {/* Topographical Nautical Latitude/Longitude Grid */}
             <g
               className="india-map-grid-lines"
-              stroke="rgba(148, 163, 184, 0.1)"
-              strokeWidth="1.1"
-              strokeDasharray="5 8"
+              stroke="rgba(56, 189, 248, 0.13)"
+              strokeWidth="1"
+              strokeDasharray="4 7"
             >
-              <line x1="20" y1="150" x2="755" y2="150" />
-              <line x1="20" y1="290" x2="755" y2="290" />
-              <line x1="20" y1="430" x2="755" y2="430" />
-              <line x1="20" y1="570" x2="755" y2="570" />
-              <line x1="20" y1="710" x2="755" y2="710" />
-              <line x1="160" y1="30" x2="160" y2="825" />
-              <line x1="310" y1="30" x2="310" y2="825" />
-              <line x1="460" y1="30" x2="460" y2="825" />
-              <line x1="610" y1="30" x2="610" y2="825" />
+              <line x1="20" y1="135" x2="755" y2="135" />
+              <line x1="20" y1="265" x2="755" y2="265" />
+              <line x1="20" y1="395" x2="755" y2="395" />
+              <line x1="20" y1="525" x2="755" y2="525" />
+              <line x1="20" y1="655" x2="755" y2="655" />
+              <line x1="20" y1="785" x2="755" y2="785" />
+              <line x1="140" y1="30" x2="140" y2="825" />
+              <line x1="280" y1="30" x2="280" y2="825" />
+              <line x1="420" y1="30" x2="420" y2="825" />
+              <line x1="560" y1="30" x2="560" y2="825" />
+              <line x1="700" y1="30" x2="700" y2="825" />
             </g>
 
             {/* Ambient Spotlight Halo */}
             <circle
-              cx="320"
+              cx="310"
               cy="460"
-              r="360"
+              r="370"
               fill="url(#trichurSpotlight)"
               className="india-map-ambient-circle"
             />
 
-            {/* Outer Concentric Network Rings Centered on India */}
+            {/* Animated Rotating Nautical Compass & Orbital Rings */}
             <circle
               cx="350"
               cy="435"
-              r="335"
+              r="345"
               fill="none"
-              stroke="rgba(56, 189, 248, 0.15)"
+              stroke="rgba(56, 189, 248, 0.18)"
               strokeWidth="1.5"
-              strokeDasharray="10 14"
+              strokeDasharray="10 12"
               className="india-orbit-ring-slow"
             />
             <circle
               cx="350"
               cy="435"
-              r="245"
+              r="255"
               fill="none"
-              stroke="rgba(251, 191, 36, 0.15)"
+              stroke="rgba(251, 191, 36, 0.16)"
               strokeWidth="1.5"
-              strokeDasharray="8 12"
+              strokeDasharray="8 10"
               className="india-orbit-ring-reverse"
             />
 
+            {/* ============================================================
+                ANIMATED OCEAN CURRENTS, WAVE CRESTS & MARITIME LABELS
+               ============================================================ */}
+            <g className="india-ocean-elements">
+              {/* 1. ARABIAN SEA (West of India) — Animated Wave Currents & Label */}
+              <g className="ocean-wave-group wave-drift-left">
+                <path
+                  d="M 28 545 Q 48 537 68 545 T 108 545 T 148 545"
+                  fill="none"
+                  stroke="rgba(56, 189, 248, 0.42)"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+                <path
+                  d="M 42 565 Q 62 557 82 565 T 122 565"
+                  fill="none"
+                  stroke="rgba(56, 189, 248, 0.28)"
+                  strokeWidth="1.6"
+                  strokeLinecap="round"
+                />
+                <path
+                  d="M 25 635 Q 45 627 65 635 T 105 635 T 145 635"
+                  fill="none"
+                  stroke="rgba(56, 189, 248, 0.38)"
+                  strokeWidth="1.8"
+                  strokeLinecap="round"
+                />
+                <path
+                  d="M 38 655 Q 58 647 78 655 T 118 655"
+                  fill="none"
+                  stroke="rgba(56, 189, 248, 0.24)"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                />
+              </g>
+              <text
+                x="88"
+                y="596"
+                textAnchor="middle"
+                fill="rgba(125, 211, 252, 0.62)"
+                fontSize="12"
+                fontWeight="800"
+                letterSpacing="0.22em"
+              >
+                ARABIAN
+              </text>
+              <text
+                x="88"
+                y="613"
+                textAnchor="middle"
+                fill="rgba(125, 211, 252, 0.62)"
+                fontSize="12"
+                fontWeight="800"
+                letterSpacing="0.22em"
+              >
+                SEA
+              </text>
+              <text
+                x="115"
+                y="808"
+                textAnchor="middle"
+                fill="rgba(147, 197, 253, 0.72)"
+                fontSize="10"
+                fontWeight="700"
+                letterSpacing="0.06em"
+              >
+                Lakshadweep
+              </text>
+
+              {/* 2. BAY OF BENGAL (East of India) — Animated Wave Currents & Compass Rose */}
+              <g className="ocean-wave-group wave-drift-right">
+                <path
+                  d="M 495 555 Q 518 546 541 555 T 587 555 T 633 555"
+                  fill="none"
+                  stroke="rgba(56, 189, 248, 0.42)"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+                <path
+                  d="M 515 576 Q 538 567 561 576 T 607 576"
+                  fill="none"
+                  stroke="rgba(56, 189, 248, 0.28)"
+                  strokeWidth="1.6"
+                  strokeLinecap="round"
+                />
+                <path
+                  d="M 465 655 Q 488 646 511 655 T 557 655 T 603 655"
+                  fill="none"
+                  stroke="rgba(56, 189, 248, 0.36)"
+                  strokeWidth="1.8"
+                  strokeLinecap="round"
+                />
+                <path
+                  d="M 485 675 Q 508 666 531 675 T 577 675"
+                  fill="none"
+                  stroke="rgba(56, 189, 248, 0.24)"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                />
+              </g>
+              <text
+                x="558"
+                y="608"
+                textAnchor="middle"
+                fill="rgba(125, 211, 252, 0.62)"
+                fontSize="12"
+                fontWeight="800"
+                letterSpacing="0.2em"
+              >
+                BAY OF
+              </text>
+              <text
+                x="558"
+                y="625"
+                textAnchor="middle"
+                fill="rgba(125, 211, 252, 0.62)"
+                fontSize="12"
+                fontWeight="800"
+                letterSpacing="0.2em"
+              >
+                BENGAL
+              </text>
+              <text
+                x="615"
+                y="756"
+                textAnchor="middle"
+                fill="rgba(147, 197, 253, 0.72)"
+                fontSize="10"
+                fontWeight="700"
+                letterSpacing="0.05em"
+              >
+                Andaman &amp; Nicobar
+              </text>
+
+              {/* 3. INDIAN OCEAN (South of Kanyakumari) */}
+              <g className="ocean-wave-group wave-drift-left">
+                <path
+                  d="M 355 795 Q 378 787 401 795 T 447 795 T 493 795"
+                  fill="none"
+                  stroke="rgba(56, 189, 248, 0.36)"
+                  strokeWidth="1.8"
+                  strokeLinecap="round"
+                />
+              </g>
+              <text
+                x="425"
+                y="818"
+                textAnchor="middle"
+                fill="rgba(125, 211, 252, 0.58)"
+                fontSize="11"
+                fontWeight="800"
+                letterSpacing="0.24em"
+              >
+                INDIAN OCEAN
+              </text>
+
+              {/* 4. Animated Nautical Compass Rose in Top-Right Quadrant (585, 135) */}
+              <g transform="translate(615, 132)">
+                <circle
+                  cx="0"
+                  cy="0"
+                  r="42"
+                  fill="rgba(11, 34, 57, 0.65)"
+                  stroke="rgba(56, 189, 248, 0.35)"
+                  strokeWidth="1.4"
+                  strokeDasharray="3 4"
+                  className="compass-outer-spin"
+                />
+                <circle
+                  cx="0"
+                  cy="0"
+                  r="30"
+                  fill="none"
+                  stroke="rgba(250, 204, 21, 0.35)"
+                  strokeWidth="1.2"
+                />
+                {/* Compass Star Points */}
+                <polygon
+                  points="0,-28 6,-6 28,0 6,6 0,28 -6,6 -28,0 -6,-6"
+                  fill="rgba(56, 189, 248, 0.28)"
+                  stroke="#38BDF8"
+                  strokeWidth="1.2"
+                />
+                <polygon
+                  points="0,-28 4,-6 0,0 -4,-6"
+                  fill="#FACC15"
+                />
+                <circle cx="0" cy="0" r="4" fill="#FEF08A" />
+                <text
+                  x="0"
+                  y="-33"
+                  textAnchor="middle"
+                  fill="#FDE047"
+                  fontSize="10"
+                  fontWeight="800"
+                >
+                  N
+                </text>
+              </g>
+
+              {/* 5. Floating Animated ISTD Pillar Badges in Upper-Left & Mid-Right */}
+              <g transform="translate(24, 92)">
+                <g className="floating-map-pill pill-float-1">
+                  <rect
+                    x="0"
+                    y="0"
+                    width="162"
+                    height="46"
+                    rx="11"
+                    fill="rgba(15, 23, 42, 0.88)"
+                    stroke="rgba(56, 189, 248, 0.5)"
+                    strokeWidth="1.5"
+                  />
+                  <text x="14" y="19" fill="#38BDF8" fontSize="11" fontWeight="800">
+                    🏛️ EST. APRIL 1970
+                  </text>
+                  <text x="14" y="35" fill="#E2E8F0" fontSize="10" fontWeight="600">
+                    55+ Chapters Nationwide
+                  </text>
+                </g>
+              </g>
+
+              <g transform="translate(22, 204)">
+                <g className="floating-map-pill pill-float-2">
+                  <rect
+                    x="0"
+                    y="0"
+                    width="158"
+                    height="46"
+                    rx="11"
+                    fill="rgba(15, 23, 42, 0.88)"
+                    stroke="rgba(250, 204, 21, 0.5)"
+                    strokeWidth="1.5"
+                  />
+                  <text x="14" y="19" fill="#FDE047" fontSize="11" fontWeight="800">
+                    🎯 L&amp;D EXCELLENCE
+                  </text>
+                  <text x="14" y="35" fill="#E2E8F0" fontSize="10" fontWeight="600">
+                    Industry &amp; Academia Bridge
+                  </text>
+                </g>
+              </g>
+
+              <g transform="translate(542, 482)">
+                <g className="floating-map-pill pill-float-1">
+                  <rect
+                    x="0"
+                    y="0"
+                    width="192"
+                    height="46"
+                    rx="11"
+                    fill="rgba(15, 23, 42, 0.88)"
+                    stroke="rgba(52, 211, 153, 0.5)"
+                    strokeWidth="1.5"
+                  />
+                  <text x="14" y="19" fill="#34D399" fontSize="11" fontWeight="800">
+                    📚 UNIVERSAL KNOWLEDGE
+                  </text>
+                  <text x="14" y="35" fill="#E2E8F0" fontSize="10" fontWeight="600">
+                    Training &amp; Action Research
+                  </text>
+                </g>
+              </g>
+            </g>
+
             {/* High-Precision Official Map of India with All State Boundaries */}
             <g className="india-map-landmass">
-              {/* Outer Glow Shadow of India */}
+              {/* Outer Coastal Bathymetry Ripple Halo of India */}
               <path
                 d={INDIA_OUTER_PATH}
-                fill="rgba(37, 99, 235, 0.22)"
+                fill="none"
+                stroke="rgba(56, 189, 248, 0.22)"
+                strokeWidth="16"
+                strokeLinejoin="round"
+                className="coastal-ripple-outer"
+              />
+              <path
+                d={INDIA_OUTER_PATH}
+                fill="rgba(37, 99, 235, 0.25)"
                 stroke="rgba(56, 189, 248, 0.45)"
-                strokeWidth="5"
+                strokeWidth="6"
                 strokeLinejoin="round"
                 filter="url(#mapGlow)"
               />
@@ -338,15 +636,15 @@ export function IstdIndiaMapShowcase() {
                   d={st.d}
                   fill={
                     st.isKerala
-                      ? 'rgba(250, 204, 21, 0.48)'
-                      : STATE_PALETTE[st.colorClass] || 'rgba(30, 64, 175, 0.55)'
+                      ? 'rgba(250, 204, 21, 0.52)'
+                      : STATE_PALETTE[st.colorClass] || 'rgba(30, 64, 175, 0.6)'
                   }
                   stroke={
                     st.isKerala
                       ? '#FACC15'
-                      : 'rgba(147, 197, 253, 0.52)'
+                      : 'rgba(147, 197, 253, 0.55)'
                   }
-                  strokeWidth={st.isKerala ? '2.8' : '1.45'}
+                  strokeWidth={st.isKerala ? '2.8' : '1.5'}
                   strokeLinejoin="round"
                   className={
                     st.isKerala
@@ -361,29 +659,29 @@ export function IstdIndiaMapShowcase() {
                 d={INDIA_OUTER_PATH}
                 fill="none"
                 stroke="url(#indiaStrokeGrad)"
-                strokeWidth="2.6"
+                strokeWidth="2.8"
                 strokeLinejoin="round"
                 className="india-map-outline-path"
               />
 
-              {/* Lakshadweep & Andaman & Nicobar Islands */}
-              <g fill="#60A5FA" stroke="#BAE6FD" strokeWidth="0.8" opacity="0.85">
+              {/* Lakshadweep & Andaman & Nicobar Islands with Pulsing Atoll Rings */}
+              <g fill="#60A5FA" stroke="#BAE6FD" strokeWidth="0.9" opacity="0.9">
                 {/* Lakshadweep */}
-                <circle cx="122" cy="708" r="3.2" />
-                <circle cx="136" cy="722" r="3" />
-                <circle cx="128" cy="738" r="3.4" />
-                <circle cx="144" cy="748" r="2.8" />
-                <circle cx="132" cy="762" r="2.8" />
-                <circle cx="142" cy="790" r="2.6" />
+                <circle cx="122" cy="708" r="3.5" />
+                <circle cx="136" cy="722" r="3.2" />
+                <circle cx="128" cy="738" r="3.8" />
+                <circle cx="144" cy="748" r="3" />
+                <circle cx="132" cy="762" r="3" />
+                <circle cx="142" cy="785" r="2.8" />
                 {/* Andaman & Nicobar Islands */}
-                <circle cx="672" cy="642" r="3.5" />
-                <circle cx="668" cy="665" r="4.2" />
-                <circle cx="666" cy="688" r="4.2" />
-                <circle cx="664" cy="712" r="3.6" />
-                <circle cx="662" cy="732" r="3.4" />
-                <circle cx="676" cy="774" r="3.2" />
-                <circle cx="692" cy="802" r="3.5" />
-                <circle cx="705" cy="821" r="4" />
+                <circle cx="672" cy="642" r="3.8" />
+                <circle cx="668" cy="665" r="4.5" />
+                <circle cx="666" cy="688" r="4.5" />
+                <circle cx="664" cy="712" r="3.8" />
+                <circle cx="662" cy="732" r="3.6" />
+                <circle cx="676" cy="774" r="3.5" />
+                <circle cx="692" cy="802" r="3.8" />
+                <circle cx="705" cy="818" r="4.2" />
               </g>
             </g>
 
@@ -391,57 +689,57 @@ export function IstdIndiaMapShowcase() {
             <g className="india-network-arcs" fill="none">
               <path
                 d="M 274 265 Q 256 232 248 205"
-                stroke="rgba(96, 165, 250, 0.55)"
-                strokeWidth="2"
+                stroke="rgba(96, 165, 250, 0.58)"
+                strokeWidth="2.1"
                 strokeDasharray="6 6"
                 className="network-arc-flow"
               />
               <path
                 d="M 274 265 Q 235 288 215 318"
-                stroke="rgba(96, 165, 250, 0.55)"
-                strokeWidth="2"
+                stroke="rgba(96, 165, 250, 0.58)"
+                strokeWidth="2.1"
                 strokeDasharray="6 6"
                 className="network-arc-flow"
               />
               <path
                 d="M 274 265 Q 190 340 146 432"
-                stroke="rgba(96, 165, 250, 0.55)"
-                strokeWidth="2.1"
+                stroke="rgba(96, 165, 250, 0.58)"
+                strokeWidth="2.2"
                 strokeDasharray="7 6"
                 className="network-arc-flow"
               />
               <path
                 d="M 274 265 Q 210 395 174 528"
-                stroke="rgba(96, 165, 250, 0.6)"
+                stroke="rgba(96, 165, 250, 0.62)"
                 strokeWidth="2.2"
                 strokeDasharray="7 6"
                 className="network-arc-flow"
               />
               <path
                 d="M 274 265 Q 322 290 362 322"
-                stroke="rgba(96, 165, 250, 0.55)"
-                strokeWidth="2"
+                stroke="rgba(96, 165, 250, 0.58)"
+                strokeWidth="2.1"
                 strokeDasharray="6 6"
                 className="network-arc-flow"
               />
               <path
                 d="M 274 265 Q 410 330 526 424"
-                stroke="rgba(96, 165, 250, 0.6)"
+                stroke="rgba(96, 165, 250, 0.62)"
                 strokeWidth="2.2"
                 strokeDasharray="7 6"
                 className="network-arc-flow"
               />
               <path
                 d="M 526 424 Q 575 365 626 318"
-                stroke="rgba(96, 165, 250, 0.55)"
-                strokeWidth="2"
+                stroke="rgba(96, 165, 250, 0.58)"
+                strokeWidth="2.1"
                 strokeDasharray="6 6"
                 className="network-arc-flow"
               />
               <path
                 d="M 274 265 Q 305 415 314 565"
-                stroke="rgba(96, 165, 250, 0.55)"
-                strokeWidth="2.1"
+                stroke="rgba(96, 165, 250, 0.58)"
+                strokeWidth="2.2"
                 strokeDasharray="7 6"
                 className="network-arc-flow"
               />
@@ -449,36 +747,36 @@ export function IstdIndiaMapShowcase() {
               {/* Southern & Coastal Connections into Trichur Diamond Chapter (238, 748) */}
               <path
                 d="M 174 528 Q 188 645 238 748"
-                stroke="rgba(251, 191, 36, 0.72)"
-                strokeWidth="2.5"
+                stroke="rgba(251, 191, 36, 0.75)"
+                strokeWidth="2.6"
                 strokeDasharray="8 6"
                 className="network-arc-flow-fast"
               />
               <path
                 d="M 266 682 Q 250 715 238 748"
-                stroke="rgba(52, 211, 153, 0.85)"
+                stroke="rgba(52, 211, 153, 0.88)"
                 strokeWidth="2.8"
                 strokeDasharray="6 5"
                 className="network-arc-flow-fast"
               />
               <path
                 d="M 338 684 Q 290 722 238 748"
-                stroke="rgba(52, 211, 153, 0.8)"
-                strokeWidth="2.5"
+                stroke="rgba(52, 211, 153, 0.82)"
+                strokeWidth="2.6"
                 strokeDasharray="6 5"
                 className="network-arc-flow-fast"
               />
               <path
                 d="M 314 565 Q 272 658 238 748"
-                stroke="rgba(251, 191, 36, 0.65)"
+                stroke="rgba(251, 191, 36, 0.68)"
                 strokeWidth="2.2"
                 strokeDasharray="7 6"
                 className="network-arc-flow"
               />
               <path
                 d="M 526 424 Q 445 555 338 684"
-                stroke="rgba(96, 165, 250, 0.48)"
-                strokeWidth="1.9"
+                stroke="rgba(96, 165, 250, 0.52)"
+                strokeWidth="2"
                 strokeDasharray="6 6"
                 className="network-arc-flow"
               />
@@ -488,7 +786,7 @@ export function IstdIndiaMapShowcase() {
                 id="delhiToTrichurMainArc"
                 d="M 274 265 Q 205 510 238 748"
                 stroke="url(#delhiTrichurGrad)"
-                strokeWidth="4.4"
+                strokeWidth="4.6"
                 strokeLinecap="round"
                 filter="url(#mapGlow)"
               />
@@ -501,17 +799,17 @@ export function IstdIndiaMapShowcase() {
               />
 
               {/* Animated Traveling Knowledge Pulses Along Flagship Corridor */}
-              <circle r="5.5" fill="#FEF08A" filter="url(#mapGlow)">
+              <circle r="6" fill="#FEF08A" filter="url(#mapGlow)">
                 <animateMotion
-                  dur="3.4s"
+                  dur="3.2s"
                   repeatCount="indefinite"
                   path="M 274 265 Q 205 510 238 748"
                 />
               </circle>
-              <circle r="4.5" fill="#38BDF8" filter="url(#mapGlow)">
+              <circle r="5" fill="#38BDF8" filter="url(#mapGlow)">
                 <animateMotion
-                  dur="3.4s"
-                  begin="1.7s"
+                  dur="3.2s"
+                  begin="1.6s"
                   repeatCount="indefinite"
                   path="M 238 748 Q 205 510 274 265"
                 />
@@ -536,7 +834,7 @@ export function IstdIndiaMapShowcase() {
                       cy={hub.y}
                       r="34"
                       fill="none"
-                      stroke="rgba(250, 204, 21, 0.6)"
+                      stroke="rgba(250, 204, 21, 0.65)"
                       strokeWidth="2.4"
                       className="trichur-sonar-ring ring-1"
                     />
@@ -560,20 +858,20 @@ export function IstdIndiaMapShowcase() {
                     />
                     <circle cx={hub.x} cy={hub.y} r="4.8" fill="#FFFFFF" />
 
-                    {/* Pointer Line + Callout Badge for ISTD Trichur Chapter (Positioned cleanly in Arabian Sea to the left of Kerala) */}
+                    {/* Pointer Line + Callout Badge for ISTD Trichur Chapter */}
                     <line
                       x1={hub.x - 14}
                       y1={hub.y}
-                      x2={hub.x - 32}
+                      x2={hub.x - 30}
                       y2={hub.y}
                       stroke="#FACC15"
-                      strokeWidth="2"
+                      strokeWidth="2.2"
                     />
-                    <g transform={`translate(10, ${hub.y - 26})`}>
+                    <g transform={`translate(18, ${hub.y - 58})`}>
                       <rect
                         x="0"
                         y="0"
-                        width="196"
+                        width="192"
                         height="52"
                         rx="12"
                         fill="rgba(11, 34, 57, 0.96)"
@@ -581,7 +879,7 @@ export function IstdIndiaMapShowcase() {
                         strokeWidth="2.4"
                       />
                       <text
-                        x="98"
+                        x="96"
                         y="22"
                         textAnchor="middle"
                         fill="#FDE047"
@@ -592,7 +890,7 @@ export function IstdIndiaMapShowcase() {
                         ★ ISTD TRICHUR
                       </text>
                       <text
-                        x="98"
+                        x="96"
                         y="40"
                         textAnchor="middle"
                         fill="#FFFFFF"
@@ -704,8 +1002,8 @@ export function IstdIndiaMapShowcase() {
                     x={hub.labelPos === 'left' ? hub.x - 12 : hub.x + 12}
                     y={hub.y + 4.5}
                     textAnchor={hub.labelPos === 'left' ? 'end' : 'start'}
-                    fill={isSelected ? '#FDE047' : 'rgba(241, 245, 249, 0.9)'}
-                    fontSize="13"
+                    fill={isSelected ? '#FDE047' : 'rgba(241, 245, 249, 0.92)'}
+                    fontSize="13.5"
                     fontWeight={isSelected ? '800' : '600'}
                   >
                     {hub.name.split(' / ')[0]}
