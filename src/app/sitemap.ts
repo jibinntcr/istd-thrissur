@@ -89,3 +89,4 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return [...corePages, ...teamPages, ...eventPages, ...campusPages];
 }
+
