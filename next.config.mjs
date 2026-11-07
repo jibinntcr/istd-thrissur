@@ -44,7 +44,27 @@ const nextConfig = {
             },
             {
               source: '/programs.html',
-              destination: '/programs',
+              destination: '/events',
+              permanent: true,
+            },
+            {
+              source: '/programs',
+              destination: '/events',
+              permanent: true,
+            },
+            {
+              source: '/committee/:slug',
+              destination: '/team/:slug',
+              permanent: true,
+            },
+            {
+              source: '/events/istd-thrissur-diamond-chapter-inauguration',
+              destination: '/events/inauguration',
+              permanent: true,
+            },
+            {
+              source: '/events/cce-student-chapter-inauguration',
+              destination: '/events/christ-college-student-chapter-inauguration',
               permanent: true,
             },
             {

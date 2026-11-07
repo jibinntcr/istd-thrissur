@@ -1,7 +1,8 @@
 User-agent: *
 Allow: /
+Disallow: /admin
 Disallow: /admin/
 Disallow: /api/
 
-Sitemap: https://jibinntcr.github.io/istd-thrissur/sitemap.xml
-Host: https://jibinntcr.github.io/istd-thrissur
+Sitemap: https://istdtrichur.in/sitemap.xml
+Host: https://istdtrichur.in

@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import {
   ALL_CHAPTER_EVENTS,
   CAMPUS_CHAPTERS,
+  GALLERY_PHOTOS,
   OFFICE_BEARERS,
   OFFICIAL_LINKS,
   ChapterEvent,
@@ -9,30 +10,50 @@ import {
   CommitteeMember,
 } from '@/data/siteData';
 
-export const SITE_URL = 'https://jibinntcr.github.io/istd-thrissur';
+export const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL || 'https://istdtrichur.in';
 export const SITE_NAME =
-  'ISTD Trichur Chapter | Indian Society for Training & Development';
+  'ISTD Trichur Chapter | Indian Society for Training & Development (Thrissur Diamond Chapter)';
 export const DEFAULT_OG_IMAGE = `${SITE_URL}/photos/istd-22.jpeg`;
 
 export const GLOBAL_SEO_KEYWORDS = [
+  // Primary Brand & Local Search Queries
   'ISTD Trichur',
   'ISTD Trichur Chapter',
   'ISTD Thrissur',
   'ISTD Thrissur Chapter',
+  'istdtrichur.in',
+  'ISTD Kerala',
+  'ISTD Chapters in Kerala',
   'Indian Society for Training and Development Trichur',
   'Indian Society for Training and Development Thrissur',
   'Indian Society for Training & Development Kerala',
   'ISTD Diamond Chapter Trichur',
+  'ISTD Diamond Chapter Thrissur',
   'ISTD Diamond Chapter of India',
   '55th Chapter of ISTD',
-  'ISTD Kerala',
   'ISTD Official Website Trichur',
+  'ISTD Official Website Thrissur',
+  // Professional & Industry Vertical Keywords
   'HR and L&D Community Trichur',
+  'HR Association Thrissur Kerala',
   'Learning and Development Kerala',
   'Human Resource Development Trichur',
   'Corporate Training Trichur',
+  'Corporate Trainers Network Kerala',
+  'Leadership Development Programmes Thrissur',
+  'Management Development Programmes Kerala',
+  'ISTD Diploma in Training and Development Kerala',
+  'ISTD Membership Kerala',
+  'ISTD Life Membership Fee',
+  'ISTD Institutional Membership',
+  'Training and Development Workshops Trichur',
+  // Student & Campus Chapters
   'ISTD Student Chapter Christ College of Engineering',
   'Christ College of Engineering Irinjalakuda ISTD',
+  'ISTD Campus Chapters Kerala',
+  'Academia Industry Interface Kerala',
+  // Key Office Bearers & National Dignitaries
   'Prof. (Dr.) Zakkariya K. A.',
   'Prof. Dr. Zakkariya K.A ISTD',
   'Zakkariya K A National Vice President ISTD',
@@ -48,11 +69,14 @@ export const GLOBAL_SEO_KEYWORDS = [
   'Jibin N Managing Director NEOM Panels',
   'Jibin N Infinio Technology Solutions',
   'Jibin N Flexon Sports Foundation',
-  'ISTD Membership Kerala',
-  'ISTD Diploma in Training and Development',
-  'Training and Development Workshops Trichur',
+  'Atul Shah National President ISTD',
+  // Featured Programmes & Webinars
   'Advancing AIoT Research Webinar ISTD',
-  'Dr. M. Boopathy ISTD Trichur',
+  'Boopathy Monzha Research Labs ISTD Trichur',
+  'From AI Assistants to AI Agents Shaheen Siddique ISTD',
+  'Healthy Habits of High Performers Dr Ashik Kareem ISTD',
+  'Chapter Connect 2026 ISTD Trichur Hotel Elite International',
+  'Future of L&D AI Ecosystems Dr Sreekanth D ISTD',
 ];
 
 interface PageSeoOptions {
@@ -69,6 +93,9 @@ interface PageSeoOptions {
   twitterCard?: 'summary' | 'summary_large_image';
   keywords?: string[];
   noIndex?: boolean;
+  publishedTime?: string;
+  modifiedTime?: string;
+  section?: string;
 }
 
 export function buildPageMetadata({
@@ -85,15 +112,17 @@ export function buildPageMetadata({
   twitterCard = 'summary_large_image',
   keywords = [],
   noIndex = false,
+  publishedTime,
+  modifiedTime,
+  section = 'Training & Human Resource Development',
 }: PageSeoOptions): Metadata {
   const effectivePath = canonicalPath || path;
   const normalizedPath = effectivePath.startsWith('/')
     ? effectivePath
     : `/${effectivePath}`;
-  const canonicalUrl =
-    normalizedPath === '/'
-      ? `${SITE_URL}/`
-      : `${SITE_URL}${normalizedPath.endsWith('/') ? normalizedPath : `${normalizedPath}/`}`;
+  const cleanPath =
+    normalizedPath === '/' ? '' : normalizedPath.replace(/\/+$/, '');
+  const canonicalUrl = `${SITE_URL}${cleanPath}`;
   const fullImageUrl = image.startsWith('http')
     ? image
     : `${SITE_URL}${image.startsWith('/') ? image : `/${image}`}`;
@@ -104,7 +133,8 @@ export function buildPageMetadata({
   );
 
   const socialTitle = exactTitle ? title : `${title} | ISTD Trichur Chapter`;
-  const resolvedImageAlt = imageAlt || title;
+  const resolvedImageAlt =
+    imageAlt || `${title} — ISTD Trichur Chapter (Thrissur Diamond Chapter)`;
 
   return {
     title: exactTitle ? { absolute: title } : title,
@@ -118,21 +148,33 @@ export function buildPageMetadata({
     ],
     creator: 'ISTD Trichur Chapter',
     publisher:
-      'Indian Society for Training & Development (ISTD) — Trichur Chapter',
+      'Indian Society for Training & Development (ISTD) — Trichur Diamond Chapter',
     alternates: {
       canonical: canonicalUrl,
+      languages: {
+        'en-IN': canonicalUrl,
+        en: canonicalUrl,
+        'x-default': canonicalUrl,
+      },
     },
     robots: noIndex
       ? {
           index: false,
           follow: false,
+          nocache: true,
+          googleBot: {
+            index: false,
+            follow: false,
+          },
         }
       : {
           index: true,
           follow: true,
+          nocache: false,
           googleBot: {
             index: true,
             follow: true,
+            noimageindex: false,
             'max-video-preview': -1,
             'max-image-preview': 'large',
             'max-snippet': -1,
@@ -145,6 +187,15 @@ export function buildPageMetadata({
       siteName: SITE_NAME,
       locale: 'en_IN',
       type,
+      ...(type === 'article'
+        ? {
+            publishedTime: publishedTime || '2026-03-30T10:00:00+05:30',
+            modifiedTime: modifiedTime || '2026-11-07T00:00:00+05:30',
+            section,
+            authors: [SITE_URL],
+            tags: mergedKeywords.slice(0, 15),
+          }
+        : {}),
       images: [
         {
           url: fullImageUrl,
@@ -160,6 +211,8 @@ export function buildPageMetadata({
       card: twitterCard,
       title: socialTitle,
       description,
+      creator: '@ISTDTrichur',
+      site: '@ISTDTrichur',
       images: [
         {
           url: fullImageUrl,
@@ -169,12 +222,22 @@ export function buildPageMetadata({
     },
     other: {
       'geo.region': 'IN-KL',
-      'geo.placename': 'Trichur, Kerala, India',
+      'geo.placename': 'Trichur (Thrissur), Kerala, India',
       'geo.position': '10.5276;76.2144',
       ICBM: '10.5276, 76.2144',
-      'revisit-after': '3 days',
+      'revisit-after': '2 days',
       rating: 'General',
       distribution: 'Global',
+      coverage: 'Worldwide',
+      target: 'all',
+      HandheldFriendly: 'True',
+      MobileOptimized: '320',
+      'dc.title': socialTitle,
+      'dc.description': description,
+      'dc.publisher':
+        'Indian Society for Training & Development (ISTD) — Trichur Chapter',
+      'dc.language': 'en-IN',
+      'apple-mobile-web-app-title': 'ISTD Trichur',
     },
   };
 }
@@ -184,24 +247,61 @@ export function getOrganizationJsonLd() {
     '@context': 'https://schema.org',
     '@graph': [
       {
-        '@type': ['Organization', 'ProfessionalService'],
+        '@type': [
+          'Organization',
+          'EducationalOrganization',
+          'ProfessionalService',
+          'LocalBusiness',
+        ],
         '@id': `${SITE_URL}/#organization`,
         name: 'ISTD Trichur Chapter',
+        legalName:
+          'Indian Society for Training & Development — Trichur Chapter',
         alternateName: [
           'ISTD Thrissur Chapter',
           'ISTD Trichur',
           'ISTD Thrissur',
-          'Indian Society for Training & Development — Trichur Diamond Chapter',
+          'ISTD Trichur Diamond Chapter',
+          'ISTD Thrissur Diamond Chapter',
+          'Indian Society for Training & Development Trichur',
+          'Indian Society for Training & Development Thrissur',
         ],
-        url: `${SITE_URL}/`,
+        url: SITE_URL,
         logo: {
           '@type': 'ImageObject',
+          '@id': `${SITE_URL}/#logo`,
           url: `${SITE_URL}/images/logo-circle.png`,
+          contentUrl: `${SITE_URL}/images/logo-circle.png`,
+          width: 512,
+          height: 512,
+          caption:
+            'Official Emblem of the Indian Society for Training & Development (ISTD) — Trichur Diamond Chapter',
         },
-        image: `${SITE_URL}/photos/istd-22.jpeg`,
+        image: [
+          `${SITE_URL}/photos/istd-22.jpeg`,
+          `${SITE_URL}/photos/istd-tcr-inauguration.jpeg`,
+          `${SITE_URL}/photos/chapter-connect-2026-2.jpg`,
+        ],
         description:
-          'Official Diamond Chapter of the Indian Society for Training & Development (ISTD, established April 1970 in New Delhi), inaugurated on 30 March 2026 in Trichur, Kerala to advance training, learning, and human resource development.',
+          'Official Diamond Chapter of the Indian Society for Training & Development (ISTD, established April 1970 in New Delhi), inaugurated on 30 March 2026 in Trichur (Thrissur), Kerala to advance corporate training, workplace learning, academic–industry student chapters, and human resource development.',
+        slogan: 'Training for Transformation',
         foundingDate: '2026-03-30',
+        foundingLocation: {
+          '@type': 'Place',
+          name: 'Trichur (Thrissur), Kerala, India',
+        },
+        priceRange: '₹₹',
+        telephone: '+91-9846101034',
+        email: 'tonychacko67@gmail.com',
+        knowsAbout: [
+          'Human Resource Development (HRD)',
+          'Learning and Development (L&D)',
+          'Corporate Training & Executive Coaching',
+          'Leadership Development',
+          'Artificial Intelligence & AIoT in Learning Ecosystems',
+          'Academic–Industry Student Chapters',
+          'ISTD Diploma in Training & Development',
+        ],
         parentOrganization: {
           '@type': 'Organization',
           '@id': 'https://www.istd.in/#organization',
@@ -210,14 +310,18 @@ export function getOrganizationJsonLd() {
           foundingDate: '1970-04',
           address: {
             '@type': 'PostalAddress',
+            streetAddress:
+              'Training House, B-23, Qutab Institutional Area, Mehrauli Road',
             addressLocality: 'New Delhi',
+            postalCode: '110016',
             addressCountry: 'IN',
           },
         },
         address: {
           '@type': 'PostalAddress',
-          addressLocality: 'Trichur',
+          addressLocality: 'Trichur (Thrissur)',
           addressRegion: 'Kerala',
+          postalCode: '680001',
           addressCountry: 'IN',
         },
         geo: {
@@ -232,18 +336,26 @@ export function getOrganizationJsonLd() {
             alternateName: 'Thrissur',
           },
           {
+            '@type': 'City',
+            name: 'Irinjalakuda',
+          },
+          {
             '@type': 'AdministrativeArea',
             name: 'Kerala',
+          },
+          {
+            '@type': 'Country',
+            name: 'India',
           },
         ],
         contactPoint: [
           {
             '@type': 'ContactPoint',
             telephone: '+91-9846101034',
-            contactType: 'Chairman & Chapter Office',
+            contactType: 'Chairman & Chapter Secretariat',
             email: 'tonychacko67@gmail.com',
             areaServed: 'IN-KL',
-            availableLanguage: ['English', 'Malayalam'],
+            availableLanguage: ['English', 'Malayalam', 'Hindi'],
           },
           {
             '@type': 'ContactPoint',
@@ -257,16 +369,17 @@ export function getOrganizationJsonLd() {
           OFFICIAL_LINKS.istdTrichurLinkedin,
           OFFICIAL_LINKS.istdNationalLinkedin,
           OFFICIAL_LINKS.istdNationalWeb,
+          'https://jibinntcr.github.io/istd-thrissur/',
         ],
         member: OFFICE_BEARERS.map((person) => ({
           '@type': 'OrganizationRole',
           roleName: person.role,
           member: {
             '@type': 'Person',
-            '@id': `${SITE_URL}/team/${person.slug}/#person`,
+            '@id': `${SITE_URL}/team/${person.slug}#person`,
             name: person.name,
             jobTitle: `${person.role}, ISTD Trichur Chapter`,
-            url: `${SITE_URL}/team/${person.slug}/`,
+            url: `${SITE_URL}/team/${person.slug}`,
             ...(person.sameAs && person.sameAs.length > 0
               ? { sameAs: person.sameAs }
               : {}),
@@ -276,17 +389,88 @@ export function getOrganizationJsonLd() {
       {
         '@type': 'WebSite',
         '@id': `${SITE_URL}/#website`,
-        url: `${SITE_URL}/`,
+        url: SITE_URL,
         name: SITE_NAME,
-        alternateName: ['ISTD Trichur', 'ISTD Thrissur', 'ISTD Diamond Chapter'],
+        alternateName: [
+          'ISTD Trichur',
+          'ISTD Thrissur',
+          'ISTD Trichur Chapter',
+          'ISTD Thrissur Chapter',
+          'ISTD Diamond Chapter Kerala',
+        ],
         publisher: {
           '@id': `${SITE_URL}/#organization`,
         },
         inLanguage: 'en-IN',
+        potentialAction: [
+          {
+            '@type': 'SearchAction',
+            target: {
+              '@type': 'EntryPoint',
+              urlTemplate: `${SITE_URL}/events?q={search_term_string}`,
+            },
+            'query-input': 'required name=search_term_string',
+          },
+        ],
+      },
+      {
+        '@type': 'SiteNavigationElement',
+        '@id': `${SITE_URL}/#sitenavigation`,
+        name: [
+          'Home',
+          'About Us',
+          'Managing Committee',
+          'Events & Programmes',
+          'Campus Chapters',
+          'Photo Gallery',
+          'ISTD Membership',
+          'Contact Us',
+        ],
+        url: [
+          SITE_URL,
+          `${SITE_URL}/about`,
+          `${SITE_URL}/committee`,
+          `${SITE_URL}/events`,
+          `${SITE_URL}/campus-chapters`,
+          `${SITE_URL}/gallery`,
+          `${SITE_URL}/membership`,
+          `${SITE_URL}/contact`,
+        ],
       },
     ],
   };
 }
+
+const EVENT_ISO_DATES: Record<string, { start: string; end: string }> = {
+  'advancing-aiot-research': {
+    start: '2026-11-10T19:00:00+05:30',
+    end: '2026-11-10T20:00:00+05:30',
+  },
+  'christ-college-student-chapter-inauguration': {
+    start: '2026-09-15T10:00:00+05:30',
+    end: '2026-09-15T13:00:00+05:30',
+  },
+  'ai-agents-in-business': {
+    start: '2026-08-08T19:30:00+05:30',
+    end: '2026-08-08T20:30:00+05:30',
+  },
+  'healthy-habits-of-high-performers': {
+    start: '2026-07-25T19:30:00+05:30',
+    end: '2026-07-25T20:30:00+05:30',
+  },
+  'chapter-connect-2026': {
+    start: '2026-06-27T10:30:00+05:30',
+    end: '2026-06-27T13:00:00+05:30',
+  },
+  'future-of-ld-ai-ecosystems': {
+    start: '2026-04-11T19:00:00+05:30',
+    end: '2026-04-11T20:30:00+05:30',
+  },
+  inauguration: {
+    start: '2026-03-30T10:00:00+05:30',
+    end: '2026-03-30T13:30:00+05:30',
+  },
+};
 
 export function getHomePageJsonLd() {
   const upcomingEvents = ALL_CHAPTER_EVENTS.filter(
@@ -298,28 +482,87 @@ export function getHomePageJsonLd() {
       {
         '@type': 'WebPage',
         '@id': `${SITE_URL}/#webpage`,
-        url: `${SITE_URL}/`,
-        name: 'ISTD Trichur Chapter | Official Diamond Chapter — Indian Society for Training & Development',
+        url: SITE_URL,
+        name: 'ISTD Trichur Chapter (Thrissur Diamond Chapter) | Indian Society for Training & Development',
         description:
-          'Official website of the ISTD Trichur Chapter (Diamond Chapter) — Indian Society for Training & Development. Empowering HR & L&D leaders, trainers, educators, and student chapters across Trichur and Central Kerala.',
+          'Official website of the ISTD Trichur Chapter (Thrissur Diamond Chapter) — Indian Society for Training & Development. Empowering HR & L&D leaders, trainers, educators, and student chapters across Trichur and Central Kerala.',
         isPartOf: { '@id': `${SITE_URL}/#website` },
         about: { '@id': `${SITE_URL}/#organization` },
+        primaryImageOfPage: {
+          '@type': 'ImageObject',
+          url: DEFAULT_OG_IMAGE,
+        },
         inLanguage: 'en-IN',
+        speakable: {
+          '@type': 'SpeakableSpecification',
+          cssSelector: ['.hero-3d-headline', '.hero-3d-lead'],
+        },
       },
-      ...upcomingEvents.map((ev) => ({
-        '@type': 'EducationEvent',
-        name: ev.title,
-        description: ev.shortDescription,
-        startDate: '2026-04-20T19:00:00+05:30',
-        endDate: '2026-04-20T20:30:00+05:30',
-        eventStatus: 'https://schema.org/EventScheduled',
-        eventAttendanceMode: 'https://schema.org/OnlineEventAttendanceMode',
-        url: `${SITE_URL}/events/${ev.slug}/`,
-        image: [
-          ev.image.startsWith('http') ? ev.image : `${SITE_URL}${ev.image}`,
+      {
+        '@type': 'FAQPage',
+        '@id': `${SITE_URL}/#faq`,
+        mainEntity: [
+          {
+            '@type': 'Question',
+            name: 'What is the ISTD Trichur Chapter (Thrissur Diamond Chapter)?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'The ISTD Trichur Chapter is the official Thrissur chapter of the Indian Society for Training & Development (ISTD, New Delhi, established in April 1970). Inaugurated on 30 March 2026 in Trichur, Kerala during ISTD’s 55th milestone year, it is designated as the prestigious Diamond Chapter of ISTD.',
+            },
+          },
+          {
+            '@type': 'Question',
+            name: 'Who are the office bearers of the ISTD Trichur Chapter?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'The ISTD Trichur Chapter is guided by Founder & Mentor Prof. (Dr.) Zakkariya K. A. (National Vice President, ISTD), Chairman Tony Chacko, Secretary Sneha Rose George, and Treasurer Jibin N.',
+            },
+          },
+          {
+            '@type': 'Question',
+            name: 'Which institution hosts the first ISTD Student Chapter under ISTD Trichur?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'Christ College of Engineering (Autonomous), Irinjalakuda, Trichur hosts the first ISTD Student Chapter inaugurated under the ISTD Trichur Chapter.',
+            },
+          },
+          {
+            '@type': 'Question',
+            name: 'How can professionals, trainers, and students join ISTD Trichur Chapter?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'HR professionals, corporate trainers, educators, institutions, and students can apply online through the official ISTD National Portal or via the Membership page at https://istdtrichur.in/membership by selecting the Trichur (Thrissur) Chapter.',
+            },
+          },
         ],
-        organizer: { '@id': `${SITE_URL}/#organization` },
-      })),
+      },
+      ...upcomingEvents.map((ev) => {
+        const iso = EVENT_ISO_DATES[ev.slug] || {
+          start: '2026-11-10T19:00:00+05:30',
+          end: '2026-11-10T20:00:00+05:30',
+        };
+        return {
+          '@type': 'EducationEvent',
+          name: ev.title,
+          description: ev.shortDescription,
+          startDate: iso.start,
+          endDate: iso.end,
+          eventStatus: 'https://schema.org/EventScheduled',
+          eventAttendanceMode: 'https://schema.org/OnlineEventAttendanceMode',
+          url: `${SITE_URL}/events/${ev.slug}`,
+          image: [
+            ev.image.startsWith('http') ? ev.image : `${SITE_URL}${ev.image}`,
+          ],
+          organizer: { '@id': `${SITE_URL}/#organization` },
+          offers: {
+            '@type': 'Offer',
+            url: `${SITE_URL}/events/${ev.slug}`,
+            price: '0',
+            priceCurrency: 'INR',
+            availability: 'https://schema.org/InStock',
+          },
+        };
+      }),
     ],
   };
 }
@@ -330,13 +573,14 @@ export function getAboutPageJsonLd() {
     '@graph': [
       {
         '@type': 'AboutPage',
-        '@id': `${SITE_URL}/about/#aboutpage`,
-        url: `${SITE_URL}/about/`,
+        '@id': `${SITE_URL}/about#aboutpage`,
+        url: `${SITE_URL}/about`,
         name: 'About ISTD Trichur Chapter (Diamond Chapter) & National ISTD Vision',
         description:
-          'Learn about the Indian Society for Training & Development (ISTD, est. April 1970, New Delhi) and the ISTD Trichur Diamond Chapter inaugurated in Trichur, Kerala.',
+          'Learn about the Indian Society for Training & Development (ISTD, est. April 1970, New Delhi) and the ISTD Trichur Diamond Chapter inaugurated in Trichur (Thrissur), Kerala.',
         isPartOf: { '@id': `${SITE_URL}/#website` },
         mainEntity: { '@id': `${SITE_URL}/#organization` },
+        inLanguage: 'en-IN',
       },
       {
         '@type': 'BreadcrumbList',
@@ -345,13 +589,13 @@ export function getAboutPageJsonLd() {
             '@type': 'ListItem',
             position: 1,
             name: 'Home',
-            item: `${SITE_URL}/`,
+            item: SITE_URL,
           },
           {
             '@type': 'ListItem',
             position: 2,
             name: 'About ISTD Trichur',
-            item: `${SITE_URL}/about/`,
+            item: `${SITE_URL}/about`,
           },
         ],
       },
@@ -365,8 +609,8 @@ export function getEventsCollectionJsonLd() {
     '@graph': [
       {
         '@type': 'CollectionPage',
-        '@id': `${SITE_URL}/events/#collection`,
-        url: `${SITE_URL}/events/`,
+        '@id': `${SITE_URL}/events#collection`,
+        url: `${SITE_URL}/events`,
         name: 'Events, Webinars & 2026 Programme Archive | ISTD Trichur Chapter',
         description:
           'Explore upcoming webinars, 2026 completed programmes, campus chapter launches, and year-wise archives of the ISTD Trichur Chapter.',
@@ -377,7 +621,7 @@ export function getEventsCollectionJsonLd() {
             '@type': 'ListItem',
             position: index + 1,
             name: ev.title,
-            url: `${SITE_URL}/events/${ev.slug}/`,
+            url: `${SITE_URL}/events/${ev.slug}`,
           })),
         },
       },
@@ -388,13 +632,13 @@ export function getEventsCollectionJsonLd() {
             '@type': 'ListItem',
             position: 1,
             name: 'Home',
-            item: `${SITE_URL}/`,
+            item: SITE_URL,
           },
           {
             '@type': 'ListItem',
             position: 2,
             name: 'Events & Programmes',
-            item: `${SITE_URL}/events/`,
+            item: `${SITE_URL}/events`,
           },
         ],
       },
@@ -408,8 +652,8 @@ export function getCampusChaptersCollectionJsonLd() {
     '@graph': [
       {
         '@type': 'CollectionPage',
-        '@id': `${SITE_URL}/campus-chapters/#collection`,
-        url: `${SITE_URL}/campus-chapters/`,
+        '@id': `${SITE_URL}/campus-chapters#collection`,
+        url: `${SITE_URL}/campus-chapters`,
         name: 'Campus & Student Chapters | ISTD Trichur Chapter',
         description:
           'Official directory of ISTD Student & Campus Chapters under the ISTD Trichur Chapter, including Christ College of Engineering (Autonomous), Irinjalakuda.',
@@ -420,7 +664,7 @@ export function getCampusChaptersCollectionJsonLd() {
             '@type': 'ListItem',
             position: index + 1,
             name: `${ch.institutionName} (${ch.shortName})`,
-            url: `${SITE_URL}/campus-chapters/${ch.slug}/`,
+            url: `${SITE_URL}/campus-chapters/${ch.slug}`,
           })),
         },
       },
@@ -431,13 +675,13 @@ export function getCampusChaptersCollectionJsonLd() {
             '@type': 'ListItem',
             position: 1,
             name: 'Home',
-            item: `${SITE_URL}/`,
+            item: SITE_URL,
           },
           {
             '@type': 'ListItem',
             position: 2,
             name: 'Campus Chapters',
-            item: `${SITE_URL}/campus-chapters/`,
+            item: `${SITE_URL}/campus-chapters`,
           },
         ],
       },
@@ -451,8 +695,8 @@ export function getMembershipPageJsonLd() {
     '@graph': [
       {
         '@type': 'WebPage',
-        '@id': `${SITE_URL}/membership/#webpage`,
-        url: `${SITE_URL}/membership/`,
+        '@id': `${SITE_URL}/membership#webpage`,
+        url: `${SITE_URL}/membership`,
         name: 'ISTD Membership Categories, Official Fee Structure & Online Portal | ISTD Trichur Chapter',
         description:
           'Join the Indian Society for Training & Development (ISTD) through the Trichur Diamond Chapter. Official Individual, Institutional, Life, Student, and Senior Citizen fee structures.',
@@ -460,7 +704,7 @@ export function getMembershipPageJsonLd() {
       },
       {
         '@type': 'FAQPage',
-        '@id': `${SITE_URL}/membership/#faq`,
+        '@id': `${SITE_URL}/membership#faq`,
         mainEntity: [
           {
             '@type': 'Question',
@@ -495,13 +739,13 @@ export function getMembershipPageJsonLd() {
             '@type': 'ListItem',
             position: 1,
             name: 'Home',
-            item: `${SITE_URL}/`,
+            item: SITE_URL,
           },
           {
             '@type': 'ListItem',
             position: 2,
             name: 'Membership',
-            item: `${SITE_URL}/membership/`,
+            item: `${SITE_URL}/membership`,
           },
         ],
       },
@@ -515,13 +759,20 @@ export function getGalleryPageJsonLd() {
     '@graph': [
       {
         '@type': 'ImageGallery',
-        '@id': `${SITE_URL}/gallery/#gallery`,
-        url: `${SITE_URL}/gallery/`,
+        '@id': `${SITE_URL}/gallery#gallery`,
+        url: `${SITE_URL}/gallery`,
         name: 'Photo Gallery & Chapter Archive | ISTD Trichur Chapter',
         description:
-          'Curated photographs from the ISTD Trichur Diamond Chapter inauguration, lamp lighting ceremony, keynote address, and student chapter launches.',
+          'Curated photographs from the ISTD Trichur Diamond Chapter inauguration, lamp lighting ceremony, keynote address, Chapter Connect 2026, and student chapter launches.',
         isPartOf: { '@id': `${SITE_URL}/#website` },
         about: { '@id': `${SITE_URL}/#organization` },
+        image: GALLERY_PHOTOS.slice(0, 12).map((photo) => ({
+          '@type': 'ImageObject',
+          contentUrl: `${SITE_URL}${photo.src}`,
+          url: `${SITE_URL}${photo.src}`,
+          name: photo.title,
+          caption: photo.caption,
+        })),
       },
       {
         '@type': 'BreadcrumbList',
@@ -530,13 +781,13 @@ export function getGalleryPageJsonLd() {
             '@type': 'ListItem',
             position: 1,
             name: 'Home',
-            item: `${SITE_URL}/`,
+            item: SITE_URL,
           },
           {
             '@type': 'ListItem',
             position: 2,
             name: 'Photo Gallery',
-            item: `${SITE_URL}/gallery/`,
+            item: `${SITE_URL}/gallery`,
           },
         ],
       },
@@ -550,8 +801,8 @@ export function getContactPageJsonLd() {
     '@graph': [
       {
         '@type': 'ContactPage',
-        '@id': `${SITE_URL}/contact/#contactpage`,
-        url: `${SITE_URL}/contact/`,
+        '@id': `${SITE_URL}/contact#contactpage`,
+        url: `${SITE_URL}/contact`,
         name: 'Contact ISTD Trichur Chapter Office Bearers & Secretariat',
         description:
           'Connect with the ISTD Trichur Chapter (Diamond Chapter) leadership team in Trichur, Kerala for membership, corporate training, and student chapter partnerships.',
@@ -565,13 +816,13 @@ export function getContactPageJsonLd() {
             '@type': 'ListItem',
             position: 1,
             name: 'Home',
-            item: `${SITE_URL}/`,
+            item: SITE_URL,
           },
           {
             '@type': 'ListItem',
             position: 2,
             name: 'Contact Us',
-            item: `${SITE_URL}/contact/`,
+            item: `${SITE_URL}/contact`,
           },
         ],
       },
@@ -580,7 +831,7 @@ export function getContactPageJsonLd() {
 }
 
 export function getCommitteeCollectionJsonLd() {
-  const pageUrl = `${SITE_URL}/committee/`;
+  const pageUrl = `${SITE_URL}/committee`;
   return {
     '@context': 'https://schema.org',
     '@graph': [
@@ -588,7 +839,7 @@ export function getCommitteeCollectionJsonLd() {
         '@type': 'CollectionPage',
         '@id': `${pageUrl}#collectionpage`,
         url: pageUrl,
-        name: 'Managing Committee | ISTD Trichur Chapter',
+        name: 'Managing Committee & Office Bearers | ISTD Trichur Chapter',
         description:
           'Office bearers and managing committee of ISTD Trichur Chapter: Founder & Mentor Prof. (Dr.) Zakkariya K. A., Chairman Tony Chacko, Secretary Sneha Rose George, and Treasurer Jibin N.',
         isPartOf: {
@@ -605,7 +856,7 @@ export function getCommitteeCollectionJsonLd() {
           itemListElement: OFFICE_BEARERS.map((person, index) => ({
             '@type': 'ListItem',
             position: index + 1,
-            url: `${SITE_URL}/team/${person.slug}/`,
+            url: `${SITE_URL}/team/${person.slug}`,
             name: `${person.name} — ${person.role}, ISTD Trichur Chapter`,
           })),
         },
@@ -618,7 +869,7 @@ export function getCommitteeCollectionJsonLd() {
             '@type': 'ListItem',
             position: 1,
             name: 'Home',
-            item: `${SITE_URL}/`,
+            item: SITE_URL,
           },
           {
             '@type': 'ListItem',
@@ -633,7 +884,7 @@ export function getCommitteeCollectionJsonLd() {
 }
 
 export function getTeamMemberJsonLd(member: CommitteeMember) {
-  const profileUrl = `${SITE_URL}/team/${member.slug}/`;
+  const profileUrl = `${SITE_URL}/team/${member.slug}`;
   const portraitUrl = member.avatar
     ? member.avatar.startsWith('http')
       ? member.avatar
@@ -663,13 +914,13 @@ export function getTeamMemberJsonLd(member: CommitteeMember) {
             '@type': 'ListItem',
             position: 1,
             name: 'Home',
-            item: `${SITE_URL}/`,
+            item: SITE_URL,
           },
           {
             '@type': 'ListItem',
             position: 2,
             name: 'Managing Committee',
-            item: `${SITE_URL}/committee/`,
+            item: `${SITE_URL}/committee`,
           },
           {
             '@type': 'ListItem',
@@ -719,7 +970,7 @@ export function getTeamMemberJsonLd(member: CommitteeMember) {
               '@id': `${SITE_URL}/#organization`,
               name: 'ISTD Trichur Chapter',
               alternateName: 'ISTD Thrissur Chapter',
-              url: `${SITE_URL}/`,
+              url: SITE_URL,
               parentOrganization: {
                 '@type': 'Organization',
                 '@id': 'https://www.istd.in/#organization',
@@ -782,27 +1033,8 @@ export function getTeamMemberJsonLd(member: CommitteeMember) {
   };
 }
 
-const EVENT_ISO_DATES: Record<string, { start: string; end: string }> = {
-  'advancing-aiot-research': {
-    start: '2026-04-20T19:00:00+05:30',
-    end: '2026-04-20T20:30:00+05:30',
-  },
-  'istd-thrissur-diamond-chapter-inauguration': {
-    start: '2026-03-30T10:00:00+05:30',
-    end: '2026-03-30T13:30:00+05:30',
-  },
-  'cce-student-chapter-inauguration': {
-    start: '2026-03-30T14:00:00+05:30',
-    end: '2026-03-30T16:30:00+05:30',
-  },
-  'strategic-ld-roundtable-2026': {
-    start: '2026-03-30T11:30:00+05:30',
-    end: '2026-03-30T13:00:00+05:30',
-  },
-};
-
 export function getEventJsonLd(event: ChapterEvent) {
-  const eventUrl = `${SITE_URL}/events/${event.slug}/`;
+  const eventUrl = `${SITE_URL}/events/${event.slug}`;
   const imageUrl = event.image.startsWith('http')
     ? event.image
     : `${SITE_URL}${event.image}`;
@@ -826,13 +1058,13 @@ export function getEventJsonLd(event: ChapterEvent) {
             '@type': 'ListItem',
             position: 1,
             name: 'Home',
-            item: `${SITE_URL}/`,
+            item: SITE_URL,
           },
           {
             '@type': 'ListItem',
             position: 2,
             name: 'Events & Programmes',
-            item: `${SITE_URL}/events/`,
+            item: `${SITE_URL}/events`,
           },
           {
             '@type': 'ListItem',
@@ -844,6 +1076,7 @@ export function getEventJsonLd(event: ChapterEvent) {
       },
       {
         '@type': 'EducationEvent',
+        '@id': `${eventUrl}#event`,
         name: event.title,
         description: event.shortDescription,
         url: eventUrl,
@@ -865,15 +1098,13 @@ export function getEventJsonLd(event: ChapterEvent) {
               name: event.venue,
               address: {
                 '@type': 'PostalAddress',
-                addressLocality: 'Trichur',
+                addressLocality: 'Trichur (Thrissur)',
                 addressRegion: 'Kerala',
                 addressCountry: 'IN',
               },
             },
         organizer: {
-          '@type': 'Organization',
-          name: 'ISTD Trichur Chapter',
-          url: `${SITE_URL}/`,
+          '@id': `${SITE_URL}/#organization`,
         },
         offers: {
           '@type': 'Offer',
@@ -895,12 +1126,28 @@ export function getEventJsonLd(event: ChapterEvent) {
             }
           : {}),
       },
+      {
+        '@type': 'Article',
+        '@id': `${eventUrl}#article`,
+        headline: event.title,
+        description: event.shortDescription,
+        image: [imageUrl],
+        datePublished: isoDates.start,
+        dateModified: '2026-11-07T00:00:00+05:30',
+        author: {
+          '@id': `${SITE_URL}/#organization`,
+        },
+        publisher: {
+          '@id': `${SITE_URL}/#organization`,
+        },
+        mainEntityOfPage: eventUrl,
+      },
     ],
   };
 }
 
 export function getCampusChapterJsonLd(chapter: CampusChapter) {
-  const pageUrl = `${SITE_URL}/campus-chapters/${chapter.slug}/`;
+  const pageUrl = `${SITE_URL}/campus-chapters/${chapter.slug}`;
   const imageUrl = `${SITE_URL}${chapter.posterImage}`;
 
   return {
@@ -913,13 +1160,13 @@ export function getCampusChapterJsonLd(chapter: CampusChapter) {
             '@type': 'ListItem',
             position: 1,
             name: 'Home',
-            item: `${SITE_URL}/`,
+            item: SITE_URL,
           },
           {
             '@type': 'ListItem',
             position: 2,
             name: 'Campus & Student Chapters',
-            item: `${SITE_URL}/campus-chapters/`,
+            item: `${SITE_URL}/campus-chapters`,
           },
           {
             '@type': 'ListItem',
@@ -931,18 +1178,17 @@ export function getCampusChapterJsonLd(chapter: CampusChapter) {
       },
       {
         '@type': 'EducationalOrganization',
+        '@id': `${pageUrl}#campuschapter`,
         name: `ISTD Student Chapter — ${chapter.institutionName}`,
         description: chapter.summary,
         url: pageUrl,
         image: imageUrl,
         parentOrganization: {
-          '@type': 'Organization',
-          name: 'ISTD Trichur Chapter',
-          url: `${SITE_URL}/`,
+          '@id': `${SITE_URL}/#organization`,
         },
         address: {
           '@type': 'PostalAddress',
-          addressLocality: 'Irinjalakuda, Trichur',
+          addressLocality: 'Irinjalakuda, Trichur (Thrissur)',
           addressRegion: 'Kerala',
           addressCountry: 'IN',
         },
@@ -954,21 +1200,19 @@ export function getCampusChapterJsonLd(chapter: CampusChapter) {
 export function getAllStaticRoutes(): string[] {
   const baseRoutes = [
     '/',
-    '/about/',
-    '/committee/',
-    '/events/',
-    '/campus-chapters/',
-    '/gallery/',
-    '/membership/',
-    '/contact/',
-    '/privacy/',
+    '/about',
+    '/committee',
+    '/events',
+    '/campus-chapters',
+    '/gallery',
+    '/membership',
+    '/contact',
+    '/privacy',
   ];
-  const eventRoutes = ALL_CHAPTER_EVENTS.map((ev) => `/events/${ev.slug}/`);
+  const eventRoutes = ALL_CHAPTER_EVENTS.map((ev) => `/events/${ev.slug}`);
   const campusRoutes = CAMPUS_CHAPTERS.map(
-    (ch) => `/campus-chapters/${ch.slug}/`
+    (ch) => `/campus-chapters/${ch.slug}`
   );
-  const teamRoutes = OFFICE_BEARERS.map(
-    (member) => `/team/${member.slug}/`
-  );
+  const teamRoutes = OFFICE_BEARERS.map((member) => `/team/${member.slug}`);
   return [...baseRoutes, ...eventRoutes, ...campusRoutes, ...teamRoutes];
 }

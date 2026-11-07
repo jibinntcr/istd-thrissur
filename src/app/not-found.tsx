@@ -1,5 +1,14 @@
 import React from 'react';
+import type { Metadata } from 'next';
 import Link from 'next/link';
+import { buildPageMetadata } from '@/lib/seoConfig';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Page Not Found (404)',
+  description: 'The requested page could not be found on the ISTD Trichur Chapter website.',
+  path: '/404',
+  noIndex: true,
+});
 
 export default function NotFound() {
   return (

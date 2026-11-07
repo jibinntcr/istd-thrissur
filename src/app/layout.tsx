@@ -38,37 +38,58 @@ export const metadata: Metadata = {
   creator: 'ISTD Trichur Chapter',
   publisher: 'Indian Society for Training & Development (ISTD) — Trichur Chapter',
   category: 'Education & Professional Development',
+  classification: 'Professional Society, Training & Human Resource Development',
+  referrer: 'origin-when-cross-origin',
+  formatDetection: {
+    email: true,
+    address: true,
+    telephone: true,
+  },
   alternates: {
-    canonical: `${SITE_URL}/`,
+    canonical: SITE_URL,
+    languages: {
+      'en-IN': SITE_URL,
+      en: SITE_URL,
+      'x-default': SITE_URL,
+    },
   },
   robots: {
     index: true,
     follow: true,
+    nocache: false,
     googleBot: {
       index: true,
       follow: true,
+      noimageindex: false,
       'max-video-preview': -1,
       'max-image-preview': 'large',
       'max-snippet': -1,
     },
   },
   icons: {
-    icon: '/images/logo-circle.png',
+    icon: [
+      { url: '/images/logo-circle.png', type: 'image/png', sizes: '192x192' },
+      { url: '/images/logo-circle.png', type: 'image/png', sizes: '512x512' },
+    ],
     shortcut: '/images/logo-circle.png',
-    apple: '/images/logo-circle.png',
+    apple: [
+      { url: '/images/logo-circle.png', sizes: '180x180', type: 'image/png' },
+    ],
   },
   manifest: '/manifest.json',
   openGraph: {
     title: SITE_NAME,
     description:
-      'Promoting excellence in Human Resource Development, workplace learning, academic–industry student chapters, and leadership development across Trichur and Central Kerala.',
-    url: `${SITE_URL}/`,
+      'Promoting excellence in Human Resource Development, workplace learning, academic–industry student chapters, and leadership development across Trichur (Thrissur) and Central Kerala.',
+    url: SITE_URL,
     siteName: SITE_NAME,
     type: 'website',
     locale: 'en_IN',
     images: [
       {
         url: DEFAULT_OG_IMAGE,
+        secureUrl: DEFAULT_OG_IMAGE,
+        type: 'image/jpeg',
         width: 1200,
         height: 630,
         alt: 'ISTD Trichur Diamond Chapter Inauguration & Leadership',
@@ -79,8 +100,20 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: SITE_NAME,
     description:
-      'Official Diamond Chapter of the Indian Society for Training & Development (ISTD) in Trichur, Kerala.',
+      'Official Diamond Chapter of the Indian Society for Training & Development (ISTD) in Trichur (Thrissur), Kerala.',
+    creator: '@ISTDTrichur',
+    site: '@ISTDTrichur',
     images: [DEFAULT_OG_IMAGE],
+  },
+  other: {
+    'geo.region': 'IN-KL',
+    'geo.placename': 'Trichur (Thrissur), Kerala, India',
+    'geo.position': '10.5276;76.2144',
+    ICBM: '10.5276, 76.2144',
+    'revisit-after': '2 days',
+    rating: 'General',
+    distribution: 'Global',
+    coverage: 'Worldwide',
   },
 };
 
