@@ -45,6 +45,9 @@ export const metadata: Metadata = {
     address: true,
     telephone: true,
   },
+  verification: {
+    google: 'houG6L-dDY_BubhxSLkCDeVY4SCKuackhf3swC-Pzu0',
+  },
   alternates: {
     canonical: SITE_URL,
     languages: {

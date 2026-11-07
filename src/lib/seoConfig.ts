@@ -149,6 +149,9 @@ export function buildPageMetadata({
     creator: 'ISTD Trichur Chapter',
     publisher:
       'Indian Society for Training & Development (ISTD) — Trichur Diamond Chapter',
+    verification: {
+      google: 'houG6L-dDY_BubhxSLkCDeVY4SCKuackhf3swC-Pzu0',
+    },
     alternates: {
       canonical: canonicalUrl,
       languages: {
