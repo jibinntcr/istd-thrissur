@@ -61,19 +61,28 @@ export async function POST(request: Request) {
         .digest('hex');
 
       const allowedEmailHashes = new Set([
-        'd6e157131c00e8a2f0333fbd5830899b3962e9f006ffecb0678b4c12619e18fd',
-        '2673938746c9355eddd4223f7449cd29773359c2330c975c70f7f0a131da6578',
+        '4d8f6544a2de4d0102527ae1e9fbd9944ac67d064064b202048829c748c2f91a', // admin@istdthrissur.org
+        'd6e157131c00e8a2f0333fbd5830899b3962e9f006ffecb0678b4c12619e18fd', // jibintcr@gmail.com
+        '2673938746c9355eddd4223f7449cd29773359c2330c975c70f7f0a131da6578', // tonychacko67@gmail.com
+        '236bb8fe3d1d2a057fb07db95a05abbbfe88a5f5568aaf7bd37cf0e16c4ec957', // admin
       ]);
 
       const envPassword = process.env.ADMIN_PASSWORD;
-      const expectedPasswordHash = envPassword
-        ? crypto
-            .createHash('sha256')
-            .update(salt + envPassword)
-            .digest('hex')
-        : '9259d3cb2c7cd679071a1534498487faa65cf332fd84b3b4aeaa30cdd38887f8';
+      const validPasswordHashes = new Set(
+        envPassword
+          ? [
+              crypto
+                .createHash('sha256')
+                .update(salt + envPassword)
+                .digest('hex'),
+            ]
+          : [
+              '3e69982ff658a8ac100c5b2436e9b1a95fdf05cbb4dafb6ab2aa5b62b9a334f7', // ISTD@Thrissur2026
+              '9259d3cb2c7cd679071a1534498487faa65cf332fd84b3b4aeaa30cdd38887f8',
+            ]
+      );
 
-      if (allowedEmailHashes.has(emailHash) && passwordHash === expectedPasswordHash) {
+      if (allowedEmailHashes.has(emailHash) && validPasswordHashes.has(passwordHash)) {
         return NextResponse.json({
           ok: true,
           session: {
@@ -81,8 +90,11 @@ export async function POST(request: Request) {
             name:
               emailHash ===
               '2673938746c9355eddd4223f7449cd29773359c2330c975c70f7f0a131da6578'
-                ? 'Chapter Chairman'
-                : 'Chapter Administrator',
+                ? 'Shri. Tony Chacko (Chairman)'
+                : emailHash ===
+                  'd6e157131c00e8a2f0333fbd5830899b3962e9f006ffecb0678b4c12619e18fd'
+                ? 'Mr. Jibin N (Treasurer)'
+                : 'ISTD Trichur Chapter Admin',
             role: 'Chapter Administrator',
             loggedInAt: new Date().toISOString(),
           },

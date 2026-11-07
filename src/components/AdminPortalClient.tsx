@@ -188,26 +188,39 @@ export function AdminPortalClient() {
         const passwordHash = await computeSaltedSha256(loginPassword);
 
         const allowedEmailHashes = new Set([
-          'd6e157131c00e8a2f0333fbd5830899b3962e9f006ffecb0678b4c12619e18fd',
-          '2673938746c9355eddd4223f7449cd29773359c2330c975c70f7f0a131da6578',
+          '4d8f6544a2de4d0102527ae1e9fbd9944ac67d064064b202048829c748c2f91a', // admin@istdthrissur.org
+          'd6e157131c00e8a2f0333fbd5830899b3962e9f006ffecb0678b4c12619e18fd', // jibintcr@gmail.com
+          '2673938746c9355eddd4223f7449cd29773359c2330c975c70f7f0a131da6578', // tonychacko67@gmail.com
+          '236bb8fe3d1d2a057fb07db95a05abbbfe88a5f5568aaf7bd37cf0e16c4ec957', // admin
         ]);
 
         const customPwHash =
           typeof window !== 'undefined'
             ? window.localStorage.getItem('istd_tcr_custom_pw_hash_v1')
             : null;
-        const expectedPwHash =
-          customPwHash ||
-          '9259d3cb2c7cd679071a1534498487faa65cf332fd84b3b4aeaa30cdd38887f8';
+        const validPwHashes = new Set(
+          customPwHash
+            ? [
+                customPwHash,
+                '3e69982ff658a8ac100c5b2436e9b1a95fdf05cbb4dafb6ab2aa5b62b9a334f7',
+              ]
+            : [
+                '3e69982ff658a8ac100c5b2436e9b1a95fdf05cbb4dafb6ab2aa5b62b9a334f7',
+                '9259d3cb2c7cd679071a1534498487faa65cf332fd84b3b4aeaa30cdd38887f8',
+              ]
+        );
 
-        if (allowedEmailHashes.has(emailHash) && passwordHash === expectedPwHash) {
+        if (allowedEmailHashes.has(emailHash) && validPwHashes.has(passwordHash)) {
           newSession = {
             email: normalized,
             name:
               emailHash ===
               '2673938746c9355eddd4223f7449cd29773359c2330c975c70f7f0a131da6578'
-                ? 'Chapter Chairman'
-                : 'Chapter Administrator',
+                ? 'Shri. Tony Chacko (Chairman)'
+                : emailHash ===
+                  'd6e157131c00e8a2f0333fbd5830899b3962e9f006ffecb0678b4c12619e18fd'
+                ? 'Mr. Jibin N (Treasurer)'
+                : 'ISTD Trichur Chapter Admin',
             role: 'Chapter Administrator',
             loggedInAt: new Date().toISOString(),
           };
@@ -835,9 +848,9 @@ export function AdminPortalClient() {
 
             <form onSubmit={handleLoginSubmit}>
               <div className="form-group" style={{ marginBottom: '1rem' }}>
-                <label className="form-label">Administrator Email *</label>
+                <label className="form-label">Administrator Email / ID *</label>
                 <input
-                  type="email"
+                  type="text"
                   className="form-control"
                   placeholder="Enter authorized administrator email"
                   value={loginEmail}
